@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "lgvsQteJoUbv9DCVFduBZDWg/x8hsPm9frkGs48RJkw8sHDJjEkOoi8vvzW/hWMpnSypzE9ufpWdGycEhjUeig==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GamerVII\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\GamerVII\\.nuget\\packages\\mvvmcross\\9.0.9\\mvvmcross.9.0.9.nupkg.sha512",
+    "C:\\Users\\GamerVII\\.nuget\\packages\\sharpvectors\\1.8.1\\sharpvectors.1.8.1.nupkg.sha512"
+  ],
+  "logs": []
+}

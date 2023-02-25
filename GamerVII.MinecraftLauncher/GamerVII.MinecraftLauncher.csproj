@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Resources\Images\background.jpg" />
+    <None Remove="Views\Resources\Images\document.svg" />
+    <None Remove="Views\Resources\Images\downloadIcon.svg" />
+    <None Remove="Views\Resources\Images\logo.svg" />
+    <None Remove="Views\Resources\Images\Profile.svg" />
+    <None Remove="Views\Resources\Images\rightArrow.svg" />
+    <None Remove="Views\Resources\Images\settings.svg" />
+    <None Remove="Views\Resources\Images\vk.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\Images\document.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Logger\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MvvmCross" Version="9.0.9" />
+    <PackageReference Include="SharpVectors" Version="1.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\Images\background.jpg" />
+    <Resource Include="Views\Resources\Images\downloadIcon.svg" />
+    <Resource Include="Views\Resources\Images\logo.svg" />
+    <Resource Include="Views\Resources\Images\Profile.svg" />
+    <Resource Include="Views\Resources\Images\settings.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\Images\rightArrow.svg" />
+    <Resource Include="Views\Resources\Images\vk.svg" />
+  </ItemGroup>
+
+</Project>

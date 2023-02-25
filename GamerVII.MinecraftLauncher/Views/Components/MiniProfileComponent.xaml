@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="GamerVII.MinecraftLauncher.Views.Components.MiniProfileComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GamerVII.MinecraftLauncher.Views.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="200">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center"
+                    >
+
+            <TextBlock Margin="0, 5, 0, 0"
+                       Text="{Binding PlayerName}"
+                       d:Text="GamerVII"
+                       FontSize="16"
+                       Foreground="{StaticResource HeadlineForegroundColor}"
+                       FontWeight="Bold">
+
+
+
+            </TextBlock>
+            <TextBlock Margin="0, 5, 0, 0">
+                <Run Text="{Binding HourPlayTime}"
+                     d:Text="45"
+                     Foreground="{StaticResource HeadlineForegroundColor}"
+                     FontWeight="Bold"/>
+                
+                <Run Text="ч."
+                     Foreground="{StaticResource ContentForegroundColor}"/>
+            
+                <Run Text="{Binding MinutesPlayTime}"
+                     d:Text="13"
+                     Foreground="{StaticResource HeadlineForegroundColor}"
+                     FontWeight="Bold"/>
+                <Run Text="м."
+                     Foreground="{StaticResource ContentForegroundColor}"/>
+
+            </TextBlock>
+        </StackPanel>
+
+        <Image Grid.Column="2"
+               Width="45"
+               Height="45"
+               Source="https://static.planetminecraft.com/files/resource_media/screenshot/1331/rewind-logo_6061718.jpg">
+            <Image.Clip>
+                <EllipseGeometry RadiusX="150" RadiusY="150"
+                                 Center="30 30"/>
+            </Image.Clip>
+        </Image>
+
+    </Grid>
+</UserControl>

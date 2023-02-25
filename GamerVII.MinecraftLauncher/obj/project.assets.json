@@ -1,0 +1,434 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0-windows7.0": {
+      "Microsoft.Extensions.Logging.Abstractions/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets": {}
+        }
+      },
+      "MvvmCross/9.0.9": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0"
+        },
+        "compile": {
+          "lib/net6.0/MvvmCross.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MvvmCross.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "SharpVectors/1.8.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0-windows7.0/SharpVectors.Converters.Wpf.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Css.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Dom.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Model.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Rendering.Gdi.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Rendering.Wpf.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Runtime.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/SharpVectors.Converters.Wpf.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Css.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Dom.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Model.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Rendering.Gdi.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Rendering.Wpf.dll": {
+            "related": ".xml"
+          },
+          "lib/net6.0-windows7.0/SharpVectors.Runtime.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.Extensions.Logging.Abstractions/7.0.0": {
+      "sha512": "kmn78+LPVMOWeITUjIlfxUPDsI0R6G0RkeAMBmQxAJ7vBJn4q2dTva7pWi65ceN5vPGjJ9q/Uae2WKgvfktJAw==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/roslyn3.11/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn3.11/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.0/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.4/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "buildTransitive/net461/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net462/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "MvvmCross/9.0.9": {
+      "sha512": "xLFAktDW6xZbJrrw2aRnREuJdiheFBjRufPJSZaepjK6/o7Ip8NjNiOId4XLt4CFMTThfm9rQZEWBLqBeUxYEw==",
+      "type": "package",
+      "path": "mvvmcross/9.0.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/net6.0-android31.0/MvvmCross.aar",
+        "lib/net6.0-android31.0/MvvmCross.dll",
+        "lib/net6.0-android31.0/MvvmCross.pdb",
+        "lib/net6.0-android31.0/MvvmCross.xml",
+        "lib/net6.0-ios16.1/MvvmCross.dll",
+        "lib/net6.0-ios16.1/MvvmCross.pdb",
+        "lib/net6.0-ios16.1/MvvmCross.xml",
+        "lib/net6.0-maccatalyst16.1/MvvmCross.dll",
+        "lib/net6.0-maccatalyst16.1/MvvmCross.pdb",
+        "lib/net6.0-maccatalyst16.1/MvvmCross.xml",
+        "lib/net6.0-macos13.0/MvvmCross.dll",
+        "lib/net6.0-macos13.0/MvvmCross.pdb",
+        "lib/net6.0-macos13.0/MvvmCross.xml",
+        "lib/net6.0-tvos16.1/MvvmCross.dll",
+        "lib/net6.0-tvos16.1/MvvmCross.pdb",
+        "lib/net6.0-tvos16.1/MvvmCross.xml",
+        "lib/net6.0-windows10.0.19041/MvvmCross.dll",
+        "lib/net6.0-windows10.0.19041/MvvmCross.pdb",
+        "lib/net6.0-windows10.0.19041/MvvmCross.xml",
+        "lib/net6.0/MvvmCross.dll",
+        "lib/net6.0/MvvmCross.pdb",
+        "lib/net6.0/MvvmCross.xml",
+        "mvvmcross.9.0.9.nupkg.sha512",
+        "mvvmcross.nuspec",
+        "readme.txt"
+      ]
+    },
+    "SharpVectors/1.8.1": {
+      "sha512": "U3zzMm53bcFfqLIFgo9zpCDjqAE2iYtPxzyb4xquJXMYs/ogmvz3//PDahrze6iyQ23fZ4AYLF0yZ9zw9uXkXg==",
+      "type": "package",
+      "path": "sharpvectors/1.8.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "docs/SharpVectors.md",
+        "images/SharpVectors64.png",
+        "lib/License.txt",
+        "lib/net40/SharpVectors.Converters.Wpf.dll",
+        "lib/net40/SharpVectors.Converters.Wpf.xml",
+        "lib/net40/SharpVectors.Core.dll",
+        "lib/net40/SharpVectors.Core.xml",
+        "lib/net40/SharpVectors.Css.dll",
+        "lib/net40/SharpVectors.Css.xml",
+        "lib/net40/SharpVectors.Dom.dll",
+        "lib/net40/SharpVectors.Dom.xml",
+        "lib/net40/SharpVectors.Model.dll",
+        "lib/net40/SharpVectors.Model.xml",
+        "lib/net40/SharpVectors.Rendering.Gdi.dll",
+        "lib/net40/SharpVectors.Rendering.Gdi.xml",
+        "lib/net40/SharpVectors.Rendering.Wpf.dll",
+        "lib/net40/SharpVectors.Rendering.Wpf.xml",
+        "lib/net40/SharpVectors.Runtime.Wpf.dll",
+        "lib/net40/SharpVectors.Runtime.Wpf.xml",
+        "lib/net45/SharpVectors.Converters.Wpf.dll",
+        "lib/net45/SharpVectors.Converters.Wpf.xml",
+        "lib/net45/SharpVectors.Core.dll",
+        "lib/net45/SharpVectors.Core.xml",
+        "lib/net45/SharpVectors.Css.dll",
+        "lib/net45/SharpVectors.Css.xml",
+        "lib/net45/SharpVectors.Dom.dll",
+        "lib/net45/SharpVectors.Dom.xml",
+        "lib/net45/SharpVectors.Model.dll",
+        "lib/net45/SharpVectors.Model.xml",
+        "lib/net45/SharpVectors.Rendering.Gdi.dll",
+        "lib/net45/SharpVectors.Rendering.Gdi.xml",
+        "lib/net45/SharpVectors.Rendering.Wpf.dll",
+        "lib/net45/SharpVectors.Rendering.Wpf.xml",
+        "lib/net45/SharpVectors.Runtime.Wpf.dll",
+        "lib/net45/SharpVectors.Runtime.Wpf.xml",
+        "lib/net46/SharpVectors.Converters.Wpf.dll",
+        "lib/net46/SharpVectors.Converters.Wpf.xml",
+        "lib/net46/SharpVectors.Core.dll",
+        "lib/net46/SharpVectors.Core.xml",
+        "lib/net46/SharpVectors.Css.dll",
+        "lib/net46/SharpVectors.Css.xml",
+        "lib/net46/SharpVectors.Dom.dll",
+        "lib/net46/SharpVectors.Dom.xml",
+        "lib/net46/SharpVectors.Model.dll",
+        "lib/net46/SharpVectors.Model.xml",
+        "lib/net46/SharpVectors.Rendering.Gdi.dll",
+        "lib/net46/SharpVectors.Rendering.Gdi.xml",
+        "lib/net46/SharpVectors.Rendering.Wpf.dll",
+        "lib/net46/SharpVectors.Rendering.Wpf.xml",
+        "lib/net46/SharpVectors.Runtime.Wpf.dll",
+        "lib/net46/SharpVectors.Runtime.Wpf.xml",
+        "lib/net47/SharpVectors.Converters.Wpf.dll",
+        "lib/net47/SharpVectors.Converters.Wpf.xml",
+        "lib/net47/SharpVectors.Core.dll",
+        "lib/net47/SharpVectors.Core.xml",
+        "lib/net47/SharpVectors.Css.dll",
+        "lib/net47/SharpVectors.Css.xml",
+        "lib/net47/SharpVectors.Dom.dll",
+        "lib/net47/SharpVectors.Dom.xml",
+        "lib/net47/SharpVectors.Model.dll",
+        "lib/net47/SharpVectors.Model.xml",
+        "lib/net47/SharpVectors.Rendering.Gdi.dll",
+        "lib/net47/SharpVectors.Rendering.Gdi.xml",
+        "lib/net47/SharpVectors.Rendering.Wpf.dll",
+        "lib/net47/SharpVectors.Rendering.Wpf.xml",
+        "lib/net47/SharpVectors.Runtime.Wpf.dll",
+        "lib/net47/SharpVectors.Runtime.Wpf.xml",
+        "lib/net48/SharpVectors.Converters.Wpf.dll",
+        "lib/net48/SharpVectors.Converters.Wpf.xml",
+        "lib/net48/SharpVectors.Core.dll",
+        "lib/net48/SharpVectors.Core.xml",
+        "lib/net48/SharpVectors.Css.dll",
+        "lib/net48/SharpVectors.Css.xml",
+        "lib/net48/SharpVectors.Dom.dll",
+        "lib/net48/SharpVectors.Dom.xml",
+        "lib/net48/SharpVectors.Model.dll",
+        "lib/net48/SharpVectors.Model.xml",
+        "lib/net48/SharpVectors.Rendering.Gdi.dll",
+        "lib/net48/SharpVectors.Rendering.Gdi.xml",
+        "lib/net48/SharpVectors.Rendering.Wpf.dll",
+        "lib/net48/SharpVectors.Rendering.Wpf.xml",
+        "lib/net48/SharpVectors.Runtime.Wpf.dll",
+        "lib/net48/SharpVectors.Runtime.Wpf.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Converters.Wpf.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Converters.Wpf.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Core.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Core.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Css.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Css.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Dom.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Dom.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Model.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Model.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Rendering.Gdi.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Rendering.Gdi.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Rendering.Wpf.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Rendering.Wpf.xml",
+        "lib/net5.0-windows7.0/SharpVectors.Runtime.Wpf.dll",
+        "lib/net5.0-windows7.0/SharpVectors.Runtime.Wpf.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Converters.Wpf.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Converters.Wpf.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Core.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Core.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Css.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Css.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Dom.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Dom.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Model.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Model.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Rendering.Gdi.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Rendering.Gdi.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Rendering.Wpf.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Rendering.Wpf.xml",
+        "lib/net6.0-windows7.0/SharpVectors.Runtime.Wpf.dll",
+        "lib/net6.0-windows7.0/SharpVectors.Runtime.Wpf.xml",
+        "lib/netcoreapp3.1/SharpVectors.Converters.Wpf.dll",
+        "lib/netcoreapp3.1/SharpVectors.Converters.Wpf.xml",
+        "lib/netcoreapp3.1/SharpVectors.Core.dll",
+        "lib/netcoreapp3.1/SharpVectors.Core.xml",
+        "lib/netcoreapp3.1/SharpVectors.Css.dll",
+        "lib/netcoreapp3.1/SharpVectors.Css.xml",
+        "lib/netcoreapp3.1/SharpVectors.Dom.dll",
+        "lib/netcoreapp3.1/SharpVectors.Dom.xml",
+        "lib/netcoreapp3.1/SharpVectors.Model.dll",
+        "lib/netcoreapp3.1/SharpVectors.Model.xml",
+        "lib/netcoreapp3.1/SharpVectors.Rendering.Gdi.dll",
+        "lib/netcoreapp3.1/SharpVectors.Rendering.Gdi.xml",
+        "lib/netcoreapp3.1/SharpVectors.Rendering.Wpf.dll",
+        "lib/netcoreapp3.1/SharpVectors.Rendering.Wpf.xml",
+        "lib/netcoreapp3.1/SharpVectors.Runtime.Wpf.dll",
+        "lib/netcoreapp3.1/SharpVectors.Runtime.Wpf.xml",
+        "sharpvectors.1.8.1.nupkg.sha512",
+        "sharpvectors.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0-windows7.0": [
+      "MvvmCross >= 9.0.9",
+      "SharpVectors >= 1.8.1"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\GamerVII\\.nuget\\packages\\": {},
+    "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+      "projectName": "GamerVII.MinecraftLauncher",
+      "projectPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+      "packagesPath": "C:\\Users\\GamerVII\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\GamerVII\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0-windows"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0-windows7.0": {
+          "targetAlias": "net7.0-windows",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0-windows7.0": {
+        "targetAlias": "net7.0-windows",
+        "dependencies": {
+          "MvvmCross": {
+            "target": "Package",
+            "version": "[9.0.9, )"
+          },
+          "SharpVectors": {
+            "target": "Package",
+            "version": "[1.8.1, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200-preview.22628.1\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

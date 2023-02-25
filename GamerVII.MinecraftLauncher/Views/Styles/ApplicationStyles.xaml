@@ -1,0 +1,384 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:GamerVII.MinecraftLauncher.Views.Converters"
+                    >
+
+    <!-- Background window -->
+    <SolidColorBrush x:Key="BackgroundColor" Color="#0E0E0E"/>
+    <SolidColorBrush x:Key="PrimaryColor" Color="#008C45"/>
+    <SolidColorBrush x:Key="PrimaryColorHover" Color="#047A3D"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#121212"/>
+    <SolidColorBrush x:Key="SecondaryColorHover" Color="#181818"/>
+    <SolidColorBrush x:Key="ContentForegroundColor" Color="#989898"/>
+    <SolidColorBrush x:Key="HeadlineForegroundColor" Color="#FFFFFF"/>
+
+
+    <!-- Navigation Colors -->
+    <SolidColorBrush x:Key="BorderBrushColor" Color="#10FFFFFF"/>
+    <SolidColorBrush x:Key="BorderBackgroundColor" Color="#60000000"/>
+
+    <!-- SecondaryButton colors -->
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#060B0D"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#171717"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#060B0D"/>
+    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#060B0D"/>
+    
+    <!-- ServersPanel colors -->
+    <SolidColorBrush x:Key="ServerBackgroundImageColor" Color="#10FFFFFF"/>
+
+    <Style x:Key="WindowBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+        <Setter Property="CornerRadius" Value="10" />
+    </Style>
+    
+    <Style x:Key="ServersListBorder" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="Padding" Value="0, 0, 0, 10" />
+        <Setter Property="Width" Value="50" />
+    </Style>
+    
+    <Style x:Key="ServerElementStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource ServerBackgroundImageColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Margin" Value="0, 5" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+    </Style>
+
+    <Style x:Key="NavigationPanel" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrushColor}"/>
+        <Setter Property="Background" Value="{StaticResource BorderBackgroundColor}"/>
+        <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+    </Style>
+
+    <Style x:Key="LoaderBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrushColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="32"/>
+        <Setter Property="Width" Value="260"/>
+        <Setter Property="Height" Value="65"/>
+    </Style>
+
+    <Style x:Key="AllCountPlayersStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="Width" Value="160"/>
+        <Setter Property="Height" Value="65"/>
+        <Setter Property="Padding" Value="10, 0"/>
+    </Style>
+
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+        
+    
+    <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{StaticResource PrimaryColor}" 
+                            CornerRadius="20"
+                            Cursor="Hand"
+                            Padding="15, 10"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource PrimaryColorHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource PrimaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <!--<Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            Background="{StaticResource SecondaryColor}" 
+                            BorderThickness="1"
+                            HorizontalAlignment="{TemplateBinding BorderBrush}" 
+                            CornerRadius="20"
+                            Cursor="Hand"
+                            Padding="15, 10"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource SecondaryColorHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource SecondaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <!--<Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="AdditionalButton" TargetType="{x:Type Button}" >
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" 
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource BorderBrushColor}"
+                            HorizontalAlignment="{TemplateBinding BorderBrush}" 
+                            CornerRadius="20"
+                            Cursor="Hand"
+                            Padding="15, 10"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource SecondaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource SecondaryColorHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource SecondaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <!--<Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+    <Style x:Key="RoundProgressBarStyle" TargetType="{x:Type ProgressBar}"
+       xmlns:sys="clr-namespace:System;assembly=mscorlib">
+        <Style.Resources>
+            <converters:RoundProgressPathConverter x:Key="Conv"/>
+            <!-- нам понадобится пара констант -->
+            <!-- доля рабиуса для внутренней части -->
+            <sys:Double x:Key="RelativeThickness">0.75</sys:Double>
+            <!-- просто 0 -->
+            <sys:Double x:Key="Zero">0.0</sys:Double>
+            <!-- просто 1 -->
+            <sys:Double x:Key="One">1.0</sys:Double>
+            <!-- какой процент рисовать для неопределённого состояния -->
+            <sys:Double x:Key="IndeterminatePart">0.25</sys:Double>
+            <!-- обычно прогресс по умолчанию зелёный -->
+            <SolidColorBrush x:Key="ProgressBar.Progress" Color="#FF06B025"/>
+            <!-- стандартный фон -->
+            <SolidColorBrush x:Key="ProgressBar.Background" Color="#FFE6E6E6"/>
+            <!-- стандартный цвет границы -->
+            <SolidColorBrush x:Key="ProgressBar.Border" Color="#FFBCBCBC"/>
+        </Style.Resources>
+        <Setter Property="Foreground" Value="{StaticResource ProgressBar.Progress}"/>
+        <Setter Property="Background" Value="{StaticResource ProgressBar.Background}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid x:Name="TemplateRoot">
+                        <!-- в неопределённом состоянии запускаем вращающуюся анимацию -->
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate"/>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation 
+                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                        Storyboard.TargetName="Animation"
+                                        From="0" To="360" Duration="0:0:2"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <!-- это фон, красим его в цвет фона-->
+                        <Path Fill="{TemplateBinding Background}" Stretch="Uniform"
+                          Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}">
+                            <Path.Data>
+                                <MultiBinding Converter="{StaticResource Conv}"
+                                          ConverterParameter="{StaticResource RelativeThickness}">
+                                    <!-- val=1, min=0, max=1 даёт полный круг -->
+                                    <Binding Source="{StaticResource One}"/>
+                                    <Binding Source="{StaticResource Zero}"/>
+                                    <Binding Source="{StaticResource One}"/>
+                                </MultiBinding>
+                            </Path.Data>
+                        </Path>
+                        <Path Fill="{TemplateBinding Foreground}" Stretch="Uniform" Name="Indicator">
+                            <Path.Data>
+                                <MultiBinding Converter="{StaticResource Conv}"
+                                          ConverterParameter="{StaticResource RelativeThickness}">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                    <Binding Path="Minimum" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                </MultiBinding>
+                            </Path.Data>
+                        </Path>
+                        <!-- это анимировнная штука, будет показываться в неопределённом состоянии -->
+                        <Path Fill="{TemplateBinding Foreground}" Stretch="Uniform" Name="Animation"
+                          Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
+                            <Path.Data>
+                                <MultiBinding Converter="{StaticResource Conv}"
+                                          ConverterParameter="{StaticResource RelativeThickness}">
+                                    <Binding Source="{StaticResource IndeterminatePart}"/>
+                                    <Binding Source="{StaticResource Zero}"/>
+                                    <Binding Source="{StaticResource One}"/>
+                                </MultiBinding>
+                            </Path.Data>
+                            <!-- положим пустое вращение, чтобы к нему цеплялась анимация -->
+                            <Path.RenderTransform>
+                                <RotateTransform/>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- в случае неопределённого состояния уберём нормальный индикатор и покажем анимацию -->
+                        <Trigger Property="IsIndeterminate" Value="true">
+                            <Setter Property="Visibility" TargetName="Indicator" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="Animation" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ServerChooseButton" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Margin" Value="0 10 0 0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="PART_ServerBorder" Width="40" Height="40" CornerRadius="40">
+                        <Image Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="PART_ServerBorder" Value="{StaticResource PrimaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_ServerBorder" Value="{StaticResource PrimaryColor}"/>
+                            <Setter Property="Cursor" TargetName="PART_ServerBorder" Value="Hand"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PageStyle" TargetType="Page">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush>
+                    <ImageBrush.ImageSource>
+                        <BitmapImage UriSource="pack://application:,,,/Views/Resources/Images/background.jpg"/>
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="ProfileButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                            Width="50"
+                            Height="50"
+                            CornerRadius="50"
+                            Cursor="Hand"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="contentPresenter" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
