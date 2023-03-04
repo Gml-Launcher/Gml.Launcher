@@ -157,6 +157,10 @@
                         </StackPanel>
 
                     </StackPanel>
+
+                    <Image Source="{Binding Skin}" 
+                           Width="2048"
+                           Grid.Column="1"/>
                 </Grid>
 
                 <Grid Grid.Row="2">

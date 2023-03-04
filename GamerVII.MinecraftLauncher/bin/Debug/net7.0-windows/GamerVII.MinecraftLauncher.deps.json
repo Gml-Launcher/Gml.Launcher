@@ -9,7 +9,8 @@
       "GamerVII.MinecraftLauncher/1.0.0": {
         "dependencies": {
           "MvvmCross": "9.0.9",
-          "SharpVectors": "1.8.1"
+          "SharpVectors": "1.8.1",
+          "SixLabors.ImageSharp": "3.0.0"
         },
         "runtime": {
           "GamerVII.MinecraftLauncher.dll": {}
@@ -69,6 +70,14 @@
             "fileVersion": "1.8.1.0"
           }
         }
+      },
+      "SixLabors.ImageSharp/3.0.0": {
+        "runtime": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
       }
     }
   },
@@ -98,6 +107,13 @@
       "sha512": "sha512-U3zzMm53bcFfqLIFgo9zpCDjqAE2iYtPxzyb4xquJXMYs/ogmvz3//PDahrze6iyQ23fZ4AYLF0yZ9zw9uXkXg==",
       "path": "sharpvectors/1.8.1",
       "hashPath": "sharpvectors.1.8.1.nupkg.sha512"
+    },
+    "SixLabors.ImageSharp/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ETEHRfUAn/rExqdmj2GDayPkW9zr3BruO9S4WF9ULpWmdydewIjoJqinbQc+o4DsM3X0wGZPyJLlj6N3uxV/aw==",
+      "path": "sixlabors.imagesharp/3.0.0",
+      "hashPath": "sixlabors.imagesharp.3.0.0.nupkg.sha512"
     }
   }
 }

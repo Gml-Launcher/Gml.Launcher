@@ -1,4 +1,6 @@
-﻿using GamerVII.MinecraftLauncher.Models;
+﻿using GamerVII.MinecraftLauncher.Core.SkinViewer;
+using GamerVII.MinecraftLauncher.Core.SkinViewer.Helpers;
+using GamerVII.MinecraftLauncher.Models;
 using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace GamerVII.MinecraftLauncher.ViewModels
@@ -22,12 +25,20 @@ namespace GamerVII.MinecraftLauncher.ViewModels
             set => SetProperty(ref _serversList, value);
         }
         #endregion
+        #region Скин пользователя
+        private ImageSource _skin;
+        public ImageSource Skin
+        {
+            get => _skin;
+            set => SetProperty(ref _skin, value);
+        }
+        #endregion
 
         public DashboardViewModel()
         {
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(@"C:\Users\GamerVII\source\repos\GamerVII.MinecraftLauncher\GamerVII.MinecraftLauncher\Views\Resources\Images\default.png");
+            bitmapImage.UriSource = new Uri(@"C:\Users\GamerVII\Source\Repos\minecraft-launcher\GamerVII.MinecraftLauncher\Views\Resources\Images\default.png");
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
             bitmapImage.EndInit();
 
@@ -122,7 +133,29 @@ namespace GamerVII.MinecraftLauncher.ViewModels
                 Image = bitmapImage
             });
 
+
+
+            LoadSkin();
         }
 
+        private async void LoadSkin()
+        {
+
+            await Task.Run(async () =>
+            {
+                Task.Delay(3000).Wait();
+                SkinViewerManager skinViewerManager = new SkinViewerManager("https://ru-minecraft.ru/uploads/posts/2018-01/1516387236_skin_stasicmirza.png");
+                //SkinViewerManager skinViewerManager = new SkinViewerManager(@"https://pngimage.net/wp-content/uploads/2018/06/скины-png-64x32-8.png");
+
+                await skinViewerManager.LoadAsync();
+
+                await App.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    Skin = skinViewerManager.GetFront(15);
+                });
+
+            });
+        
+        }
     }
 }

@@ -27,10 +27,10 @@ namespace GamerVII.MinecraftLauncher
 
         private void WindowMove(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                this.DragMove();
-            }
+            //if (e.LeftButton == MouseButtonState.Pressed)
+            //{
+            //    this.DragMove();
+            //}
         }
     }
 }

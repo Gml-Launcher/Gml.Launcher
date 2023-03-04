@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj": {}
+    "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj": {
+    "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+        "projectUniqueName": "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
         "projectName": "GamerVII.MinecraftLauncher",
-        "projectPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+        "projectPath": "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
         "packagesPath": "C:\\Users\\GamerVII\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\obj\\",
+        "outputPath": "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
@@ -55,6 +55,10 @@
             "SharpVectors": {
               "target": "Package",
               "version": "[1.8.1, )"
+            },
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             }
           },
           "imports": [

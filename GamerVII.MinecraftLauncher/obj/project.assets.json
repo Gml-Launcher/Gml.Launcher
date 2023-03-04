@@ -91,6 +91,22 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
+      },
+      "SixLabors.ImageSharp/3.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/SixLabors.ImageSharp.props": {}
+        }
       }
     }
   },
@@ -342,12 +358,29 @@
         "sharpvectors.1.8.1.nupkg.sha512",
         "sharpvectors.nuspec"
       ]
+    },
+    "SixLabors.ImageSharp/3.0.0": {
+      "sha512": "ETEHRfUAn/rExqdmj2GDayPkW9zr3BruO9S4WF9ULpWmdydewIjoJqinbQc+o4DsM3X0wGZPyJLlj6N3uxV/aw==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "build/SixLabors.ImageSharp.props",
+        "lib/net6.0/SixLabors.ImageSharp.dll",
+        "lib/net6.0/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.3.0.0.nupkg.sha512",
+        "sixlabors.imagesharp.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
       "MvvmCross >= 9.0.9",
-      "SharpVectors >= 1.8.1"
+      "SharpVectors >= 1.8.1",
+      "SixLabors.ImageSharp >= 3.0.0"
     ]
   },
   "packageFolders": {
@@ -358,11 +391,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+      "projectUniqueName": "C:\\Users\\GamerVII\\Source\\Repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
       "projectName": "GamerVII.MinecraftLauncher",
-      "projectPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
+      "projectPath": "C:\\Users\\GamerVII\\Source\\Repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher.csproj",
       "packagesPath": "C:\\Users\\GamerVII\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GamerVII\\source\\repos\\GamerVII.MinecraftLauncher\\GamerVII.MinecraftLauncher\\obj\\",
+      "outputPath": "C:\\Users\\GamerVII\\Source\\Repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
@@ -406,6 +439,10 @@
           "SharpVectors": {
             "target": "Package",
             "version": "[1.8.1, )"
+          },
+          "SixLabors.ImageSharp": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           }
         },
         "imports": [
