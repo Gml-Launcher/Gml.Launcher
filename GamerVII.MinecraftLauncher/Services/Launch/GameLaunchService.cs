@@ -32,7 +32,7 @@ class GameLaunchService : IGameLaunchService
 
         Launcher.ProgressChanged += (sender, e) => ProgressChanged?.Invoke(((decimal)e.ProgressPercentage) / 100);
         Launcher.FileChanged += (e) => FileChanged?.Invoke(e.FileName);
-
+        
     }
 
     public async Task<Process> LaunchClient(IGameClient client)
@@ -89,7 +89,7 @@ class GameLaunchService : IGameLaunchService
         {
             LoadClientEnded?.Invoke(false, ex.Message);
         }
-
+        
     }
 
     private async Task LoadForge(IGameClient client)
