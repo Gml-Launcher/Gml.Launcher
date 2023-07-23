@@ -1,27 +1,30 @@
-﻿<Page x:Class="GamerVII.MinecraftLauncher.Views.Pages.DashboardPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GamerVII.MinecraftLauncher.Views.Pages"
-      xmlns:vm="clr-namespace:GamerVII.MinecraftLauncher.ViewModels"
-      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-      xmlns:components="clr-namespace:GamerVII.MinecraftLauncher.Views.Components"
-      mc:Ignorable="d" 
-      d:DesignHeight="750" d:DesignWidth="900"
-      d:Background="Black"
-      Style="{StaticResource PageStyle}"
-      Title="DashboardPage">
-    
-    
+﻿<Page
+    x:Class="GamerVII.MinecraftLauncher.Views.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:GamerVII.MinecraftLauncher.Views.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GamerVII.MinecraftLauncher.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:vm="clr-namespace:GamerVII.MinecraftLauncher.ViewModels"
+    Title="DashboardPage"
+    d:Background="Black"
+    d:DesignHeight="750"
+    d:DesignWidth="1200"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+
+
 
     <Page.DataContext>
         <vm:DashboardViewModel />
     </Page.DataContext>
 
     <Grid>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="80" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -29,17 +32,17 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80" />
                     <RowDefinition />
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="80" />
                 </Grid.RowDefinitions>
 
-                <svgc:SvgViewbox Source="/Views/Resources/Images/logo.svg"
-                                 Width="40"
-                                 Height="40"/>
+                <svgc:SvgViewbox
+                    Width="40"
+                    Height="40"
+                    Source="/Views/Resources/Images/logo.svg" />
 
-                <Grid Grid.Row="1"
-                      VerticalAlignment="Center">
+                <Grid Grid.Row="1" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -47,31 +50,32 @@
 
                     <Button Style="{DynamicResource ProfileButton}">
                         <svgc:SvgViewbox
-                            Source="/Views/Resources/Images/Profile.svg"
                             Width="16"
-                            Height="16"/>
+                            Height="16"
+                            Source="/Views/Resources/Images/Profile.svg" />
                     </Button>
 
-                    <components:ServersListComponent Grid.Row="1"
-                                                     Margin="0, 10, 0, 0"
-                                                     ServersList="{Binding ServersList}"/>
+                    <components:ClientListComponent
+                        Grid.Row="1"
+                        Margin="0,10,0,0"
+                        GameClients="{Binding GameClients}"
+                        SelectedClient="{Binding SelectedGameClient}" />
 
 
 
                 </Grid>
-                
+
             </Grid>
-            
+
         </Border>
 
 
-        <Border Grid.Column="1"
-                Padding="60, 20">
+        <Border Grid.Column="1" Padding="60,20">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80" />
                     <RowDefinition />
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -81,86 +85,153 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <components:AllServerCounterComponent PlayerCount="2546"
-                                                          HorizontalAlignment="Left"/>
+                    <components:AllServerCounterComponent HorizontalAlignment="Left" PlayerCount="2546" />
 
-                    <components:ServerLoaderComponent Grid.Column="1"
-                                                  Title="Загрузка сервера..."
-                                                  Description="minecraft.jar..."
-                                                  VerticalAlignment="Center"/>
+                    <!--<components:ServerLoaderComponent
+                        Title="Загрузка клиента..."
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        LoadingFile="{Binding LoadingFile}"
+                        Value="{Binding LoadingPercentage}" />-->
 
-                    <components:MiniProfileComponent Grid.Column="2"
-                                                     HorizontalAlignment="Right"
-                                                     PlayerName="GamerVII"
-                                                     HourPlayTime="25"
-                                                     MinutesPlayTime="12"/>
+                    <Border Grid.Column="1" Style="{StaticResource LoaderBorderStyle}">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+
+                            <svgc:SvgViewbox
+                                Width="25"
+                                Height="25"
+                                Source="/Views/Resources/Images/downloadIcon.svg" />
+
+                            <StackPanel
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="12"
+                                    FontWeight="Medium"
+                                    Foreground="White"
+                                    Text="Загрузка клиента" />
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    FontSize="10"
+                                    FontWeight="Medium"
+                                    Foreground="#56ffffff"
+                                    Text="{Binding LoadingFile}" />
+
+
+                            </StackPanel>
+
+                            <ProgressBar
+                                Grid.Column="2"
+                                Width="40"
+                                Height="40"
+                                Background="#151515"
+                                Foreground="#018C45"
+                                Maximum="1"
+                                Style="{DynamicResource RoundProgressBarStyle}"
+                                Value="{Binding LoadingPercentage}" />
+
+
+                        </Grid>
+
+                    </Border>
+
+                    <components:MiniProfileComponent
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        HourPlayTime="25"
+                        MinutesPlayTime="12"
+                        PlayerName="GamerVII" />
 
                 </Grid>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" IsEnabled="{Binding CanStartGame}">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition Width="290"/>
+                        <ColumnDefinition Width="290" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Vertical"
-                                VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
 
-                        <Border BorderBrush="{StaticResource BorderBrushColor}"
-                                BorderThickness="1.2"
-                                Padding="10, 5"
-                                CornerRadius="15"
-                                HorizontalAlignment="Left">
-                            <TextBlock Text="Выключен"
-                                       FontSize="14"
-                                       Foreground="{StaticResource ContentForegroundColor}"/>
+                        <Border
+                            Padding="10,5"
+                            HorizontalAlignment="Left"
+                            BorderBrush="{StaticResource BorderBrushColor}"
+                            BorderThickness="1.2"
+                            CornerRadius="15">
+                            <TextBlock
+                                FontSize="14"
+                                Foreground="{StaticResource ContentForegroundColor}"
+                                Text="Выключен" />
                         </Border>
 
-                        <TextBlock Text="TECHNO MAGIC"
-                                   FontWeight="BOld"
-                                   FontSize="70"
-                                   Width="290"
-                                   HorizontalAlignment="Left"
-                                   TextWrapping="Wrap"
-                                   TextTrimming="WordEllipsis"
-                                   Foreground="{StaticResource HeadlineForegroundColor}"/>
+                        <TextBlock
+                            Width="350"
+                            HorizontalAlignment="Left"
+                            FontSize="70"
+                            FontWeight="BOld"
+                            Foreground="{StaticResource HeadlineForegroundColor}"
+                            Text="{Binding SelectedGameClient.Name}"
+                            TextTrimming="WordEllipsis"
+                            TextWrapping="Wrap" />
 
-                        <StackPanel Orientation="Horizontal"
-                                    Margin="0, 15, 0, 0">
-                            <Button Style="{DynamicResource PrimaryButton}"
-                                    VerticalAlignment="Center">
+                        <StackPanel Margin="0,15,0,0" Orientation="Horizontal">
+                            <Button
+                                VerticalAlignment="Center"
+                                Click="Button_Click"
+                                Command="{Binding StartGameCommand}"
+                                Style="{DynamicResource PrimaryButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <svgc:SvgViewbox Source="/Views/Resources/Images/rightArrow.svg"
-                                                     Width="20"
-                                                     Height="20"/>
-                                    <TextBlock Text="ИГРАТЬ"
-                                               Foreground="White"
-                                               FontWeight="Bold"
-                                               Margin="10, 0, 0, 0"
-                                               VerticalAlignment="Center"/>
+                                    <svgc:SvgViewbox
+                                        Width="20"
+                                        Height="20"
+                                        Source="/Views/Resources/Images/rightArrow.svg" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="ИГРАТЬ" />
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource SecondaryButton}"
-                                    VerticalAlignment="Center"
-                                    Margin="5, 0, 0, 0">
+                            <Button
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource SecondaryButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <svgc:SvgViewbox Source="/Views/Resources/Images/settings.svg"
-                                                     Width="20"
-                                                     Height="20"/>
-                                    <TextBlock Text="НАСТРОИТЬ"
-                                               Foreground="White"
-                                               FontWeight="Bold"
-                                               Margin="10, 0, 0, 0"
-                                               VerticalAlignment="Center"/>
+                                    <svgc:SvgViewbox
+                                        Width="20"
+                                        Height="20"
+                                        Source="/Views/Resources/Images/settings.svg" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="НАСТРОИТЬ" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>
 
                     </StackPanel>
 
-                    <Image Source="{Binding Skin}" 
-                           Width="2048"
-                           Grid.Column="1"/>
+                    <Image Grid.Column="1" Source="{Binding Skin}" />
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -169,54 +240,63 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource AdditionalButton}"
-                            VerticalAlignment="Center"
-                            BorderBrush="Red"
-                            BorderThickness="1"
-                            HorizontalAlignment="Left"
-                                    Margin="5, 0, 0, 0">
+                    <Button
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        BorderBrush="Red"
+                        BorderThickness="1"
+                        Style="{StaticResource AdditionalButton}">
                         <StackPanel Orientation="Horizontal">
-                            <svgc:SvgViewbox Source="/Views/Resources/Images/document.svg"
-                                                     Width="20"
-                                                     Height="20"/>
-                            <TextBlock Text="СПИСОК МОДОВ"
-                                               Foreground="White"
-                                               FontWeight="Bold"
-                                               Margin="10, 0, 0, 0"
-                                               VerticalAlignment="Center"/>
+                            <svgc:SvgViewbox
+                                Width="20"
+                                Height="20"
+                                Source="/Views/Resources/Images/document.svg" />
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="СПИСОК МОДОВ" />
                         </StackPanel>
                     </Button>
 
-                    <StackPanel Grid.Column="1"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <Button Style="{StaticResource AdditionalButton}"
-                                Width="65"
-                                Height="45"
-                                VerticalAlignment="Center"
-                                BorderBrush="Red"
-                                BorderThickness="1"
-                                HorizontalAlignment="Left"
-                                    Margin="5, 0, 0, 0">
-                            <svgc:SvgViewbox Source="/Views/Resources/Images/vk.svg"
-                                                     Width="20"
-                                                     Height="20"/>
-                        </Button>
-                        <Button Style="{StaticResource AdditionalButton}"
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Width="65"
+                            Height="45"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             BorderBrush="Red"
                             BorderThickness="1"
+                            Style="{StaticResource AdditionalButton}">
+                            <svgc:SvgViewbox
+                                Width="20"
+                                Height="20"
+                                Source="/Views/Resources/Images/vk.svg" />
+                        </Button>
+                        <Button
+                            Margin="10,0,0,0"
                             HorizontalAlignment="Left"
-                                    Margin="10, 0, 0, 0">
+                            VerticalAlignment="Center"
+                            BorderBrush="Red"
+                            BorderThickness="1"
+                            Style="{StaticResource AdditionalButton}">
                             <StackPanel Orientation="Horizontal">
-                                <svgc:SvgViewbox Source="/Views/Resources/Images/document.svg"
-                                                     Width="20"
-                                                     Height="20"/>
-                                <TextBlock Text="НАШ САЙТ"
-                                               Foreground="White"
-                                               FontWeight="Bold"
-                                               Margin="10, 0, 0, 0"
-                                               VerticalAlignment="Center"/>
+                                <svgc:SvgViewbox
+                                    Width="20"
+                                    Height="20"
+                                    Source="/Views/Resources/Images/document.svg" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="НАШ САЙТ" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -226,8 +306,8 @@
             </Grid>
 
         </Border>
-        
-        
-        
+
+
+
     </Grid>
 </Page>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33312.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamerVII.MinecraftLauncher", "GamerVII.MinecraftLauncher\GamerVII.MinecraftLauncher.csproj", "{08A568D1-4D9A-436F-A07E-51F1D53ADC2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamerVII.MinecraftLauncher", "GamerVII.MinecraftLauncher\GamerVII.MinecraftLauncher.csproj", "{08A568D1-4D9A-436F-A07E-51F1D53ADC2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
