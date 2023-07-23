@@ -1,4 +1,5 @@
-﻿using GamerVII.MinecraftLauncher.Services.ClientService;
+﻿using GamerVII.MinecraftLauncher.Services.Auth;
+using GamerVII.MinecraftLauncher.Services.ClientService;
 using GamerVII.MinecraftLauncher.Services.Launch;
 using GamerVII.MinecraftLauncher.Services.Skin;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ public partial class App : Application
                 services.AddTransient<IGameClientService, LocalGameClientService>();
                 services.AddTransient<ISkinService, SkinService>();
                 services.AddTransient<IGameLaunchService, GameLaunchService>();
+                services.AddTransient<IAuthService, AuthService>();
             })
             .Build();
     }
