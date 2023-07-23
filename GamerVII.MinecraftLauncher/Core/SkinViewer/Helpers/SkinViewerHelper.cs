@@ -3,15 +3,10 @@ using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -28,8 +23,8 @@ namespace GamerVII.MinecraftLauncher.Core.SkinViewer.Helpers
         public static async Task<ImageSource> LoadImageAsync(string url)
         {
 
-			try
-			{
+            try
+            {
                 using (var httpClient = new HttpClient())
                 {
 
@@ -50,12 +45,12 @@ namespace GamerVII.MinecraftLauncher.Core.SkinViewer.Helpers
                     }
 
                 }
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine($"Failed to load image from {url}: {ex.Message}");
                 return null;
-			}
+            }
 
         }
 
@@ -71,7 +66,7 @@ namespace GamerVII.MinecraftLauncher.Core.SkinViewer.Helpers
         /// <returns></returns>
         public static ImageSource CropImage(ImageSource imageSource, int x, int y, int width, int height)
         {
-            var croppedBitmap = new CroppedBitmap((BitmapSource)imageSource, new Int32Rect(x, y , width, height));
+            var croppedBitmap = new CroppedBitmap((BitmapSource)imageSource, new Int32Rect(x, y, width, height));
             croppedBitmap.Freeze();
             return croppedBitmap;
 

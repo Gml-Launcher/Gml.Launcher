@@ -1,32 +1,27 @@
-﻿using GamerVII.MinecraftLauncher.Views.Pages;
-using MvvmCross.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GamerVII.MinecraftLauncher.ViewModels.Base;
+using GamerVII.MinecraftLauncher.Views.Pages;
+using ReactiveUI;
 using System.Windows.Controls;
 
-namespace GamerVII.MinecraftLauncher.ViewModels
+namespace GamerVII.MinecraftLauncher.ViewModels;
+
+public class MainViewModel : BaseViewModel
 {
-    public class MainViewModel : MvxViewModel
+
+    private Page _dashboardPage = new DashboardPage();
+
+    #region Текущая страница
+    private Page _currentPage;
+    public Page ContentPage
     {
-
-        private Page _dashboardPage = new DashboardPage();
-
-        #region Текущая страница
-        private Page _currentPage;
-        public Page ContentPage
-        {
-            get => _currentPage;
-            set => SetProperty(ref _currentPage, value);
-        }
-        #endregion
-
-        public MainViewModel()
-        {
-            ContentPage = _dashboardPage;
-        }
-
+        get => _currentPage;
+        set => this.RaiseAndSetIfChanged(ref _currentPage, value);
     }
+    #endregion
+
+    public MainViewModel()
+    {
+        ContentPage = _dashboardPage;
+    }
+
 }

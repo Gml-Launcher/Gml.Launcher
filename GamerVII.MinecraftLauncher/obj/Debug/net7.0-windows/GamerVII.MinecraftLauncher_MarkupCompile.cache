@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\GamerVII\source\repos\minecraft-launcher\GamerVII.MinecraftLauncher\App.xaml
-8-1001640875
+8-1389119109
 
-16334769267
-2091168213784
-Views\Components\AllServerCounterComponent.xaml;Views\Components\MiniProfileComponent.xaml;Views\Components\ServerLoaderComponent.xaml;Views\Components\ServersListComponent.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\ProfilePage.xaml;Views\Styles\ApplicationStyles.xaml;Views\Windows\MainWindow.xaml;
+251909562644
+243-38749584
+Views\Components\AllServerCounterComponent.xaml;Views\Components\ClientListComponent.xaml;Views\Components\MiniProfileComponent.xaml;Views\Components\ServerLoaderComponent.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\ProfilePage.xaml;Views\Styles\ApplicationStyles.xaml;Views\Windows\MainWindow.xaml;
 
 False
 

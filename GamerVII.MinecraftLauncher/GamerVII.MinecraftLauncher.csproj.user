@@ -16,7 +16,7 @@
     <Compile Update="Views\Components\ServerLoaderComponent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Components\ServersListComponent.xaml.cs">
+    <Compile Update="Views\Components\ClientListComponent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\DashboardPage.xaml.cs">
@@ -36,7 +36,7 @@
     <Page Update="Views\Components\ServerLoaderComponent.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Components\ServersListComponent.xaml">
+    <Page Update="Views\Components\ClientListComponent.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DashboardPage.xaml">

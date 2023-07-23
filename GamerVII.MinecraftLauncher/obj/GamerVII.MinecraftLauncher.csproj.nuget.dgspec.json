@@ -14,12 +14,10 @@
         "outputPath": "C:\\Users\\GamerVII\\source\\repos\\minecraft-launcher\\GamerVII.MinecraftLauncher\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\GamerVII\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -28,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -42,15 +39,38 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "default"
         }
       },
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
-            "MvvmCross": {
+            "CmlLib.Core": {
               "target": "Package",
-              "version": "[9.0.9, )"
+              "version": "[3.3.7, )"
+            },
+            "CmlLib.Core.Installer.Forge": {
+              "target": "Package",
+              "version": "[0.0.2, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0-preview.6.23329.7, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0-preview.6.23329.7, )"
+            },
+            "ReactiveUI": {
+              "target": "Package",
+              "version": "[19.4.1, )"
+            },
+            "ReactiveUI.WPF": {
+              "target": "Package",
+              "version": "[19.4.1, )"
             },
             "SharpVectors": {
               "target": "Package",
@@ -72,6 +92,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.2, 7.0.2]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[7.0.2, 7.0.2]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.2, 7.0.2]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.2, 7.0.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -80,7 +118,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200-preview.22628.1\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.3.23178.7\\RuntimeIdentifierGraph.json"
         }
       }
     }

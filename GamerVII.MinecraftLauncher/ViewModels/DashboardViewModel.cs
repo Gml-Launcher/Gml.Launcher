@@ -1,161 +1,130 @@
 ﻿using GamerVII.MinecraftLauncher.Core.SkinViewer;
-using GamerVII.MinecraftLauncher.Core.SkinViewer.Helpers;
-using GamerVII.MinecraftLauncher.Models;
-using MvvmCross.ViewModels;
-using System;
-using System.Collections.Generic;
+using GamerVII.MinecraftLauncher.Models.Client;
+using GamerVII.MinecraftLauncher.Services.ClientService;
+using GamerVII.MinecraftLauncher.Services.Launch;
+using GamerVII.MinecraftLauncher.Services.Skin;
+using GamerVII.MinecraftLauncher.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
+using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Reactive;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
-namespace GamerVII.MinecraftLauncher.ViewModels
+namespace GamerVII.MinecraftLauncher.ViewModels;
+
+public class DashboardViewModel : BaseViewModel
 {
-    public class DashboardViewModel : MvxViewModel
+
+    private readonly IGameClientService ServerService;
+    private readonly ISkinService SkinService;
+    private readonly IGameLaunchService GameService;
+
+    private SkinViewerManager SkinViewerManager;
+
+    #region Список серверов
+    private ObservableCollection<IGameClient> _serversList = new ObservableCollection<IGameClient>();
+    public ObservableCollection<IGameClient> GameClients
     {
-
-        #region Текущая страница
-        private ObservableCollection<IServer> _serversList = new ObservableCollection<IServer>();
-        public ObservableCollection<IServer> ServersList
+        get => _serversList;
+        set => this.RaiseAndSetIfChanged(ref _serversList, value);
+    }
+    #endregion
+    #region Выбранный сервер
+    private IGameClient _selectedServer;
+    public IGameClient SelectedGameClient
+    {
+        get => _selectedServer;
+        set => this.RaiseAndSetIfChanged(ref _selectedServer, value);
+    }
+    #endregion
+    #region Загружаемый файл
+    private string _loadingFile;
+    public string LoadingFile
+    {
+        get => _loadingFile;
+        set => this.RaiseAndSetIfChanged(ref _loadingFile, value);
+    }
+    #endregion
+    #region Процент загрузки
+    private decimal _loadingPercentage;
+    public decimal LoadingPercentage
+    {
+        get => _loadingPercentage;
+        set => this.RaiseAndSetIfChanged(ref _loadingPercentage, value);
+    }
+    #endregion
+    #region Возможность взаимодействия с игровыми клиентами
+    public bool CanStartGame
+    {
+        get => !IsGameClientLaunching;
+    }
+    #endregion
+    #region Прозводится запуск игрового клиента
+    private bool _isGameClientLaunching = false;
+    public bool IsGameClientLaunching
+    {
+        get => _isGameClientLaunching;
+        set
         {
-            get => _serversList;
-            set => SetProperty(ref _serversList, value);
-        }
-        #endregion
-        #region Скин пользователя
-        private ImageSource _skin;
-        public ImageSource Skin
-        {
-            get => _skin;
-            set => SetProperty(ref _skin, value);
-        }
-        #endregion
-
-        public DashboardViewModel()
-        {
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(@"C:\Users\GamerVII\Source\Repos\minecraft-launcher\GamerVII.MinecraftLauncher\Views\Resources\Images\default.png");
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
-
-            ServersList.Add(new Server
-            {
-                Name = "Hitech",
-                Image = bitmapImage
-
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-            ServersList.Add(new Server
-            {
-                Name = "Magic",
-                Image = bitmapImage
-            });
-
-
-
-            LoadSkin();
-        }
-
-        private async void LoadSkin()
-        {
-
-            await Task.Run(async () =>
-            {
-                Task.Delay(3000).Wait();
-                SkinViewerManager skinViewerManager = new SkinViewerManager("https://ru-minecraft.ru/uploads/posts/2018-01/1516387236_skin_stasicmirza.png");
-                //SkinViewerManager skinViewerManager = new SkinViewerManager(@"https://pngimage.net/wp-content/uploads/2018/06/скины-png-64x32-8.png");
-
-                await skinViewerManager.LoadAsync();
-
-                await App.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    Skin = skinViewerManager.GetFront(15);
-                });
-
-            });
-        
+            this.RaiseAndSetIfChanged(ref _isGameClientLaunching, value);
+            this.RaisePropertyChanged(nameof(CanStartGame));
         }
     }
+
+    #endregion
+    #region Скин пользователя
+    private ImageSource _skin;
+    public ImageSource Skin
+    {
+        get => _skin;
+        set => this.RaiseAndSetIfChanged(ref _skin, value);
+    }
+    #endregion
+
+    public DashboardViewModel()
+    {
+        // ToDo: replace
+        ServerService = App.AppHost!.Services.GetService<IGameClientService>()!;
+        SkinService = App.AppHost!.Services.GetService<ISkinService>()!;
+        GameService = App.AppHost!.Services.GetService<IGameLaunchService>()!;
+
+        LoadData();
+    }
+
+    private async void LoadData()
+    {
+        var clients = await ServerService.GetClientsAsync();
+        GameClients = new ObservableCollection<IGameClient>(clients);
+
+        if (GameClients.Count > 0)
+            SelectedGameClient = GameClients.First();
+
+        SkinViewerManager = await SkinService.GetSkinViewerManager("https://ru-minecraft.ru/uploads/posts/2018-01/1516387236_skin_stasicmirza.png");
+
+        Skin = SkinViewerManager.GetFront(32);
+    }
+
+
+    public ReactiveCommand<Unit, Unit> StartGameCommand => ReactiveCommand.CreateFromTask(async () =>
+    {
+        IsGameClientLaunching = true;
+
+        IGameClient client = await GameService.LoadClient(SelectedGameClient);
+
+        GameService.FileChanged += (fileName) => LoadingFile = fileName;
+        GameService.ProgressChanged += (percentage) => LoadingPercentage = percentage;
+
+        GameService.LoadClientEnded += async (isSuccess, message) =>
+        {
+            if (isSuccess)
+                await GameService.LaunchClient(client);
+
+            IsGameClientLaunching = false;
+            
+        };
+
+    });
+
+
 }
