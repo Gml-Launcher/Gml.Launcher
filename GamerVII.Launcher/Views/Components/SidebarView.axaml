@@ -1,0 +1,49 @@
+<UserControl
+    x:Class="GamerVII.Launcher.Views.Components.SidebarView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="using:GamerVII.Launcher.Views.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:GamerVII.Launcher.ViewModels"
+    d:DesignHeight="950"
+    d:DesignWidth="80"
+    x:DataType="vm:SidebarViewModel"
+    mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Assets/Resources/Styles.axaml" />
+    </UserControl.Styles>
+
+    <Design.DataContext>
+        <vm:SidebarViewModel />
+    </Design.DataContext>
+
+    <Border Classes="Sidebar">
+        <Grid RowDefinitions="80, *, 80">
+
+            <Svg Path="/Assets/logo.svg" Width="40"/>
+            
+            <StackPanel Grid.Row="1" Spacing="15" VerticalAlignment="Center">
+        
+                <Button Classes="Sidebar-Button" Command="{Binding OpenProfilePageCommand}">
+                    <Svg Path="/Assets/profile.svg" Width="30"/>
+                </Button>
+        
+                <components:ServersListView DataContext="{Binding ServersListViewModel}"
+                                            Grid.Row="1"
+                                            VerticalAlignment="Center" />
+        
+            </StackPanel>
+            
+
+            <Button Grid.Row="2" 
+                    Classes="Sidebar-Button" 
+                    Command="{Binding LogoutCommand}">
+                <Svg Path="/Assets/logout.svg" Width="25" />
+            </Button>
+
+        </Grid>
+    </Border>
+
+</UserControl>

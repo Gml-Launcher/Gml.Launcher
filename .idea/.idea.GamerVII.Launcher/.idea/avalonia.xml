@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="GamerVII.Launcher/Assets/Resources/Styles.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Components/LogoutButton.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Components/ServerContent.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Components/ServersListView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Components/SidebarView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/MainWindow.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Pages/AuthPageView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Pages/ClientSettingsPageView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Pages/ProfilePageView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

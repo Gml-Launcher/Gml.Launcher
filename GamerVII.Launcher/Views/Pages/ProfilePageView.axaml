@@ -1,0 +1,147 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:GamerVII.Launcher.ViewModels"
+             x:DataType="vm:ProfilePageViewModel"
+             mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="700"
+             x:Class="GamerVII.Launcher.Views.Pages.ProfilePageView">
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Assets/Resources/Styles.axaml" />
+    </UserControl.Styles>
+
+    <Design.DataContext>
+        <vm:ProfilePageViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="120, *" Background="#0E1011">
+
+        <Border Padding="20">
+            <Button Classes="Btn Btn-Additional" Command="{Binding GoTaMainPageCommand}">
+                <StackPanel Classes="Btn-Wrapper">
+                    <Svg Path="/Assets/leftArrow.svg" Height="22" />
+                    <TextBlock Text="НАЗАД" Classes="Headline" />
+                </StackPanel>
+            </Button>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="400, .7*">
+
+            <Grid>
+
+                <Border Background="#111111"
+                        BorderBrush="#2E2E2E"
+                        BorderThickness="1"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        Width="350"
+                        CornerRadius="20">
+
+                    <StackPanel>
+
+
+                        <Grid>
+
+
+                            <TextBlock Text="GamerVII"
+                                       Foreground="#018A44"
+                                       FontWeight="Bold"
+                                       FontSize="28"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center"
+                                       Margin="0, 0, 0, 20" />
+
+                            <Canvas Height="400">
+                                <!-- <Image Source="/Assets/background.jpg" -->
+                                <!--        HorizontalAlignment="Center" -->
+                                <!--        Width="250" -->
+                                <!--        Height="300" -->
+                                <!--        Canvas.Bottom="80" -->
+                                <!--        VerticalAlignment="Bottom"/> -->
+
+                                <Path Canvas.Bottom="0"
+                                      Data="M 0 -200 L 0 0 L 60 20 L 290 20 L 350 0 L 350 -200 Z">
+                                    <Path.Fill>
+                                        <LinearGradientBrush StartPoint="50%, -80%" EndPoint="50%, 100%" Opacity=".2">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#10018A44" />
+                                                <GradientStop Offset="1" Color="#018A44" />
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Path.Fill>
+                                </Path>
+                                <Path Stroke="#018A44"
+                                      Canvas.Bottom="0"
+                                      StrokeThickness="2"
+                                      Data="M 0 0 L 60 20 L 290 20 L 350 0">
+                                </Path>
+                            </Canvas>
+                        </Grid>
+                        <Button HorizontalAlignment="Center"
+                                Margin="0, 40"
+                                Classes="Btn Btn-Primary"
+                                Padding="15, 10">
+                            <StackPanel Classes="Btn-Wrapper">
+                                <Svg Path="/Assets/rightArrow.svg" Height="28" />
+                                <TextBlock Text="СМЕНИТЬ СКИН"
+                                           Classes="Btn-Text"
+                                           FontSize="18" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
+            <Grid Grid.Column="1">
+
+                <Grid 
+                    VerticalAlignment="Top">
+                    
+                    
+                    <Border Background="#111111"
+                            Margin="0, 0, 20, 20"
+                            BorderBrush="#2E2E2E"
+                            BorderThickness="1"
+                            Padding="40"
+                            CornerRadius="20">
+
+
+
+                        <StackPanel MaxWidth="450" HorizontalAlignment="Left">
+                            <TextBlock Text="Летние скидки в магазине блоков!" Classes="Headline" />
+                            <TextBlock Classes="Content"
+                                       TextWrapping="Wrap"
+                                       LineHeight="25"
+                                       Margin="0, 20, 0, 0"
+                                       Text="Независимые государства представлены в исключительно положительном свете. Значимость этих проблем настолько очевидна, что сплочённость команды профессионалов играет важную роль в формировании инновационных методов управления процессами.!" />
+
+
+                            <Button Classes="Btn Btn-Additional"
+                                    Margin="0, 20, 0, 0"
+                                    Command="{Binding GoTaMainPageCommand}">
+                                <StackPanel Classes="Btn-Wrapper">
+                                    <Svg Path="/Assets/leftArrow.svg" Height="22" />
+                                    <TextBlock Text="ПЕРЕЙТИ В МАГАЗИН" Classes="Headline" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+
+                    </Border>
+                    
+                    <Image Source="/Assets/promo.png"
+                           HorizontalAlignment="Right"
+                           Width="450"
+                           Margin="0, -100, 0, 20"
+                           VerticalAlignment="Bottom" />
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

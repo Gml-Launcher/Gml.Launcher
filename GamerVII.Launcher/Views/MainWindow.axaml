@@ -1,0 +1,173 @@
+<Window
+    x:Class="GamerVII.Launcher.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="using:GamerVII.Launcher.Views.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:GamerVII.Launcher.ViewModels"
+    Title="GamerVII.Launcher"
+    d:DesignHeight="550"
+    d:DesignWidth="800"
+    MinWidth="1315"
+    MinHeight="700"
+    WindowStartupLocation="CenterScreen"
+    x:DataType="vm:MainWindowViewModel"
+    Background="Transparent"
+    ExtendClientAreaToDecorationsHint="True"
+    Icon="/Assets/avalonia-logo.ico"
+    TransparencyLevelHint="AcrylicBlur"
+    mc:Ignorable="d">
+
+    <Window.Styles>
+        <StyleInclude Source="/Assets/Resources/Styles.axaml" />
+    </Window.Styles>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    MaterialOpacity="0.85"
+                    TintColor="Black"
+                    TintOpacity=".9" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <Grid ColumnDefinitions="90, *">
+
+            <Image Grid.ColumnSpan="2"
+                   Stretch="UniformToFill"
+                   Source="/Assets/background.jpg" />
+
+            <TransitioningContentControl 
+                Grid.ColumnSpan="2"
+                ZIndex="100"
+                Content="{Binding CurrentPage}" />
+            
+            <components:SidebarView 
+                DataContext="{Binding SidebarViewModel}" />
+
+            <Border Grid.Column="1" Classes="ContentPresenter">
+
+                <Grid RowDefinitions="80, *, 50" ColumnDefinitions="*, *">
+
+                    <!-- Online -->
+                    <Border Classes="Online">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Classes="Online-Icon">
+                                <Svg Path="/Assets/users.svg" Height="22" />
+                            </Border>
+
+                            <StackPanel Grid.Column="2" Classes="Online-Content">
+                                <TextBlock Text="На серверах:" Classes="Content" />
+                                <StackPanel Classes="Online-Players-Count">
+                                    <TextBlock Classes="Headline"
+                                               Text="123234" />
+                                    <TextBlock Classes="Content"
+                                               VerticalAlignment="Bottom"
+                                               Margin="5, 0, 0,2"
+                                               Text="чел." />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Content -->
+                    <Grid Grid.ColumnDefinitions="*, *"
+                          Margin="0, 20, 0, 0"
+                          Grid.ColumnSpan="2"
+                          Grid.Row="1">
+
+                        <StackPanel
+                            Spacing="20"
+                            VerticalAlignment="Center">
+
+                            <!-- ServerStatus -->
+                            <Border Classes="Tip">
+                                <TextBlock Classes="Content"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding SidebarViewModel.ServersListViewModel.SelectClient.Version}" />
+                            </Border>
+
+                            <TextBlock Classes="Server-Name"
+                                       TextWrapping="Wrap"
+                                       Text="{Binding SidebarViewModel.ServersListViewModel.SelectClient.Name}" />
+
+                            <TextBlock Classes="Content"
+                                       FontSize="16"
+                                       LineHeight="30"
+                                       TextWrapping="Wrap"
+                                       Text="{Binding SidebarViewModel.ServersListViewModel.SelectClient.Description}" />
+
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <Button Classes="Btn Btn-Primary" 
+                                        Command="{Binding LaunchGameCommand}">
+                                    <StackPanel Classes="Btn-Wrapper">
+                                        <Svg Path="/Assets/rightArrow.svg" Height="28"/>
+                                        <TextBlock Text="ИГРАТЬ" Classes="Headline" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Classes="Btn Btn-Secondary" Command="{Binding SettingsClientCommand}">
+                                    <StackPanel Classes="Btn-Wrapper">
+                                        <Svg Path="/Assets/settings.svg" Height="28" />
+                                        <TextBlock Text="НАСТРОИТЬ" Classes="Headline" />
+                                    </StackPanel>
+                                </Button>
+
+                            </StackPanel>
+
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <!-- Footer -->
+                    <Grid Grid.Row="2"
+                          Grid.ColumnSpan="3"
+                          ColumnDefinitions="*, *">
+
+                        <Button Classes="Btn Btn-Additional" Command="{Binding ModsListCommand}">
+                            <StackPanel Classes="Btn-Wrapper">
+                                <Svg Path="/Assets/document.svg" Height="22" />
+                                <TextBlock Text="СПИСОК МОДОВ" Classes="Headline" />
+                            </StackPanel>
+                        </Button>
+
+                        <StackPanel Spacing="10"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                            <Button Classes="Btn Btn-Additional">
+                                <StackPanel Classes="Btn-Wrapper">
+                                    <Svg Path="/Assets/vk.svg" Height="25" />
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="Btn Btn-Additional">
+                                <StackPanel Classes="Btn-Wrapper">
+                                    <Svg Path="/Assets/document.svg" Height="22" />
+                                    <TextBlock Text="НАШ САЙТ" Classes="Headline" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+
+        </Grid>
+
+    </Panel>
+
+
+</Window>

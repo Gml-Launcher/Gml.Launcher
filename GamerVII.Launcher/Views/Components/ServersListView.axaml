@@ -1,0 +1,52 @@
+<UserControl
+    x:Class="GamerVII.Launcher.Views.Components.ServersListView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:GamerVII.Launcher.Models.Client"
+    xmlns:vm="using:GamerVII.Launcher.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="80"
+    x:DataType="vm:ServersListViewModel"
+    mc:Ignorable="d">
+    
+    <UserControl.Styles>
+        <StyleInclude Source="/Assets/Resources/Styles.axaml" />
+    </UserControl.Styles>
+    
+    <Design.DataContext>
+        <vm:ServersListViewModel />
+    </Design.DataContext>
+    
+    <ListBox SelectedIndex="0"
+             SelectedItem="{Binding SelectClient}"
+             ItemsSource="{Binding GameClients, Mode=OneWay}"
+             Classes="SelectServer">
+            
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+                <Setter Property="CornerRadius" Value="50"/>
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="0, 0, 0, 5"/>
+            </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="#047A3D"/>
+            </Style>
+            <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="#20FFFFFF"/>
+            </Style>
+        </ListBox.Styles>
+            
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Image Source="/Assets/avalonia-logo.ico" Width="24"/>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+    
+    
+
+</UserControl>
