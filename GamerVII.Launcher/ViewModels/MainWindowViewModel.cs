@@ -17,14 +17,21 @@ using Splat;
 
 namespace GamerVII.Launcher.ViewModels
 {
+    /// <summary>
+    /// View model class for the main window, derived from ViewModelBase.
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
+        // Sidebar view model for the main window.
         public SidebarViewModel SidebarViewModel { get; }
 
         #region Public properties
 
         #region Current user
 
+        /// <summary>
+        /// Gets or sets the currently authorized user.
+        /// </summary>
         public IUser User
         {
             get => _user;
@@ -35,6 +42,9 @@ namespace GamerVII.Launcher.ViewModels
 
         #region Processing
 
+        /// <summary>
+        /// Gets or sets a value indicating whether an operation is in progress.
+        /// </summary>
         public bool IsProcessing
         {
             get => _isProcessing;
@@ -43,8 +53,11 @@ namespace GamerVII.Launcher.ViewModels
 
         #endregion
 
-        #region Текущая страница
+        #region Current page
 
+        /// <summary>
+        /// Gets or sets the current page view model displayed in the main window.
+        /// </summary>
         public PageViewModelBase CurrentPage
         {
             get => _currentPage;
@@ -55,6 +68,9 @@ namespace GamerVII.Launcher.ViewModels
 
         #region Processing file name
 
+        /// <summary>
+        /// Gets or sets the name of the file currently being processed.
+        /// </summary>
         public string LoadingFile
         {
             get => _loadingFile;
@@ -65,6 +81,9 @@ namespace GamerVII.Launcher.ViewModels
 
         #region Processing percentage
 
+        /// <summary>
+        /// Gets or sets the percentage of the processing progress.
+        /// </summary>
         public decimal LoadingPercentage
         {
             get => _loadingPercentage;
@@ -77,8 +96,19 @@ namespace GamerVII.Launcher.ViewModels
 
         #region Commands
 
+        /// <summary>
+        /// Command to launch the game.
+        /// </summary>
         public ICommand LaunchGameCommand { get; }
+
+        /// <summary>
+        /// Command to open the client settings page.
+        /// </summary>
         public ICommand SettingsClientCommand { get; }
+
+        /// <summary>
+        /// Command to view the list of mods.
+        /// </summary>
         public ICommand ModsListCommand { get; }
 
         #endregion
@@ -95,6 +125,7 @@ namespace GamerVII.Launcher.ViewModels
         private IUser _user;
         private PageViewModelBase _currentPage;
 
+        // Array of available page view models.
         private readonly PageViewModelBase[] Pages =
         {
             new AuthPageViewModel(),
@@ -105,14 +136,23 @@ namespace GamerVII.Launcher.ViewModels
         #endregion
 
 
+        /// <summary>
+        /// Initializes a new instance of the MainWindowViewModel class.
+        /// </summary>
+        /// <param name="gameLaunchService">An optional IGameLaunchService implementation for game launching.</param>
+        /// <param name="authService">An optional IAuthService implementation for user authentication.</param>
+        /// <param name="loggerService">An optional ILoggerService implementation for logging messages.</param>
         public MainWindowViewModel(IGameLaunchService gameLaunchService = null, IAuthService? authService = null, ILoggerService loggerService = null)
         {
+            // Initialize the SidebarViewModel for the main window.
             SidebarViewModel = new SidebarViewModel();
 
+            // Set the provided or default implementations for game launch service, authentication service, and logger service.
             _gameLaunchService = gameLaunchService ?? Locator.Current.GetService<IGameLaunchService>()!;
             _authService = authService ?? Locator.Current.GetService<IAuthService>()!;
             _loggerService = loggerService ?? Locator.Current.GetService<ILoggerService>()!;
 
+            // Define conditions for enabling certain commands based on view model properties.
             var canLaunch = this.WhenAnyValue(
                 x => x.IsProcessing, x => x.SidebarViewModel.ServersListViewModel.SelectClient,
                 (isProcessing, gameClient) =>
@@ -125,6 +165,7 @@ namespace GamerVII.Launcher.ViewModels
                 (isProcessing, gameClient) => gameClient != null
             );
 
+            // Set up commands with corresponding actions and conditions.
             SidebarViewModel.OpenProfilePageCommand = ReactiveCommand.Create(OpenPage<ProfilePageViewModel>);
             SidebarViewModel.LogoutCommand = ReactiveCommand.CreateFromTask(Logout);
             SettingsClientCommand = ReactiveCommand.Create(OpenPage<ClientSettingsPageViewModel>, canLaunch);
@@ -132,9 +173,14 @@ namespace GamerVII.Launcher.ViewModels
             LaunchGameCommand = ReactiveCommand.CreateFromTask(LaunchGame, canLaunch);
             SidebarViewModel.ServersListViewModel.SelectedServerChanged += ResetPage;
 
+            // Load user data and set the appropriate initial page based on user status.
             LoadData();
         }
 
+        /// <summary>
+        /// Handles the logout operation.
+        /// </summary>
+        /// <returns>An asynchronous task.</returns>
         private async Task Logout()
         {
             await _authService.OnLogout();
@@ -143,6 +189,9 @@ namespace GamerVII.Launcher.ViewModels
             OpenPage<AuthPageViewModel>();
         }
 
+        /// <summary>
+        /// Loads initial data, sets the user, and determines the initial page to display.
+        /// </summary>
         private async void LoadData()
         {
             User = await _authService.GetAuthorizedUser();
@@ -150,13 +199,17 @@ namespace GamerVII.Launcher.ViewModels
             if (User == null || !User.IsLogin)
                 OpenPage<AuthPageViewModel>();
 
+            // Obtain instances of the AuthPageViewModel, ProfilePageViewModel, and ClientSettingsPageViewModel
+            // to set up navigation commands between pages.
             var authPage = Pages.FirstOrDefault(c => c.GetType().Equals(typeof(AuthPageViewModel))) as AuthPageViewModel;
             var profilePage =  Pages.FirstOrDefault(c => c.GetType().Equals(typeof(ProfilePageViewModel))) as ProfilePageViewModel;
             var settingsPage =  Pages.FirstOrDefault(c => c.GetType().Equals(typeof(ClientSettingsPageViewModel))) as ClientSettingsPageViewModel;
 
-            profilePage.GoTaMainPageCommand = ReactiveCommand.Create(ResetPage);
-            settingsPage.GoTaMainPageCommand = ReactiveCommand.Create(ResetPage);
+            // Set the GoToMainPageCommand for profile and client settings pages to reset the current page.
+            profilePage.GoToMainPageCommand = ReactiveCommand.Create(ResetPage);
+            settingsPage.GoToMainPageCommand = ReactiveCommand.Create(ResetPage);
 
+            // Subscribe to the Authorized event of the AuthPageViewModel to handle successful authorization.
             authPage.Authorized += (isSuccess) =>
             {
                 if (isSuccess)
@@ -166,11 +219,18 @@ namespace GamerVII.Launcher.ViewModels
             };
         }
 
+        /// <summary>
+        /// Resets the current page by setting it to null.
+        /// </summary>
         private void ResetPage()
         {
             CurrentPage = null;
         }
 
+        /// <summary>
+        /// Opens the specified page view model and sets it as the current page.
+        /// </summary>
+        /// <typeparam name="T">The type of the page view model to open.</typeparam>
         private void OpenPage<T>()
         {
             var type = typeof(T);
@@ -185,6 +245,11 @@ namespace GamerVII.Launcher.ViewModels
             }
         }
 
+        /// <summary>
+        /// Launches the game based on the selected game client.
+        /// </summary>
+        /// <param name="arg">The cancellation token for the async task.</param>
+        /// <returns>An asynchronous task.</returns>
         private async Task LaunchGame(CancellationToken arg)
         {
             try
@@ -194,6 +259,7 @@ namespace GamerVII.Launcher.ViewModels
                 IGameClient client =
                     await _gameLaunchService.LoadClient(SidebarViewModel.ServersListViewModel.SelectClient);
 
+                // Subscribe to events from the game launch service to update processing information.
                 _gameLaunchService.FileChanged += (fileName) => LoadingFile = fileName;
                 _gameLaunchService.ProgressChanged += (percentage) => LoadingPercentage = percentage;
 

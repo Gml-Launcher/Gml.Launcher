@@ -3,18 +3,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using GamerVII.Launcher.Models.Users;
 using GamerVII.Launcher.Services.LocalStorage;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Splat;
 
 namespace GamerVII.Launcher.Services.AuthService;
-
 
 public class AuthService : IAuthService
 {
