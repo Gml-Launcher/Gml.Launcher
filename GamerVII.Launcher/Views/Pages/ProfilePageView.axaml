@@ -17,9 +17,9 @@
     </Design.DataContext>
 
     <Grid RowDefinitions="120, *" Background="#0E1011">
-        
+
         <Border Padding="20">
-            
+
             <components:ButtonControl Classes="Additional"
                                       IconPath="/Assets/leftArrow.svg"
                                       Text="НАЗАД"
@@ -40,7 +40,6 @@
                         CornerRadius="20">
 
                     <StackPanel>
-
 
                         <Grid>
 
@@ -72,8 +71,8 @@
                                 </Path>
                             </Canvas>
                         </Grid>
-                        
-                        
+
+
                         <components:ButtonControl Classes="Primary"
                                                   HorizontalAlignment="Center"
                                                   Margin="0, 40"
@@ -88,17 +87,16 @@
             </Grid>
             <Grid Grid.Column="1">
 
-                <Grid 
+                <Grid
                     VerticalAlignment="Top">
-                    
-                    
+
+
                     <Border Background="#111111"
                             Margin="0, 0, 20, 20"
                             BorderBrush="#2E2E2E"
                             BorderThickness="1"
                             Padding="40"
                             CornerRadius="20">
-
 
 
                         <StackPanel MaxWidth="450" HorizontalAlignment="Left">
@@ -108,7 +106,7 @@
                                        LineHeight="25"
                                        Margin="0, 20, 0, 0"
                                        Text="Независимые государства представлены в исключительно положительном свете. Значимость этих проблем настолько очевидна, что сплочённость команды профессионалов играет важную роль в формировании инновационных методов управления процессами.!" />
-                            
+
                             <components:ButtonControl Classes="Secondary"
                                                       Margin="0, 20, 0, 0"
                                                       IconPath="/Assets/rightArrow.svg"
@@ -119,7 +117,7 @@
 
 
                     </Border>
-                    
+
                     <Image Source="/Assets/promo.png"
                            HorizontalAlignment="Right"
                            Width="450"

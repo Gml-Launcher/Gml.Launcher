@@ -9,6 +9,7 @@
                 <controls:ButtonControl Classes="Secondary" />
                 <controls:ButtonControl Classes="Additional" />
                 <controls:ButtonControl Classes="Icon" />
+                <controls:ButtonControl Classes="Link" />
             </StackPanel>
 
         </Border>
@@ -32,7 +33,7 @@
                         Command="{TemplateBinding Command}">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" 
+                            <Setter Property="Background"
                                     Value="{DynamicResource PrimaryColorHover}" />
                         </Style>
                     </Button.Styles>
@@ -66,7 +67,7 @@
                         Command="{TemplateBinding Command}">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" 
+                            <Setter Property="Background"
                                     Value="{DynamicResource SecondaryColorHover}" />
                         </Style>
                     </Button.Styles>
@@ -82,7 +83,7 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    
+
     <Style Selector="controls|ButtonControl.Additional">
 
         <Setter Property="Background" Value="{DynamicResource AdditionalColor}" />
@@ -104,9 +105,9 @@
                         Command="{TemplateBinding Command}">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" 
+                            <Setter Property="Background"
                                     Value="{DynamicResource AdditionalColorHover}" />
-                            <Setter Property="BorderBrush" 
+                            <Setter Property="BorderBrush"
                                     Value="{DynamicResource AdditionalBorderColorHover}" />
                         </Style>
                     </Button.Styles>
@@ -122,13 +123,13 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    
+
     <Style Selector="controls|ButtonControl.Icon">
 
         <Setter Property="Background" Value="{DynamicResource AdditionalColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AdditionalBorderColor}" />
         <Setter Property="CornerRadius" Value="50" />
-        <Setter Property="Padding" Value="15, 15" />
+        <Setter Property="Padding" Value="15" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
@@ -144,9 +145,9 @@
                         Command="{TemplateBinding Command}">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" 
+                            <Setter Property="Background"
                                     Value="{DynamicResource AdditionalColorHover}" />
-                            <Setter Property="BorderBrush" 
+                            <Setter Property="BorderBrush"
                                     Value="{DynamicResource AdditionalBorderColorHover}" />
                         </Style>
                     </Button.Styles>
@@ -155,5 +156,44 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    
+
+    <Style Selector="controls|ButtonControl.Link">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="0, 15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+                        </Style>
+                    </Button.Styles>
+                    <TextBlock Text="{TemplateBinding Text}"
+                               Padding="{TemplateBinding Padding}"
+                               Foreground="{TemplateBinding Foreground}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock:pointerover">
+                                <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
 </Styles>

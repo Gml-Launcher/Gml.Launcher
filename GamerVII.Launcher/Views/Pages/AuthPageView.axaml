@@ -22,8 +22,6 @@
 
             <StackPanel Spacing="20">
                 
-                
-                
                 <StackPanel>
                     <Svg Path="/Assets/logo.svg" Width="40"/>
                     <TextBlock Text="GamerLauncher"
@@ -43,16 +41,17 @@
                     
                 </StackPanel>
 
-                <Grid ColumnDefinitions="*, *">
+                <Grid ColumnDefinitions="*, *"
+                      Margin="0, 20, 0, 0">
 
-                    <TextBlock Classes="Content"
-                               VerticalAlignment="Center"
-                               Text="Регистрация" />
+                    <components:ButtonControl Classes="Link"
+                                              HorizontalAlignment="Left"
+                                              IconPath="/Assets/rightArrow.svg"
+                                              Text="Регистрация" />
                     
                     <components:ButtonControl Classes="Primary"
                                               Grid.Column="1"
                                               HorizontalAlignment="Right"
-                                              Margin="0, 20, 0, 0"
                                               IconPath="/Assets/rightArrow.svg"
                                               Text="ВОЙТИ"
                                               Command="{Binding OnLoginCommand}" />

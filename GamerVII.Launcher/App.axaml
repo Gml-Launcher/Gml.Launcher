@@ -27,6 +27,7 @@
         <SolidColorBrush x:Key="AdditionalBorderColorHover">#353535</SolidColorBrush>
 
         <SolidColorBrush x:Key="HeadlineColor">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="ContentColor">#989898</SolidColorBrush>
         
     </Application.Resources>
 
