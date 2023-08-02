@@ -21,6 +21,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Assets/Resources/Styles.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/ButtonControl.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/LogoutButton.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

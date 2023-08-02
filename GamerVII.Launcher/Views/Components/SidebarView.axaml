@@ -24,7 +24,9 @@
 
             <Svg Path="/Assets/logo.svg" Width="40"/>
             
-            <StackPanel Grid.Row="1" Spacing="15" VerticalAlignment="Center">
+            <StackPanel Grid.Row="1" 
+                        Spacing="15" 
+                        VerticalAlignment="Center">
         
                 <Button Classes="Sidebar-Button" Command="{Binding OpenProfilePageCommand}">
                     <Svg Path="/Assets/profile.svg" Width="30"/>
@@ -36,12 +38,12 @@
         
             </StackPanel>
             
+            <components:ButtonControl Classes="Icon" 
+                                      HorizontalAlignment="Center"
+                                      Grid.Row="2" 
+                                      IconPath="/Assets/logout.svg"
+                                      Command="{Binding LogoutCommand}" />
 
-            <Button Grid.Row="2" 
-                    Classes="Sidebar-Button" 
-                    Command="{Binding LogoutCommand}">
-                <Svg Path="/Assets/logout.svg" Width="25" />
-            </Button>
 
         </Grid>
     </Border>

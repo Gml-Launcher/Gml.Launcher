@@ -3,13 +3,31 @@
              x:Class="GamerVII.Launcher.App"
              xmlns:local="using:GamerVII.Launcher"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
-  
+
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="/Views/Components/ButtonControl.axaml" />
     </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryColor">#008C45</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryColorHover">#047A3D</SolidColorBrush>
+        
+        <SolidColorBrush x:Key="SecondaryColor">#0E0E0E</SolidColorBrush>
+        <SolidColorBrush x:Key="SecondaryColorHover">#181818</SolidColorBrush>
+        
+        <SolidColorBrush x:Key="AdditionalColor">#151515</SolidColorBrush>
+        <SolidColorBrush x:Key="AdditionalColorHover">#1B1B1B</SolidColorBrush>
+        <SolidColorBrush x:Key="AdditionalBorderColor">#2C2C2C</SolidColorBrush>
+        <SolidColorBrush x:Key="AdditionalBorderColorHover">#353535</SolidColorBrush>
+
+        <SolidColorBrush x:Key="HeadlineColor">#FFFFFF</SolidColorBrush>
+        
+    </Application.Resources>
+
 </Application>

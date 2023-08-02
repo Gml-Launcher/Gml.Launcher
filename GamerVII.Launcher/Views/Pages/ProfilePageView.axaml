@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:GamerVII.Launcher.ViewModels"
+             xmlns:components="clr-namespace:GamerVII.Launcher.Views.Components"
              x:DataType="vm:ProfilePageViewModel"
              mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="700"
              x:Class="GamerVII.Launcher.Views.Pages.ProfilePageView">
@@ -16,14 +17,14 @@
     </Design.DataContext>
 
     <Grid RowDefinitions="120, *" Background="#0E1011">
-
+        
         <Border Padding="20">
-            <Button Classes="Btn Btn-Additional" Command="{Binding GoToMainPageCommand}">
-                <StackPanel Classes="Btn-Wrapper">
-                    <Svg Path="/Assets/leftArrow.svg" Height="22" />
-                    <TextBlock Text="НАЗАД" Classes="Headline" />
-                </StackPanel>
-            </Button>
+            
+            <components:ButtonControl Classes="Additional"
+                                      IconPath="/Assets/leftArrow.svg"
+                                      Text="НАЗАД"
+                                      Command="{Binding GoToMainPageCommand}" />
+
         </Border>
 
         <Grid Grid.Row="1" ColumnDefinitions="400, .7*">
@@ -53,13 +54,6 @@
                                        Margin="0, 0, 0, 20" />
 
                             <Canvas Height="400">
-                                <!-- <Image Source="/Assets/background.jpg" -->
-                                <!--        HorizontalAlignment="Center" -->
-                                <!--        Width="250" -->
-                                <!--        Height="300" -->
-                                <!--        Canvas.Bottom="80" -->
-                                <!--        VerticalAlignment="Bottom"/> -->
-
                                 <Path Canvas.Bottom="0"
                                       Data="M 0 -200 L 0 0 L 60 20 L 290 20 L 350 0 L 350 -200 Z">
                                     <Path.Fill>
@@ -78,17 +72,15 @@
                                 </Path>
                             </Canvas>
                         </Grid>
-                        <Button HorizontalAlignment="Center"
-                                Margin="0, 40"
-                                Classes="Btn Btn-Primary"
-                                Padding="15, 10">
-                            <StackPanel Classes="Btn-Wrapper">
-                                <Svg Path="/Assets/rightArrow.svg" Height="28" />
-                                <TextBlock Text="СМЕНИТЬ СКИН"
-                                           Classes="Btn-Text"
-                                           FontSize="18" />
-                            </StackPanel>
-                        </Button>
+                        
+                        
+                        <components:ButtonControl Classes="Primary"
+                                                  HorizontalAlignment="Center"
+                                                  Margin="0, 40"
+                                                  IconPath="/Assets/rightArrow.svg"
+                                                  Text="СМЕНИТЬ СКИН"
+                                                  Command="{Binding GoToMainPageCommand}" />
+
                     </StackPanel>
 
                 </Border>
@@ -116,16 +108,13 @@
                                        LineHeight="25"
                                        Margin="0, 20, 0, 0"
                                        Text="Независимые государства представлены в исключительно положительном свете. Значимость этих проблем настолько очевидна, что сплочённость команды профессионалов играет важную роль в формировании инновационных методов управления процессами.!" />
+                            
+                            <components:ButtonControl Classes="Secondary"
+                                                      Margin="0, 20, 0, 0"
+                                                      IconPath="/Assets/rightArrow.svg"
+                                                      Text="ПЕРЕЙТИ В МАГАЗИН"
+                                                      Command="{Binding GoToMainPageCommand}" />
 
-
-                            <Button Classes="Btn Btn-Additional"
-                                    Margin="0, 20, 0, 0"
-                                    Command="{Binding GoToMainPageCommand}">
-                                <StackPanel Classes="Btn-Wrapper">
-                                    <Svg Path="/Assets/leftArrow.svg" Height="22" />
-                                    <TextBlock Text="ПЕРЕЙТИ В МАГАЗИН" Classes="Headline" />
-                                </StackPanel>
-                            </Button>
                         </StackPanel>
 
 

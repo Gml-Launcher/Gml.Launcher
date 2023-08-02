@@ -3,7 +3,9 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="GamerVII.Launcher/App.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
         <entry key="GamerVII.Launcher/Assets/Resources/Styles.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
+        <entry key="GamerVII.Launcher/Views/Components/ButtonControl.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
         <entry key="GamerVII.Launcher/Views/Components/LogoutButton.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
         <entry key="GamerVII.Launcher/Views/Components/ServerContent.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
         <entry key="GamerVII.Launcher/Views/Components/ServersListView.axaml" value="GamerVII.Launcher/GamerVII.Launcher.csproj" />
