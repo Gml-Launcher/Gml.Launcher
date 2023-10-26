@@ -13,37 +13,37 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GamerVII.Launcher
-build_property.ProjectDir = C:\Users\GamerVII\source\repos\GamerVII.Launcher\GamerVII.Launcher\
+build_property.ProjectDir = /home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/App.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Assets/Resources/Styles.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Assets/Resources/Styles.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/ButtonControl.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Components/ButtonControl.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/LogoutButton.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Components/LogoutButton.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/ServerContent.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Components/ServerContent.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/ServersListView.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Components/ServersListView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Components/SidebarView.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Components/SidebarView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/MainWindow.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Pages/AuthPageView.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Pages/AuthPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Pages/ClientSettingsPageView.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Pages/ClientSettingsPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/GamerVII/source/repos/GamerVII.Launcher/GamerVII.Launcher/Views/Pages/ProfilePageView.axaml]
+[/home/gamervii/RiderProjects/minecraft-launcher/GamerVII.Launcher/Views/Pages/ProfilePageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

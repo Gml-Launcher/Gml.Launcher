@@ -41,12 +41,13 @@
                    Source="/Assets/background.jpg" />
 
             <TransitioningContentControl
+                Grid.Column="0"
                 Grid.ColumnSpan="2"
                 ZIndex="100"
                 Content="{Binding CurrentPage}" />
 
-            <components:SidebarView
-                DataContext="{Binding SidebarViewModel}" />
+            <components:SidebarView Grid.Column="0"
+                                    DataContext="{Binding SidebarViewModel}" />
 
             <Border Grid.Column="1" Classes="ContentPresenter">
 
@@ -107,7 +108,7 @@
                                        TextWrapping="Wrap"
                                        Text="{Binding SidebarViewModel.ServersListViewModel.SelectClient.Description}" />
 
-                            <StackPanel Orientation="Horizontal" 
+                            <StackPanel Orientation="Horizontal"
                                         Spacing="20">
 
                                 <components:ButtonControl Text="ИГРАТЬ"
@@ -131,7 +132,7 @@
                     <Grid Grid.Row="2"
                           Grid.ColumnSpan="3"
                           ColumnDefinitions="*, *">
-                        
+
                         <components:ButtonControl Text="СПИСОК МОДОВ"
                                                   Classes="Additional"
                                                   IconPath="/Assets/document.svg"
@@ -141,7 +142,7 @@
                                     HorizontalAlignment="Right"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                            
+
                             <components:ButtonControl Classes="Icon"
                                                       IconPath="/Assets/tg.svg"
                                                       Command="{Binding ModsListCommand}" />
