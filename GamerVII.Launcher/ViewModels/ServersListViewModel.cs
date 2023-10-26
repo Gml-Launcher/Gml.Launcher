@@ -4,6 +4,7 @@ using GamerVII.Launcher.ViewModels.Base;
 using ReactiveUI;
 using Splat;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GamerVII.Launcher.ViewModels;
 
@@ -70,5 +71,7 @@ public class ServersListViewModel : ViewModelBase
         var clients = await _gameClientService.GetClientsAsync();
 
         GameClients = new ObservableCollection<IGameClient>(clients);
+
+        SelectClient = GameClients.FirstOrDefault();
     }
 }

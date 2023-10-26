@@ -40,13 +40,14 @@
                    Stretch="UniformToFill"
                    Source="/Assets/background.jpg" />
 
-            <TransitioningContentControl 
+            <TransitioningContentControl
+                Grid.Column="0"
                 Grid.ColumnSpan="2"
                 ZIndex="100"
                 Content="{Binding CurrentPage}" />
-            
-            <components:SidebarView 
-                DataContext="{Binding SidebarViewModel}" />
+
+            <components:SidebarView Grid.Column="0"
+                                    DataContext="{Binding SidebarViewModel}" />
 
             <Border Grid.Column="1" Classes="ContentPresenter">
 
@@ -107,21 +108,18 @@
                                        TextWrapping="Wrap"
                                        Text="{Binding SidebarViewModel.ServersListViewModel.SelectClient.Description}" />
 
-                            <StackPanel Orientation="Horizontal" Spacing="20">
-                                <Button Classes="Btn Btn-Primary" 
-                                        Command="{Binding LaunchGameCommand}">
-                                    <StackPanel Classes="Btn-Wrapper">
-                                        <Svg Path="/Assets/rightArrow.svg" Height="28"/>
-                                        <TextBlock Text="ИГРАТЬ" Classes="Headline" />
-                                    </StackPanel>
-                                </Button>
+                            <StackPanel Orientation="Horizontal"
+                                        Spacing="20">
 
-                                <Button Classes="Btn Btn-Secondary" Command="{Binding SettingsClientCommand}">
-                                    <StackPanel Classes="Btn-Wrapper">
-                                        <Svg Path="/Assets/settings.svg" Height="28" />
-                                        <TextBlock Text="НАСТРОИТЬ" Classes="Headline" />
-                                    </StackPanel>
-                                </Button>
+                                <components:ButtonControl Text="ИГРАТЬ"
+                                                          Classes="Primary"
+                                                          IconPath="/Assets/rightArrow.svg"
+                                                          Command="{Binding LaunchGameCommand}" />
+
+                                <components:ButtonControl Text="НАСТРОИТЬ"
+                                                          Classes="Secondary"
+                                                          IconPath="/Assets/settings.svg"
+                                                          Command="{Binding SettingsClientCommand}" />
 
                             </StackPanel>
 
@@ -135,28 +133,29 @@
                           Grid.ColumnSpan="3"
                           ColumnDefinitions="*, *">
 
-                        <Button Classes="Btn Btn-Additional" Command="{Binding ModsListCommand}">
-                            <StackPanel Classes="Btn-Wrapper">
-                                <Svg Path="/Assets/document.svg" Height="22" />
-                                <TextBlock Text="СПИСОК МОДОВ" Classes="Headline" />
-                            </StackPanel>
-                        </Button>
+                        <components:ButtonControl Text="СПИСОК МОДОВ"
+                                                  Classes="Additional"
+                                                  IconPath="/Assets/document.svg"
+                                                  Command="{Binding ModsListCommand}" />
 
-                        <StackPanel Spacing="10"
+                        <StackPanel Spacing="20"
                                     HorizontalAlignment="Right"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                            <Button Classes="Btn Btn-Additional">
-                                <StackPanel Classes="Btn-Wrapper">
-                                    <Svg Path="/Assets/vk.svg" Height="25" />
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="Btn Btn-Additional">
-                                <StackPanel Classes="Btn-Wrapper">
-                                    <Svg Path="/Assets/document.svg" Height="22" />
-                                    <TextBlock Text="НАШ САЙТ" Classes="Headline" />
-                                </StackPanel>
-                            </Button>
+
+                            <components:ButtonControl Classes="Icon"
+                                                      IconPath="/Assets/tg.svg"
+                                                      Command="{Binding ModsListCommand}" />
+
+                            <components:ButtonControl Classes="Icon"
+                                                      IconPath="/Assets/vk.svg"
+                                                      Command="{Binding ModsListCommand}" />
+
+                            <components:ButtonControl Text="НАШ САЙТ"
+                                                      Classes="Additional"
+                                                      IconPath="/Assets/document.svg"
+                                                      Command="{Binding ModsListCommand}" />
+
                         </StackPanel>
 
                     </Grid>

@@ -53,46 +53,6 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style Selector="Button.Btn">
-        <Setter Property="CornerRadius" Value="50" />
-        <Setter Property="Padding" Value="20, 15" />
-        <Setter Property="Cursor" Value="Hand" />
-    </Style>
-
-    <Style Selector="TextBlock.Btn-Text">
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-    </Style>
-    <Style Selector="Button.Btn-Primary">
-        <Setter Property="Background" Value="#008C45" />
-    </Style>
-    
-    <Style Selector="Button.Btn-Primary:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="#047A3D" />
-    </Style>
-
-    <Style Selector="Button.Btn-Additional">
-        <Setter Property="Background" Value="#0E0E0E" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#20FFFFFF" />
-    </Style>
-
-    <Style Selector="Button.Btn-Additional:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="#181818" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#25FFFFFF" />
-    </Style>
-
-    <Style Selector="Button.Btn-Secondary">
-        <Setter Property="Background" Value="#0E0E0E" />
-    </Style>
-
-    <Style Selector="Button.Btn-Secondary:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="#181818" />
-    </Style>
-
     <Style Selector="Button.Sidebar-Button">
         <Setter Property="Background" Value="#0E0E0E" />
         <Setter Property="CornerRadius" Value="50" />

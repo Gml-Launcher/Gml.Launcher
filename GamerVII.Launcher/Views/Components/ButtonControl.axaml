@@ -1,0 +1,199 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:GamerVII.Launcher.Views.Components">
+    <Design.PreviewWith>
+        <Border Background="{DynamicResource SecondaryColorHover}"
+                Padding="50">
+            <StackPanel Spacing="20">
+                <controls:ButtonControl Classes="Primary" />
+                <controls:ButtonControl Classes="Secondary" />
+                <controls:ButtonControl Classes="Additional" />
+                <controls:ButtonControl Classes="Icon" />
+                <controls:ButtonControl Classes="Link" />
+            </StackPanel>
+
+        </Border>
+    </Design.PreviewWith>
+
+
+    <Style Selector="controls|ButtonControl.Primary">
+
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="20, 15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource PrimaryColorHover}" />
+                        </Style>
+                    </Button.Styles>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="10">
+                        <Svg Path="{TemplateBinding IconPath}" Height="28" />
+                        <TextBlock Text="{TemplateBinding Text}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|ButtonControl.Secondary">
+
+        <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="20, 15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource SecondaryColorHover}" />
+                        </Style>
+                    </Button.Styles>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="10">
+                        <Svg Path="{TemplateBinding IconPath}" Height="28" />
+                        <TextBlock Text="{TemplateBinding Text}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|ButtonControl.Additional">
+
+        <Setter Property="Background" Value="{DynamicResource AdditionalColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AdditionalBorderColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="20, 15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AdditionalColorHover}" />
+                            <Setter Property="BorderBrush"
+                                    Value="{DynamicResource AdditionalBorderColorHover}" />
+                        </Style>
+                    </Button.Styles>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="10">
+                        <Svg Path="{TemplateBinding IconPath}" Height="28" />
+                        <TextBlock Text="{TemplateBinding Text}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|ButtonControl.Icon">
+
+        <Setter Property="Background" Value="{DynamicResource AdditionalColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AdditionalBorderColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AdditionalColorHover}" />
+                            <Setter Property="BorderBrush"
+                                    Value="{DynamicResource AdditionalBorderColorHover}" />
+                        </Style>
+                    </Button.Styles>
+                    <Svg Path="{TemplateBinding IconPath}" Height="28" />
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|ButtonControl.Link">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Padding" Value="0, 15" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}" />
+        <Setter Property="FontWeight" Value="Bold" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Command="{TemplateBinding Command}">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+                        </Style>
+                    </Button.Styles>
+                    <TextBlock Text="{TemplateBinding Text}"
+                               Padding="{TemplateBinding Padding}"
+                               Foreground="{TemplateBinding Foreground}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock:pointerover">
+                                <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+</Styles>
