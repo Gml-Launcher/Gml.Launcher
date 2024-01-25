@@ -1,0 +1,57 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Components"
+             xmlns:profiles="clr-namespace:Gml.WebApi.Models.Dtos.Profiles;assembly=Gml.WebApi.Models"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
+             xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             x:DataType="vm:ListViewModel"
+             mc:Ignorable="d" d:DesignWidth="80" d:DesignHeight="350"
+             x:Class="Gml.Launcher.Views.Components.ServerListComponent">
+    <Border Background="{StaticResource SecondaryColor}"
+                        HorizontalAlignment="Center"
+                        ClipToBounds="True"
+                        MaxHeight="350"
+                        Padding="5"
+                        CornerRadius="50">
+
+                    <Grid>
+                        <components:LoadingControl
+                            Margin="8"
+                            Size="22"
+                            IsVisible="{Binding IsNotLoaded}"/>
+
+                        <ListBox ItemsSource="{Binding Profiles}"
+                                 IsVisible="{Binding HasItems}"
+                                 SelectedItem="{CompiledBinding SelectedProfile}"
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                 Background="Transparent">
+
+                            <ListBox.Styles>
+                                <Style Selector="ListBoxItem">
+                                    <Setter Property="Width" Value="40" />
+                                    <Setter Property="Height" Value="40" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="CornerRadius" Value="50" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                </Style>
+                                <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="{StaticResource SecondaryColorHover}" />
+                                </Style>
+                                <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+                                </Style>
+                            </ListBox.Styles>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="profiles:ReadProfileDto">
+                                    <Image Source="{Binding IconBase64, Converter={converters:Base64ToBitmapConverter}}"
+                                           Width="24" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+</UserControl>
+

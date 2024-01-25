@@ -1,0 +1,58 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+        xmlns:controls="using:Gml.Launcher.Views.Components">
+    <Design.PreviewWith>
+        <Border Background="{DynamicResource BackgroundColor}">
+            <controls:ServerInfo />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ServerInfo">
+
+        <Setter Property="Spacing" Value="20"/>
+        <Setter Property="FontSize" Value="60"/>
+        <Setter Property="MaxWidth" Value="400"/>
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}"/>
+        <Setter Property="FontWeight" Value="Black"/>
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Spacing="{TemplateBinding Spacing}"
+                            MaxWidth="{TemplateBinding MaxWidth}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left">
+                    <controls:BadgeComponent Text="{TemplateBinding Status}"
+                                             FontSize="14"
+                                             FontWeight="Medium"/>
+                    <TextBlock Text="{TemplateBinding ProfileName}"
+                               Foreground="{TemplateBinding Foreground}"
+                               TextWrapping="Wrap"
+                               FontSize="{TemplateBinding FontSize}"/>
+                    <TextBlock Text="{TemplateBinding ProfileDescription}"
+                               Foreground="{DynamicResource ContentColor}"
+                               FontWeight="Medium"
+                               LineHeight="25"
+                               TextWrapping="Wrap"
+                               FontSize="14"/>
+
+                    <StackPanel Spacing="10" Orientation="Horizontal">
+                        <controls:GmlButton Classes="TextIcon Primary"
+                                            IconPath="/Assets/Images/login.svg"
+                                            Command="{TemplateBinding PlayCommand}"
+                                            IconSize="24"
+                                            FontSize="16"
+                                            Text="{x:Static lang:Resources.Play}"/>
+                        <controls:GmlButton Classes="TextIcon Secondary"
+                                            Command="{TemplateBinding SettingsCommand}"
+                                            IconPath="/Assets/Images/settings.svg"
+                                            IconSize="24"
+                                            FontSize="16"
+                                            Text="{x:Static lang:Resources.Settings}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
+
