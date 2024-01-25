@@ -1,0 +1,32 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components">
+    <Design.PreviewWith>
+        <Border Background="{DynamicResource BackgroundColor}">
+            <controls:BadgeComponent />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|BadgeComponent">
+
+        <Setter Property="BorderBrush" Value="{DynamicResource BadgeBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10, 5"/>
+        <Setter Property="CornerRadius" Value="50"/>
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <TextBlock Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
+

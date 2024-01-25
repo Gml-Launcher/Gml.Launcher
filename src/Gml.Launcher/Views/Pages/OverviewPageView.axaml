@@ -1,0 +1,81 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
+             xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+             xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             mc:Ignorable="d"
+             d:DesignWidth="1000"
+             Background="Transparent"
+             d:DesignHeight="600"
+             x:DataType="vm:OverviewPageViewModel"
+             x:Class="Gml.Launcher.Views.Pages.OverviewPageView">
+
+
+    <Grid ColumnDefinitions="Auto, *">
+
+        <!-- Background -->
+        <components:BackgroundComponent Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <!-- Content -->
+        <Border Grid.Column="1" Padding="25">
+
+            <Grid ColumnDefinitions="Auto, 30, *"
+                  RowDefinitions="Auto, 30 *, 30, Auto">
+
+                <!-- Server Info -->
+                <components:ServerInfo Grid.Column="0"
+                                       Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
+                                       Grid.Row="2"
+                                       PlayCommand="{Binding PlayCommand}"
+                                       IsVisible="{Binding ListViewModel.HasSelectedItem}"
+                                       ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
+                                       ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
+                                       VerticalAlignment="Center" />
+
+                <!-- Footer -->
+                <Grid Grid.Row="4"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      ColumnDefinitions="Auto, *, Auto">
+
+                    <components:GmlButton Grid.Column="0"
+                                          IconPath="/Assets/Images/document.svg"
+                                          IconSize="22"
+                                          Classes="TextIcon Additional"
+                                          Text="{x:Static lang:Resources.ModsList}" />
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                Spacing="10">
+
+                        <components:GmlButton IconPath="/Assets/Images/vk.svg"
+                                              IconSize="24"
+                                              Padding="0, 2, 0, 0"
+                                              Classes="Icon Additional"
+                                              Text="{x:Static lang:Resources.Website}" />
+
+                        <components:GmlButton IconPath="/Assets/Images/app.svg"
+                                              IconSize="22"
+                                              Padding="15, 0, 15, 0"
+                                              Classes="TextIcon Additional"
+                                              Text="{x:Static lang:Resources.Website}" />
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
+
+        </Border>
+
+        <!-- Sidebar -->
+        <components:SidebarComponent Grid.Column="0"
+                                     ListViewModel="{Binding ListViewModel}"
+                                     LogoutCommand="{Binding LogoutCommand}"
+                                     ProfileCommand="{Binding GoProfileCommand}" />
+
+    </Grid>
+
+</UserControl>

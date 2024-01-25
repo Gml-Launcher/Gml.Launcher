@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="PrimaryColor">#008C45</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryColorHover">#01763B</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryTransparentColor">#101412</SolidColorBrush>
+
+    <SolidColorBrush x:Key="HeadlineColor">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="ContentColor">#969696</SolidColorBrush>
+
+    <SolidColorBrush x:Key="BackgroundColor">#0E0E0E</SolidColorBrush>
+
+    <SolidColorBrush x:Key="FrameBackgroundColor">#111111</SolidColorBrush>
+    <SolidColorBrush x:Key="FrameBackgroundBorderColor">#2E2E2E</SolidColorBrush>
+
+    <SolidColorBrush x:Key="SecondaryColor">#060B0D</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondaryColorHover">#131719</SolidColorBrush>
+
+    <SolidColorBrush x:Key="FormBackgroundColor">#151515</SolidColorBrush>
+    <SolidColorBrush x:Key="FormBackgroundHoverColor">#1C1C1C</SolidColorBrush>
+    <SolidColorBrush x:Key="FormBorderColor">#212121</SolidColorBrush>
+    <SolidColorBrush x:Key="FormBorderHoverColor">#2C2C2C</SolidColorBrush>
+
+
+    <SolidColorBrush x:Key="BadgeBorder">#20FFFFFF</SolidColorBrush>
+
+</ResourceDictionary>
+

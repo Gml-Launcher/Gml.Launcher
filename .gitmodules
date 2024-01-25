@@ -1,0 +1,3 @@
+[submodule "src/Gml.Client"]
+	path = src/Gml.Client
+	url = https://github.com/GamerVII-NET/Gml.Client.git
