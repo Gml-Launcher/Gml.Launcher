@@ -15,13 +15,31 @@ public class GmlButton : TemplatedControl
         nameof(IconSize), 16);
 
     public static readonly StyledProperty<ICommand> CommandProperty = AvaloniaProperty.Register<GmlButton, ICommand>(
-        "Command");
+        nameof(Command));
 
     public static readonly StyledProperty<string?> TextProperty = AvaloniaProperty.Register<GmlButton, string?>(
         nameof(Text), "DefaultButton style");
 
     public static readonly StyledProperty<int> SpacingProperty = AvaloniaProperty.Register<GmlButton, int>(
         nameof(Spacing), 10);
+
+    public static readonly StyledProperty<bool> IsDefaultProperty = AvaloniaProperty.Register<GmlButton, bool>(
+        nameof(IsDefault));
+
+    public static readonly StyledProperty<object?> CommandParameterProperty = AvaloniaProperty.Register<GmlButton, object?>(
+        nameof(CommandParameter));
+
+    public object? CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
+    public bool IsDefault
+    {
+        get => GetValue(IsDefaultProperty);
+        set => SetValue(IsDefaultProperty, value);
+    }
 
     public int Spacing
     {

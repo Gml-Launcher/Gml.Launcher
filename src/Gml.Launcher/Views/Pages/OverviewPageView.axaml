@@ -53,11 +53,15 @@
                         <components:GmlButton IconPath="/Assets/Images/vk.svg"
                                               IconSize="24"
                                               Padding="0, 2, 0, 0"
+                                              Command="{Binding OpenLinkCommand}"
+                                              CommandParameter="https://vk.com/recloud.studio"
                                               Classes="Icon Additional"
                                               Text="{x:Static lang:Resources.Website}" />
 
                         <components:GmlButton IconPath="/Assets/Images/app.svg"
                                               IconSize="22"
+                                              Command="{Binding OpenLinkCommand}"
+                                              CommandParameter="https://recloud.tech"
                                               Padding="15, 0, 15, 0"
                                               Classes="TextIcon Additional"
                                               Text="{x:Static lang:Resources.Website}" />

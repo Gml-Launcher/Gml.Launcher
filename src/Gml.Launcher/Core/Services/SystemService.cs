@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using Avalonia.Controls.Shapes;
 
 namespace Gml.Launcher.Core.Services;
 
@@ -21,6 +23,16 @@ public class SystemService : ISystemService
         }
 
         throw new NotSupportedException(NotSupportedMessage);
+    }
+
+    public string GetGameFolder(bool needCreate)
+    {
+        var directoryInfo = new DirectoryInfo(System.IO.Path.Combine(GetApplicationFolder(), "GamerVII")); // ToDo: To const
+
+        if (needCreate && !directoryInfo.Exists)
+            directoryInfo.Create();
+
+        return directoryInfo.FullName;
     }
 
     private static string GetFolderPath(Environment.SpecialFolder folder)

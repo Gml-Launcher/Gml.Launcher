@@ -39,4 +39,10 @@
   <data name="Website" xml:space="preserve">
     <value>Website</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>Auth error</value>
+  </data>
 </root>

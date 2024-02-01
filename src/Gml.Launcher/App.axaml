@@ -29,6 +29,7 @@
 
         <StyleInclude Source="Assets/Styles/Classes.axaml"/>
 
+        <StyleInclude Source="avares://GamerVII.Notification.Avalonia/Themes/Generic.xaml" />
 
     </Application.Styles>
 </Application>

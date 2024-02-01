@@ -3,13 +3,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
 using Gml.Client;
+using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
+using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
 using Gml.WebApi.Models.Dtos.Profiles;
@@ -22,17 +25,25 @@ namespace Gml.Launcher.ViewModels.Pages;
 public class OverviewPageViewModel : PageViewModelBase
 {
     private readonly IScreen _screen;
+    private readonly IStorageService _storageService;
     private readonly IGmlClientManager _clientManager;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoProfileCommand { get; set; }
-    public ReactiveCommand<Unit, IRoutableViewModel> LogoutCommand { get; set; }
+    public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
 
-    internal OverviewPageViewModel(IScreen screen, IGmlClientManager? clientManager = null) : base(screen)
+    internal OverviewPageViewModel(
+        IScreen screen,
+        IGmlClientManager? clientManager = null,
+        IStorageService? storageService = null
+        ) : base(screen)
     {
         _screen = screen;
+        _storageService = storageService
+                          ?? Locator.Current.GetService<IStorageService>()
+            ?? throw new ServiceNotFoundException(typeof(IStorageService));;
         _clientManager = clientManager
                          ?? Locator.Current.GetService<IGmlClientManager>()
                          ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
@@ -41,13 +52,17 @@ public class OverviewPageViewModel : PageViewModelBase
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen))
         );
 
-        LogoutCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new LoginPageViewModel(screen))
-        );
+        LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
+    }
+
+    private async Task OnLogout(CancellationToken arg)
+    {
+        await _storageService.SetAsync(StorageConstants.User, new AuthUser());
+        _screen.Router.Navigate.Execute(new LoginPageViewModel(_screen));
     }
 
     private async Task StartGame(CancellationToken arg)

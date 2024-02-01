@@ -38,8 +38,10 @@
             <ControlTemplate>
                 <Button Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
                         Command="{TemplateBinding Command}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Width="{TemplateBinding Width}"
@@ -62,7 +64,9 @@
             <ControlTemplate>
                 <Button Background="{TemplateBinding Background}"
                         Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
                         Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"

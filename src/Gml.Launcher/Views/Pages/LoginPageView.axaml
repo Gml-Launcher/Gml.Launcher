@@ -33,24 +33,33 @@
             <StackPanel Classes="MarginBottom">
                 <TextBlock Text="{x:Static lang:Resources.Login}"
                            Classes="FormText" />
-                <TextBox Classes="FormBox" />
+                <TextBox Classes="FormBox" Text="{Binding Login}" />
             </StackPanel>
 
             <StackPanel Classes="MarginBottom">
                 <TextBlock Text="{x:Static lang:Resources.Password}"
                            Classes="FormText" />
-                <TextBox Classes="FormBox" PasswordChar="•" />
+                <TextBox Classes="FormBox"
+                         PasswordChar="•"
+                         Text="{Binding Password}" />
             </StackPanel>
 
             <components:GmlButton Command="{Binding LoginCommand}"
                                   HorizontalAlignment="Center"
-                                  Classes="TextIcon Primary MarginTop"
+                                  IsDefault="True"
+                                  IsVisible="{Binding IsNotProcessing}"
+                                  Classes="TextIcon Primary"
                                   IconPath="/Assets/Images/login.svg"
                                   IconSize="24"
                                   FontWeight="Bold"
-                                  Text="{x:Static lang:Resources.AuthButtonText}">
+                                  Text="{x:Static lang:Resources.AuthButtonText}" />
 
-            </components:GmlButton>
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Classes="ProgressBar"
+                         IsVisible="{Binding IsProcessing}"
+                         Margin="23"
+                         Height="1"
+                         VerticalAlignment="Bottom"/>
 
         </components:StackFrameBorder>
 
