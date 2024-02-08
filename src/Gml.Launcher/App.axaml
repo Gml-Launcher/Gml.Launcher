@@ -26,6 +26,8 @@
         <StyleInclude Source="/Views/Components/BadgeComponent.axaml" />
         <StyleInclude Source="/Views/Components/ServerInfo.axaml" />
         <StyleInclude Source="/Views/Components/LoadingControl.axaml" />
+        <StyleInclude Source="/Views/Components/ProfileUserControl.axaml" />
+        <StyleInclude Source="/Views/Components/ProfileInfoComponent.axaml" />
 
         <StyleInclude Source="Assets/Styles/Classes.axaml"/>
 

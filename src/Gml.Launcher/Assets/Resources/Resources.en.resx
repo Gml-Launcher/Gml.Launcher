@@ -38,4 +38,16 @@
   <data name="InvalidAuthData" xml:space="preserve">
     <value>Auth error</value>
   </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Lost connection to server</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Reconnecting....</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>

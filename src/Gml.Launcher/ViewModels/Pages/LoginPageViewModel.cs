@@ -1,5 +1,6 @@
 using System;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -80,7 +81,7 @@ public class LoginPageViewModel : PageViewModelBase
         var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
         if (authUser is { IsAuth: true })
-            _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen));
+            _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authUser));
     }
 
     private async Task OnAuth(CancellationToken arg)
@@ -103,7 +104,7 @@ public class LoginPageViewModel : PageViewModelBase
             if (user.Item1.IsAuth)
             {
                 await _storageService.SetAsync(StorageConstants.User, user.Item1);
-                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen));
+                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, user.Item1));
                 return;
             }
 

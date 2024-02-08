@@ -3,15 +3,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
+             xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
              mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             d:DesignWidth="1000"
+             d:DesignHeight="600"
              x:DataType="vm:ProfilePageViewModel"
              x:Class="Gml.Launcher.Views.Pages.ProfilePageView">
 
-    <Grid ColumnDefinitions="Auto, *">
-        <Button Command="{Binding GoBackCommand}" Content="Назад"/>
+    <Grid>
+        <!-- Background -->
+        <components:BackgroundComponent Grid.Column="0" />
+        <Border Padding="20">
+            <Grid ColumnDefinitions="350, 30, 0.65*" RowDefinitions="Auto, 30, *">
+
+                <!-- Navigation -->
+                <Grid Grid.ColumnSpan="3" Grid.Row="0">
+                    <components:GmlButton Classes="TextIcon Additional"
+                                          Padding="15, 0, 20 ,0"
+                                          IconPath="/Assets/Images/back.svg"
+                                          IconSize="22"
+                                          Text="{x:Static lang:Resources.Back}"
+                                          Command="{Binding GoBackCommand}" />
+                </Grid>
+
+
+                <components:ProfileUserControl Grid.Row="2"
+                                               Grid.Column="0"
+                                               UserName="{Binding User.Name}"
+                                               SkinUrl="{Binding SkinUrl}"
+                                               VerticalAlignment="Top" />
+
+            </Grid>
+        </Border>
     </Grid>
 
 </UserControl>

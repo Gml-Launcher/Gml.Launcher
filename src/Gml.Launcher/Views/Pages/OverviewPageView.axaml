@@ -24,6 +24,8 @@
             <Grid ColumnDefinitions="Auto, 30, *"
                   RowDefinitions="Auto, 30 *, 30, Auto">
 
+                <TextBlock Text="{Binding LoadingPercentage}" />
+
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
                                        Classes.Animated="{Binding ListViewModel.HasSelectedItem}"

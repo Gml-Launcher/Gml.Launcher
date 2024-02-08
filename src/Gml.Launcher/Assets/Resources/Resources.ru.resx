@@ -38,4 +38,16 @@
   <data name="InvalidAuthData" xml:space="preserve">
     <value>Ошибка авторизации</value>
   </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Потеряно соединение с сервером</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Переподключение...</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>НАЗАД</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Личный кабинет</value>
+  </data>
 </root>

@@ -13,13 +13,14 @@ public static class ServiceLocator
     {
         var systemService = new SystemService();
 
-        var baseAddress = "https://localhost:5000";
+        var baseAddress = "http://localhost:5000";
+        var skinServiceAddress = "http://localhost:5006";
         var installationDirectory = Path.Combine(systemService.GetApplicationFolder(), "GamerVIILauncher"); // ToDo: to const
 
         Locator.CurrentMutable.RegisterConstant(new ResourceLocalizationService(), typeof(ILocalizationService));
         Locator.CurrentMutable.RegisterConstant(systemService, typeof(ISystemService));
         Locator.CurrentMutable.RegisterConstant(new LocalStorageService(), typeof(IStorageService));
-        Locator.CurrentMutable.RegisterConstant(new GmlClientManager(baseAddress, installationDirectory), typeof(IGmlClientManager));
+        Locator.CurrentMutable.RegisterConstant(new GmlClientManager(baseAddress, skinServiceAddress, installationDirectory), typeof(IGmlClientManager));
 
         return builder;
     }
