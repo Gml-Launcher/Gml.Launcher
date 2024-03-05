@@ -14,6 +14,32 @@
         <Setter Property="Margin" Value="0, 0, 0, 8"/>
     </Style>
 
+    <Style Selector="CheckBox.FormCheckBox">
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <Style Selector="Slider.FormSlider /template/ RepeatButton#PART_DecreaseButton /template/ Border#TrackBackground">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="Slider.FormSlider /template/ Thumb#thumb /template/ Border">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="CheckBox.FormCheckBox:checked /template/ Border#NormalRectangle">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="TextBlock.HeadlineText">
+        <Setter Property="Margin" Value="0, 0, 0, 8"/>
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+
     <Style Selector="TextBox.FormBox">
         <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>

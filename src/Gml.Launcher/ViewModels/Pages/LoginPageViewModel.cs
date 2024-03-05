@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
@@ -49,7 +52,14 @@ public class LoginPageViewModel : PageViewModelBase
         }
     }
 
+    public ObservableCollection<string> Errors
+    {
+        get => _errors;
+        set => this.RaiseAndSetIfChanged(ref _errors, value);
+    }
+
     public bool IsNotProcessing => !_isProcessing;
+    public ObservableCollection<string> _errors = new();
 
     public ICommand LoginCommand { get; set; }
 
@@ -97,18 +107,20 @@ public class LoginPageViewModel : PageViewModelBase
             //     .HasMessage("Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
             //     .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
             //     .Queue();
-
+            //28823c6e1c503fa9b051fec15e9c5986
             IsProcessing = true;
-            var user = await _gmlClientManager.Auth(Login, Password);
+            var authInfo = await _gmlClientManager.Auth(Login, Password);
 
-            if (user.Item1.IsAuth)
+            authInfo.User.Uuid = "28823c6e1c503fa9b051fec15e9c5986";
+
+            if (authInfo.User.IsAuth)
             {
-                await _storageService.SetAsync(StorageConstants.User, user.Item1);
-                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, user.Item1));
+                await _storageService.SetAsync(StorageConstants.User, authInfo.User);
+                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User));
                 return;
             }
 
-            if (user.Item1.Has2Fa)
+            if (authInfo.Item1.Has2Fa)
             {
                 //ToDo: Next versions
 
@@ -117,15 +129,18 @@ public class LoginPageViewModel : PageViewModelBase
 
             if (_screen is MainWindowViewModel mainView)
             {
-                mainView.Manager
-                    .CreateMessage(true, "#D03E3E",
-                        LocalizationService.GetString(ResourceKeysDictionary.Error),
-                        string.Join(". ",
+                if (!authInfo.Details.Any())
+                {
+                    mainView.Manager
+                        .CreateMessage(true, "#D03E3E",
                             LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
-                            user.Item2))
-                    .Dismiss()
-                    .WithDelay(TimeSpan.FromSeconds(3))
-                    .Queue();
+                            authInfo.Message)
+                        .Dismiss()
+                        .WithDelay(TimeSpan.FromSeconds(3))
+                        .Queue();
+                }
+
+                Errors = new ObservableCollection<string>(authInfo.Details);
             }
         }
         catch (Exception e)

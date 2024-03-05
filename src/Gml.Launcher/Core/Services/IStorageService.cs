@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gml.Launcher.Core.Services;
 
@@ -13,8 +14,9 @@ public interface IStorageService
     /// <typeparam name="T">The type of the value to store.</typeparam>
     /// <param name="key">The key for the value.</param>
     /// <param name="value">The value to store.</param>
+    /// <param name="token"></param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    Task SetAsync<T>(string key, T value);
+    Task SetAsync<T>(string key, T value, CancellationToken? token = default);
 
     /// <summary>
     /// Retrieves the value associated with the specified key asynchronously.

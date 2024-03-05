@@ -50,4 +50,25 @@
   <data name="Cabinet" xml:space="preserve">
     <value>Личный кабинет</value>
   </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Профиль не настроен, запуск текущего клиента не доступен</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Настройки ОЗУ</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Настройте объем потребляемой оперативной памяти</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Автоматически</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Полноэкранный режим</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Размеры окна</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>Мб</value>
+  </data>
 </root>

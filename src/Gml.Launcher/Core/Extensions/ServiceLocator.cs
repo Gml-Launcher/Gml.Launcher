@@ -13,8 +13,8 @@ public static class ServiceLocator
     {
         var systemService = new SystemService();
 
-        var baseAddress = "http://localhost:5000";
-        var skinServiceAddress = "http://localhost:5006";
+        var baseAddress = "http://192.168.31.199:5000";
+        var skinServiceAddress = "http://192.168.31.199:5000";
         var installationDirectory = Path.Combine(systemService.GetApplicationFolder(), "GamerVIILauncher"); // ToDo: to const
 
         Locator.CurrentMutable.RegisterConstant(new ResourceLocalizationService(), typeof(ILocalizationService));

@@ -5,6 +5,8 @@
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
@@ -44,6 +46,12 @@
                          Text="{Binding Password}" />
             </StackPanel>
 
+            <TextBlock Text="{Binding Errors, Converter={converters:FirstElementConverter}}"
+                       IsVisible="{Binding Errors, Converter={converters:HasElementsConverter}}"
+                       Foreground="Tomato"
+                       Margin="0, 0, 0, 20"/>
+
+
             <components:GmlButton Command="{Binding LoginCommand}"
                                   HorizontalAlignment="Center"
                                   IsDefault="True"
@@ -59,7 +67,7 @@
                          IsVisible="{Binding IsProcessing}"
                          Margin="23"
                          Height="1"
-                         VerticalAlignment="Bottom"/>
+                         VerticalAlignment="Bottom" />
 
         </components:StackFrameBorder>
 

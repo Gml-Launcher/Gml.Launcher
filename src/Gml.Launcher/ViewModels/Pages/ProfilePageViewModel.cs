@@ -13,21 +13,17 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class ProfilePageViewModel : PageViewModelBase
 {
-    private readonly IUser _user;
+    private IUser _user;
     private readonly IGmlClientManager _clientManager;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
-    public IUser User => _user;
 
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBackCommand { get; set; }
-
-    public string SkinUrl
+    public IUser User
     {
-        get => _skinUrl;
-        set => this.RaiseAndSetIfChanged(ref _skinUrl, value);
+        get => _user;
+        private init => this.RaiseAndSetIfChanged(ref _user, value);
     }
 
 
-    private string _skinUrl = string.Empty;
 
     internal ProfilePageViewModel(IScreen screen,
         IUser user,
@@ -35,18 +31,16 @@ public class ProfilePageViewModel : PageViewModelBase
         ILocalizationService? localizationService = null) : base(screen,
         localizationService)
     {
-        _user = user;
+        User = user;
         _clientManager = clientManager
                          ?? Locator.Current.GetService<IGmlClientManager>()
                          ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
-
-        GoBackCommand = screen.Router.NavigateBack!;
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
 
     private async void LoadData()
     {
-        SkinUrl = await _clientManager.GetSkinPath(_user);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
 using Gml.Launcher.Core.Exceptions;
@@ -30,7 +31,7 @@ public class LocalStorageService : IStorageService
         _database.CreateTableAsync<StorageItem>().Wait();
     }
 
-    public async Task SetAsync<T>(string key, T value)
+    public async Task SetAsync<T>(string key, T value, CancellationToken? token = default)
     {
         var serializedValue = JsonConvert.SerializeObject(value);
         var storageItem = new StorageItem
@@ -39,6 +40,7 @@ public class LocalStorageService : IStorageService
             TypeName = typeof(T).FullName,
             Value = serializedValue
         };
+
         await _database.InsertOrReplaceAsync(storageItem);
     }
 

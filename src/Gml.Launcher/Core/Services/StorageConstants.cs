@@ -3,4 +3,5 @@
 public static class StorageConstants
 {
     public const string User = "UserInfo";
+    public const string Settings = "Settings";
 }

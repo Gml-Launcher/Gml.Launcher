@@ -138,5 +138,61 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Cabinet", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ProfileNotConfigured {
+            get {
+                return ResourceManager.GetString("ProfileNotConfigured", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string SettingsRamDescription {
+            get {
+                return ResourceManager.GetString("SettingsRamDescription", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string SettingsRamTitle {
+            get {
+                return ResourceManager.GetString("SettingsRamTitle", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string DynamicValue {
+            get {
+                return ResourceManager.GetString("DynamicValue", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string WindowSize {
+            get {
+                return ResourceManager.GetString("WindowSize", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string FullScreen {
+            get {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string UnitMb {
+            get {
+                return ResourceManager.GetString("UnitMb", resourceCulture);
+            }
+        }
     }
 }

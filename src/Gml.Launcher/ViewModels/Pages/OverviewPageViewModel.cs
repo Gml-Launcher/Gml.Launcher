@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -38,9 +39,10 @@ public class OverviewPageViewModel : PageViewModelBase
     private int _loadingPercentage;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
-    public ReactiveCommand<Unit, IRoutableViewModel> GoProfileCommand { get; set; }
+    public ICommand GoProfileCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
+    public ICommand GoSettingsCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User => _user;
 
@@ -70,6 +72,10 @@ public class OverviewPageViewModel : PageViewModelBase
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user, clientManager))
         );
 
+        GoSettingsCommand = ReactiveCommand.CreateFromObservable(
+            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(screen, LocalizationService, _storageService, ListViewModel.SelectedProfile!))
+        );
+
         _clientManager.ProgressChanged += (sender, args) =>
         {
             if (_loadingPercentage != args.ProgressPercentage)
@@ -97,10 +103,10 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             var localProfile = new ProfileCreateInfoDto
             {
-                ClientName = ListViewModel.SelectedProfile!.Name,
+                ProfileName = ListViewModel.SelectedProfile!.Name,
                 RamSize = 8192,
                 IsFullScreen = false,
-                OsType = (int)OsType.Windows,
+                OsType = ((int)OsType.Windows).ToString(),
                 OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
                 UserAccessToken = User.AccessToken,
                 UserName = User.Name,
@@ -109,16 +115,29 @@ public class OverviewPageViewModel : PageViewModelBase
 
             var profileInfo = await _clientManager.GetProfileInfo(localProfile);
 
-            if (profileInfo != null)
+            if (profileInfo is { Data: not null })
             {
-                // await _clientManager.DownloadNotInstalledFiles(profileInfo);
+                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data));
 
-                var process = await _clientManager.GetProcess(profileInfo);
+                var process = await _clientManager.GetProcess(profileInfo.Data);
 
                 var p = new ProcessUtil(process);
                 p.OutputReceived += (s, e) => Console.WriteLine(e);
                 p.StartWithEvents();
                 await p.WaitForExitTaskAsync();
+            }
+            else
+            {
+                if (_screen is MainWindowViewModel mainViewModel)
+                {
+                    mainViewModel.Manager
+                        .CreateMessage(true, "#D03E3E",
+                            LocalizationService.GetString(ResourceKeysDictionary.Error),
+                            LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured))
+                        .Dismiss()
+                        .WithDelay(TimeSpan.FromSeconds(3))
+                        .Queue();
+                }
             }
         }
         catch (Exception exception)
@@ -136,6 +155,10 @@ public class OverviewPageViewModel : PageViewModelBase
 
             Console.WriteLine(exception);
         }
+        finally
+        {
+
+        }
     }
 
 
@@ -143,7 +166,9 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
-            ListViewModel.Profiles = new ObservableCollection<ReadProfileDto>(await _clientManager.GetProfiles());
+            var profilesData = await _clientManager.GetProfiles();
+
+            ListViewModel.Profiles = new ObservableCollection<ReadProfileDto>(profilesData.Data ?? []);
         }
         catch (TaskCanceledException ex)
         {

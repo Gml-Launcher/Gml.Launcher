@@ -18,6 +18,7 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
     public string Title => LocalizationService.GetString(ResourceKeysDictionary.DefaultPageTitle);
 
     public ICommand OpenLinkCommand { get; }
+    public ICommand GoBackCommand { get; set; }
 
     protected PageViewModelBase(IScreen screen, ILocalizationService? localizationService = null)
     {
@@ -26,6 +27,7 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
                                ?? throw new ServiceNotFoundException(typeof(ILocalizationService));
 
         OpenLinkCommand = ReactiveCommand.Create<string>(OpenLink);
+        GoBackCommand = screen.Router.NavigateBack;
 
         HostScreen = screen;
     }

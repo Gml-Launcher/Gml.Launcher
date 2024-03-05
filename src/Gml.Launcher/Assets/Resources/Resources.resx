@@ -57,4 +57,25 @@
   <data name="Cabinet" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Profile not configured</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Settings RAM</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Configure the amount of RAM consumed.</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Window size</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>MB</value>
+  </data>
 </root>
