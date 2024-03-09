@@ -118,7 +118,6 @@ public class OverviewPageViewModel : PageViewModelBase
             if (profileInfo is { Data: not null })
             {
                 await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data));
-
                 var process = await _clientManager.GetProcess(profileInfo.Data);
 
                 var p = new ProcessUtil(process);

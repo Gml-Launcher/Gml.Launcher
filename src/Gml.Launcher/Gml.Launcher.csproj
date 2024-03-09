@@ -51,6 +51,7 @@
       <Compile Update="Core\Services\LocalStorageService.cs">
         <DependentUpon>IStorageService.cs</DependentUpon>
       </Compile>
+      <Compile Remove="Assets\Resources\ResourceKeysDictionary.Template.cs" />
     </ItemGroup>
 
 

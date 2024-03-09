@@ -9,6 +9,6 @@ public static class ResourceKeysDictionary
     public const string InvalidAuthData = "InvalidAuthData";
     public const string Reconnecting = "Reconnecting";
     public const string LostConnection = "LostConnection";
-    public const string Host = "LostConnection";
-    public const string FolderName = "GamerVIILauncher";
+    public const string Host = "{{HOST}}";
+    public const string FolderName = "{{FOLDER_NAME}}";
 }
