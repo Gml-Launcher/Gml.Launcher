@@ -111,8 +111,6 @@ public class LoginPageViewModel : PageViewModelBase
             IsProcessing = true;
             var authInfo = await _gmlClientManager.Auth(Login, Password);
 
-            authInfo.User.Uuid = "28823c6e1c503fa9b051fec15e9c5986";
-
             if (authInfo.User.IsAuth)
             {
                 await _storageService.SetAsync(StorageConstants.User, authInfo.User);
