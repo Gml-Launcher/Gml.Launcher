@@ -3,9 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Components"
-             xmlns:profiles="clr-namespace:Gml.WebApi.Models.Dtos.Profiles;assembly=Gml.WebApi.Models"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:profile="clr-namespace:Gml.Web.Api.Dto.Profile;assembly=Gml.Web.Api.Dto"
              x:DataType="vm:ListViewModel"
              mc:Ignorable="d" d:DesignWidth="80" d:DesignHeight="350"
              x:Class="Gml.Launcher.Views.Components.ServerListComponent">
@@ -45,7 +45,7 @@
                             </ListBox.Styles>
 
                             <ListBox.ItemTemplate>
-                                <DataTemplate DataType="profiles:ReadProfileDto">
+                                <DataTemplate DataType="profile:ProfileReadDto">
                                     <Image Source="{Binding IconBase64, Converter={converters:Base64ToBitmapConverter}}"
                                            Width="24" />
                                 </DataTemplate>

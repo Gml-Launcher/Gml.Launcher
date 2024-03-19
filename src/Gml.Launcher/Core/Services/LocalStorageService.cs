@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
+using Gml.Client;
 using Gml.Launcher.Core.Exceptions;
 using Newtonsoft.Json;
 using Splat;
@@ -13,13 +15,19 @@ public class LocalStorageService : IStorageService
 {
     private const string DatabaseFileName = "data.db";
     private readonly SQLiteAsyncConnection _database;
+    private readonly IGmlClientManager _gmlClient;
+    private readonly ISystemService _systemService;
 
-    public LocalStorageService(ISystemService? systemService = null)
+    public LocalStorageService(ISystemService? systemService = null, IGmlClientManager? gmlClient = null)
     {
-        systemService ??= Locator.Current.GetService<ISystemService>()
+        _gmlClient = gmlClient
+                     ?? Locator.Current.GetService<IGmlClientManager>()
+                     ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
+
+        _systemService ??= Locator.Current.GetService<ISystemService>()
                           ?? throw new ServiceNotFoundException(typeof(ISystemService));
 
-        var databasePath = System.IO.Path.Combine(systemService.GetGameFolder(true), DatabaseFileName);
+        var databasePath = System.IO.Path.Combine(_systemService.GetGameFolder(_gmlClient.ProjectName ,true), DatabaseFileName);
 
         _database = new SQLiteAsyncConnection(databasePath);
 
@@ -29,6 +37,7 @@ public class LocalStorageService : IStorageService
     private void InitializeTables()
     {
         _database.CreateTableAsync<StorageItem>().Wait();
+        _database.CreateTableAsync<LogsItem>().Wait();
     }
 
     public async Task SetAsync<T>(string key, T value, CancellationToken? token = default)
@@ -63,11 +72,26 @@ public class LocalStorageService : IStorageService
         return _database.InsertOrReplaceAsync(record);
     }
 
+    public async Task<string> GetLogsAsync(int rowCount = 100)
+    {
+        var logs = await _database.Table<LogsItem>().Take(rowCount).ToListAsync();
+
+        return string.Join("\n", logs.Select(c => c.Message));
+    }
+
     [Table("StorageItems")]
     private class StorageItem
     {
         [PrimaryKey] public string Key { get; set; } = null!;
         public string? TypeName { get; set; }
         public string Value { get; set; } = null!;
+    }
+
+    [Table("Logs")]
+    private class LogsItem
+    {
+        [PrimaryKey] public string Date { get; set; } = null!;
+        public string? Message { get; set; }
+        public string StackTrace { get; set; } = null!;
     }
 }

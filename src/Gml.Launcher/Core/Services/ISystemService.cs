@@ -3,5 +3,5 @@
 public interface ISystemService
 {
     string GetApplicationFolder();
-    string GetGameFolder(bool needCreate);
+    string GetGameFolder(string additionalPath, bool needCreate);
 }
