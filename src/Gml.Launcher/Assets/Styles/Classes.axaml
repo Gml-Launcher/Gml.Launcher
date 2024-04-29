@@ -1,0 +1,90 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:components="clr-namespace:Gml.Launcher.Views.Components">
+
+    <Design.PreviewWith>
+        <components:StackFrameBorder Padding="20">
+            <TextBox Text="Поле для ввода"/>
+        </components:StackFrameBorder>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBlock.FormText">
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="0, 0, 0, 8"/>
+    </Style>
+
+    <Style Selector="CheckBox.FormCheckBox">
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <Style Selector="Slider.FormSlider /template/ RepeatButton#PART_DecreaseButton /template/ Border#TrackBackground">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="Slider.FormSlider /template/ Thumb#thumb /template/ Border">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="CheckBox.FormCheckBox:checked /template/ Border#NormalRectangle">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="TextBlock.HeadlineText">
+        <Setter Property="Margin" Value="0, 0, 0, 8"/>
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+
+    <Style Selector="TextBox.FormBox">
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Background" Value="{DynamicResource FormBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource FormBorderColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="15"/>
+    </Style>
+    <Style Selector="TextBox.FormBox:pointerover /template/  Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="{DynamicResource FormBorderHoverColor}"/>
+    </Style>
+    <Style Selector="TextBox.FormBox:focus /template/  Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryTransparentColor}"/>
+    </Style>
+
+    <Style Selector="StackPanel.MarginBottom">
+        <Setter Property="Margin" Value="0, 0, 0, 15"/>
+    </Style>
+
+    <Style Selector="Border.Separator">
+        <Setter Property="Margin" Value="0, 20"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Background" Value="{DynamicResource FormBorderColor}"/>
+    </Style>
+
+    <Style Selector="ProgressBar.ProgressBar">
+        <Setter Property="Background" Value="{DynamicResource FormBorderColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
+    <Style Selector="components|ServerInfo.Animated">
+        <Style.Animations>
+            <Animation Duration="0:0:0.5" IterationCount="1">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0"/>
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="Opacity" Value="1"/>
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+</Styles>
+

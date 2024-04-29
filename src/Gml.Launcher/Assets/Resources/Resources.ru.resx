@@ -1,0 +1,74 @@
+﻿<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthButtonText" xml:space="preserve">
+    <value>АВТОРИЗОВАТЬСЯ</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>ИГРАТЬ</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>НАСТРОЙКИ</value>
+  </data>
+  <data name="ModsList" xml:space="preserve">
+    <value>СПИСОК МОДОВ</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>НАШ САЙТ</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>Ошибка авторизации</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Потеряно соединение с сервером</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Переподключение...</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>НАЗАД</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Личный кабинет</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Профиль не настроен, запуск текущего клиента не доступен</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Настройки ОЗУ</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Настройте объем потребляемой оперативной памяти</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Автоматически</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Полноэкранный режим</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Размеры окна</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>Мб</value>
+  </data>
+</root>

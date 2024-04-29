@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthButtonText" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ModsList" xml:space="preserve">
+    <value>Mods list</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>Auth error</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Lost connection to server</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Reconnecting....</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Profile not configured</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Settings RAM</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Configure the amount of RAM consumed.</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Window size</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>MB</value>
+  </data>
+</root>

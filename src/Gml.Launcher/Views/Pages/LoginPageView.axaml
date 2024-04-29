@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
+             xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+             xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:DataType="vm:LoginPageViewModel"
+             x:Class="Gml.Launcher.Views.Pages.LoginPageView">
+
+
+    <Grid>
+
+        <!-- Background -->
+        <!-- <components:BackgroundComponent /> -->
+
+        <components:StackFrameBorder VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Width="380"
+                                     Spacing="20">
+
+            <StackPanel Classes="MarginBottom">
+
+                <components:LogoComponent Classes="TextLogo"
+                                          HorizontalAlignment="Center" />
+            </StackPanel>
+
+            <Border Classes="Separator" />
+
+            <StackPanel Classes="MarginBottom">
+                <TextBlock Text="{x:Static lang:Resources.Login}"
+                           Classes="FormText" />
+                <TextBox Classes="FormBox" Text="{Binding Login}" />
+            </StackPanel>
+
+            <StackPanel Classes="MarginBottom">
+                <TextBlock Text="{x:Static lang:Resources.Password}"
+                           Classes="FormText" />
+                <TextBox Classes="FormBox"
+                         PasswordChar="•"
+                         Text="{Binding Password}" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding Errors, Converter={converters:FirstElementConverter}}"
+                       IsVisible="{Binding Errors, Converter={converters:HasElementsConverter}}"
+                       Foreground="Tomato"
+                       Margin="0, 0, 0, 20"/>
+
+
+            <components:GmlButton Command="{Binding LoginCommand}"
+                                  HorizontalAlignment="Center"
+                                  IsDefault="True"
+                                  IsVisible="{Binding IsNotProcessing}"
+                                  Classes="TextIcon Primary"
+                                  IconPath="/Assets/Images/login.svg"
+                                  IconSize="24"
+                                  FontWeight="Bold"
+                                  Text="{x:Static lang:Resources.AuthButtonText}" />
+
+            <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                         Classes="ProgressBar"
+                         IsVisible="{Binding IsProcessing}"
+                         Margin="23"
+                         Height="1"
+                         VerticalAlignment="Bottom" />
+
+        </components:StackFrameBorder>
+
+    </Grid>
+
+</UserControl>

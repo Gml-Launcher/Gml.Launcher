@@ -1,0 +1,37 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Gml.Launcher.App"
+             xmlns:helpers="clr-namespace:Gml.Launcher.Core.Helpers">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Assets/Styles/Colors.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.DataTemplates>
+        <helpers:ViewLocator />
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <StyleInclude Source="/Views/Components/BackgroundComponent.axaml" />
+        <StyleInclude Source="/Views/Components/GmlButton.axaml" />
+        <StyleInclude Source="/Views/Components/SidebarComponent.axaml" />
+        <StyleInclude Source="/Views/Components/LogoComponent.axaml" />
+        <StyleInclude Source="/Views/Components/StackFrameBorder.axaml" />
+        <StyleInclude Source="/Views/Components/BadgeComponent.axaml" />
+        <StyleInclude Source="/Views/Components/ServerInfo.axaml" />
+        <StyleInclude Source="/Views/Components/LoadingControl.axaml" />
+        <StyleInclude Source="/Views/Components/ProfileUserControl.axaml" />
+        <StyleInclude Source="/Views/Components/ProfileInfoComponent.axaml" />
+
+        <StyleInclude Source="Assets/Styles/Classes.axaml"/>
+
+        <StyleInclude Source="avares://GamerVII.Notification.Avalonia/Themes/Generic.xaml" />
+
+    </Application.Styles>
+</Application>

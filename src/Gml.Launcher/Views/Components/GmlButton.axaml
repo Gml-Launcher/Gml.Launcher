@@ -1,0 +1,117 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components">
+
+    <Design.PreviewWith>
+        <Border Background="{StaticResource BackgroundColor}"
+                Padding="20">
+            <StackPanel Spacing="20">
+                <StackPanel Spacing="10" Orientation="Horizontal">
+                    <controls:GmlButton Classes="Icon Secondary" />
+                    <controls:GmlButton Classes="Icon Primary" />
+                    <controls:GmlButton Classes="Icon Additional" />
+                </StackPanel>
+                <controls:GmlButton Classes="TextIcon Primary" />
+                <controls:GmlButton Classes="TextIcon Secondary" />
+                <controls:GmlButton Classes="TextIcon Additional" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|GmlButton">
+
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+
+    </Style>
+
+
+    <Style Selector="controls|GmlButton.Icon">
+
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="50" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
+                        Command="{TemplateBinding Command}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}">
+                    <Svg Path="{TemplateBinding IconPath}"
+                         Width="{TemplateBinding IconSize}"
+                         Height="{TemplateBinding IconSize}" />
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="controls|GmlButton.TextIcon">
+
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="10, 0, 20, 0" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Background="{TemplateBinding Background}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}">
+
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="{TemplateBinding Spacing}">
+                        <Svg Path="{TemplateBinding IconPath}"
+                             Width="{TemplateBinding IconSize}"
+                             Height="{TemplateBinding IconSize}" />
+                        <TextBlock Text="{TemplateBinding Text}"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   Foreground="{DynamicResource HeadlineColor}"/>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Secondary">
+        <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Secondary:pointerover /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource SecondaryColorHover}" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Additional">
+        <Setter Property="Background" Value="{StaticResource FormBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FormBorderColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="controls|GmlButton.Additional:pointerover /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary">
+        <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:pointerover /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource PrimaryColorHover}" />
+    </Style>
+
+</Styles>

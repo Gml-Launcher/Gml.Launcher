@@ -1,0 +1,46 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components">
+    <Design.PreviewWith>
+        <controls:LoadingControl />
+    </Design.PreviewWith>
+
+    <Style Selector="Ellipse.RoundAnimate">
+        <Style.Animations>
+            <Animation Duration="0:0:1" IterationCount="INFINITE">
+                <KeyFrame Cue="0%">
+                    <Setter Property="RotateTransform.Angle" Value="0.0"/>
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="RotateTransform.Angle" Value="360.0"/>
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="controls|LoadingControl">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Canvas Width="{TemplateBinding Size}"
+                        Height="{TemplateBinding Size}"
+                        Background="{StaticResource BackgroundColor}">
+                    <Ellipse Width="{TemplateBinding Size}"
+                             Height="{TemplateBinding Size}"
+                             Stroke="#20FFFFFF"
+                             StrokeThickness="2">
+                    </Ellipse>
+                    <Ellipse Width="{TemplateBinding Size}"
+                             Height="{TemplateBinding Size}"
+                             Stroke="#FFFFFF"
+                             StrokeLineCap="Round"
+                             StrokeThickness="2"
+                             Classes="RoundAnimate"
+                             StrokeDashArray="13, 352">
+                    </Ellipse>
+                </Canvas>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
+

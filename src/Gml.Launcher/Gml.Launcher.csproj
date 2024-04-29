@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ApplicationIcon>Assets\Images\avalonia-logo.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Assets\Resource.resx" />
+      <EmbeddedResource Update="Assets\Resources\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.2.1" />
+        <PackageReference Include="Avalonia" Version="11.0.7" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.7" />
+        <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.10" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.7" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.7" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.7" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.7" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Compile Update="Core\Services\ResourceLocalizationService.cs">
+        <DependentUpon>ILocalizationService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Core\Services\SystemService.cs">
+        <DependentUpon>ISystemService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Assets\Resources\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Core\Services\LocalStorageService.cs">
+        <DependentUpon>IStorageService.cs</DependentUpon>
+      </Compile>
+      <Compile Remove="Assets\Resources\ResourceKeysDictionary.Template.cs" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia.csproj" />
+      <ProjectReference Include="..\Gml.Client\src\Gml.Client\Gml.Client.csproj" />
+      <ProjectReference Include="..\Gml.Client\src\Gml.WebApi.Models\Gml.WebApi.Models.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <AvaloniaResource Update="Assets\Resource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resource.resx</DependentUpon>
+      </AvaloniaResource>
+      <AvaloniaResource Update="Assets\Resource.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      </AvaloniaResource>
+      <AvaloniaResource Update="Assets\Resources\Resources.en.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </AvaloniaResource>
+      <AvaloniaResource Update="Assets\Resources\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </AvaloniaResource>
+      <AvaloniaResource Update="Assets\Resources\Resources.ru.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </AvaloniaResource>
+    </ItemGroup>
+</Project>
