@@ -11,6 +11,7 @@ public class AppViewLocator : IViewLocator
     {
         OverviewPageViewModel context => new OverviewPageView { DataContext = context },
         ProfilePageViewModel context => new ProfilePageView() { DataContext = context },
+        SettingsPageViewModel context => new SettingsPageView() { DataContext = context },
         LoginPageViewModel context => new LoginPageView() { DataContext = context },
 
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))

@@ -1,0 +1,45 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:models="clr-namespace:Gml.Launcher.Models">
+    <Design.PreviewWith>
+        <controls:StackFrameBorder Spacing="20" Width="450">
+            <controls:ProfileInfoComponent />
+        </controls:StackFrameBorder>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ProfileInfoComponent">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+
+                <ItemsControl ItemsSource="{TemplateBinding ProfileInfoItems}">
+                    <ItemsControl.DataTemplates>
+                        <DataTemplate x:DataType="models:ProfileInfoItem">
+                            <Grid Margin="0, 10"
+                                  ColumnDefinitions="Auto, *, Auto"
+                                  x:Name="ProfileInfoItemView">
+                                <TextBlock Grid.Column="0"
+                                           Foreground="{DynamicResource ContentColor}"
+                                           Text="{Binding Key}" />
+                                <TextBlock Grid.Column="2" Foreground="{DynamicResource ContentColor}"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding Value}" />
+                                <Rectangle Grid.Column="1" Height="1"
+                                           Margin="5, 0"
+                                           VerticalAlignment="Bottom"
+                                           StrokeDashArray="5"
+                                           StrokeJoin="Round"
+                                           StrokeLineCap="Round"
+                                           StrokeThickness="1"
+                                           Stroke="{DynamicResource FormBorderColor}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.DataTemplates>
+
+                </ItemsControl>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
+

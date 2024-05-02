@@ -1,0 +1,66 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Runtime"
+        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources">
+    <Design.PreviewWith>
+        <Border Background="{DynamicResource BackgroundColor}"
+                Width="390"
+                Padding="20">
+            <controls:ProfileUserControl />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ProfileUserControl">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:StackFrameBorder Spacing="40"
+                                           Padding="0">
+
+                    <Grid RowDefinitions="Auto, *">
+
+                        <Grid>
+                            <Grid ClipToBounds="True"
+                                  Height="150"
+                                  Margin="0,40,0,40">
+                                <Image asyncImageLoader:ImageLoader.Source="{TemplateBinding SkinUrl}"
+                                       VerticalAlignment="Top"
+                                       Height="250" />
+                            </Grid>
+                            <TextBlock Text="{TemplateBinding UserName}"
+                                       Foreground="{DynamicResource PrimaryColor}"
+                                       TextAlignment="Center"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0,0,0,10"
+                                       FontSize="24"
+                                       FontWeight="ExtraBlack" />
+                        </Grid>
+                        <Canvas Grid.Row="0">
+                            <Path Canvas.Bottom="0"
+                                  Data="M 0 -200 L 0 0 L 60 20 L 290 20 L 350 0 L 350 -200 Z"
+                                  Fill="{DynamicResource ProfileLinearGradient}" />
+                            <Path Stroke="{DynamicResource PrimaryColor}"
+                                  Canvas.Bottom="0"
+                                  StrokeThickness="2"
+                                  Data="M 0 0 L 60 20 L 290 20 L 350 0" />
+                        </Canvas>
+                        <StackPanel Grid.Row="1" Margin="30">
+
+                            <controls:ProfileInfoComponent />
+
+                            <controls:GmlButton Classes="TextIcon Primary"
+                                                Margin="0, 15, 0, 0"
+                                                Padding="15, 10, 10, 10"
+                                                Text="{x:Static lang:Resources.Cabinet}"
+                                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+
+
+                </controls:StackFrameBorder>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

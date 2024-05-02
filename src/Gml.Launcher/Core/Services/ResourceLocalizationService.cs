@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia;
+using Gml.Launcher.Assets.Resources;
 
 namespace Gml.Launcher.Core.Services;
 
@@ -17,8 +18,6 @@ public class ResourceLocalizationService : ILocalizationService
 
     private static string? TryGetLocalizedString(string key)
     {
-        return Application.Current!.Resources.TryGetResource(key, null, out var value)
-            ? value?.ToString()
-            : null;
+        return Resources.ResourceManager.GetString(key, Resources.Culture);
     }
 }

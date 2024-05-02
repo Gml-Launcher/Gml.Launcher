@@ -10,8 +10,8 @@
 
 namespace Gml.Launcher.Assets.Resources {
     using System;
-    
-    
+
+
     /// <summary>
     ///   Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Gml.Launcher.Assets.Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Перезаписывает свойство CurrentUICulture текущего потока для всех
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
@@ -59,7 +59,7 @@ namespace Gml.Launcher.Assets.Resources {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Sign in.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("AuthButtonText", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Login.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Mods list.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModsList", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Password.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Play.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Play", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Settings.
         /// </summary>
@@ -113,13 +113,85 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Website.
         /// </summary>
         public static string Website {
             get {
                 return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Website.
+        /// </summary>
+        public static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Website.
+        /// </summary>
+        public static string Cabinet {
+            get {
+                return ResourceManager.GetString("Cabinet", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ProfileNotConfigured {
+            get {
+                return ResourceManager.GetString("ProfileNotConfigured", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string SettingsRamDescription {
+            get {
+                return ResourceManager.GetString("SettingsRamDescription", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string SettingsRamTitle {
+            get {
+                return ResourceManager.GetString("SettingsRamTitle", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string DynamicValue {
+            get {
+                return ResourceManager.GetString("DynamicValue", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string WindowSize {
+            get {
+                return ResourceManager.GetString("WindowSize", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string FullScreen {
+            get {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string UnitMb {
+            get {
+                return ResourceManager.GetString("UnitMb", resourceCulture);
             }
         }
     }
