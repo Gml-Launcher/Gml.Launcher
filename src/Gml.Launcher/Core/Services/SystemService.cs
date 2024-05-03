@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using Avalonia.Controls.Shapes;
+using Gml.Client;
+using Gml.Launcher.Core.Exceptions;
+using Splat;
 using static System.OperatingSystem;
 
 namespace Gml.Launcher.Core.Services;
@@ -9,12 +12,17 @@ public class SystemService : ISystemService
 {
     private const string NotSupportedMessage = "Operating system not supported";
 
+    public SystemService()
+    {
+    }
+
     public string GetApplicationFolder()
     {
         if (IsWindows())
         {
             return GetFolderPath(Environment.SpecialFolder.ApplicationData);
         }
+
         if (IsLinux() || IsMacOS())
         {
             return GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -23,9 +31,10 @@ public class SystemService : ISystemService
         throw new NotSupportedException(NotSupportedMessage);
     }
 
-    public string GetGameFolder(bool needCreate)
+    public string GetGameFolder(string addtionalPath, bool needCreate)
     {
-        var directoryInfo = new DirectoryInfo(System.IO.Path.Combine(GetApplicationFolder(), "GamerVII")); // ToDo: To const
+        var directoryInfo =
+            new DirectoryInfo(System.IO.Path.Combine(GetApplicationFolder(), addtionalPath)); // ToDo: To const
 
         if (needCreate && !directoryInfo.Exists)
             directoryInfo.Create();

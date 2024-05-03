@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
-using Gml.WebApi.Models.Dtos.Profiles;
+using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -15,7 +15,7 @@ namespace Gml.Launcher.ViewModels.Pages;
 public class SettingsPageViewModel : PageViewModelBase
 {
     private readonly IStorageService _storageService;
-    private readonly ReadProfileDto _selectedProfile;
+    private readonly ProfileReadDto _selectedProfile;
 
     public bool DynamicRamValue
     {
@@ -65,7 +65,7 @@ public class SettingsPageViewModel : PageViewModelBase
         IScreen screen,
         ILocalizationService? localizationService,
         IStorageService storageService,
-        ReadProfileDto selectedProfile) : base(screen, localizationService)
+        ProfileReadDto selectedProfile) : base(screen, localizationService)
     {
         _storageService = storageService;
         _selectedProfile = selectedProfile;

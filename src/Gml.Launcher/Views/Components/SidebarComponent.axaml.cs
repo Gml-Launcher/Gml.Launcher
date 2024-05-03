@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Gml.Launcher.ViewModels.Components;
-using Gml.WebApi.Models.Dtos.Profiles;
 
 namespace Gml.Launcher.Views.Components;
 

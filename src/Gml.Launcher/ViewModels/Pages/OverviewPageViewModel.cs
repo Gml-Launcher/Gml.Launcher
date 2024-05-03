@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Reactive;
 using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,7 +13,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using DynamicData;
 using GamerVII.Notification.Avalonia;
 using Gml.Client;
 using Gml.Client.Models;
@@ -23,8 +21,8 @@ using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
-using Gml.WebApi.Models.Dtos.Profiles;
-using Gml.WebApi.Models.Enums.System;
+using Gml.Web.Api.Domains.System;
+using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using Splat;
 
@@ -97,7 +95,7 @@ public class OverviewPageViewModel : PageViewModelBase
         _screen.Router.Navigate.Execute(new LoginPageViewModel(_screen));
     }
 
-    private async Task StartGame(CancellationToken arg)
+    private async Task StartGame(CancellationToken cancellationToken)
     {
         try
         {
@@ -117,13 +115,11 @@ public class OverviewPageViewModel : PageViewModelBase
 
             if (profileInfo is { Data: not null })
             {
-                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data));
+                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data), cancellationToken);
                 var process = await _clientManager.GetProcess(profileInfo.Data);
 
-                var p = new ProcessUtil(process);
-                p.OutputReceived += (s, e) => Console.WriteLine(e);
-                p.StartWithEvents();
-                await p.WaitForExitTaskAsync();
+                process.Start();
+                await process.WaitForExitAsync(cancellationToken);
             }
             else
             {
@@ -154,10 +150,6 @@ public class OverviewPageViewModel : PageViewModelBase
 
             Console.WriteLine(exception);
         }
-        finally
-        {
-
-        }
     }
 
 
@@ -167,7 +159,7 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             var profilesData = await _clientManager.GetProfiles();
 
-            ListViewModel.Profiles = new ObservableCollection<ReadProfileDto>(profilesData.Data ?? []);
+            ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
         }
         catch (TaskCanceledException ex)
         {

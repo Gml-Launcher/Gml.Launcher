@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Gml.Launcher.ViewModels.Base;
-using Gml.WebApi.Models.Dtos.Profiles;
+using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 
 namespace Gml.Launcher.ViewModels.Components;
@@ -9,7 +9,7 @@ namespace Gml.Launcher.ViewModels.Components;
 public class ListViewModel : ViewModelBase
 {
 
-    public ObservableCollection<ReadProfileDto>? Profiles
+    public ObservableCollection<ProfileReadDto>? Profiles
     {
         get => _profiles;
         set
@@ -21,7 +21,7 @@ public class ListViewModel : ViewModelBase
         }
     }
 
-    public ReadProfileDto? SelectedProfile
+    public ProfileReadDto? SelectedProfile
     {
         get => _selectedProfile;
         set
@@ -36,7 +36,7 @@ public class ListViewModel : ViewModelBase
     public bool HasSelectedItem => _selectedProfile != null;
 
 
-    private ObservableCollection<ReadProfileDto>? _profiles;
-    private ReadProfileDto? _selectedProfile;
+    private ObservableCollection<ProfileReadDto>? _profiles;
+    private ProfileReadDto? _selectedProfile;
 
 }

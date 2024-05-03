@@ -32,7 +32,9 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.7" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.7" />
+        <PackageReference Include="Sentry" Version="4.2.1" />
         <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     </ItemGroup>
 
 
@@ -58,7 +60,7 @@
     <ItemGroup>
       <ProjectReference Include="..\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia.csproj" />
       <ProjectReference Include="..\Gml.Client\src\Gml.Client\Gml.Client.csproj" />
-      <ProjectReference Include="..\Gml.Client\src\Gml.WebApi.Models\Gml.WebApi.Models.csproj" />
+      <ProjectReference Include="..\Gml.Client\src\Gml.Web.Api.Domains\Gml.Web.Api.Domains.csproj" />
     </ItemGroup>
 
 
