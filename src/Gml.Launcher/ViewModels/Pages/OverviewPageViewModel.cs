@@ -118,10 +118,8 @@ public class OverviewPageViewModel : PageViewModelBase
                 await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data), cancellationToken);
                 var process = await _clientManager.GetProcess(profileInfo.Data);
 
-                var p = new ProcessUtil(process);
-                p.OutputReceived += (s, e) => Console.WriteLine(e);
-                p.StartWithEvents();
-                await p.WaitForExitTaskAsync();
+                process.Start();
+                await process.WaitForExitAsync(cancellationToken);
             }
             else
             {
