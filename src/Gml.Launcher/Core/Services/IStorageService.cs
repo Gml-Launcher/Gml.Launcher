@@ -36,4 +36,6 @@ public interface IStorageService
     /// <param name="value">The record to save.</param>
     /// <returns>A task representing the asynchronous save operation.</returns>
     Task<int> SaveRecord<T>(T value);
+
+    Task<string> GetLogsAsync(int rowCount);
 }

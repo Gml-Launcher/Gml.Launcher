@@ -34,6 +34,7 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
+                                       Status="Доступен"
                                        ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
                                        VerticalAlignment="Center" />
 
