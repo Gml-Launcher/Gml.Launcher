@@ -126,6 +126,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     cancellationToken);
 
                 var process = await _clientManager.GetProcess(profileInfo.Data);
+                await _clientManager.ClearFiles(profileInfo.Data);
 
                 UpdateProgress("Запуск", "Подготовка к запуску...", true);
                 process.Start();
