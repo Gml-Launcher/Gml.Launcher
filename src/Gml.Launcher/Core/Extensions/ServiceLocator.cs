@@ -27,7 +27,7 @@ public static class ServiceLocator
 
         Locator.CurrentMutable.RegisterConstant(new ResourceLocalizationService(), typeof(ILocalizationService));
         Locator.CurrentMutable.RegisterConstant(systemService, typeof(ISystemService));
-        Locator.CurrentMutable.RegisterConstant(new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host, ResourceKeysDictionary.FolderName), typeof(IGmlClientManager));
+        Locator.CurrentMutable.RegisterConstant(new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host, ResourceKeysDictionary.FolderName, systemService.GetOsType()), typeof(IGmlClientManager));
         Locator.CurrentMutable.RegisterConstant(new LocalStorageService(), typeof(IStorageService));
 
         AppDomain.CurrentDomain.UnhandledException += (sender, args) =>

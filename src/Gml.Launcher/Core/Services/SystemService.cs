@@ -3,6 +3,7 @@ using System.IO;
 using Avalonia.Controls.Shapes;
 using Gml.Client;
 using Gml.Launcher.Core.Exceptions;
+using Gml.Web.Api.Domains.System;
 using Splat;
 using static System.OperatingSystem;
 
@@ -45,5 +46,25 @@ public class SystemService : ISystemService
     private static string GetFolderPath(Environment.SpecialFolder folder)
     {
         return Environment.GetFolderPath(folder);
+    }
+
+    public OsType GetOsType()
+    {
+        if (IsWindows())
+        {
+            return OsType.Windows;
+        }
+
+        if (IsLinux())
+        {
+            return OsType.Linux;
+        }
+
+        if (IsMacOS())
+        {
+            return OsType.OsX;
+        }
+
+        return OsType.Undefined;
     }
 }

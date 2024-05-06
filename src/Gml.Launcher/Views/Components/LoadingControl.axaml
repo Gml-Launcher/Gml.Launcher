@@ -19,12 +19,14 @@
     </Style>
 
     <Style Selector="controls|LoadingControl">
+        <Setter Property="Background" Value="#000000"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
                 <Canvas Width="{TemplateBinding Size}"
                         Height="{TemplateBinding Size}"
-                        Background="{StaticResource BackgroundColor}">
+                        Background="{TemplateBinding Background}">
                     <Ellipse Width="{TemplateBinding Size}"
                              Height="{TemplateBinding Size}"
                              Stroke="#20FFFFFF"
@@ -32,7 +34,7 @@
                     </Ellipse>
                     <Ellipse Width="{TemplateBinding Size}"
                              Height="{TemplateBinding Size}"
-                             Stroke="#FFFFFF"
+                             Stroke="{TemplateBinding Foreground}"
                              StrokeLineCap="Round"
                              StrokeThickness="2"
                              Classes="RoundAnimate"

@@ -24,6 +24,7 @@ using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Domains.System;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -34,7 +35,6 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _clientManager;
     private readonly IUser _user;
-    private int _loadingPercentage;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
@@ -44,11 +44,13 @@ public class OverviewPageViewModel : PageViewModelBase
     public ListViewModel ListViewModel { get; } = new();
     public IUser User => _user;
 
-    public int LoadingPercentage
-    {
-        get => _loadingPercentage;
-        set => this.RaiseAndSetIfChanged(ref _loadingPercentage, value);
-    }
+    [Reactive] public int? LoadingPercentage { get; set; }
+
+    [Reactive] public string Headline { get; set; }
+
+    [Reactive] public string Description { get; set; }
+
+    [Reactive] public bool IsProcessing { get; set; }
 
     internal OverviewPageViewModel(
         IScreen screen,
@@ -71,12 +73,13 @@ public class OverviewPageViewModel : PageViewModelBase
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(screen, LocalizationService, _storageService, ListViewModel.SelectedProfile!))
+            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(screen, LocalizationService, _storageService,
+                ListViewModel.SelectedProfile!))
         );
 
         _clientManager.ProgressChanged += (sender, args) =>
         {
-            if (_loadingPercentage != args.ProgressPercentage)
+            if (LoadingPercentage != args.ProgressPercentage)
             {
                 LoadingPercentage = args.ProgressPercentage;
             }
@@ -99,6 +102,8 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
+            UpdateProgress("Обновление", "Получение обновлений", true);
+
             var localProfile = new ProfileCreateInfoDto
             {
                 ProfileName = ListViewModel.SelectedProfile!.Name,
@@ -115,10 +120,18 @@ public class OverviewPageViewModel : PageViewModelBase
 
             if (profileInfo is { Data: not null })
             {
-                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data), cancellationToken);
+                UpdateProgress("Обновление", "Проверка целостности файлов", true);
+
+                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data),
+                    cancellationToken);
+
                 var process = await _clientManager.GetProcess(profileInfo.Data);
 
+                UpdateProgress("Запуск", "Подготовка к запуску...", true);
                 process.Start();
+
+                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                UpdateProgress(string.Empty, string.Empty, false);
                 await process.WaitForExitAsync(cancellationToken);
             }
             else
@@ -152,6 +165,14 @@ public class OverviewPageViewModel : PageViewModelBase
         }
     }
 
+    private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
+    {
+        Headline = headline;
+        Description = description;
+        IsProcessing = isProcessing;
+        LoadingPercentage = percentage;
+    }
+
 
     private async void LoadData()
     {
@@ -161,12 +182,14 @@ public class OverviewPageViewModel : PageViewModelBase
 
             ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
         }
-        catch (TaskCanceledException ex)
+        catch (TaskCanceledException exception)
         {
+            Console.WriteLine(exception);
             await Reconnect();
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException exception)
         {
+            Console.WriteLine(exception);
             await Reconnect();
         }
         catch (Exception ex)

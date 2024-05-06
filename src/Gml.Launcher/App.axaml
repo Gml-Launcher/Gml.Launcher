@@ -28,6 +28,7 @@
         <StyleInclude Source="/Views/Components/LoadingControl.axaml" />
         <StyleInclude Source="/Views/Components/ProfileUserControl.axaml" />
         <StyleInclude Source="/Views/Components/ProfileInfoComponent.axaml" />
+        <StyleInclude Source="/Views/Components/ProgressBar.axaml" />
 
         <StyleInclude Source="Assets/Styles/Classes.axaml"/>
 

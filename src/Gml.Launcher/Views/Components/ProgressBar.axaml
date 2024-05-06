@@ -1,0 +1,72 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components">
+    <Design.PreviewWith>
+        <controls:ProgressBar />
+    </Design.PreviewWith>
+
+    <Style Selector="Ellipse.LoadingInfinity">
+        <Style.Animations>
+            <Animation Duration="0:0:0:1" IterationCount="INFINITE">
+                <KeyFrame Cue="0%">
+                    <Setter Property="RotateTransform.Angle" Value="0.0" />
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="RotateTransform.Angle" Value="-360.0" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="controls|ProgressBar">
+        <Setter Property="Background" Value="{StaticResource FrameBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FrameBackgroundBorderColor}" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="BorderThickness" Value="1" />
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        HorizontalAlignment="Center"
+                        Padding="5, 5, 25, 5"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="5">
+
+                        <!-- <Svg Path="/Assets/Images/download.svg" -->
+                        <!--      Width="36" /> -->
+
+                        <Grid>
+                            <controls:LoadingControl
+                                Background="Transparent"
+                                Foreground="{DynamicResource PrimaryColor}"
+                                Margin="8"
+                                Size="28"/>
+
+                            <TextBlock Text="{TemplateBinding Percentage}"
+                                       HorizontalAlignment="Center"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource PrimaryColor}"/>
+                        </Grid>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    Spacing="3">
+                            <TextBlock Foreground="{DynamicResource HeadlineColor}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Text="{TemplateBinding Headline}" />
+                            <TextBlock Foreground="{DynamicResource ContentColor}"
+                                       FontSize="12"
+                                       Text="{TemplateBinding Description}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

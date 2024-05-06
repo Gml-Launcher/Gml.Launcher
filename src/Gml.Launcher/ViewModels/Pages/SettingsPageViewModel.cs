@@ -59,7 +59,6 @@ public class SettingsPageViewModel : PageViewModelBase
     private double _ramValue;
     private bool _dynamicRamValue;
     private bool _fullScreen;
-    private bool _isBusy;
 
     public SettingsPageViewModel(
         IScreen screen,
