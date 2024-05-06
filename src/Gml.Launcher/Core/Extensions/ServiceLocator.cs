@@ -37,16 +37,23 @@ public static class ServiceLocator
 
         var sentryUrl = GmlClientManager.GetSentryLink(ResourceKeysDictionary.Host).Result;
 
-        SentrySdk.Init(options =>
+        try
         {
-            options.Dsn = sentryUrl;
-            options.Debug = true;
-            options.TracesSampleRate = 1.0;
-            options.DiagnosticLevel = SentryLevel.Debug;
-            options.IsGlobalModeEnabled = true;
-            options.SendDefaultPii = true;
-            options.MaxAttachmentSize = 10 * 1024 * 1024;
-        });
+            SentrySdk.Init(options =>
+            {
+                options.Dsn = sentryUrl;
+                options.Debug = true;
+                options.TracesSampleRate = 1.0;
+                options.DiagnosticLevel = SentryLevel.Debug;
+                options.IsGlobalModeEnabled = true;
+                options.SendDefaultPii = true;
+                options.MaxAttachmentSize = 10 * 1024 * 1024;
+            });
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
 
         return builder;
     }
