@@ -14,10 +14,10 @@ public class ProfileUserControl : TemplatedControl
             nameof(ProfileInfoItems));
 
     public static readonly StyledProperty<string> SkinUrlProperty = AvaloniaProperty.Register<ProfileUserControl, string>(
-        nameof(SkinUrl));
+        nameof(SkinUrl), "https://textures.recloud.tech/skin/GamerVII/front/128");
 
     public static readonly StyledProperty<string> UserNameProperty = AvaloniaProperty.Register<ProfileUserControl, string>(
-        nameof(UserName));
+        nameof(UserName), "GamerVII");
 
     public string UserName
     {

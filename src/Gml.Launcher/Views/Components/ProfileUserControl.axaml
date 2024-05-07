@@ -3,7 +3,8 @@
         xmlns:controls="using:Gml.Launcher.Views.Components"
         xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Runtime"
-        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources">
+        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+        xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters">
     <Design.PreviewWith>
         <Border Background="{DynamicResource BackgroundColor}"
                 Width="390"
@@ -22,13 +23,12 @@
                     <Grid RowDefinitions="Auto, *">
 
                         <Grid>
-                            <Grid ClipToBounds="True"
-                                  Height="150"
-                                  Margin="0,40,0,40">
-                                <Image asyncImageLoader:ImageLoader.Source="{TemplateBinding SkinUrl}"
-                                       VerticalAlignment="Top"
-                                       Height="250" />
-                            </Grid>
+                            <Border Padding="0, 60, 0, 0" Height="250">
+                                <Image Source="{TemplateBinding SkinUrl, Converter={converters:SkinRenderConverter}}"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0, 0, 0, -128"
+                                       Height="350" />
+                            </Border>
                             <TextBlock Text="{TemplateBinding UserName}"
                                        Foreground="{DynamicResource PrimaryColor}"
                                        TextAlignment="Center"
