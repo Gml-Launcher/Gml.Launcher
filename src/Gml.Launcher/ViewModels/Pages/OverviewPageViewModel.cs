@@ -19,6 +19,7 @@ using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
+using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Domains.System;
@@ -35,12 +36,14 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _clientManager;
     private readonly IUser _user;
+    private readonly ISystemService _systemService;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
+    public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User => _user;
 
@@ -56,10 +59,15 @@ public class OverviewPageViewModel : PageViewModelBase
         IScreen screen,
         IUser user,
         IGmlClientManager? clientManager = null,
+        ISystemService? systemService = null,
         IStorageService? storageService = null) : base(screen)
     {
         _screen = screen;
         _user = user;
+        _systemService = systemService
+                         ?? Locator.Current.GetService<ISystemService>()
+                         ?? throw new ServiceNotFoundException(typeof(ISystemService));
+        ;
         _storageService = storageService
                           ?? Locator.Current.GetService<IStorageService>()
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
@@ -73,9 +81,15 @@ public class OverviewPageViewModel : PageViewModelBase
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(screen, LocalizationService, _storageService,
+            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
+                screen,
+                LocalizationService,
+                _storageService,
+                _systemService,
                 ListViewModel.SelectedProfile!))
         );
+
+        HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
 
         _clientManager.ProgressChanged += (sender, args) =>
         {
@@ -102,14 +116,24 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
-            UpdateProgress("Обновление", "Получение обновлений", true);
+            UpdateProgress(
+                LocalizationService.GetString(ResourceKeysDictionary.Updating),
+                LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
+                true);
+
+            var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
+
+            if (settings is null)
+            {
+                throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
+            }
 
             var localProfile = new ProfileCreateInfoDto
             {
                 ProfileName = ListViewModel.SelectedProfile!.Name,
-                RamSize = 8192,
+                RamSize = Convert.ToInt32(settings.RamValue),
                 IsFullScreen = false,
-                OsType = ((int)OsType.Windows).ToString(),
+                OsType = ((int)_systemService.GetOsType()).ToString(),
                 OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
                 UserAccessToken = User.AccessToken,
                 UserName = User.Name,
@@ -120,7 +144,10 @@ public class OverviewPageViewModel : PageViewModelBase
 
             if (profileInfo is { Data: not null })
             {
-                UpdateProgress("Обновление", "Проверка целостности файлов", true);
+                UpdateProgress(
+                    LocalizationService.GetString(ResourceKeysDictionary.Updating),
+                    LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity),
+                    true);
 
                 await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data),
                     cancellationToken);
@@ -128,7 +155,10 @@ public class OverviewPageViewModel : PageViewModelBase
                 var process = await _clientManager.GetProcess(profileInfo.Data);
                 await _clientManager.ClearFiles(profileInfo.Data);
 
-                UpdateProgress("Запуск", "Подготовка к запуску...", true);
+                UpdateProgress(
+                    LocalizationService.GetString(ResourceKeysDictionary.Launching),
+                    LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch), //Preparing to launch...
+                    true);
                 process.Start();
 
                 await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
@@ -163,6 +193,10 @@ public class OverviewPageViewModel : PageViewModelBase
             }
 
             Console.WriteLine(exception);
+        }
+        finally
+        {
+            UpdateProgress(string.Empty, string.Empty, false);
         }
     }
 

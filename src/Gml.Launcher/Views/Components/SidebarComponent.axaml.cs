@@ -17,6 +17,15 @@ public class SidebarComponent : TemplatedControl
     public static readonly StyledProperty<ListViewModel> ListViewModelProperty = AvaloniaProperty.Register<SidebarComponent, ListViewModel>(
         nameof(ListViewModel));
 
+    public static readonly StyledProperty<ICommand> HomeCommandProperty = AvaloniaProperty.Register<SidebarComponent, ICommand>(
+        nameof(HomeCommand));
+
+    public ICommand HomeCommand
+    {
+        get => GetValue(HomeCommandProperty);
+        set => SetValue(HomeCommandProperty, value);
+    }
+
     public ListViewModel ListViewModel
     {
         get => GetValue(ListViewModelProperty);

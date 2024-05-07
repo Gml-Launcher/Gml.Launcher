@@ -194,5 +194,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("UnitMb", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Available {
+            get {
+                return ResourceManager.GetString("Available", resourceCulture);
+            }
+        }
     }
 }

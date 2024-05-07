@@ -22,6 +22,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        BeginMoveDrag(e);
+        // BeginMoveDrag(e);
     }
 }

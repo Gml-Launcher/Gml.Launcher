@@ -1,8 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Management;
 using Avalonia.Controls.Shapes;
 using Gml.Client;
 using Gml.Launcher.Core.Exceptions;
+using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
 using Splat;
 using static System.OperatingSystem;
@@ -16,6 +21,68 @@ public class SystemService : ISystemService
     public SystemService()
     {
     }
+
+
+    public ulong GetMaxRam()
+    {
+        if (IsWindows())
+        {
+            return GetWindowsMaxRam();
+        }
+
+        if (IsLinux())
+        {
+            return GetUnixMaxRam();
+        }
+
+        throw new NotSupportedException("The operating system is not supported.");
+    }
+    private static ulong GetWindowsMaxRam()
+    {
+        var searcher = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem");
+        var collection = searcher.Get();
+
+        foreach (var item in collection)
+        {
+            ulong totalPhysicalMemory = (ulong)item["TotalPhysicalMemory"];
+            return totalPhysicalMemory / (1024 * 1024);
+        }
+
+        throw new Exception("Unable to determine total physical memory.");
+    }
+
+    private static ulong GetUnixMaxRam()
+    {
+        try
+        {
+            using (Process proc = new Process())
+            {
+                proc.StartInfo.FileName = "/bin/bash";
+                proc.StartInfo.Arguments = "-c \"free -b | grep Mem | awk '{print $2}'\"";
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.Start();
+
+                string output = proc.StandardOutput.ReadToEnd();
+                proc.WaitForExit();
+
+                if(ulong.TryParse(output, out ulong totalPhysicalMemory))
+                {
+                    return totalPhysicalMemory / (1024 * 1024);
+                }
+                else
+                {
+                    throw new Exception("Unable to parse total physical memory.");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle or log exception as needed
+            throw new Exception("Unable to determine total physical memory.", ex);
+        }
+    }
+
 
     public string GetApplicationFolder()
     {
@@ -66,5 +133,14 @@ public class SystemService : ISystemService
         }
 
         return OsType.Undefined;
+    }
+
+    public IEnumerable<Language> GetAvailableLanguages()
+    {
+       return new List<Language>
+        {
+            new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") },
+            new() { IconPath = "/Assets/Images/lang-ru.svg", Name = "Русский", Culture = new CultureInfo("ru-RU") },
+        };
     }
 }
