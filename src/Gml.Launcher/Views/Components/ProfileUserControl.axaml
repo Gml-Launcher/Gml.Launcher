@@ -24,10 +24,17 @@
 
                         <Grid>
                             <Border Padding="0, 60, 0, 0" Height="250">
-                                <Image Source="{TemplateBinding SkinUrl, Converter={converters:SkinRenderConverter}}"
-                                       VerticalAlignment="Bottom"
-                                       Margin="0, 0, 0, -128"
-                                       Height="350" />
+
+                                <Grid>
+                                    <controls:LoadingControl Background="Transparent"
+                                                             Foreground="{DynamicResource PrimaryColor}"
+                                                             Size="45"/>
+
+                                    <Image converters:AsyncSkinRenderLoader.Source="{TemplateBinding SkinUrl}"
+                                           VerticalAlignment="Bottom"
+                                           Margin="0, 0, 0, -128"
+                                           Height="350" />
+                                </Grid>
                             </Border>
                             <TextBlock Text="{TemplateBinding UserName}"
                                        Foreground="{DynamicResource PrimaryColor}"
