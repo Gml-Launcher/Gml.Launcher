@@ -3,6 +3,7 @@ using System.Linq;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Gml.Launcher.ViewModels.Components;
 

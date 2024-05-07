@@ -22,9 +22,15 @@
         <Border Grid.Column="1" Padding="25">
 
             <Grid ColumnDefinitions="Auto, 30, *"
-                  RowDefinitions="Auto, 30 *, 30, Auto">
+                  RowDefinitions="60, 30 *, 30, Auto">
 
-                <TextBlock Text="{Binding LoadingPercentage}" />
+                <components:ProgressBar Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        IsVisible="{Binding IsProcessing}"
+                                        Headline="{Binding Headline}"
+                                        Description="{Binding Description}"
+                                        Percentage="{Binding LoadingPercentage}"/>
 
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
@@ -34,7 +40,7 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
-                                       Status="Доступен"
+                                       Status="{x:Static lang:Resources.Available}"
                                        ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
                                        VerticalAlignment="Center" />
 
@@ -82,6 +88,7 @@
         <components:SidebarComponent Grid.Column="0"
                                      ListViewModel="{Binding ListViewModel}"
                                      LogoutCommand="{Binding LogoutCommand}"
+                                     HomeCommand="{Binding HomeCommand}"
                                      ProfileCommand="{Binding GoProfileCommand}" />
 
     </Grid>

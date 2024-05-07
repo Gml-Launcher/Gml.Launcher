@@ -71,4 +71,25 @@
   <data name="UnitMb" xml:space="preserve">
     <value>Мб</value>
   </data>
+  <data name="NotSetting" xml:space="preserve">
+    <value>Не удалось получить настройки запуска. Перейдите в настройки клиента и повторите попытку</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Обновление</value>
+  </data>
+  <data name="UpdatingDescription" xml:space="preserve">
+    <value>Получение обновлений</value>
+  </data>
+  <data name="CheckingFileIntegrity" xml:space="preserve">
+    <value>Проверка целостности файлов</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
+  <data name="PreparingLaunch" xml:space="preserve">
+    <value>Подготовка к запуску...</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Доступен</value>
+  </data>
 </root>

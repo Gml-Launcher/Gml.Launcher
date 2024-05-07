@@ -18,6 +18,7 @@
 
                     <Grid>
                         <components:LoadingControl
+                            Background="Transparent"
                             Margin="8"
                             Size="22"
                             IsVisible="{Binding IsNotLoaded}"/>

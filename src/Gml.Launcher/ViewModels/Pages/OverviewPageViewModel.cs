@@ -19,11 +19,13 @@ using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
+using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Domains.System;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -34,30 +36,38 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _clientManager;
     private readonly IUser _user;
-    private int _loadingPercentage;
+    private readonly ISystemService _systemService;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
+    public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User => _user;
 
-    public int LoadingPercentage
-    {
-        get => _loadingPercentage;
-        set => this.RaiseAndSetIfChanged(ref _loadingPercentage, value);
-    }
+    [Reactive] public int? LoadingPercentage { get; set; }
+
+    [Reactive] public string Headline { get; set; }
+
+    [Reactive] public string Description { get; set; }
+
+    [Reactive] public bool IsProcessing { get; set; }
 
     internal OverviewPageViewModel(
         IScreen screen,
         IUser user,
         IGmlClientManager? clientManager = null,
+        ISystemService? systemService = null,
         IStorageService? storageService = null) : base(screen)
     {
         _screen = screen;
         _user = user;
+        _systemService = systemService
+                         ?? Locator.Current.GetService<ISystemService>()
+                         ?? throw new ServiceNotFoundException(typeof(ISystemService));
+        ;
         _storageService = storageService
                           ?? Locator.Current.GetService<IStorageService>()
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
@@ -71,12 +81,19 @@ public class OverviewPageViewModel : PageViewModelBase
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(screen, LocalizationService, _storageService, ListViewModel.SelectedProfile!))
+            () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
+                screen,
+                LocalizationService,
+                _storageService,
+                _systemService,
+                ListViewModel.SelectedProfile!))
         );
+
+        HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
 
         _clientManager.ProgressChanged += (sender, args) =>
         {
-            if (_loadingPercentage != args.ProgressPercentage)
+            if (LoadingPercentage != args.ProgressPercentage)
             {
                 LoadingPercentage = args.ProgressPercentage;
             }
@@ -99,12 +116,24 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
+            UpdateProgress(
+                LocalizationService.GetString(ResourceKeysDictionary.Updating),
+                LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
+                true);
+
+            var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
+
+            if (settings is null)
+            {
+                throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
+            }
+
             var localProfile = new ProfileCreateInfoDto
             {
                 ProfileName = ListViewModel.SelectedProfile!.Name,
-                RamSize = 8192,
+                RamSize = Convert.ToInt32(settings.RamValue),
                 IsFullScreen = false,
-                OsType = ((int)OsType.Windows).ToString(),
+                OsType = ((int)_systemService.GetOsType()).ToString(),
                 OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
                 UserAccessToken = User.AccessToken,
                 UserName = User.Name,
@@ -115,10 +144,25 @@ public class OverviewPageViewModel : PageViewModelBase
 
             if (profileInfo is { Data: not null })
             {
-                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data), cancellationToken);
-                var process = await _clientManager.GetProcess(profileInfo.Data);
+                UpdateProgress(
+                    LocalizationService.GetString(ResourceKeysDictionary.Updating),
+                    LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity),
+                    true);
 
+                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data),
+                    cancellationToken);
+
+                var process = await _clientManager.GetProcess(profileInfo.Data);
+                await _clientManager.ClearFiles(profileInfo.Data);
+
+                UpdateProgress(
+                    LocalizationService.GetString(ResourceKeysDictionary.Launching),
+                    LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch), //Preparing to launch...
+                    true);
                 process.Start();
+
+                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                UpdateProgress(string.Empty, string.Empty, false);
                 await process.WaitForExitAsync(cancellationToken);
             }
             else
@@ -150,6 +194,18 @@ public class OverviewPageViewModel : PageViewModelBase
 
             Console.WriteLine(exception);
         }
+        finally
+        {
+            UpdateProgress(string.Empty, string.Empty, false);
+        }
+    }
+
+    private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
+    {
+        Headline = headline;
+        Description = description;
+        IsProcessing = isProcessing;
+        LoadingPercentage = percentage;
     }
 
 
@@ -161,12 +217,14 @@ public class OverviewPageViewModel : PageViewModelBase
 
             ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
         }
-        catch (TaskCanceledException ex)
+        catch (TaskCanceledException exception)
         {
+            Console.WriteLine(exception);
             await Reconnect();
         }
-        catch (HttpRequestException ex)
+        catch (HttpRequestException exception)
         {
+            Console.WriteLine(exception);
             await Reconnect();
         }
         catch (Exception ex)

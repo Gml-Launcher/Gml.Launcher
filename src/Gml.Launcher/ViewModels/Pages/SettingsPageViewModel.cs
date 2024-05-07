@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -9,25 +11,25 @@ using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Gml.Launcher.ViewModels.Pages;
 
 public class SettingsPageViewModel : PageViewModelBase
 {
     private readonly IStorageService _storageService;
-    private readonly ProfileReadDto _selectedProfile;
 
-    public bool DynamicRamValue
-    {
-        get => _dynamicRamValue;
-        set => this.RaiseAndSetIfChanged(ref _dynamicRamValue, value);
-    }
+    [Reactive]
+    public bool DynamicRamValue { get; set; }
 
-    public bool FullScreen
-    {
-        get => _fullScreen;
-        set => this.RaiseAndSetIfChanged(ref _fullScreen, value);
-    }
+    [Reactive]
+    public bool FullScreen { get; set; }
+
+    [Reactive]
+    public ulong MaxRamValue { get; set; }
+
+    [Reactive]
+    public Language? SelectedLanguage { get; set; }
 
 
     public double RamValue
@@ -54,32 +56,48 @@ public class SettingsPageViewModel : PageViewModelBase
         set => this.RaiseAndSetIfChanged(ref _windowHeight, int.Parse(string.Concat(value.Where(char.IsDigit))));
     }
 
+    public ObservableCollection<Language> AvailableLanguages { get; }
+
     private int _windowWidth;
     private int _windowHeight;
     private double _ramValue;
-    private bool _dynamicRamValue;
-    private bool _fullScreen;
-    private bool _isBusy;
 
     public SettingsPageViewModel(
         IScreen screen,
         ILocalizationService? localizationService,
         IStorageService storageService,
+        ISystemService systemService,
         ProfileReadDto selectedProfile) : base(screen, localizationService)
     {
         _storageService = storageService;
-        _selectedProfile = selectedProfile;
 
         this.WhenAnyValue(
                 x => x.RamValue,
                 x => x.WindowWidth,
                 x => x.WindowHeight,
                 x => x.FullScreen,
-                x => x.DynamicRamValue
+                x => x.DynamicRamValue,
+                x => x.SelectedLanguage
             )
             .Throttle(TimeSpan.FromMilliseconds(400))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(SaveSettings);
+
+        this.WhenAnyValue(x => x.SelectedLanguage)
+            .Skip(2)
+            .Subscribe(language =>
+            {
+                if (language == null) return;
+
+                Assets.Resources.Resources.Culture = language.Culture;
+
+                GoBackCommand.Execute(null);
+            });
+
+
+        AvailableLanguages = new ObservableCollection<Language>(systemService.GetAvailableLanguages());
+
+        MaxRamValue = systemService.GetMaxRam();
 
         RxApp.MainThreadScheduler.Schedule(LoadSettings);
     }
@@ -98,19 +116,28 @@ public class SettingsPageViewModel : PageViewModelBase
 
         if (data == null) return;
 
-        WindowWidth = data.GameWidth.ToString();
-        WindowHeight = data.GameHeight.ToString();
+        if (!string.IsNullOrEmpty(data.LanguageCode))
+        {
+            SelectedLanguage = AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode);
+        }
+
+        WindowWidth = data.GameWidth == 0 ? "900" : data.GameWidth.ToString();
+        WindowHeight = data.GameHeight == 0 ? "600" : data.GameHeight.ToString();
         RamValue = data.RamValue;
         DynamicRamValue = data.IsDynamicRam;
         FullScreen = data.FullScreen;
     }
 
     private void SaveSettings(
-        (double ramValue, string width, string height, bool isFullScreen, bool isDynamicRam) update)
+        (double ramValue, string width, string height, bool isFullScreen, bool isDynamicRam, Language? selectedLanguage) update)
     {
         _storageService.SetAsync(
             StorageConstants.Settings,
-            new SettingsInfo(int.Parse(update.width), int.Parse(update.height), update.isFullScreen,
-                update.isDynamicRam, update.ramValue));
+            new SettingsInfo(
+                int.Parse(update.width),
+                int.Parse(update.height),
+                update.isFullScreen,
+                update.isDynamicRam,
+                update.ramValue, update.selectedLanguage?.Culture.Name));
     }
 }
