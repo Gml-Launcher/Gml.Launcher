@@ -18,6 +18,7 @@ class Program
             RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
+
         }
         catch (Exception e)
         {
