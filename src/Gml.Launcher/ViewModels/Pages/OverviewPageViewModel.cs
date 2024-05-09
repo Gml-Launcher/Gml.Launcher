@@ -34,7 +34,7 @@ public class OverviewPageViewModel : PageViewModelBase
 {
     private readonly IScreen _screen;
     private readonly IStorageService _storageService;
-    private readonly IGmlClientManager _clientManager;
+    private readonly IGmlClientManager _gmlManager;
     private readonly IUser _user;
     private readonly ISystemService _systemService;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
@@ -58,7 +58,7 @@ public class OverviewPageViewModel : PageViewModelBase
     internal OverviewPageViewModel(
         IScreen screen,
         IUser user,
-        IGmlClientManager? clientManager = null,
+        IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
         IStorageService? storageService = null) : base(screen)
     {
@@ -72,12 +72,12 @@ public class OverviewPageViewModel : PageViewModelBase
                           ?? Locator.Current.GetService<IStorageService>()
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
 
-        _clientManager = clientManager
+        _gmlManager = gmlManager
                          ?? Locator.Current.GetService<IGmlClientManager>()
                          ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user, clientManager))
+            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user, gmlManager))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -91,7 +91,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
 
-        _clientManager.ProgressChanged += (sender, args) =>
+        _gmlManager.ProgressChanged += (sender, args) =>
         {
             if (LoadingPercentage != args.ProgressPercentage)
             {
@@ -121,6 +121,8 @@ public class OverviewPageViewModel : PageViewModelBase
                 LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
                 true);
 
+            await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
+
             var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
 
             if (settings is null)
@@ -140,7 +142,7 @@ public class OverviewPageViewModel : PageViewModelBase
                 UserUuid = User.Uuid
             };
 
-            var profileInfo = await _clientManager.GetProfileInfo(localProfile);
+            var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
 
             if (profileInfo is { Data: not null })
             {
@@ -149,11 +151,11 @@ public class OverviewPageViewModel : PageViewModelBase
                     LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity),
                     true);
 
-                await Task.Run(async () => await _clientManager.DownloadNotInstalledFiles(profileInfo.Data),
+                await Task.Run(async () => await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data),
                     cancellationToken);
 
-                var process = await _clientManager.GetProcess(profileInfo.Data);
-                await _clientManager.ClearFiles(profileInfo.Data);
+                var process = await _gmlManager.GetProcess(profileInfo.Data);
+                await _gmlManager.ClearFiles(profileInfo.Data);
 
                 UpdateProgress(
                     LocalizationService.GetString(ResourceKeysDictionary.Launching),
@@ -196,6 +198,7 @@ public class OverviewPageViewModel : PageViewModelBase
         }
         finally
         {
+            await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
             UpdateProgress(string.Empty, string.Empty, false);
         }
     }
@@ -213,7 +216,10 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
-            var profilesData = await _clientManager.GetProfiles();
+            await _gmlManager.LoadDiscordRpc();
+            await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+
+            var profilesData = await _gmlManager.GetProfiles();
 
             ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
         }

@@ -7,6 +7,8 @@ public static class ResourceKeysDictionary
     public const string Error = "Error";
     public const string NotSetting = "NotSetting";
     public const string Updating = "Updating";
+    public const string DefaultDRpcText = "DefaultDRpcText";
+    public const string PlayDRpcText = "PlayDRpcText";
     public const string Launching = "Launching";
     public const string PreparingLaunch = "PreparingLaunch";
     public const string CheckingFileIntegrity = "CheckingFileIntegrity";
