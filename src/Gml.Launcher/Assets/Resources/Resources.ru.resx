@@ -92,4 +92,10 @@
   <data name="Available" xml:space="preserve">
     <value>Доступен</value>
   </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>Сидит в лаунчере</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>Играет в</value>
+  </data>
 </root>

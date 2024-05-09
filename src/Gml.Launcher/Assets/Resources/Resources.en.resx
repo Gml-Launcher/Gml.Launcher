@@ -92,4 +92,10 @@
   <data name="Available" xml:space="preserve">
     <value>Available</value>
   </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>Sits in the launcher</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>Play in</value>
+  </data>
 </root>

@@ -38,7 +38,6 @@ public static class ServiceLocator
 
         if (data != null && !string.IsNullOrEmpty(data.LanguageCode))
         {
-
             Assets.Resources.Resources.Culture = systemService
                 .GetAvailableLanguages()
                 .FirstOrDefault(c => c.Culture.Name == data.LanguageCode)?
