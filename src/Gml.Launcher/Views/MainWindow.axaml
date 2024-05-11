@@ -27,10 +27,6 @@
     <Grid>
         <Border CornerRadius="5" ClipToBounds="True">
             <Panel>
-
-
-
-
                 <ExperimentalAcrylicBorder IsHitTestVisible="False">
                     <ExperimentalAcrylicBorder.Material>
                         <ExperimentalAcrylicMaterial
@@ -45,7 +41,7 @@
 
 
                     <!-- Background -->
-                    <components:BackgroundComponent />
+                    <components:BackgroundComponent Source="/Assets/Images/background.jpg" />
 
                     <!-- Content -->
                     <rxui:RoutedViewHost Router="{Binding Router}">

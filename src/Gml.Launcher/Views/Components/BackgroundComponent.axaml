@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Image Stretch="UniformToFill"
-                       Source="/Assets/Images/background.jpg" />
+                       Source="{TemplateBinding Source}" />
             </ControlTemplate>
         </Setter>
     </Style>

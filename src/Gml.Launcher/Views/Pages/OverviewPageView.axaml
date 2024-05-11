@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              mc:Ignorable="d"
              d:DesignWidth="1000"
              Background="Transparent"
@@ -16,7 +17,9 @@
     <Grid ColumnDefinitions="Auto, *">
 
         <!-- Background -->
-        <components:BackgroundComponent Grid.Column="0" Grid.ColumnSpan="2" />
+        <components:BackgroundComponent Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        converters:AsyncStreamToImageLoader.Source="{Binding ListViewModel.SelectedProfile.Background}" />
 
         <!-- Content -->
         <Border Grid.Column="1" Padding="25">
@@ -30,7 +33,7 @@
                                         IsVisible="{Binding IsProcessing}"
                                         Headline="{Binding Headline}"
                                         Description="{Binding Description}"
-                                        Percentage="{Binding LoadingPercentage}"/>
+                                        Percentage="{Binding LoadingPercentage}" />
 
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
