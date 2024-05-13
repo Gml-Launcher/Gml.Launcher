@@ -19,9 +19,4 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.AttachDevTools();
 #endif
     }
-
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        // BeginMoveDrag(e);
-    }
 }
