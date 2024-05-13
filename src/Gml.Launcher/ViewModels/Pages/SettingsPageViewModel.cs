@@ -120,6 +120,10 @@ public class SettingsPageViewModel : PageViewModelBase
         {
             SelectedLanguage = AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode);
         }
+        else
+        {
+            SelectedLanguage = AvailableLanguages.FirstOrDefault();
+        }
 
         WindowWidth = data.GameWidth == 0 ? "900" : data.GameWidth.ToString();
         WindowHeight = data.GameHeight == 0 ? "600" : data.GameHeight.ToString();
