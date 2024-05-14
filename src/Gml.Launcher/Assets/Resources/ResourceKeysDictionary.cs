@@ -17,7 +17,7 @@ public static class ResourceKeysDictionary
     public const string InvalidAuthData = "InvalidAuthData";
     public const string Reconnecting = "Reconnecting";
     public const string LostConnection = "LostConnection";
+    // public const string Host = "http://localhost:5000";
     public const string Host = "https://gmlb.recloud.tech";
-    // public const string Host = "http://192.168.31.199:5000";
     public const string FolderName = "GamerVIILacunerhV2";
 }

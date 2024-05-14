@@ -1,3 +1,5 @@
+using System;
+using System.Reactive.Subjects;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -20,8 +22,11 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 #endif
     }
 
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    protected override void OnClosed(EventArgs e)
     {
-        // BeginMoveDrag(e);
+        if(DataContext is MainWindowViewModel viewModel)
+            viewModel.OnClosed.OnNext(false);
+
+        base.OnClosed(e);
     }
 }
