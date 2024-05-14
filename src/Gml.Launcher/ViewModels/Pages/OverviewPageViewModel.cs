@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
+using System.Diagnostics;
 using System.Net.Http;
-using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +19,7 @@ using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
-using Gml.Web.Api.Domains.System;
+using Gml.Web.Api.Dto.Messages;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -36,7 +33,10 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlManager;
     private readonly IUser _user;
+    private readonly IObservable<bool> _onClosed;
     private readonly ISystemService _systemService;
+    private readonly IDisposable? _closeEvent;
+    private Process? _gameProcess;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
@@ -49,25 +49,26 @@ public class OverviewPageViewModel : PageViewModelBase
 
     [Reactive] public int? LoadingPercentage { get; set; }
 
-    [Reactive] public string Headline { get; set; }
+    [Reactive] public string? Headline { get; set; }
 
-    [Reactive] public string Description { get; set; }
+    [Reactive] public string? Description { get; set; }
 
     [Reactive] public bool IsProcessing { get; set; }
 
-    internal OverviewPageViewModel(
-        IScreen screen,
+    internal OverviewPageViewModel(IScreen screen,
         IUser user,
+        IObservable<bool> onClosed,
         IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
         IStorageService? storageService = null) : base(screen)
     {
         _screen = screen;
         _user = user;
+        _onClosed = onClosed;
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
                          ?? throw new ServiceNotFoundException(typeof(ISystemService));
-        ;
+
         _storageService = storageService
                           ?? Locator.Current.GetService<IStorageService>()
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
@@ -91,13 +92,15 @@ public class OverviewPageViewModel : PageViewModelBase
 
         HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
 
-        _gmlManager.ProgressChanged += (sender, args) =>
+        _gmlManager.ProgressChanged += (_, args) =>
         {
             if (LoadingPercentage != args.ProgressPercentage)
             {
                 LoadingPercentage = args.ProgressPercentage;
             }
         };
+
+        _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
 
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
 
@@ -109,98 +112,105 @@ public class OverviewPageViewModel : PageViewModelBase
     private async Task OnLogout(CancellationToken arg)
     {
         await _storageService.SetAsync(StorageConstants.User, new AuthUser());
-        _screen.Router.Navigate.Execute(new LoginPageViewModel(_screen));
+        _screen.Router.Navigate.Execute(new LoginPageViewModel(_screen, _onClosed));
     }
 
     private async Task StartGame(CancellationToken cancellationToken)
     {
-        try
+
+        await ExecuteFromNewThread(async () =>
         {
-            UpdateProgress(
-                LocalizationService.GetString(ResourceKeysDictionary.Updating),
-                LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
-                true);
-
-            await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
-
-            var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
-
-            if (settings is null)
+            try
             {
-                throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
-            }
+                var profileInfo = await PrepareLaunch();
 
-            var localProfile = new ProfileCreateInfoDto
-            {
-                ProfileName = ListViewModel.SelectedProfile!.Name,
-                RamSize = Convert.ToInt32(settings.RamValue),
-                IsFullScreen = false,
-                OsType = ((int)_systemService.GetOsType()).ToString(),
-                OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
-                UserAccessToken = User.AccessToken,
-                UserName = User.Name,
-                UserUuid = User.Uuid
-            };
-
-            var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
-
-            if (profileInfo is { Data: not null })
-            {
-                UpdateProgress(
-                    LocalizationService.GetString(ResourceKeysDictionary.Updating),
-                    LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity),
-                    true);
-
-                await Task.Run(async () => await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data),
-                    cancellationToken);
-
-                var process = await _gmlManager.GetProcess(profileInfo.Data);
-                await _gmlManager.ClearFiles(profileInfo.Data);
-
-                UpdateProgress(
-                    LocalizationService.GetString(ResourceKeysDictionary.Launching),
-                    LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch), //Preparing to launch...
-                    true);
-                process.Start();
-
-                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-                UpdateProgress(string.Empty, string.Empty, false);
-                await process.WaitForExitAsync(cancellationToken);
-            }
-            else
-            {
-                if (_screen is MainWindowViewModel mainViewModel)
+                if (profileInfo is { Data: not null })
                 {
-                    mainViewModel.Manager
-                        .CreateMessage(true, "#D03E3E",
-                            LocalizationService.GetString(ResourceKeysDictionary.Error),
-                            LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured))
-                        .Dismiss()
-                        .WithDelay(TimeSpan.FromSeconds(3))
-                        .Queue();
+                    _gameProcess?.Close();
+                    _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
+
+                    _gameProcess.Start();
+
+                    await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                    UpdateProgress(string.Empty, string.Empty, false);
+                    await _gameProcess.WaitForExitAsync(cancellationToken);
+                }
+                else
+                {
+                    ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
             }
-        }
-        catch (Exception exception)
-        {
-            if (_screen is MainWindowViewModel mainViewModel)
+            catch (Exception exception)
             {
-                mainViewModel.Manager
-                    .CreateMessage(true, "#D03E3E",
-                        LocalizationService.GetString(ResourceKeysDictionary.Error),
-                        string.Join(". ", exception.Message))
-                    .Dismiss()
-                    .WithDelay(TimeSpan.FromSeconds(3))
-                    .Queue();
-            }
+                ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
 
-            Console.WriteLine(exception);
-        }
-        finally
+                Console.WriteLine(exception);
+            }
+            finally
+            {
+                await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+                UpdateProgress(string.Empty, string.Empty, false);
+            }
+        });
+
+
+
+    }
+
+    private async Task<Process> GenerateProcess(CancellationToken cancellationToken, ResponseMessage<ProfileReadInfoDto?> profileInfo)
+    {
+        UpdateProgress(
+            LocalizationService.GetString(ResourceKeysDictionary.Updating),
+            LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity),
+            true);
+
+        if (profileInfo.Data is null)
         {
-            await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
-            UpdateProgress(string.Empty, string.Empty, false);
+            throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured));
         }
+
+        await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
+
+        var process = await _gmlManager.GetProcess(profileInfo.Data);
+        await _gmlManager.ClearFiles(profileInfo.Data);
+
+        UpdateProgress(
+            LocalizationService.GetString(ResourceKeysDictionary.Launching),
+            LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch),
+            true);
+        return process;
+    }
+
+    private async Task<ResponseMessage<ProfileReadInfoDto?>?> PrepareLaunch()
+    {
+        UpdateProgress(
+            LocalizationService.GetString(ResourceKeysDictionary.Updating),
+            LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
+            true);
+
+        await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
+
+        var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
+
+        if (settings is null)
+        {
+            throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
+        }
+
+        var localProfile = new ProfileCreateInfoDto
+        {
+            ProfileName = ListViewModel.SelectedProfile!.Name,
+            RamSize = Convert.ToInt32(settings.RamValue),
+            IsFullScreen = false,
+            OsType = ((int)_systemService.GetOsType()).ToString(),
+            OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
+            UserAccessToken = User.AccessToken,
+            UserName = User.Name,
+            UserUuid = User.Uuid
+        };
+
+        var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
+        return profileInfo;
     }
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)

@@ -19,6 +19,6 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
 
     public MainWindowViewModel()
     {
-        Router.Navigate.Execute(new LoginPageViewModel(this));
+        Router.Navigate.Execute(new LoginPageViewModel(this, OnClosed));
     }
 }

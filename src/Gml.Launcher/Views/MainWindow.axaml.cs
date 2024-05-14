@@ -1,3 +1,5 @@
+using System;
+using System.Reactive.Subjects;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -18,5 +20,13 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 #if DEBUG
         this.AttachDevTools();
 #endif
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        if(DataContext is MainWindowViewModel viewModel)
+            viewModel.OnClosed.OnNext(false);
+
+        base.OnClosed(e);
     }
 }

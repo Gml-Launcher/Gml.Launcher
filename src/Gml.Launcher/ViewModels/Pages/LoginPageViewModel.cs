@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,6 +27,7 @@ public class LoginPageViewModel : PageViewModelBase
     private bool _isProcessing = false;
     private string _password = string.Empty;
     private readonly IScreen _screen;
+    private readonly IObservable<bool> _onClosed;
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlClientManager;
 
@@ -64,13 +66,14 @@ public class LoginPageViewModel : PageViewModelBase
     public ICommand LoginCommand { get; set; }
 
 
-    internal LoginPageViewModel(
-        IScreen screen,
+    internal LoginPageViewModel(IScreen screen,
+        IObservable<bool> onClosed,
         IGmlClientManager? gmlClientManager = null,
         IStorageService? storageService = null,
         ILocalizationService? localizationService = null) : base(screen, localizationService)
     {
         _screen = screen;
+        _onClosed = onClosed;
 
         _storageService = storageService
                           ?? Locator.Current.GetService<IStorageService>()
@@ -91,7 +94,7 @@ public class LoginPageViewModel : PageViewModelBase
         var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
         if (authUser is { IsAuth: true })
-            _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authUser));
+            _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authUser, _onClosed));
     }
 
     private async Task OnAuth(CancellationToken arg)
@@ -114,7 +117,7 @@ public class LoginPageViewModel : PageViewModelBase
             if (authInfo.User.IsAuth)
             {
                 await _storageService.SetAsync(StorageConstants.User, authInfo.User);
-                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User));
+                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User, _onClosed));
                 return;
             }
 

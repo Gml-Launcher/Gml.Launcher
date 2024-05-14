@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
@@ -39,6 +42,42 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
             FileName = url,
             UseShellExecute = true
         });
+    }
+
+    protected void ShowError(string title, string content)
+    {
+        if (HostScreen is MainWindowViewModel mainViewModel)
+        {
+            mainViewModel.Manager
+                .CreateMessage(true, "#D03E3E",
+                    LocalizationService.GetString(title),
+                    LocalizationService.GetString(content))
+                .Dismiss()
+                .WithDelay(TimeSpan.FromSeconds(3))
+                .Queue();
+        }
+    }
+
+    protected Task ExecuteFromNewThread(Func<Task> func)
+    {
+        var tcs = new TaskCompletionSource<object?>();
+
+        async void RunThreadTask()
+        {
+            try
+            {
+                await func();
+                tcs.SetResult(null);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }
+
+        new Thread(RunThreadTask).Start();
+
+        return tcs.Task;
     }
 
 }
