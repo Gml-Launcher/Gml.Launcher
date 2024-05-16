@@ -1,8 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -36,6 +38,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IObservable<bool> _onClosed;
     private readonly ISystemService _systemService;
     private readonly IDisposable? _closeEvent;
+    private readonly IDisposable _profileNameChanged;
     private Process? _gameProcess;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
@@ -101,12 +104,19 @@ public class OverviewPageViewModel : PageViewModelBase
         };
 
         _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
+        _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
 
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
+    }
+
+    private async void SaveSelectedServer(ProfileReadDto? profile)
+    {
+        if (profile != null)
+            await _storageService.SetAsync(StorageConstants.LastSelectedProfileName, profile.Name);
     }
 
     private async Task OnLogout(CancellationToken arg)
@@ -232,6 +242,14 @@ public class OverviewPageViewModel : PageViewModelBase
             var profilesData = await _gmlManager.GetProfiles();
 
             ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
+
+            var lastSelectedProfileName = await _storageService.GetAsync<string>(StorageConstants.LastSelectedProfileName);
+
+            if (!string.IsNullOrEmpty(lastSelectedProfileName) && ListViewModel.Profiles.Any())
+            {
+                ListViewModel.SelectedProfile =
+                    ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName);
+            }
         }
         catch (TaskCanceledException exception)
         {

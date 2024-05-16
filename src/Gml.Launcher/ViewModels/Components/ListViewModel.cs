@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Subjects;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
@@ -9,6 +10,7 @@ namespace Gml.Launcher.ViewModels.Components;
 
 public class ListViewModel : ViewModelBase
 {
+    internal readonly Subject<ProfileReadDto?> ProfileChanged = new();
 
     public ObservableCollection<ProfileReadDto>? Profiles
     {
@@ -29,6 +31,8 @@ public class ListViewModel : ViewModelBase
         {
             this.RaiseAndSetIfChanged(ref _selectedProfile, value);
             this.RaisePropertyChanged(nameof(HasSelectedItem));
+
+            ProfileChanged.OnNext(value);
         }
     }
 
