@@ -1,88 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Management;
-using Avalonia.Controls.Shapes;
-using Gml.Client;
-using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
-using Splat;
+using Hardware.Info;
 using static System.OperatingSystem;
 
 namespace Gml.Launcher.Core.Services;
 
 public class SystemService : ISystemService
 {
-    private const string NotSupportedMessage = "Operating system not supported";
+    private const string NotSupportedMessage = "The operating system is not supported.";
 
     public SystemService()
     {
     }
 
-
     public ulong GetMaxRam()
     {
-        if (IsWindows())
+        if (!(IsWindows() || IsLinux() || IsMacOS()))
         {
-            return GetWindowsMaxRam();
+            throw new NotSupportedException(NotSupportedMessage);
         }
 
-        if (IsLinux())
-        {
-            return GetUnixMaxRam();
-        }
+        var hardwareInfo = new HardwareInfo();
 
-        throw new NotSupportedException("The operating system is not supported.");
+        hardwareInfo.RefreshMemoryStatus();
+
+        return hardwareInfo.MemoryStatus.TotalPhysical / (1024 * 1024);
     }
-    private static ulong GetWindowsMaxRam()
-    {
-        var searcher = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem");
-        var collection = searcher.Get();
-
-        foreach (var item in collection)
-        {
-            ulong totalPhysicalMemory = (ulong)item["TotalPhysicalMemory"];
-            return totalPhysicalMemory / (1024 * 1024);
-        }
-
-        throw new Exception("Unable to determine total physical memory.");
-    }
-
-    private static ulong GetUnixMaxRam()
-    {
-        try
-        {
-            using (Process proc = new Process())
-            {
-                proc.StartInfo.FileName = "/bin/bash";
-                proc.StartInfo.Arguments = "-c \"free -b | grep Mem | awk '{print $2}'\"";
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.RedirectStandardOutput = true;
-                proc.Start();
-
-                string output = proc.StandardOutput.ReadToEnd();
-                proc.WaitForExit();
-
-                if(ulong.TryParse(output, out ulong totalPhysicalMemory))
-                {
-                    return totalPhysicalMemory / (1024 * 1024);
-                }
-                else
-                {
-                    throw new Exception("Unable to parse total physical memory.");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            // Handle or log exception as needed
-            throw new Exception("Unable to determine total physical memory.", ex);
-        }
-    }
-
 
     public string GetApplicationFolder()
     {
@@ -99,10 +46,9 @@ public class SystemService : ISystemService
         throw new NotSupportedException(NotSupportedMessage);
     }
 
-    public string GetGameFolder(string addtionalPath, bool needCreate)
+    public string GetGameFolder(string additionalPath, bool needCreate)
     {
-        var directoryInfo =
-            new DirectoryInfo(System.IO.Path.Combine(GetApplicationFolder(), addtionalPath)); // ToDo: To const
+        var directoryInfo = new DirectoryInfo(Path.Combine(GetApplicationFolder(), additionalPath)); // ToDo: To const
 
         if (needCreate && !directoryInfo.Exists)
             directoryInfo.Create();
