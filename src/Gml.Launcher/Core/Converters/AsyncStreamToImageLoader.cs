@@ -3,9 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Media.Imaging;
-using Gml.Launcher.Core.Services;
 using Gml.Launcher.Views.Components;
 
 namespace Gml.Launcher.Core.Converters;
@@ -67,7 +65,6 @@ public class AsyncStreamToImageLoader
             await input.CopyToAsync(fileStream);
         }
     }
-
 
     private static bool ValidateUrl(string url)
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Reactive;
-using System.Threading.Tasks;
-using Avalonia.Threading;
+﻿using System.Reactive;
 using GamerVII.Notification.Avalonia;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Pages;

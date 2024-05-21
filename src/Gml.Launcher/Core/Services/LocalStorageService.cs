@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls.Shapes;
 using Gml.Client;
 using Gml.Launcher.Core.Exceptions;
-using Newtonsoft.Json;
 using Splat;
 using SQLite;
 
@@ -42,7 +40,7 @@ public class LocalStorageService : IStorageService
 
     public async Task SetAsync<T>(string key, T value, CancellationToken? token = default)
     {
-        var serializedValue = JsonConvert.SerializeObject(value);
+        var serializedValue = JsonSerializer.Serialize(value);
         var storageItem = new StorageItem
         {
             Key = key,
@@ -61,10 +59,10 @@ public class LocalStorageService : IStorageService
 
         if (storageItem != null)
         {
-            return JsonConvert.DeserializeObject<T>(storageItem.Value);
+            return JsonSerializer.Deserialize<T>(storageItem.Value);
         }
 
-        return default(T);
+        return default;
     }
 
     public Task<int> SaveRecord<T>(T record)

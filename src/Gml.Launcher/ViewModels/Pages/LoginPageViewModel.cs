@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Client;
 using Gml.Client.Models;
