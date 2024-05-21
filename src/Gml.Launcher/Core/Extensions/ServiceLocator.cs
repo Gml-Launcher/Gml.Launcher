@@ -3,15 +3,11 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Avalonia;
-using GamerVII.Notification.Avalonia;
 using Gml.Client;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
-using ReactiveUI;
 using Sentry;
 using Splat;
 
