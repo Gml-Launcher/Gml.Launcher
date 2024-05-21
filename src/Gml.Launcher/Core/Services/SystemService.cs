@@ -13,10 +13,6 @@ public class SystemService : ISystemService
 {
     private const string NotSupportedMessage = "The operating system is not supported.";
 
-    public SystemService()
-    {
-    }
-
     public ulong GetMaxRam()
     {
         if (!(IsWindows() || IsLinux() || IsMacOS()))
@@ -48,7 +44,7 @@ public class SystemService : ISystemService
 
     public string GetGameFolder(string additionalPath, bool needCreate)
     {
-        var directoryInfo = new DirectoryInfo(Path.Combine(GetApplicationFolder(), additionalPath)); // ToDo: To const
+        var directoryInfo = new DirectoryInfo(Path.Combine(GetApplicationFolder(), additionalPath));
 
         if (needCreate && !directoryInfo.Exists)
             directoryInfo.Create();
