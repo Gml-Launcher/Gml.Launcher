@@ -249,6 +249,11 @@ public class OverviewPageViewModel : PageViewModelBase
                 ListViewModel.SelectedProfile =
                     ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName);
             }
+
+            if (string.IsNullOrEmpty(lastSelectedProfileName))
+            {
+                ListViewModel.SelectedProfile = ListViewModel.Profiles.FirstOrDefault();
+            }
         }
         catch (TaskCanceledException exception)
         {
