@@ -21,6 +21,10 @@
                                         Grid.ColumnSpan="2"
                                         converters:AsyncStreamToImageLoader.Source="{Binding ListViewModel.SelectedProfile.Background}" />
 
+        <Rectangle Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Fill="{DynamicResource BackgroundOverlay}" />
+
         <!-- Content -->
         <Border Grid.Column="1" Padding="25">
 

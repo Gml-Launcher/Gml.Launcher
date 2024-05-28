@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
-using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Gml.Launcher.Core.Services;
 
@@ -88,5 +84,4 @@ public class AsyncSkinRenderLoader
 
     private static void SetIsLoading(Image obj, bool value) => obj.SetValue(IsLoadingProperty, value);
     public static bool GetIsLoading(Image obj) => obj.GetValue(IsLoadingProperty);
-
 }

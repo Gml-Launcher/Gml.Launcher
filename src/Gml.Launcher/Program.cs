@@ -28,7 +28,6 @@ class Program
 
     private static void GlobalExceptionHandler(Exception exception)
     {
-
         SentrySdk.CaptureException(exception);
     }
 

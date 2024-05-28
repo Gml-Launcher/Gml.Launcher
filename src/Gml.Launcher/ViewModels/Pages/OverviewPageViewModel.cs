@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
-using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,6 +11,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Client;
 using Gml.Client.Models;
@@ -31,7 +31,6 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class OverviewPageViewModel : PageViewModelBase
 {
-    private readonly IScreen _screen;
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlManager;
     private readonly IUser _user;
@@ -40,6 +39,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IDisposable? _closeEvent;
     private readonly IDisposable _profileNameChanged;
     private Process? _gameProcess;
+    private readonly MainWindowViewModel _mainViewModel;
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
@@ -65,7 +65,7 @@ public class OverviewPageViewModel : PageViewModelBase
         ISystemService? systemService = null,
         IStorageService? storageService = null) : base(screen)
     {
-        _screen = screen;
+        _mainViewModel = screen as MainWindowViewModel ?? throw new Exception("Not valid screen");
         _user = user;
         _onClosed = onClosed;
         _systemService = systemService
@@ -122,7 +122,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private async Task OnLogout(CancellationToken arg)
     {
         await _storageService.SetAsync(StorageConstants.User, new AuthUser());
-        _screen.Router.Navigate.Execute(new LoginPageViewModel(_screen, _onClosed));
+        _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
     }
 
     private async Task StartGame(CancellationToken cancellationToken)
@@ -138,10 +138,9 @@ public class OverviewPageViewModel : PageViewModelBase
                 {
                     _gameProcess?.Close();
                     _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
-
                     _gameProcess.Start();
-
                     await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                    Dispatcher.UIThread.Invoke(() => _mainViewModel.gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
                 }
@@ -158,8 +157,9 @@ public class OverviewPageViewModel : PageViewModelBase
             }
             finally
             {
-                await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+                Dispatcher.UIThread.Invoke(() => _mainViewModel.gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
+                await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
             }
         });
 
@@ -250,6 +250,11 @@ public class OverviewPageViewModel : PageViewModelBase
                 ListViewModel.SelectedProfile =
                     ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName);
             }
+
+            if (string.IsNullOrEmpty(lastSelectedProfileName))
+            {
+                ListViewModel.SelectedProfile = ListViewModel.Profiles.FirstOrDefault();
+            }
         }
         catch (TaskCanceledException exception)
         {
@@ -270,32 +275,29 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task Reconnect()
     {
-        if (_screen is MainWindowViewModel mainViewModel)
-        {
-            mainViewModel.Manager
-                .CreateMessage()
-                .Accent("#F15B19")
-                .Background("#111111")
-                .HasHeader(LocalizationService.GetString(ResourceKeysDictionary.LostConnection))
-                .HasMessage(LocalizationService.GetString(ResourceKeysDictionary.Reconnecting))
-                .WithOverlay(new ProgressBar
-                {
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    Height = 2,
-                    BorderThickness = new Thickness(0),
-                    Foreground = new SolidColorBrush(Color.FromArgb(128, 255, 255, 255)),
-                    Background = Brushes.Transparent,
-                    IsIndeterminate = true,
-                    IsHitTestVisible = false
-                })
-                .Dismiss()
-                .WithDelay(TimeSpan.FromSeconds(5))
-                .Queue();
+        _mainViewModel.Manager
+            .CreateMessage()
+            .Accent("#F15B19")
+            .Background("#111111")
+            .HasHeader(LocalizationService.GetString(ResourceKeysDictionary.LostConnection))
+            .HasMessage(LocalizationService.GetString(ResourceKeysDictionary.Reconnecting))
+            .WithOverlay(new ProgressBar
+            {
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Height = 2,
+                BorderThickness = new Thickness(0),
+                Foreground = new SolidColorBrush(Color.FromArgb(128, 255, 255, 255)),
+                Background = Brushes.Transparent,
+                IsIndeterminate = true,
+                IsHitTestVisible = false
+            })
+            .Dismiss()
+            .WithDelay(TimeSpan.FromSeconds(5))
+            .Queue();
 
-            await Task.Delay(TimeSpan.FromSeconds(5));
+        await Task.Delay(TimeSpan.FromSeconds(5));
 
-            LoadData();
-        }
+        LoadData();
     }
 }

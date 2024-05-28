@@ -39,5 +39,13 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="BackgroundOverlay" StartPoint="50%, -80%" EndPoint="50%, 100%" Opacity=".9">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="Transparent" />
+            <GradientStop Offset="0.3" Color="#0E0E0E" />
+            <GradientStop Offset="1" Color="#0E0E0E" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
 </ResourceDictionary>
 

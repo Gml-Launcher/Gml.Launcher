@@ -20,6 +20,22 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 #if DEBUG
         this.AttachDevTools();
 #endif
+
+
+    }
+
+    protected override void OnDataContextChanged(EventArgs e)
+    {
+        base.OnDataContextChanged(e);
+
+        if (DataContext is MainWindowViewModel viewModel)
+            viewModel.GameLaunched.Subscribe(isActive =>
+            {
+                if (isActive)
+                    Hide();
+                else
+                    Show();
+            });
     }
 
     protected override void OnClosed(EventArgs e)

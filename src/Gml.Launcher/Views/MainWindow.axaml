@@ -39,9 +39,11 @@
 
                 <Grid>
 
-
                     <!-- Background -->
                     <components:BackgroundComponent Source="/Assets/Images/background.jpg" />
+
+                    <Rectangle Fill="{DynamicResource BackgroundOverlay}" />
+
 
                     <!-- Content -->
                     <rxui:RoutedViewHost Router="{Binding Router}">

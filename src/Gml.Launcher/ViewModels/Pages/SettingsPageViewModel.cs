@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
