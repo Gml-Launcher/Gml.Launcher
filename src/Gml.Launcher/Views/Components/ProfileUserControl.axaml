@@ -25,7 +25,7 @@
                         <Grid>
                             <Border Padding="0, 60, 0, 0" Height="250">
 
-                                <Grid>
+                                <Grid ClipToBounds="True">
                                     <controls:LoadingControl Background="Transparent"
                                                              Foreground="{DynamicResource PrimaryColor}"
                                                              Size="45"/>

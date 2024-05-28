@@ -1,4 +1,5 @@
-﻿using System.Reactive.Subjects;
+﻿using System;
+using System.Reactive.Subjects;
 using ReactiveUI;
 
 namespace Gml.Launcher.ViewModels.Base;

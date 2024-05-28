@@ -3,6 +3,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Layout;
+using Avalonia.Media;
+using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
@@ -26,8 +31,8 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
     protected PageViewModelBase(IScreen screen, ILocalizationService? localizationService = null)
     {
         LocalizationService = localizationService
-                               ?? Locator.Current.GetService<ILocalizationService>()
-                               ?? throw new ServiceNotFoundException(typeof(ILocalizationService));
+                              ?? Locator.Current.GetService<ILocalizationService>()
+                              ?? throw new ServiceNotFoundException(typeof(ILocalizationService));
 
         OpenLinkCommand = ReactiveCommand.Create<string>(OpenLink);
         GoBackCommand = screen.Router.NavigateBack;
@@ -48,13 +53,16 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
     {
         if (HostScreen is MainWindowViewModel mainViewModel)
         {
-            mainViewModel.Manager
-                .CreateMessage(true, "#D03E3E",
-                    LocalizationService.GetString(title),
-                    LocalizationService.GetString(content))
-                .Dismiss()
-                .WithDelay(TimeSpan.FromSeconds(3))
-                .Queue();
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                mainViewModel.Manager
+                    .CreateMessage(true, "#D03E3E",
+                        LocalizationService.GetString(title),
+                        content)
+                    .Dismiss()
+                    .WithDelay(TimeSpan.FromSeconds(3))
+                    .Queue();
+            });
         }
     }
 
@@ -79,5 +87,4 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
 
         return tcs.Task;
     }
-
 }
