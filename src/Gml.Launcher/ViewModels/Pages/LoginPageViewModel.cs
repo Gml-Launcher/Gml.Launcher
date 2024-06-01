@@ -26,6 +26,7 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly IObservable<bool> _onClosed;
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlClientManager;
+    private readonly ISystemService _systemService;
 
     public string Login
     {
@@ -66,6 +67,7 @@ public class LoginPageViewModel : PageViewModelBase
         IObservable<bool> onClosed,
         IGmlClientManager? gmlClientManager = null,
         IStorageService? storageService = null,
+        ISystemService? systemService = null,
         ILocalizationService? localizationService = null) : base(screen, localizationService)
     {
         _screen = screen;
@@ -74,6 +76,10 @@ public class LoginPageViewModel : PageViewModelBase
         _storageService = storageService
                           ?? Locator.Current.GetService<IStorageService>()
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
+
+        _systemService = systemService
+                         ?? Locator.Current.GetService<ISystemService>()
+                         ?? throw new ServiceNotFoundException(typeof(IStorageService));
 
         _gmlClientManager = gmlClientManager
                             ?? Locator.Current.GetService<IGmlClientManager>()
@@ -108,7 +114,8 @@ public class LoginPageViewModel : PageViewModelBase
             //     .Queue();
             //28823c6e1c503fa9b051fec15e9c5986
             IsProcessing = true;
-            var authInfo = await _gmlClientManager.Auth(Login, Password);
+
+            var authInfo = await _gmlClientManager.Auth(Login, Password, _systemService.GetHwid());
 
             if (authInfo.User.IsAuth)
             {

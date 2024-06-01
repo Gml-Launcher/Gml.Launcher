@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
 using Hardware.Info;
@@ -11,7 +13,17 @@ namespace Gml.Launcher.Core.Services;
 
 public class SystemService : ISystemService
 {
+    private readonly HardwareInfo _hardwareInfo;
     private const string NotSupportedMessage = "The operating system is not supported.";
+
+    public SystemService()
+    {
+        _hardwareInfo = new HardwareInfo();
+
+        _hardwareInfo.RefreshDriveList();
+        _hardwareInfo.RefreshMotherboardList();
+        _hardwareInfo.RefreshCPUList();
+    }
 
     public ulong GetMaxRam()
     {
@@ -20,11 +32,9 @@ public class SystemService : ISystemService
             throw new NotSupportedException(NotSupportedMessage);
         }
 
-        var hardwareInfo = new HardwareInfo();
+        _hardwareInfo.RefreshMemoryStatus();
 
-        hardwareInfo.RefreshMemoryStatus();
-
-        return hardwareInfo.MemoryStatus.TotalPhysical / (1024 * 1024);
+        return _hardwareInfo.MemoryStatus.TotalPhysical / (1024 * 1024);
     }
 
     public string GetApplicationFolder()
@@ -50,6 +60,16 @@ public class SystemService : ISystemService
             directoryInfo.Create();
 
         return directoryInfo.FullName;
+    }
+
+    public string GetHwid()
+    {
+        var cpuIdentifier = _hardwareInfo.CpuList.FirstOrDefault()?.ProcessorId ?? "NOT_FOUND";
+        var motherboardIdentifier = _hardwareInfo.MotherboardList.FirstOrDefault()?.SerialNumber ?? "NOT_FOUND";
+
+        var diskIdentifiers = string.Join("-", _hardwareInfo.DriveList.Select(d => d.SerialNumber));
+
+        return $"{cpuIdentifier}-{motherboardIdentifier}-{diskIdentifiers}";
     }
 
     private static string GetFolderPath(Environment.SpecialFolder folder)
