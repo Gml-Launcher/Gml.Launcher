@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
 
@@ -11,4 +12,5 @@ public interface ISystemService
     ulong GetMaxRam();
     OsType GetOsType();
     IEnumerable<Language> GetAvailableLanguages();
+    string GetHwid();
 }
