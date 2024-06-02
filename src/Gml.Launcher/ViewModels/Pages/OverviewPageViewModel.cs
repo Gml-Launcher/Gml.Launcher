@@ -188,6 +188,7 @@ public class OverviewPageViewModel : PageViewModelBase
             LocalizationService.GetString(ResourceKeysDictionary.Launching),
             LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch),
             true);
+
         return process;
     }
 
