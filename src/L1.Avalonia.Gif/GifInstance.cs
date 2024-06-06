@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -13,17 +8,13 @@ namespace L1.Avalonia.Gif
 {
     public class GifInstance : IDisposable
     {
-        public IterationCount IterationCount { get; set; }
-        public bool AutoStart { get; private set; } = true;
+        private readonly List<ulong> _colorTableIdList;
+        private readonly List<TimeSpan> _frameTimes;
         private readonly GifDecoder _gifDecoder;
         private readonly WriteableBitmap _targetBitmap;
-        private TimeSpan _totalTime;
-        private readonly List<TimeSpan> _frameTimes;
-        private uint _iterationCount;
         private int _currentFrameIndex;
-        private readonly List<ulong> _colorTableIdList;
-
-        public CancellationTokenSource CurrentCts { get; }
+        private uint _iterationCount;
+        private TimeSpan _totalTime;
 
         internal GifInstance(object newValue) : this(newValue switch
         {
@@ -32,13 +23,16 @@ namespace L1.Avalonia.Gif
             string str => GetStreamFromString(str),
             _ => throw new InvalidDataException("Unsupported source object")
         })
-        { }
+        {
+        }
 
         public GifInstance(string uri) : this(GetStreamFromString(uri))
-        { }
+        {
+        }
 
         public GifInstance(Uri uri) : this(GetStreamFromUri(uri))
-        { }
+        {
+        }
 
         public GifInstance(Stream currentStream)
         {
@@ -79,12 +73,25 @@ namespace L1.Avalonia.Gif
             //     _colorTableIdList.Add(_gifDecoder.Header.GlobalColorTableCacheID);
         }
 
+        public IterationCount IterationCount { get; set; }
+        public bool AutoStart { get; private set; } = true;
+
+        public CancellationTokenSource CurrentCts { get; }
+
+        public int GifFrameCount => _frameTimes.Count;
+
+        public PixelSize GifPixelSize { get; }
+
+        public void Dispose()
+        {
+            CurrentCts.Cancel();
+            _targetBitmap?.Dispose();
+        }
+
         private static Stream GetStreamFromString(string str)
         {
             if (!Uri.TryCreate(str, UriKind.RelativeOrAbsolute, out var res))
-            {
                 throw new InvalidCastException("The string provided can't be converted to URI.");
-            }
 
             return GetStreamFromUri(res);
         }
@@ -106,28 +113,12 @@ namespace L1.Avalonia.Gif
             return assetLocator;
         }
 
-        public int GifFrameCount => _frameTimes.Count;
-
-        public PixelSize GifPixelSize { get; }
-
-        public void Dispose()
-        {
-            CurrentCts.Cancel();
-            _targetBitmap?.Dispose();
-        }
-
         [CanBeNull]
         public WriteableBitmap ProcessFrameTime(TimeSpan stopwatchElapsed)
         {
-            if (!IterationCount.IsInfinite && _iterationCount > IterationCount.Value)
-            {
-                return null;
-            }
+            if (!IterationCount.IsInfinite && _iterationCount > IterationCount.Value) return null;
 
-            if (CurrentCts.IsCancellationRequested)
-            {
-                return null;
-            }
+            if (CurrentCts.IsCancellationRequested) return null;
 
             var elapsedTicks = stopwatchElapsed.Ticks;
             var timeModulus = TimeSpan.FromTicks(elapsedTicks % _totalTime.Ticks);
@@ -153,5 +144,8 @@ namespace L1.Avalonia.Gif
     }
 }
 
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Delegate | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-public sealed class CanBeNullAttribute : Attribute { }
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
+                AttributeTargets.Delegate | AttributeTargets.Field)]
+public sealed class CanBeNullAttribute : Attribute
+{
+}
