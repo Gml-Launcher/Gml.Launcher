@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Gml.Launcher.Views.Components;
+using L1.Avalonia.Gif.Decoding;
 using Sentry;
 
 namespace Gml.Launcher.Core.Converters;
@@ -51,7 +52,22 @@ public class AsyncStreamToImageLoader
                 await ConvertStreamToFile(stream, fileName);
             }
 
-            sender.Source = new Bitmap(File.OpenRead(fileName));
+
+            var fileStream = File.OpenRead(fileName);
+
+            sender.Classes.Clear();
+            if (GifDecoder.IsGifStream(fileStream))
+            {
+                sender.Classes.Add("Gif");
+                sender.SourceStream = fileStream;
+            }
+            else
+            {
+                sender.Classes.Add("Image");
+                sender.Source = new Bitmap(fileStream);
+            }
+
+
         }
         catch (Exception exception)
         {
@@ -78,7 +94,7 @@ public class AsyncStreamToImageLoader
     {
         return Uri.TryCreate(url, UriKind.Absolute, out var uriResult)
                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
-               && Path.GetFileName(url) is {} fileName && Guid.TryParse(fileName, out _);
+               && Path.GetFileName(url) is { } fileName && Guid.TryParse(fileName, out _);
     }
 
     public static void SetSource(BackgroundComponent obj, string value) => obj.SetValue(SourceProperty, value);
