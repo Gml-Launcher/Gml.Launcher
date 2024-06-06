@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
@@ -86,9 +88,10 @@ public class SettingsPageViewModel : PageViewModelBase
             {
                 if (language == null) return;
 
-                Assets.Resources.Resources.Culture = language.Culture;
+                Thread.CurrentThread.CurrentCulture = language.Culture;
+                Thread.CurrentThread.CurrentCulture.ClearCachedData();
 
-                GoBackCommand.Execute(null);
+                GoBackCommand.Execute(Unit.Default);
             });
 
 

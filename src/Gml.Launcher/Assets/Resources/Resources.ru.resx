@@ -98,4 +98,13 @@
   <data name="PlayDRpcText" xml:space="preserve">
     <value>Играет в</value>
   </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>Установка обновлений</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>Проверка обновлений</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>Не удалось определить операционную систему</value>
+  </data>
 </root>

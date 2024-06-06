@@ -19,10 +19,6 @@ public class SystemService : ISystemService
     public SystemService()
     {
         _hardwareInfo = new HardwareInfo();
-
-        _hardwareInfo.RefreshDriveList();
-        _hardwareInfo.RefreshMotherboardList();
-        _hardwareInfo.RefreshCPUList();
     }
 
     public ulong GetMaxRam()
@@ -72,6 +68,16 @@ public class SystemService : ISystemService
         return $"{cpuIdentifier}-{motherboardIdentifier}-{diskIdentifiers}";
     }
 
+    public async Task LoadSystemData()
+    {
+        await Task.Run(() =>
+        {
+            _hardwareInfo.RefreshDriveList();
+            _hardwareInfo.RefreshMotherboardList();
+            _hardwareInfo.RefreshCPUList();
+        });
+    }
+
     private static string GetFolderPath(Environment.SpecialFolder folder)
     {
         return Environment.GetFolderPath(folder);
@@ -99,7 +105,7 @@ public class SystemService : ISystemService
 
     public IEnumerable<Language> GetAvailableLanguages()
     {
-       return new List<Language>
+        return new List<Language>
         {
             new() { IconPath = "/Assets/Images/lang-ru.svg", Name = "Русский", Culture = new CultureInfo("ru-RU") },
             new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") },

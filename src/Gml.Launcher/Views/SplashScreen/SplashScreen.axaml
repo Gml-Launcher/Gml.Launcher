@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+        xmlns:viewModels="clr-namespace:Gml.Launcher.ViewModels"
+        mc:Ignorable="d"
+        d:DesignWidth="380"
+        d:DesignHeight="210"
+        Width="380"
+        Height="210"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="None"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
+        TransparencyBackgroundFallback="Transparent"
+        x:Class="Gml.Launcher.Views.SplashScreen.SplashScreen"
+        x:DataType="viewModels:SplashScreenViewModel"
+        Title="SplashScreen">
+
+    <Border Background="{DynamicResource FrameBackgroundColor}"
+            BorderBrush="{DynamicResource FrameBackgroundBorderColor}"
+            BorderThickness="1"
+            ClipToBounds="True"
+            CornerRadius="15">
+
+        <Grid>
+            <StackPanel VerticalAlignment="Center">
+                <components:LogoComponent Classes="TextLogo"
+                                          HorizontalAlignment="Center" />
+
+                <ProgressBar IsIndeterminate="{Binding InfinityLoading}"
+                             Value="{Binding Progress}"
+                             Maximum="100"
+                             Classes="ProgressBar"
+                             Margin="60, 20"
+                             Height="1"
+                             VerticalAlignment="Bottom" />
+
+                <TextBlock Text="{Binding StatusText}"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource ContentColor}"/>
+            </StackPanel>
+        </Grid>
+
+    </Border>
+
+</Window>

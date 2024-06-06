@@ -21,7 +21,7 @@
         WindowStartupLocation="CenterScreen"
         TransparencyLevelHint="AcrylicBlur"
         TransparencyBackgroundFallback="Transparent"
-        Icon="/Assets/Images/avalonia-logo.ico"
+        Icon="/Assets/Images/logo.ico"
         Title="Gml.Launcher">
 
     <Grid>

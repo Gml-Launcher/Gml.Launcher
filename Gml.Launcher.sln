@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Dto", "src\Gml.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Domains", "src\Gml.Client\src\Gml.Web.Api.Domains\Gml.Web.Api.Domains.csproj", "{88B821C7-B895-4CB0-832A-5B66138B6AF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmlCore.Interfaces", "src\Gml.Client\src\GmlCore.Interfaces\GmlCore.Interfaces.csproj", "{211E5785-E7FD-4E2B-925D-EAACED8F9D2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Core.Interfaces", "src\Gml.Client\src\Gml.Core.Interfaces\Gml.Core.Interfaces.csproj", "{AE697645-C3EB-4FC8-AAA6-932B9751D348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +61,10 @@ Global
 		{88B821C7-B895-4CB0-832A-5B66138B6AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88B821C7-B895-4CB0-832A-5B66138B6AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88B821C7-B895-4CB0-832A-5B66138B6AF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{211E5785-E7FD-4E2B-925D-EAACED8F9D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{211E5785-E7FD-4E2B-925D-EAACED8F9D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{211E5785-E7FD-4E2B-925D-EAACED8F9D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{211E5785-E7FD-4E2B-925D-EAACED8F9D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE697645-C3EB-4FC8-AAA6-932B9751D348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE697645-C3EB-4FC8-AAA6-932B9751D348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE697645-C3EB-4FC8-AAA6-932B9751D348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE697645-C3EB-4FC8-AAA6-932B9751D348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +79,6 @@ Global
 		{B8E0451C-3C44-470B-9853-C7D0A3648C20} = {662268E9-BD01-43C7-924B-F4F285C8D391}
 		{20707D1F-FF51-4E7B-BF99-2B87065AFDC7} = {662268E9-BD01-43C7-924B-F4F285C8D391}
 		{88B821C7-B895-4CB0-832A-5B66138B6AF2} = {662268E9-BD01-43C7-924B-F4F285C8D391}
-		{211E5785-E7FD-4E2B-925D-EAACED8F9D2C} = {662268E9-BD01-43C7-924B-F4F285C8D391}
+		{AE697645-C3EB-4FC8-AAA6-932B9751D348} = {662268E9-BD01-43C7-924B-F4F285C8D391}
 	EndGlobalSection
 EndGlobal

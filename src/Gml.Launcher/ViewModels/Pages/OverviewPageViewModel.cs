@@ -95,13 +95,11 @@ public class OverviewPageViewModel : PageViewModelBase
 
         HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
 
-        _gmlManager.ProgressChanged += (_, args) =>
+        _gmlManager.ProgressChanged.Subscribe(percentage =>
         {
-            if (LoadingPercentage != args.ProgressPercentage)
-            {
-                LoadingPercentage = args.ProgressPercentage;
-            }
-        };
+            if (LoadingPercentage != percentage)
+                LoadingPercentage = percentage;
+        });
 
         _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
