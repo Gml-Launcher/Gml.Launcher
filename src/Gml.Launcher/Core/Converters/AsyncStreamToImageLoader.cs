@@ -67,7 +67,6 @@ public class AsyncStreamToImageLoader
                 sender.Source = new Bitmap(fileStream);
             }
 
-
         }
         catch (Exception exception)
         {
