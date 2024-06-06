@@ -41,8 +41,6 @@ public class AsyncStreamToImageLoader
                 return;
             }
 
-            ;
-
             var fileName = Path.Combine(TempPath, Path.GetFileName(url));
 
             if (!File.Exists(fileName))
