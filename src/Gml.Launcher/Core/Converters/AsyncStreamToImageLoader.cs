@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Gml.Launcher.Views.Components;
+using Sentry;
 
 namespace Gml.Launcher.Core.Converters;
 
@@ -24,31 +25,38 @@ public class AsyncStreamToImageLoader
 
     private static async void OnSourceChanged(BackgroundComponent sender, AvaloniaPropertyChangedEventArgs args)
     {
-        var url = args.GetNewValue<string>();
-
-        if (string.IsNullOrEmpty(url))
+        try
         {
-            sender.Source = null;
-            return;
+            var url = args.GetNewValue<string>();
+
+            if (string.IsNullOrEmpty(url))
+            {
+                sender.Source = null;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(url) || !ValidateUrl(url))
+            {
+                sender.Source = null;
+                return;
+            }
+
+            var fileName = Path.Combine(TempPath, Path.GetFileName(url));
+
+            if (!File.Exists(fileName))
+            {
+                using var client = new HttpClient();
+                var response = await client.GetByteArrayAsync(url);
+                using var stream = new MemoryStream(response);
+                await ConvertStreamToFile(stream, fileName);
+            }
+
+            sender.Source = new Bitmap(File.OpenRead(fileName));
         }
-
-        if (string.IsNullOrEmpty(url) || !ValidateUrl(url))
+        catch (Exception exception)
         {
-            sender.Source = null;
-            return;
-        };
-
-        var fileName = Path.Combine(TempPath, Path.GetFileName(url));
-
-        if (!File.Exists(fileName))
-        {
-            using var client = new HttpClient();
-            var response = await client.GetByteArrayAsync(url);
-            using var stream = new MemoryStream(response);
-            await ConvertStreamToFile(stream, fileName);
+            SentrySdk.CaptureException(exception);
         }
-
-        sender.Source = new Bitmap(File.OpenRead(fileName));
     }
 
     private static async Task ConvertStreamToFile(Stream input, string filePath)
