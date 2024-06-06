@@ -17,6 +17,9 @@ public static class ResourceKeysDictionary
     public const string InvalidAuthData = "InvalidAuthData";
     public const string Reconnecting = "Reconnecting";
     public const string LostConnection = "LostConnection";
+    public const string CheckUpdates = "CheckUpdates";
+    public const string InstallingUpdates = "InstallingUpdates";
+    public const string FailedOs = "FailedOs";
     public const string Host = "{{HOST}}";
     public const string FolderName = "{{FOLDER_NAME}}";
 }

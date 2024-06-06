@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Avalonia;
 using Gml.Client;
 using Gml.Launcher.Assets;
@@ -21,11 +22,14 @@ public static class ServiceLocator
 
         var configurationManager = ConfigurationManager.OpenMachineConfiguration();
 
-        var installationDirectory = Path.Combine(systemService.GetApplicationFolder(), ResourceKeysDictionary.FolderName);
+        var installationDirectory =
+            Path.Combine(systemService.GetApplicationFolder(), ResourceKeysDictionary.FolderName);
 
         Locator.CurrentMutable.RegisterConstant(new ResourceLocalizationService(), typeof(ILocalizationService));
         Locator.CurrentMutable.RegisterConstant(systemService, typeof(ISystemService));
-        Locator.CurrentMutable.RegisterConstant(new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host, ResourceKeysDictionary.FolderName, systemService.GetOsType()), typeof(IGmlClientManager));
+        Locator.CurrentMutable.RegisterConstant(
+            new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host, ResourceKeysDictionary.FolderName,
+                systemService.GetOsType()), typeof(IGmlClientManager));
 
         var storageService = new LocalStorageService();
         Locator.CurrentMutable.RegisterConstant(storageService, typeof(IStorageService));
@@ -34,13 +38,11 @@ public static class ServiceLocator
 
         if (data != null && !string.IsNullOrEmpty(data.LanguageCode))
         {
-            Assets.Resources.Resources.Culture = systemService
+            Thread.CurrentThread.CurrentCulture = systemService
                 .GetAvailableLanguages()
                 .FirstOrDefault(c => c.Culture.Name == data.LanguageCode)?
-                .Culture;
+                .Culture ?? new CultureInfo("ru-RU");;
         }
-
-        Assets.Resources.Resources.Culture ??= new CultureInfo("ru-RU");
 
         AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
         {
@@ -51,16 +53,19 @@ public static class ServiceLocator
 
         try
         {
-            SentrySdk.Init(options =>
+            if (!string.IsNullOrEmpty(sentryUrl))
             {
-                options.Dsn = sentryUrl;
-                options.Debug = true;
-                options.TracesSampleRate = 1.0;
-                options.DiagnosticLevel = SentryLevel.Debug;
-                options.IsGlobalModeEnabled = true;
-                options.SendDefaultPii = true;
-                options.MaxAttachmentSize = 10 * 1024 * 1024;
-            });
+                SentrySdk.Init(options =>
+                {
+                    options.Dsn = sentryUrl;
+                    options.Debug = true;
+                    options.TracesSampleRate = 1.0;
+                    options.DiagnosticLevel = SentryLevel.Debug;
+                    options.IsGlobalModeEnabled = true;
+                    options.SendDefaultPii = true;
+                    options.MaxAttachmentSize = 10 * 1024 * 1024;
+                });
+            }
         }
         catch (Exception exception)
         {
@@ -69,5 +74,4 @@ public static class ServiceLocator
 
         return builder;
     }
-
 }

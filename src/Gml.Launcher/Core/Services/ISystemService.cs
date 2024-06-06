@@ -13,4 +13,5 @@ public interface ISystemService
     OsType GetOsType();
     IEnumerable<Language> GetAvailableLanguages();
     string GetHwid();
+    Task LoadSystemData();
 }

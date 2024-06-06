@@ -98,4 +98,13 @@
   <data name="PlayDRpcText" xml:space="preserve">
     <value>Play in</value>
   </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>Installing updates</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>Failed to determine the operating system</value>
+  </data>
 </root>
