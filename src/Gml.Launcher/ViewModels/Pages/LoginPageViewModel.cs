@@ -22,7 +22,7 @@ public class LoginPageViewModel : PageViewModelBase
     private string _login = string.Empty;
     private bool _isProcessing = false;
     private string _password = string.Empty;
-    private readonly IScreen _screen;
+    private readonly MainWindowViewModel _screen;
     private readonly IObservable<bool> _onClosed;
     private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlClientManager;
@@ -70,7 +70,7 @@ public class LoginPageViewModel : PageViewModelBase
         ISystemService? systemService = null,
         ILocalizationService? localizationService = null) : base(screen, localizationService)
     {
-        _screen = screen;
+        _screen = (MainWindowViewModel)screen;
         _onClosed = onClosed;
 
         _storageService = storageService
@@ -85,10 +85,16 @@ public class LoginPageViewModel : PageViewModelBase
                             ?? Locator.Current.GetService<IGmlClientManager>()
                             ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
+        _screen.OnClosed.Subscribe(DisposeConnections);
 
         LoginCommand = ReactiveCommand.CreateFromTask(OnAuth);
 
         RxApp.MainThreadScheduler.Schedule(CheckAuth);
+    }
+
+    private void DisposeConnections(bool isClosed)
+    {
+        _gmlClientManager.Dispose();
     }
 
     private async void CheckAuth()
@@ -96,7 +102,10 @@ public class LoginPageViewModel : PageViewModelBase
         var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
         if (authUser is { IsAuth: true })
+        {
             _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authUser, _onClosed));
+            await _gmlClientManager.OpenServerConnection(authUser);
+        }
     }
 
     private async Task OnAuth(CancellationToken arg)

@@ -28,6 +28,7 @@ public class AsyncStreamToImageLoader
     {
         try
         {
+            sender.Classes.Clear();
             var url = args.GetNewValue<string>();
 
             if (string.IsNullOrEmpty(url))
@@ -42,20 +43,19 @@ public class AsyncStreamToImageLoader
                 return;
             }
 
-            var fileName = Path.Combine(TempPath, Path.GetFileName(url));
+            var fileName = new FileInfo(Path.Combine(TempPath, Path.GetFileName(url)));
 
-            if (!File.Exists(fileName))
+            if (!fileName.Exists || fileName.Length == 0)
             {
                 using var client = new HttpClient();
                 var response = await client.GetByteArrayAsync(url);
                 using var stream = new MemoryStream(response);
-                await ConvertStreamToFile(stream, fileName);
+                await ConvertStreamToFile(stream, fileName.FullName);
             }
 
 
-            var fileStream = File.OpenRead(fileName);
+            var fileStream = File.OpenRead(fileName.FullName);
 
-            sender.Classes.Clear();
             if (GifDecoder.IsGifStream(fileStream))
             {
                 sender.Classes.Add("Gif");
