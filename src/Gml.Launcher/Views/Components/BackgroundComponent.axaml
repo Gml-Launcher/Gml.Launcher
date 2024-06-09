@@ -1,16 +1,25 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:Gml.Launcher.Views.Components">
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:gif="clr-namespace:L1.Avalonia.Gif;assembly=L1.Avalonia.Gif">
     <Design.PreviewWith>
         <controls:BackgroundComponent Width="1920"
                                       Height="1080" />
     </Design.PreviewWith>
 
-    <Style Selector="controls|BackgroundComponent">
+    <Style Selector="controls|BackgroundComponent.Image">
         <Setter Property="Template">
             <ControlTemplate>
                 <Image Stretch="UniformToFill"
                        Source="{TemplateBinding Source}" />
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="controls|BackgroundComponent.Gif">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <gif:GifImage Stretch="UniformToFill"
+                              SourceStream="{TemplateBinding SourceStream}"/>
             </ControlTemplate>
         </Setter>
     </Style>

@@ -40,7 +40,7 @@
                 <Grid>
 
                     <!-- Background -->
-                    <components:BackgroundComponent Source="/Assets/Images/background.jpg" />
+                    <components:BackgroundComponent Classes="Image" Source="/Assets/Images/background.jpg" />
 
                     <Rectangle Fill="{DynamicResource BackgroundOverlay}" />
 

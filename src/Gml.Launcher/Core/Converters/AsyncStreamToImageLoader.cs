@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Gml.Launcher.Views.Components;
+using L1.Avalonia.Gif.Decoding;
 using Sentry;
 
 namespace Gml.Launcher.Core.Converters;
@@ -27,6 +28,7 @@ public class AsyncStreamToImageLoader
     {
         try
         {
+            sender.Classes.Clear();
             var url = args.GetNewValue<string>();
 
             if (string.IsNullOrEmpty(url))
@@ -41,17 +43,30 @@ public class AsyncStreamToImageLoader
                 return;
             }
 
-            var fileName = Path.Combine(TempPath, Path.GetFileName(url));
+            var fileName = new FileInfo(Path.Combine(TempPath, Path.GetFileName(url)));
 
-            if (!File.Exists(fileName))
+            if (!fileName.Exists || fileName.Length == 0)
             {
                 using var client = new HttpClient();
                 var response = await client.GetByteArrayAsync(url);
                 using var stream = new MemoryStream(response);
-                await ConvertStreamToFile(stream, fileName);
+                await ConvertStreamToFile(stream, fileName.FullName);
             }
 
-            sender.Source = new Bitmap(File.OpenRead(fileName));
+
+            var fileStream = File.OpenRead(fileName.FullName);
+
+            if (GifDecoder.IsGifStream(fileStream))
+            {
+                sender.Classes.Add("Gif");
+                sender.SourceStream = fileStream;
+            }
+            else
+            {
+                sender.Classes.Add("Image");
+                sender.Source = new Bitmap(fileStream);
+            }
+
         }
         catch (Exception exception)
         {
@@ -78,7 +93,7 @@ public class AsyncStreamToImageLoader
     {
         return Uri.TryCreate(url, UriKind.Absolute, out var uriResult)
                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
-               && Path.GetFileName(url) is {} fileName && Guid.TryParse(fileName, out _);
+               && Path.GetFileName(url) is { } fileName && Guid.TryParse(fileName, out _);
     }
 
     public static void SetSource(BackgroundComponent obj, string value) => obj.SetValue(SourceProperty, value);
