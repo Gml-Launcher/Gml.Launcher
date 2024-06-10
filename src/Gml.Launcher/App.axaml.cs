@@ -21,7 +21,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
 
-#if DEBUG
+#if !DEBUG
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
