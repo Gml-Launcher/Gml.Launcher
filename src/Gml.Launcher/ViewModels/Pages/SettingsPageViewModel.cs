@@ -46,13 +46,35 @@ public class SettingsPageViewModel : PageViewModelBase
     public string WindowWidth
     {
         get => _windowWidth.ToString();
-        set => this.RaiseAndSetIfChanged(ref _windowWidth, int.Parse(string.Concat(value.Where(char.IsDigit))));
+        set
+        {
+            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out int numericValue);
+            if (isNumeric)
+            {
+                this.RaiseAndSetIfChanged(ref _windowWidth, numericValue);
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+            }
+        }
     }
 
     public string WindowHeight
     {
         get => _windowHeight.ToString();
-        set => this.RaiseAndSetIfChanged(ref _windowHeight, int.Parse(string.Concat(value.Where(char.IsDigit))));
+        set
+        {
+            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out int numericValue);
+            if (isNumeric)
+            {
+                this.RaiseAndSetIfChanged(ref _windowHeight, numericValue);
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+            }
+        }
     }
 
     public ObservableCollection<Language> AvailableLanguages { get; }
