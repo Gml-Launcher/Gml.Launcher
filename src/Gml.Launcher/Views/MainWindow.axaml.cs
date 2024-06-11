@@ -49,10 +49,5 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         BeginMoveDrag(e);
-
-        // if(this.GetVisualRoot() is Window window && e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-        // {
-        //     window.BeginMoveDrag(e);
-        // }
     }
 }
