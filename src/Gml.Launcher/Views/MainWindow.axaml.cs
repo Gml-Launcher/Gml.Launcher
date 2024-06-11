@@ -45,4 +45,9 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
         base.OnClosed(e);
     }
+
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        BeginMoveDrag(e);
+    }
 }

@@ -28,7 +28,9 @@
                     <TextBlock Text="{TemplateBinding ProfileName}"
                                Foreground="{TemplateBinding Foreground}"
                                TextWrapping="Wrap"
+                               FontWeight="ExtraBlack"
                                FontSize="{TemplateBinding FontSize}"/>
+
                     <TextBlock Text="{TemplateBinding ProfileDescription}"
                                Foreground="{DynamicResource ContentColor}"
                                FontWeight="Medium"

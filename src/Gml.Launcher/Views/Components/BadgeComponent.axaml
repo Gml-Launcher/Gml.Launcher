@@ -23,7 +23,9 @@
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                    <TextBlock Text="{TemplateBinding Text}" Foreground="{TemplateBinding Foreground}"/>
+                    <TextBlock Text="{TemplateBinding Text}"
+                               FontWeight="Medium"
+                               Foreground="{TemplateBinding Foreground}"/>
                 </Border>
             </ControlTemplate>
         </Setter>

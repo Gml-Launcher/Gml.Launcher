@@ -57,7 +57,7 @@
 
         <Setter Property="CornerRadius" Value="50" />
         <Setter Property="Height" Value="50" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="ExtraBold" />
         <Setter Property="Padding" Value="10, 0, 20, 0" />
 
         <Setter Property="Template">

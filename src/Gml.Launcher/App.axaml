@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="Assets/Styles/Colors.axaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="ManropeFont">avares://Gml.Launcher/Assets/Fonts#Manrope</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 

@@ -70,12 +70,11 @@ public class SystemService : ISystemService
 
     public async Task LoadSystemData()
     {
-        await Task.Run(() =>
-        {
-            _hardwareInfo.RefreshDriveList();
-            _hardwareInfo.RefreshMotherboardList();
-            _hardwareInfo.RefreshCPUList();
-        });
+        var refreshDriveListTask = Task.Run(() => _hardwareInfo.RefreshDriveList());
+        var refreshMotherboardListTask = Task.Run(() => _hardwareInfo.RefreshMotherboardList());
+        var refreshCpuListTask = Task.Run(() => _hardwareInfo.RefreshCPUList());
+
+        await Task.WhenAll(refreshDriveListTask, refreshMotherboardListTask, refreshCpuListTask);
     }
 
     private static string GetFolderPath(Environment.SpecialFolder folder)

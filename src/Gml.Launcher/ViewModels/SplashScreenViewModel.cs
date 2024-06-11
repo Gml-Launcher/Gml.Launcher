@@ -74,7 +74,7 @@ public class SplashScreenViewModel : WindowViewModelBase
 
         if (actualVersion is null)
         {
-            return (null, false);
+            return (null, true);
         }
 
         var version = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0, 0, 0);

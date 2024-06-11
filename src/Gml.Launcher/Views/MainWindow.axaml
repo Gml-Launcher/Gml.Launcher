@@ -14,6 +14,7 @@
         Width="1000"
         Height="600"
         MinHeight="600"
+        CanResize="False"
         x:Class="Gml.Launcher.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Background="Transparent"
