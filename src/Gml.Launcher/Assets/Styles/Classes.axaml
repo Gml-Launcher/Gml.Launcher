@@ -8,6 +8,10 @@
         </components:StackFrameBorder>
     </Design.PreviewWith>
 
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="Manrope"/>
+    </Style>
+
     <Style Selector="TextBlock.FormText">
         <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
