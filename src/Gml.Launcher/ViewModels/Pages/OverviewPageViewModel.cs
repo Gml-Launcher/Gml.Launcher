@@ -230,7 +230,6 @@ public class OverviewPageViewModel : PageViewModelBase
         LoadingPercentage = percentage;
     }
 
-
     private async void LoadData()
     {
         try
