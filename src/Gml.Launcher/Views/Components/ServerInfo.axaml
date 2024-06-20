@@ -28,7 +28,7 @@
                     <TextBlock Text="{TemplateBinding ProfileName}"
                                Foreground="{TemplateBinding Foreground}"
                                TextWrapping="Wrap"
-                               FontWeight="ExtraBlack"
+                               FontWeight="Black"
                                FontSize="{TemplateBinding FontSize}"/>
 
                     <TextBlock Text="{TemplateBinding ProfileDescription}"
