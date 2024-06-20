@@ -7,6 +7,7 @@ using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Gml.Client;
 using Gml.Launcher.Core.Services;
 
 namespace Gml.Launcher.Core.Converters;
@@ -52,6 +53,9 @@ public class AsyncSkinRenderLoader
             if (string.IsNullOrEmpty(url) || !ValidateUrl(url)) return;
 
             using var client = new HttpClient();
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.UserAgent.ParseAdd(
+                $"Gml.Launcher-Client-{nameof(GmlClientManager)}/1.0 (OS: {Environment.OSVersion};)");
             var response = await client.GetByteArrayAsync(url, cts.Token);
             using var stream = new MemoryStream(response);
 
