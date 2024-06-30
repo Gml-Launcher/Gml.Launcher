@@ -31,28 +31,28 @@
                                                              Size="45"/>
 
                                     <Image converters:AsyncSkinRenderLoader.Source="{TemplateBinding SkinUrl}"
-                                           VerticalAlignment="Bottom"
+                                           VerticalAlignment="Top"
                                            Margin="0, 0, 0, -128"
                                            Height="350" />
+                                    <Canvas>
+                                        <Path Canvas.Bottom="0"
+                                              Data="M 0 -200 L 0 0 L 60 20 L 290 20 L 350 0 L 350 -200 Z"
+                                              Fill="{DynamicResource ProfileLinearGradient}" />
+                                        <Path Stroke="{DynamicResource PrimaryColor}"
+                                              Canvas.Bottom="0"
+                                              StrokeThickness="2"
+                                              Data="M 0 0 L 60 20 L 290 20 L 350 0" />
+                                    </Canvas>
                                 </Grid>
                             </Border>
                             <TextBlock Text="{TemplateBinding UserName}"
                                        Foreground="{DynamicResource PrimaryColor}"
                                        TextAlignment="Center"
-                                       VerticalAlignment="Bottom"
-                                       Margin="0,0,0,10"
+                                       VerticalAlignment="Top"
+                                       Margin="0,15,0,0"
                                        FontSize="24"
                                        FontWeight="ExtraBlack" />
                         </Grid>
-                        <Canvas Grid.Row="0">
-                            <Path Canvas.Bottom="0"
-                                  Data="M 0 -200 L 0 0 L 60 20 L 290 20 L 350 0 L 350 -200 Z"
-                                  Fill="{DynamicResource ProfileLinearGradient}" />
-                            <Path Stroke="{DynamicResource PrimaryColor}"
-                                  Canvas.Bottom="0"
-                                  StrokeThickness="2"
-                                  Data="M 0 0 L 60 20 L 290 20 L 350 0" />
-                        </Canvas>
                         <StackPanel Grid.Row="1" Margin="30">
 
                             <controls:ProfileInfoComponent />
