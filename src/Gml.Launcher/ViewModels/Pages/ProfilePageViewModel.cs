@@ -44,10 +44,6 @@ public class ProfilePageViewModel : PageViewModelBase
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
 
-
-
-        // File.Delete("logs.txt");
-
     }
 
     private async void LoadData()
