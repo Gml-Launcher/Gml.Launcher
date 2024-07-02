@@ -200,23 +200,20 @@ public class OverviewPageViewModel : PageViewModelBase
 
         await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
 
-        var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
-
-        if (settings is null)
-        {
-            throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
-        }
+        var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
             RamSize = Convert.ToInt32(settings.RamValue),
-            IsFullScreen = false,
+            IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
             OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
             UserAccessToken = User.AccessToken,
             UserName = User.Name,
-            UserUuid = User.Uuid
+            UserUuid = User.Uuid,
+            WindowWidth = settings.GameWidth,
+            WindowHeight = settings.GameHeight
         };
 
         var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
