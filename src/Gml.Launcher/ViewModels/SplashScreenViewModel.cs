@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
 using Gml.Client;
@@ -46,11 +47,12 @@ public class SplashScreenViewModel : WindowViewModelBase
     public async Task InitializeAsync()
     {
         var osType = _systemService.GetOsType();
+        var osArch = RuntimeInformation.ProcessArchitecture;
 
         await _systemService.LoadSystemData();
         ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
 
-        var versionInfo = await CheckActualVersion(osType);
+        var versionInfo = await CheckActualVersion(osType, osArch);
 
         if (!versionInfo.IsActuallVersion)
         {
@@ -68,9 +70,10 @@ public class SplashScreenViewModel : WindowViewModelBase
         }
     }
 
-    private async Task<(IVersionFile? ActualVersion, bool IsActuallVersion)> CheckActualVersion(OsType osType)
+    private async Task<(IVersionFile? ActualVersion, bool IsActuallVersion)> CheckActualVersion(OsType osType,
+        Architecture osArch)
     {
-        var actualVersion = await _manager.GetActualVersion(osType);
+        var actualVersion = await _manager.GetActualVersion(osType, osArch);
 
         if (actualVersion is null)
         {
