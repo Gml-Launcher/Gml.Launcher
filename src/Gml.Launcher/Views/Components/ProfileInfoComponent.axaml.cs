@@ -12,10 +12,10 @@ public class ProfileInfoComponent : TemplatedControl
         AvaloniaProperty.Register<ProfileUserControl, IEnumerable<ProfileInfoItem>>(
             nameof(ProfileInfoItems), new List<ProfileInfoItem>
             {
-                new("На проекте", "150 дней"),
-                new("Наиграно", " 551 час 45 мин"),
-                new("Баланс", "150 руб."),
-                new("Группа", "Premium"),
+                // new("На проекте", "150 дней"),
+                // new("Наиграно", " 551 час 45 мин"),
+                // new("Баланс", "150 руб."),
+                // new("Группа", "Premium"),
             });
 
 

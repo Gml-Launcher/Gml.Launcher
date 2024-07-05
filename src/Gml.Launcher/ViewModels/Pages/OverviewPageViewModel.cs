@@ -130,7 +130,7 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             try
             {
-                var profileInfo = await PrepareLaunch();
+                var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
                 {
@@ -191,7 +191,7 @@ public class OverviewPageViewModel : PageViewModelBase
         return process;
     }
 
-    private async Task<ResponseMessage<ProfileReadInfoDto?>?> PrepareLaunch()
+    private async Task<ResponseMessage<ProfileReadInfoDto?>?> GetProfileInfo()
     {
         UpdateProgress(
             LocalizationService.GetString(ResourceKeysDictionary.Updating),
