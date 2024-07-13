@@ -38,15 +38,29 @@
 
                     <components:ProfileInfoComponent />
 
-                    <components:GmlButton Classes="TextIcon Primary"
-                                        Margin="0, 15, 0, 0"
-                                        Padding="15, 10, 10, 10"
 
-                                        Command="{Binding OpenLinkCommand}"
-                                        CommandParameter="https://recloud.tech"
-                                        Text="{x:Static lang:Resources.Cabinet}"
-                                        HorizontalAlignment="Center" />
-                                               </components:ProfileUserControl>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="15"
+                                HorizontalAlignment="Center">
+                        <components:GmlButton Classes="Icon Additional"
+                                              Margin="0, 15, 0, 0"
+                                              Command="{Binding OpenLinkCommand}"
+                                              CommandParameter="https://recloud.tech"
+                                              Text="{x:Static lang:Resources.Cabinet}"
+                                              HorizontalAlignment="Center" />
+
+                        <components:GmlButton Classes="TextIcon Primary"
+                                              Margin="0, 15, 0, 0"
+                                              Padding="15, 10, 10, 10"
+
+                                              Command="{Binding OpenLinkCommand}"
+                                              CommandParameter="https://recloud.tech"
+                                              IconSize="20"
+                                              IconPath="/Assets/Images/home.svg"
+                                              Text="{x:Static lang:Resources.Cabinet}"
+                                              HorizontalAlignment="Center" />
+                    </StackPanel>
+                </components:ProfileUserControl>
 
             </Grid>
         </Border>
