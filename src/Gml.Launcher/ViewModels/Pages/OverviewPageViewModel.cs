@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
@@ -146,6 +147,12 @@ public class OverviewPageViewModel : PageViewModelBase
                 {
                     ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
+            }
+            catch (FileNotFoundException exception)
+            {
+                ShowError(ResourceKeysDictionary.Error, LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
+
+                Console.WriteLine(exception);
             }
             catch (Exception exception)
             {

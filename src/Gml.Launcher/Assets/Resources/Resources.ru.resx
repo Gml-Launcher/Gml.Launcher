@@ -107,4 +107,13 @@
   <data name="FailedOs" xml:space="preserve">
     <value>Не удалось определить операционную систему</value>
   </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>На серверах</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>чел.</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>Не удалось обнаружить загруженную Java для Вашей операционной системы, обратитесь в поддержку или к администратору проекта</value>
+  </data>
 </root>

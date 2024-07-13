@@ -114,4 +114,13 @@
   <data name="FailedOs" xml:space="preserve">
     <value>Failed to determine the operating system</value>
   </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>On servers</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>pl.</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>Unable to detect a loaded Java for your operating system, please contact support or the project administrator.</value>
+  </data>
 </root>

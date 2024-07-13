@@ -1,0 +1,64 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources">
+    <Design.PreviewWith>
+        <Grid Width="350" Height="100">
+            <controls:BackgroundComponent Classes="Image" Source="/Assets/Images/background.jpg" />
+            <Rectangle Fill="{DynamicResource BackgroundOverlay}" />
+
+            <Border Padding="20">
+                <controls:OnlineComponent />
+            </Border>
+        </Grid>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|OnlineComponent">
+
+        <Setter Property="Background" Value="{DynamicResource FrameBackgroundColor}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <!-- Component Border -->
+                <Border Background="{TemplateBinding Background}"
+                        Padding="10, 8, 15, 8"
+                        CornerRadius="12"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        HorizontalAlignment="Left">
+                    <Grid ColumnDefinitions="Auto, 10, Auto">
+
+                        <!-- Icon -->
+                        <Border Background="{DynamicResource PrimaryColor}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Padding="12"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <Svg Path="/Assets/Images/users.svg" Width="18" />
+                        </Border>
+
+                        <!-- Content -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="{x:Static lang:Resources.OnServers}"
+                                       Foreground="{DynamicResource ContentColor}"
+                                       FontSize="14"
+                                       FontWeight="Medium" />
+                            <TextBlock>
+                                <Run Text="{TemplateBinding Online}"
+                                     Foreground="{DynamicResource HeadlineColor}"
+                                     FontSize="20"
+                                     FontWeight="Bold" />
+                                <Run Text="{x:Static lang:Resources.PlayersShort}"
+                                     Foreground="{DynamicResource ContentColor}"
+                                     FontSize="14"
+                                     FontWeight="Medium" />
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

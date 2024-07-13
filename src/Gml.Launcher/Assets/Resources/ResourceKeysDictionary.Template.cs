@@ -20,6 +20,7 @@ public static class ResourceKeysDictionary
     public const string CheckUpdates = "CheckUpdates";
     public const string InstallingUpdates = "InstallingUpdates";
     public const string FailedOs = "FailedOs";
+    public const string JavaNotFound = "JavaNotFound";
     public const string Host = "{{HOST}}";
     public const string FolderName = "{{FOLDER_NAME}}";
 }
