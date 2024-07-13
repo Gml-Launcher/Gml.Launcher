@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
@@ -130,7 +131,7 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             try
             {
-                var profileInfo = await PrepareLaunch();
+                var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
                 {
@@ -146,6 +147,12 @@ public class OverviewPageViewModel : PageViewModelBase
                 {
                     ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
+            }
+            catch (FileNotFoundException exception)
+            {
+                ShowError(ResourceKeysDictionary.Error, LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
+
+                Console.WriteLine(exception);
             }
             catch (Exception exception)
             {
@@ -191,7 +198,7 @@ public class OverviewPageViewModel : PageViewModelBase
         return process;
     }
 
-    private async Task<ResponseMessage<ProfileReadInfoDto?>?> PrepareLaunch()
+    private async Task<ResponseMessage<ProfileReadInfoDto?>?> GetProfileInfo()
     {
         UpdateProgress(
             LocalizationService.GetString(ResourceKeysDictionary.Updating),
@@ -200,23 +207,20 @@ public class OverviewPageViewModel : PageViewModelBase
 
         await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
 
-        var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
-
-        if (settings is null)
-        {
-            throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.NotSetting));
-        }
+        var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
             RamSize = Convert.ToInt32(settings.RamValue),
-            IsFullScreen = false,
+            IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
             OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
             UserAccessToken = User.AccessToken,
             UserName = User.Name,
-            UserUuid = User.Uuid
+            UserUuid = User.Uuid,
+            WindowWidth = settings.GameWidth,
+            WindowHeight = settings.GameHeight
         };
 
         var profileInfo = await _gmlManager.GetProfileInfo(localProfile);

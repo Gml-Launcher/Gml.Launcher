@@ -202,5 +202,21 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Available", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string OnServers {
+            get {
+                return ResourceManager.GetString("OnServers", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string PlayersShort {
+            get {
+                return ResourceManager.GetString("PlayersShort", resourceCulture);
+            }
+        }
     }
 }

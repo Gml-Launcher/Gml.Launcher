@@ -31,6 +31,13 @@
             <Grid ColumnDefinitions="Auto, 30, *"
                   RowDefinitions="60, 30 *, 30, Auto">
 
+                <components:OnlineComponent
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Online="{Binding ListViewModel.SelectedProfile.Servers,
+                    Converter={converters:SumServersOnlineConverter}}"
+                    VerticalAlignment="Center" />
+
                 <components:ProgressBar Grid.Row="0"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
