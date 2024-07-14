@@ -218,5 +218,21 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("PlayersShort", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string InstallationDirectory {
+            get {
+                return ResourceManager.GetString("InstallationDirectory", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
     }
 }

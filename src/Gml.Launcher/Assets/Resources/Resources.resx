@@ -123,4 +123,10 @@
   <data name="JavaNotFound" xml:space="preserve">
     <value>Unable to detect a loaded Java for your operating system, please contact support or the project administrator.</value>
   </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>Install folder</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Change</value>
+  </data>
 </root>

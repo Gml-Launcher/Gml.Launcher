@@ -41,7 +41,7 @@ public static class ServiceLocator
             Thread.CurrentThread.CurrentCulture = systemService
                 .GetAvailableLanguages()
                 .FirstOrDefault(c => c.Culture.Name == data.LanguageCode)?
-                .Culture ?? new CultureInfo("ru-RU");;
+                .Culture ?? new CultureInfo("ru-RU");
         }
 
         AppDomain.CurrentDomain.UnhandledException += (sender, args) =>

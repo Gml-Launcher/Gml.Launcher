@@ -91,6 +91,7 @@ public class OverviewPageViewModel : PageViewModelBase
                 LocalizationService,
                 _storageService,
                 _systemService,
+                _gmlManager,
                 ListViewModel.SelectedProfile!))
         );
 

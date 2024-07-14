@@ -43,6 +43,7 @@
                                    Margin="0"
                                    VerticalAlignment="Center" />
                     </StackPanel>
+
                     <TextBlock Text="{x:Static lang:Resources.SettingsRamDescription}"
                                TextWrapping="Wrap"
                                Margin="38, 0, 0, 0"
@@ -59,7 +60,6 @@
                     <Border Classes="Separator"
                             Margin="0, 10"
                             IsVisible="{Binding DynamicRamValue, Converter={converters:BoolReverseConverter}}" />
-
 
                     <StackPanel IsVisible="{Binding DynamicRamValue, Converter={converters:BoolReverseConverter}}">
                         <Slider Minimum="512"
@@ -83,54 +83,96 @@
                         </Grid>
                     </StackPanel>
 
-
                 </components:StackFrameBorder>
 
-                <!-- Game Window Size -->
-                <components:StackFrameBorder Grid.Row="2"
-                                             Grid.Column="2"
-                                             Spacing="10"
-                                             VerticalAlignment="Top">
+                <StackPanel Grid.Row="2"
+                            Grid.Column="2"
+                            Spacing="20">
 
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0, 0, 0, 10"
-                                Spacing="10">
-                        <Svg Path="/Assets/Images/window.svg"
-                             Width="28"
-                             Height="28" />
-                        <TextBlock Text="{x:Static lang:Resources.WindowSize}"
-                                   Margin="0"
-                                   Classes="HeadlineText" />
-                    </StackPanel>
+                    <!-- Game Window Size -->
+                    <components:StackFrameBorder
+                        Spacing="10"
+                        VerticalAlignment="Top">
 
-                    <Border Classes="Separator" Margin="0, 10" />
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0, 0, 0, 10"
+                                    Spacing="10">
+                            <Svg Path="/Assets/Images/window.svg"
+                                 Width="28"
+                                 Height="28" />
+                            <TextBlock Text="{x:Static lang:Resources.WindowSize}"
+                                       Margin="0"
+                                       Classes="HeadlineText" />
+                        </StackPanel>
 
-                    <CheckBox Content="{x:Static lang:Resources.FullScreen}"
-                              Classes="FormCheckBox"
-                              IsChecked="{Binding FullScreen}" />
+                        <Border Classes="Separator" Margin="0, 10" />
 
-                    <Border Classes="Separator" Margin="0, 10"
-                            IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}" />
+                        <CheckBox Content="{x:Static lang:Resources.FullScreen}"
+                                  Classes="FormCheckBox"
+                                  IsChecked="{Binding FullScreen}" />
 
-                    <Grid ColumnDefinitions="*, 10, Auto, 10, *"
-                          Margin="0, 10, 0, 0"
-                          IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}">
-                        <TextBox Grid.Column="0"
-                                 Classes="FormBox"
-                                 Text="{Binding WindowWidth}"
-                                 TextChanged="OnTextInput" />
-                        <TextBlock Text="x"
-                                   Classes="FormText"
-                                   VerticalAlignment="Center"
-                                   Grid.Column="2" />
-                        <TextBox Grid.Column="4"
-                                 TextChanged="OnTextInput"
-                                 Text="{Binding WindowHeight}"
-                                 Classes="FormBox" />
-                    </Grid>
+                        <Border Classes="Separator" Margin="0, 10"
+                                IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}" />
+
+                        <Grid ColumnDefinitions="*, 10, Auto, 10, *"
+                              Margin="0, 10, 0, 0"
+                              IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}">
+                            <TextBox Grid.Column="0"
+                                     Classes="FormBox"
+                                     Text="{Binding WindowWidth}"
+                                     TextChanged="OnTextInput" />
+                            <TextBlock Text="x"
+                                       Classes="FormText"
+                                       VerticalAlignment="Center"
+                                       Grid.Column="2" />
+                            <TextBox Grid.Column="4"
+                                     TextChanged="OnTextInput"
+                                     Text="{Binding WindowHeight}"
+                                     Classes="FormBox" />
+                        </Grid>
 
 
-                </components:StackFrameBorder>
+                    </components:StackFrameBorder>
+
+                    <!-- Installation directory -->
+                    <components:StackFrameBorder
+                        Spacing="10"
+                        VerticalAlignment="Top">
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0, 0, 0, 10"
+                                    Spacing="10">
+                            <Svg Path="/Assets/Images/folder.svg"
+                                 Width="28"
+                                 Height="28" />
+                            <TextBlock Text="{x:Static lang:Resources.InstallationDirectory}"
+                                       Margin="0"
+                                       Classes="HeadlineText" />
+                        </StackPanel>
+
+                        <Border Classes="Separator" Margin="0, 10"
+                                IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}" />
+
+                        <Grid Margin="0, 10, 0, 0"
+                              ColumnDefinitions="*, 15, Auto"
+                              IsVisible="{Binding FullScreen, Converter={converters:BoolReverseConverter}}">
+                            <TextBox Grid.Column="0"
+                                     Classes="FormBox"
+                                     Text="{Binding InstallationFolder}" />
+
+                            <components:GmlButton Grid.Column="2" Classes="TextIcon Additional"
+                                                  Padding="15, 0, 20 ,0"
+                                                  IconPath="/Assets/Images/folder.svg"
+                                                  IconSize="22"
+                                                  HorizontalAlignment="Right"
+                                                  CornerRadius="10"
+                                                  Text="{x:Static lang:Resources.Edit}" />
+
+                        </Grid>
+
+                    </components:StackFrameBorder>
+
+                </StackPanel>
 
                 <!-- Language -->
                 <!-- <ComboBox Grid.Column="4" -->

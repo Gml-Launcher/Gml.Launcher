@@ -5,10 +5,13 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Windows.Input;
+using Gml.Client;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Dto.Profile;
+using GmlCore.Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -29,6 +32,11 @@ public class SettingsPageViewModel : PageViewModelBase
 
     [Reactive]
     public Language? SelectedLanguage { get; set; }
+
+    [Reactive]
+    public string? InstallationFolder { get; set; }
+
+    public ICommand ChangeInstallationDirectory { get; }
 
 
     public double RamValue
@@ -82,15 +90,18 @@ public class SettingsPageViewModel : PageViewModelBase
     private int _windowWidth;
     private int _windowHeight;
     private double _ramValue;
+    private readonly IGmlClientManager _gmlManager;
 
     public SettingsPageViewModel(
         IScreen screen,
         ILocalizationService? localizationService,
         IStorageService storageService,
         ISystemService systemService,
+        IGmlClientManager gmlManager,
         ProfileReadDto selectedProfile) : base(screen, localizationService)
     {
         _storageService = storageService;
+        _gmlManager = gmlManager;
 
         this.WhenAnyValue(
                 x => x.RamValue,
@@ -116,12 +127,21 @@ public class SettingsPageViewModel : PageViewModelBase
                 GoBackCommand.Execute(Unit.Default);
             });
 
+        ChangeInstallationDirectory = ReactiveCommand.Create(ChangeFolder);
 
         AvailableLanguages = new ObservableCollection<Language>(systemService.GetAvailableLanguages());
 
         MaxRamValue = systemService.GetMaxRam();
 
+        InstallationFolder = _gmlManager.InstallationDirectory;
+
         RxApp.MainThreadScheduler.Schedule(LoadSettings);
+    }
+
+    private void ChangeFolder()
+    {
+        if (InstallationFolder != null)
+            _gmlManager.ChangeInstallationFolder(InstallationFolder);
     }
 
     private double RoundToNearest(double value, double step)

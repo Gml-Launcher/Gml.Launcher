@@ -116,4 +116,10 @@
   <data name="JavaNotFound" xml:space="preserve">
     <value>Не удалось обнаружить загруженную Java для Вашей операционной системы, обратитесь в поддержку или к администратору проекта</value>
   </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>Папка установки</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Gml.Launcher.ViewModels.Pages;
@@ -29,5 +30,10 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
             textBox.Text = string.Concat(textBox.Text?.Where(char.IsDigit) ?? string.Empty);
         }
 
+    }
+
+    private void OpenFileDialog(object? sender, RoutedEventArgs e)
+    {
+        
     }
 }
