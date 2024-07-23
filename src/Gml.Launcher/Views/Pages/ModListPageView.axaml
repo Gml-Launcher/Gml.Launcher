@@ -1,0 +1,300 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+             xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="1000"
+             d:DesignHeight="600"
+             x:DataType="vm:ModListPageViewModel"
+             x:Class="Gml.Launcher.Views.Pages.ModListPageView">
+    <Grid>
+        <!-- Background -->
+        <components:BackgroundComponent Grid.Column="0" />
+        <Border Padding="20">
+            <Grid ColumnDefinitions="980, 30, .6*, 30 0.2*" RowDefinitions="Auto, 30, *">
+
+                <!-- Navigation -->
+                <Grid Grid.ColumnSpan="3" Grid.Row="0">
+                    <components:GmlButton Classes="TextIcon Additional"
+                                          Padding="15, 0, 20 ,0"
+                                          IconPath="/Assets/Images/back.svg"
+                                          IconSize="22"
+                                          Text="{x:Static lang:Resources.Back}"
+                                          Command="{Binding GoBackCommand}" />
+                </Grid>
+
+                <components:StackFrameBorder Grid.Row="2"
+                                             Grid.Column="0"
+                                             Spacing="10"
+                                             VerticalAlignment="Top">
+
+                    <StackPanel Orientation="Horizontal"
+                                    Margin="0, 0, 0, 10"
+                                    Spacing="10">
+                        <Svg Path="/Assets/Images/ram.svg"
+                             Width="28"
+                             Height="28" />
+                        <TextBlock Text="{x:Static lang:Resources.ModList}"
+                                   Classes="HeadlineText"
+                                   Margin="0"
+                                   VerticalAlignment="Center" />
+                       <components:GmlButton Classes="TextIcon Secondary"
+                                            IconPath="/Assets/Images/login.svg"
+                                            Command="{Binding OpenFolder}"
+                                            IconSize="24"
+                                            FontSize="16"
+                                            Margin="475, 0, 0, 0"
+                                            Text="{x:Static lang:Resources.ModDir}"/>
+                    </StackPanel>
+                        <TextBlock Text="{x:Static lang:Resources.ModDecs}"
+                               TextWrapping="Wrap"
+                               Margin="38, 0, 0, 0"
+                               LineHeight="25"
+                               Classes="FormText" />
+
+                        <Border Classes="Separator"
+                            Margin="0, 10" />
+                    <Border Height="350">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Grid ColumnDefinitions="20*, 20*, 20*, 20*" RowDefinitions="80, 80, 80, 80, 80, 80">
+                                    <components:ModComponent
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        ModName="3АS"
+                                        Decs="Главный мод по ЗВ"
+                                        Command="{Binding OpenLinkCommand}"
+                                        CommandParameter="https://recloud.tech"
+                                        ToolTip.Tip="Открыть страницу мода"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        ModName="3АS Terrains"
+                                        Decs="Пропы/Текстуры ЗВ"
+                                        Command=""
+                                        CommandParameter="@3AS Terrains (Beta)"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="0"
+                                        Grid.Column="2"
+                                        ModName="3еden Enchanced"
+                                        Decs="Пропы/Текстуры ЗВ"
+                                        Command=""
+                                        CommandParameter="@3den Enhanced"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="0"
+                                        Grid.Column="3"
+                                        ModName="ace"
+                                        Decs="Мод на реализм"
+                                        Command=""
+                                        CommandParameter="@ace"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                    <components:ModComponent
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        ModName="ACE 3 Ext."
+                                        Decs="Анимации для ace"
+                                        Command=""
+                                        CommandParameter="@ACE 3 Extension (Animations and Actions)"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        ModName="ACE 3 Ext."
+                                        Decs="Жесты для ace"
+                                        Command=""
+                                        CommandParameter="@ACE 3 Extension (Gestures)"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        ModName="ACE Arsenal Ext."
+                                        Decs="Улучшенный арсенал"
+                                        Command=""
+                                        CommandParameter="@ACE3 Arsenal Extended - Core"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="1"
+                                        Grid.Column="3"
+                                        ModName="ARMPv2"
+                                        Decs="Ассеты для карт"
+                                        Command=""
+                                        CommandParameter="@Arma Realistic Map Assets V2"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                    <components:ModComponent
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        ModName="CBA_A3"
+                                        Decs="Утилиты модов"
+                                        Command=""
+                                        CommandParameter="@CBA_A3"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        ModName="CWN"
+                                        Decs="Пропы от SoG"
+                                        Command=""
+                                        CommandParameter="@CWN - Clone Wars [Noxvel]"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="2"
+                                        Grid.Column="2"
+                                        ModName="Deformer"
+                                        Decs="Ред. ландшафт карты"
+                                        Command=""
+                                        CommandParameter="@Deformer"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="2"
+                                        Grid.Column="3"
+                                        ModName="Improved Melee"
+                                        Decs="Ближний бой"
+                                        Command=""
+                                        CommandParameter="@Improved Melee System"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                    <components:ModComponent
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        ModName="JM Structures"
+                                        Decs="Фишки ивентологов"
+                                        Command=""
+                                        CommandParameter="@JM's Structures"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        ModName="JLTS"
+                                        Decs="Звёздные войны"
+                                        Command=""
+                                        CommandParameter="@Just Like The Simulations - The Great War"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="3"
+                                        Grid.Column="2"
+                                        ModName="LAMBS"
+                                        Decs="Улучшение ИИ"
+                                        Command=""
+                                        CommandParameter="@LAMBS_Danger.fsm"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="3"
+                                        Grid.Column="3"
+                                        ModName="Legion Studios"
+                                        Decs="Броня клонов"
+                                        Command=""
+                                        CommandParameter="@Legion Studios Base - Stable"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                    <components:ModComponent
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        ModName="Lightsabers"
+                                        Decs="Мод на джедаев"
+                                        Command=""
+                                        CommandParameter="@Lightsabers and Force"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        ModName="Radio Anims"
+                                        Decs="Анимации для TFAR"
+                                        Command=""
+                                        CommandParameter="@Radio Animations for Task Force Radio"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="4"
+                                        Grid.Column="2"
+                                        ModName="Rosche Germany"
+                                        Decs="Текущая карта"
+                                        Command=""
+                                        CommandParameter="@Rosche, Germany"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="4"
+                                        Grid.Column="3"
+                                        ModName="SoG"
+                                        Decs="Утилиты сервера"
+                                        Command=""
+                                        CommandParameter="@SoG"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+
+                                    <components:ModComponent
+                                        Grid.Row="5"
+                                        Grid.Column="0"
+                                        ModName="SWZT"
+                                        Decs="Различная ЗВ броня"
+                                        Command=""
+                                        CommandParameter="@Star Wars Zero Pack  (Alifa Test)"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        ModName="StormGalaxy"
+                                        Decs="Основные ассеты"
+                                        Command=""
+                                        CommandParameter="@Storm Of Galaxy - RP Server"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="5"
+                                        Grid.Column="2"
+                                        ModName="TFAR"
+                                        Decs="Радио / Общение"
+                                        Command=""
+                                        CommandParameter="@Task Force Arrowhead Radio (BETA!!!)"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                    <components:ModComponent
+                                        Grid.Row="5"
+                                        Grid.Column="3"
+                                        ModName="WK Droids"
+                                        Decs="Улучшенные дроиды"
+                                        Command=""
+                                        CommandParameter="@WebKnight Droids"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"/>
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+
+                </components:StackFrameBorder>
+
+
+
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -47,6 +47,7 @@ public class OverviewPageViewModel : PageViewModelBase
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
+    public ICommand GoModListCommand { get; set; }
     public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User => _user;
@@ -87,6 +88,14 @@ public class OverviewPageViewModel : PageViewModelBase
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
             () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
+                screen,
+                LocalizationService,
+                _storageService,
+                _systemService,
+                ListViewModel.SelectedProfile!))
+        );
+        GoModListCommand = ReactiveCommand.CreateFromObservable(
+            () => screen.Router.Navigate.Execute(new ModListPageViewModel(
                 screen,
                 LocalizationService,
                 _storageService,
