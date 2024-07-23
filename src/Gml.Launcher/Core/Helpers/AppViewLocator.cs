@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Gml.Launcher.ViewModels.Pages;
 using Gml.Launcher.Views.Pages;
 using ReactiveUI;
@@ -12,6 +12,7 @@ public class AppViewLocator : IViewLocator
         OverviewPageViewModel context => new OverviewPageView { DataContext = context },
         ProfilePageViewModel context => new ProfilePageView { DataContext = context },
         SettingsPageViewModel context => new SettingsPageView { DataContext = context },
+        ModListPageViewModel context => new ModListPageView { DataContext = context },
         LoginPageViewModel context => new LoginPageView { DataContext = context },
 
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
