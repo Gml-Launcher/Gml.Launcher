@@ -116,4 +116,7 @@
   <data name="JavaNotFound" xml:space="preserve">
     <value>Не удалось обнаружить загруженную Java для Вашей операционной системы, обратитесь в поддержку или к администратору проекта</value>
   </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Осталось</value>
+  </data>
 </root>

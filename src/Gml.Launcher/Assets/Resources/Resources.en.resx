@@ -116,4 +116,7 @@
   <data name="JavaNotFound" xml:space="preserve">
     <value>Unable to detect a loaded Java for your operating system, please contact support or the project administrator.</value>
   </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Stay</value>
+  </data>
 </root>
