@@ -254,10 +254,11 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
+            await LoadProfiles();
+
             await _gmlManager.LoadDiscordRpc();
             await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
 
-            await LoadProfiles();
         }
         catch (TaskCanceledException exception)
         {
