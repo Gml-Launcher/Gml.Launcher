@@ -10,11 +10,11 @@
 
     <Style Selector="controls|ServerInfo">
 
-        <Setter Property="Spacing" Value="20"/>
-        <Setter Property="FontSize" Value="60"/>
-        <Setter Property="MaxWidth" Value="400"/>
-        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}"/>
-        <Setter Property="FontWeight" Value="Black"/>
+        <Setter Property="Spacing" Value="20" />
+        <Setter Property="FontSize" Value="60" />
+        <Setter Property="MaxWidth" Value="400" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
+        <Setter Property="FontWeight" Value="Black" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -24,19 +24,19 @@
                             HorizontalAlignment="Left">
                     <controls:BadgeComponent Text="{TemplateBinding Status}"
                                              FontSize="14"
-                                             FontWeight="Medium"/>
+                                             FontWeight="Medium" />
                     <TextBlock Text="{TemplateBinding ProfileName}"
                                Foreground="{TemplateBinding Foreground}"
                                TextWrapping="Wrap"
                                FontWeight="Black"
-                               FontSize="{TemplateBinding FontSize}"/>
+                               FontSize="{TemplateBinding FontSize}" />
 
                     <TextBlock Text="{TemplateBinding ProfileDescription}"
                                Foreground="{DynamicResource ContentColor}"
                                FontWeight="Medium"
                                LineHeight="25"
                                TextWrapping="Wrap"
-                               FontSize="14"/>
+                               FontSize="14" />
 
                     <StackPanel Spacing="10" Orientation="Horizontal">
                         <controls:GmlButton Classes="TextIcon Primary"
@@ -44,17 +44,16 @@
                                             Command="{TemplateBinding PlayCommand}"
                                             IconSize="24"
                                             FontSize="16"
-                                            Text="{x:Static lang:Resources.Play}"/>
+                                            Text="{x:Static lang:Resources.Play}" />
                         <controls:GmlButton Classes="TextIcon Secondary"
                                             Command="{TemplateBinding SettingsCommand}"
                                             IconPath="/Assets/Images/settings.svg"
                                             IconSize="24"
                                             FontSize="16"
-                                            Text="{x:Static lang:Resources.Settings}"/>
+                                            Text="{x:Static lang:Resources.Settings}" />
                     </StackPanel>
                 </StackPanel>
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

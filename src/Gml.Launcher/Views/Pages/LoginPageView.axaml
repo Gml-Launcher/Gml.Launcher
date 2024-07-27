@@ -5,7 +5,6 @@
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              mc:Ignorable="d"
              d:DesignWidth="800"
@@ -49,7 +48,7 @@
             <TextBlock Text="{Binding Errors, Converter={converters:FirstElementConverter}}"
                        IsVisible="{Binding Errors, Converter={converters:HasElementsConverter}}"
                        Foreground="Tomato"
-                       Margin="0, 0, 0, 20"/>
+                       Margin="0, 0, 0, 20" />
 
 
             <components:GmlButton Command="{Binding LoginCommand}"

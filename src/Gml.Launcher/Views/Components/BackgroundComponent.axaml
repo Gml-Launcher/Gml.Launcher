@@ -19,9 +19,8 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <gif:GifImage Stretch="UniformToFill"
-                              SourceStream="{TemplateBinding SourceStream}"/>
+                              SourceStream="{TemplateBinding SourceStream}" />
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

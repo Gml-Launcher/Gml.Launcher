@@ -43,14 +43,14 @@
                                 Background="Transparent"
                                 Foreground="{DynamicResource PrimaryColor}"
                                 Margin="8"
-                                Size="28"/>
+                                Size="28" />
 
                             <TextBlock Text="{TemplateBinding Percentage}"
                                        HorizontalAlignment="Center"
                                        FontSize="10"
                                        FontWeight="Bold"
                                        VerticalAlignment="Center"
-                                       Foreground="{DynamicResource PrimaryColor}"/>
+                                       Foreground="{DynamicResource PrimaryColor}" />
                         </Grid>
 
                         <StackPanel VerticalAlignment="Center"
@@ -60,6 +60,7 @@
                                        FontWeight="SemiBold"
                                        Text="{TemplateBinding Headline}" />
                             <TextBlock Foreground="{DynamicResource ContentColor}"
+                                       MinWidth="145"
                                        FontSize="12"
                                        Text="{TemplateBinding Description}" />
                         </StackPanel>

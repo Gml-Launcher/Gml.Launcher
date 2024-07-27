@@ -9,18 +9,18 @@
         <Style.Animations>
             <Animation Duration="0:0:1" IterationCount="INFINITE">
                 <KeyFrame Cue="0%">
-                    <Setter Property="RotateTransform.Angle" Value="0.0"/>
+                    <Setter Property="RotateTransform.Angle" Value="0.0" />
                 </KeyFrame>
                 <KeyFrame Cue="100%">
-                    <Setter Property="RotateTransform.Angle" Value="360.0"/>
+                    <Setter Property="RotateTransform.Angle" Value="360.0" />
                 </KeyFrame>
             </Animation>
         </Style.Animations>
     </Style>
 
     <Style Selector="controls|LoadingControl">
-        <Setter Property="Background" Value="#000000"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="#000000" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
@@ -30,19 +30,16 @@
                     <Ellipse Width="{TemplateBinding Size}"
                              Height="{TemplateBinding Size}"
                              Stroke="#20FFFFFF"
-                             StrokeThickness="2">
-                    </Ellipse>
+                             StrokeThickness="2" />
                     <Ellipse Width="{TemplateBinding Size}"
                              Height="{TemplateBinding Size}"
                              Stroke="{TemplateBinding Foreground}"
                              StrokeLineCap="Round"
                              StrokeThickness="2"
                              Classes="RoundAnimate"
-                             StrokeDashArray="13, 352">
-                    </Ellipse>
+                             StrokeDashArray="13, 352" />
                 </Canvas>
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

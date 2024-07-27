@@ -1,10 +1,9 @@
-﻿using System;
-using System.Reactive.Subjects;
+﻿using System.Reactive.Subjects;
 using ReactiveUI;
 
 namespace Gml.Launcher.ViewModels.Base;
 
 public class ViewModelBase : ReactiveObject
 {
-    protected internal Subject<bool> OnClosed = new();
+    protected internal readonly Subject<bool> OnClosed = new();
 }

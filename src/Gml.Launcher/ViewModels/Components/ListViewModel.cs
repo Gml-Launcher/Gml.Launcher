@@ -11,6 +11,10 @@ public class ListViewModel : ViewModelBase
 {
     internal readonly Subject<ProfileReadDto?> ProfileChanged = new();
 
+
+    private ObservableCollection<ProfileReadDto>? _profiles;
+    private ProfileReadDto? _selectedProfile;
+
     public ObservableCollection<ProfileReadDto>? Profiles
     {
         get => _profiles;
@@ -38,9 +42,4 @@ public class ListViewModel : ViewModelBase
     public bool IsNotLoaded => _profiles == null;
     public bool HasItems => _profiles != null && _profiles.Any();
     public bool HasSelectedItem => _selectedProfile != null;
-
-
-    private ObservableCollection<ProfileReadDto>? _profiles;
-    private ProfileReadDto? _selectedProfile;
-
 }

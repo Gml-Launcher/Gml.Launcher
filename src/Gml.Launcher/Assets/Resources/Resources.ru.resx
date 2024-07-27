@@ -6,10 +6,14 @@
     <value>1.3</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+      PublicKeyToken=b77a5c561934e089
+    </value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+      PublicKeyToken=b77a5c561934e089
+    </value>
   </resheader>
   <data name="AuthButtonText" xml:space="preserve">
     <value>АВТОРИЗОВАТЬСЯ</value>
@@ -115,5 +119,20 @@
   </data>
   <data name="JavaNotFound" xml:space="preserve">
     <value>Не удалось обнаружить загруженную Java для Вашей операционной системы, обратитесь в поддержку или к администратору проекта</value>
+  </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>Папка установки</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Осталось</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>файлов</value>
+  </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>Не получилось сменить папку установки или произошла ошибка при смене папки</value>
   </data>
 </root>
