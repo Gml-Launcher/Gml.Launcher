@@ -221,9 +221,33 @@ namespace Gml.Launcher.Assets.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
         /// </summary>
+        public static string InstallationDirectory {
+            get {
+                return ResourceManager.GetString("InstallationDirectory", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
         public static string Stay {
             get {
                 return ResourceManager.GetString("Stay", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", resourceCulture);
             }
         }
     }

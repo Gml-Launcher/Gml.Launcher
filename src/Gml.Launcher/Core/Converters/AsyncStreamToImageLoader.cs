@@ -22,7 +22,7 @@ public class AsyncStreamToImageLoader
         TempPath = Path.GetTempPath();
     }
 
-    public static string TempPath { get; set; }
+    private static string TempPath { get; }
 
     private static async void OnSourceChanged(BackgroundComponent sender, AvaloniaPropertyChangedEventArgs args)
     {
@@ -66,7 +66,6 @@ public class AsyncStreamToImageLoader
                 sender.Classes.Add("Image");
                 sender.Source = new Bitmap(fileStream);
             }
-
         }
         catch (Exception exception)
         {
@@ -78,15 +77,10 @@ public class AsyncStreamToImageLoader
     {
         var fileInfo = new FileInfo(filePath);
 
-        if (!fileInfo.Directory!.Exists)
-        {
-            fileInfo.Directory.Create();
-        }
+        if (!fileInfo.Directory!.Exists) fileInfo.Directory.Create();
 
-        using (var fileStream = File.Create(filePath))
-        {
-            await input.CopyToAsync(fileStream);
-        }
+        await using var fileStream = File.Create(filePath);
+        await input.CopyToAsync(fileStream);
     }
 
     private static bool ValidateUrl(string url)
@@ -96,6 +90,13 @@ public class AsyncStreamToImageLoader
                && Path.GetFileName(url) is { } fileName && Guid.TryParse(fileName, out _);
     }
 
-    public static void SetSource(BackgroundComponent obj, string value) => obj.SetValue(SourceProperty, value);
-    public static string GetSource(BackgroundComponent obj) => obj.GetValue(SourceProperty);
+    public static void SetSource(BackgroundComponent obj, string value)
+    {
+        obj.SetValue(SourceProperty, value);
+    }
+
+    public static string GetSource(BackgroundComponent obj)
+    {
+        return obj.GetValue(SourceProperty);
+    }
 }

@@ -1,14 +1,14 @@
-﻿using Avalonia;
-using Avalonia.ReactiveUI;
-using System;
+﻿using System;
 using System.Reactive;
+using Avalonia;
+using Avalonia.ReactiveUI;
 using Gml.Launcher.Core.Extensions;
 using ReactiveUI;
 using Sentry;
 
 namespace Gml.Launcher;
 
-class Program
+internal class Program
 {
     [STAThread]
     public static void Main(string[] args)
@@ -18,7 +18,6 @@ class Program
             RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
-
         }
         catch (Exception e)
         {
@@ -32,10 +31,12 @@ class Program
     }
 
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+    {
+        return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
             .RegisterServices()
             .LogToTrace()
             .UseReactiveUI();
+    }
 }

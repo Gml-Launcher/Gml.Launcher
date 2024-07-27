@@ -2,12 +2,7 @@
 
 namespace Gml.Launcher.Core.Exceptions;
 
-public class ServiceNotFoundException : Exception
+public class ServiceNotFoundException(Type eType) : Exception
 {
-    public Type NotFoundedService { get;}
-
-    public ServiceNotFoundException(Type eType)
-    {
-        NotFoundedService = eType;
-    }
+    public Type NotFoundedService { get; } = eType;
 }

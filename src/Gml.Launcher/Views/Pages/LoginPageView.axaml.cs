@@ -13,4 +13,3 @@ public partial class LoginPageView : ReactiveUserControl<LoginPageViewModel>
         AvaloniaXamlLoader.Load(this);
     }
 }
-

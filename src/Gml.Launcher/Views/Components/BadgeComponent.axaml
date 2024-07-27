@@ -9,11 +9,11 @@
 
     <Style Selector="controls|BadgeComponent">
 
-        <Setter Property="BorderBrush" Value="{DynamicResource BadgeBorder}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="10, 5"/>
-        <Setter Property="CornerRadius" Value="50"/>
-        <Setter Property="Foreground" Value="{DynamicResource ContentColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BadgeBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="10, 5" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Foreground" Value="{DynamicResource ContentColor}" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -25,10 +25,9 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <TextBlock Text="{TemplateBinding Text}"
                                FontWeight="Medium"
-                               Foreground="{TemplateBinding Foreground}"/>
+                               Foreground="{TemplateBinding Foreground}" />
                 </Border>
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

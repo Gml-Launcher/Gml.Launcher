@@ -19,48 +19,15 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class LoginPageViewModel : PageViewModelBase
 {
-    private string _login = string.Empty;
-    private bool _isProcessing = false;
-    private string _password = string.Empty;
-    private readonly MainWindowViewModel _screen;
-    private readonly IObservable<bool> _onClosed;
-    private readonly IStorageService _storageService;
     private readonly IGmlClientManager _gmlClientManager;
+    private readonly IObservable<bool> _onClosed;
+    private readonly MainWindowViewModel _screen;
+    private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
-
-    public string Login
-    {
-        get => _login;
-        set => this.RaiseAndSetIfChanged(ref _login, value);
-    }
-
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-
-    public bool IsProcessing
-    {
-        get => _isProcessing;
-        set
-        {
-            this.RaiseAndSetIfChanged(ref _isProcessing, value);
-
-            this.RaisePropertyChanged(nameof(IsNotProcessing));
-        }
-    }
-
-    public ObservableCollection<string> Errors
-    {
-        get => _errors;
-        set => this.RaiseAndSetIfChanged(ref _errors, value);
-    }
-
-    public bool IsNotProcessing => !_isProcessing;
-    public ObservableCollection<string> _errors = new();
-
-    public ICommand LoginCommand { get; set; }
+    private ObservableCollection<string> _errorList = new();
+    private bool _isProcessing;
+    private string _login = string.Empty;
+    private string _password = string.Empty;
 
 
     internal LoginPageViewModel(IScreen screen,
@@ -91,6 +58,39 @@ public class LoginPageViewModel : PageViewModelBase
 
         RxApp.MainThreadScheduler.Schedule(CheckAuth);
     }
+
+    public string Login
+    {
+        get => _login;
+        set => this.RaiseAndSetIfChanged(ref _login, value);
+    }
+
+    public string Password
+    {
+        get => _password;
+        set => this.RaiseAndSetIfChanged(ref _password, value);
+    }
+
+    public bool IsProcessing
+    {
+        get => _isProcessing;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _isProcessing, value);
+
+            this.RaisePropertyChanged(nameof(IsNotProcessing));
+        }
+    }
+
+    public ObservableCollection<string> Errors
+    {
+        get => _errorList;
+        set => this.RaiseAndSetIfChanged(ref _errorList, value);
+    }
+
+    public bool IsNotProcessing => !_isProcessing;
+
+    public ICommand LoginCommand { get; set; }
 
     private void DisposeConnections(bool isClosed)
     {
@@ -134,16 +134,12 @@ public class LoginPageViewModel : PageViewModelBase
             }
 
             if (authInfo.Item1.Has2Fa)
-            {
                 //ToDo: Next versions
-
                 return;
-            }
 
-            if (_screen is MainWindowViewModel mainView)
+            if (_screen is { } mainView)
             {
                 if (!authInfo.Details.Any())
-                {
                     mainView.Manager
                         .CreateMessage(true, "#D03E3E",
                             LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
@@ -151,7 +147,6 @@ public class LoginPageViewModel : PageViewModelBase
                         .Dismiss()
                         .WithDelay(TimeSpan.FromSeconds(3))
                         .Queue();
-                }
 
                 Errors = new ObservableCollection<string>(authInfo.Details);
             }

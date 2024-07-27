@@ -44,7 +44,7 @@ public abstract class SkinViewer
 
     public static byte[] GetFront(Stream skinStream, int size)
     {
-        using Image inputImage = Image.Load(skinStream);
+        using var inputImage = Image.Load(skinStream);
 
         var scaleFactor = inputImage.Width / 64;
 

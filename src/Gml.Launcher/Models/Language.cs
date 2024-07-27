@@ -4,7 +4,7 @@ namespace Gml.Launcher.Models;
 
 public class Language
 {
-    public required string IconPath { get; set; }
-    public required string Name { get; set; }
-    public required CultureInfo Culture { get; set; }
+    public required string IconPath { get; init; }
+    public required string Name { get; init; }
+    public required CultureInfo Culture { get; init; }
 }

@@ -39,7 +39,7 @@
 
                 <TextBlock Text="{Binding StatusText}"
                            HorizontalAlignment="Center"
-                           Foreground="{DynamicResource ContentColor}"/>
+                           Foreground="{DynamicResource ContentColor}" />
             </StackPanel>
         </Grid>
 
