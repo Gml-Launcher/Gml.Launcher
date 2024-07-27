@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -32,7 +31,7 @@ public static class ServiceLocator
         CheckAndChangeLanguage(storageService, systemService);
         InitializeSentry();
 
-        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
             SentrySdk.CaptureException((Exception)args.ExceptionObject);
         };
@@ -47,7 +46,6 @@ public static class ServiceLocator
         try
         {
             if (!string.IsNullOrEmpty(sentryUrl))
-            {
                 SentrySdk.Init(options =>
                 {
                     options.Dsn = sentryUrl;
@@ -58,7 +56,6 @@ public static class ServiceLocator
                     options.SendDefaultPii = true;
                     options.MaxAttachmentSize = 10 * 1024 * 1024;
                 });
-            }
         }
         catch (Exception exception)
         {
@@ -71,12 +68,10 @@ public static class ServiceLocator
         var data = storageService.GetAsync<SettingsInfo>(StorageConstants.Settings).Result;
 
         if (data != null && !string.IsNullOrEmpty(data.LanguageCode))
-        {
             Thread.CurrentThread.CurrentCulture = systemService
                 .GetAvailableLanguages()
                 .FirstOrDefault(c => c.Culture.Name == data.LanguageCode)?
                 .Culture ?? new CultureInfo("ru-RU");
-        }
     }
 
     private static LocalStorageService RegisterStorage()
@@ -91,10 +86,7 @@ public static class ServiceLocator
     {
         var installationDirectory = storageService.GetAsync<string>(StorageConstants.InstallationDirectory).Result;
 
-        if (!string.IsNullOrEmpty(installationDirectory))
-        {
-            manager.ChangeInstallationFolder(installationDirectory);
-        }
+        if (!string.IsNullOrEmpty(installationDirectory)) manager.ChangeInstallationFolder(installationDirectory);
     }
 
     private static GmlClientManager RegisterGmlManager(SystemService systemService, string installationDirectory)
@@ -113,11 +105,9 @@ public static class ServiceLocator
         Locator.CurrentMutable.RegisterConstant(systemService, typeof(ISystemService));
     }
 
-    private static ILocalizationService RegisterLocalizationService()
+    private static void RegisterLocalizationService()
     {
         var service = new ResourceLocalizationService();
-        Locator.CurrentMutable.RegisterConstant(new ResourceLocalizationService(), typeof(ILocalizationService));
-
-        return service;
+        Locator.CurrentMutable.RegisterConstant(service, typeof(ILocalizationService));
     }
 }
