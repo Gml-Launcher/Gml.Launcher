@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Gml.Launcher.Models;
 
 namespace Gml.Launcher.Core.Services;
 
@@ -39,5 +37,10 @@ public interface IStorageService
     /// <returns>A task representing the asynchronous save operation.</returns>
     Task<int> SaveRecord<T>(T value);
 
+    /// <summary>
+    /// Retrieves the logs from the storage service asynchronously.
+    /// </summary>
+    /// <param name="rowCount">The maximum number of logs to retrieve. Default value is 100.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains the logs as a concatenated string.</returns>
     Task<string> GetLogsAsync(int rowCount);
 }

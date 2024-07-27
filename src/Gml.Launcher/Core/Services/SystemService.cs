@@ -13,13 +13,8 @@ namespace Gml.Launcher.Core.Services;
 
 public class SystemService : ISystemService
 {
-    private readonly HardwareInfo _hardwareInfo;
+    private readonly HardwareInfo _hardwareInfo = new();
     private const string NotSupportedMessage = "The operating system is not supported.";
-
-    public SystemService()
-    {
-        _hardwareInfo = new HardwareInfo();
-    }
 
     public ulong GetMaxRam()
     {

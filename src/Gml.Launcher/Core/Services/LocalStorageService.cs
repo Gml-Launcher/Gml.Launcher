@@ -13,19 +13,18 @@ public class LocalStorageService : IStorageService
 {
     private const string DatabaseFileName = "data.db";
     private readonly SQLiteAsyncConnection _database;
-    private readonly IGmlClientManager _gmlClient;
-    private readonly ISystemService _systemService;
 
     public LocalStorageService(ISystemService? systemService = null, IGmlClientManager? gmlClient = null)
     {
-        _gmlClient = gmlClient
-                     ?? Locator.Current.GetService<IGmlClientManager>()
-                     ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
+        var gmlClientManager = gmlClient
+                               ?? Locator.Current.GetService<IGmlClientManager>()
+                               ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
-        _systemService ??= Locator.Current.GetService<ISystemService>()
-                          ?? throw new ServiceNotFoundException(typeof(ISystemService));
+        var systemServiceDependency = systemService
+                             ?? Locator.Current.GetService<ISystemService>()
+                             ?? throw new ServiceNotFoundException(typeof(ISystemService));
 
-        var databasePath = System.IO.Path.Combine(_systemService.GetGameFolder(_gmlClient.ProjectName ,true), DatabaseFileName);
+        var databasePath = System.IO.Path.Combine(systemServiceDependency.GetGameFolder(gmlClientManager.ProjectName ,true), DatabaseFileName);
 
         _database = new SQLiteAsyncConnection(databasePath);
 
@@ -80,9 +79,9 @@ public class LocalStorageService : IStorageService
     [Table("StorageItems")]
     private class StorageItem
     {
-        [PrimaryKey] public string Key { get; set; } = null!;
+        [PrimaryKey] public string Key { get; init; } = null!;
         public string? TypeName { get; set; }
-        public string Value { get; set; } = null!;
+        public string Value { get; init; } = null!;
     }
 
     [Table("Logs")]
