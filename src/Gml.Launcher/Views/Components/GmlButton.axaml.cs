@@ -98,16 +98,5 @@ public class GmlButton : TemplatedControl
             };
         }
     }
-
-    protected sealed override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        base.OnPointerReleased(e);
-
-        if (e.InitialPressMouseButton == MouseButton.Left)
-        {
-            RaiseEvent(new RoutedEventArgs(ClickEvent));
-            Command?.Execute(CommandParameter);
-        }
-    }
 }
 
