@@ -11,13 +11,6 @@ namespace Gml.Launcher.ViewModels.Pages;
 public class ProfilePageViewModel : PageViewModelBase
 {
     private IUser _user;
-    public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
-
-    public IUser User
-    {
-        get => _user;
-        set => this.RaiseAndSetIfChanged(ref _user, value);
-    }
 
     internal ProfilePageViewModel(IScreen screen,
         IUser user,
@@ -27,7 +20,14 @@ public class ProfilePageViewModel : PageViewModelBase
         _user = user ?? throw new ArgumentNullException(nameof(user));
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
+    }
 
+    public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
+
+    public IUser User
+    {
+        get => _user;
+        set => this.RaiseAndSetIfChanged(ref _user, value);
     }
 
     private void LoadData()

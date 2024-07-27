@@ -1,8 +1,5 @@
-﻿using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using Avalonia.VisualTree;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
 
@@ -16,4 +13,3 @@ public partial class OverviewPageView : ReactiveUserControl<OverviewPageViewMode
         AvaloniaXamlLoader.Load(this);
     }
 }
-

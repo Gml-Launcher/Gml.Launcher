@@ -7,13 +7,16 @@ namespace Gml.Launcher.Core.Helpers;
 
 public class AppViewLocator : IViewLocator
 {
-    public IViewFor ResolveView<T>(T? viewModel, string? contract = null) => viewModel switch
+    public IViewFor ResolveView<T>(T? viewModel, string? contract = null)
     {
-        OverviewPageViewModel context => new OverviewPageView { DataContext = context },
-        ProfilePageViewModel context => new ProfilePageView { DataContext = context },
-        SettingsPageViewModel context => new SettingsPageView { DataContext = context },
-        LoginPageViewModel context => new LoginPageView { DataContext = context },
+        return viewModel switch
+        {
+            OverviewPageViewModel context => new OverviewPageView { DataContext = context },
+            ProfilePageViewModel context => new ProfilePageView { DataContext = context },
+            SettingsPageViewModel context => new SettingsPageView { DataContext = context },
+            LoginPageViewModel context => new LoginPageView { DataContext = context },
 
-        _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
-    };
+            _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
+        };
+    }
 }

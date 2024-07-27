@@ -18,8 +18,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 #if DEBUG
         this.AttachDevTools();
 #endif
-
-
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -45,7 +43,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     private void SendCloseEvent()
     {
-        if(DataContext is MainWindowViewModel viewModel)
+        if (DataContext is MainWindowViewModel viewModel)
             viewModel.OnClosed.OnNext(false);
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,20 +22,15 @@ public class LocalStorageService : IStorageService
                                ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
         var systemServiceDependency = systemService
-                             ?? Locator.Current.GetService<ISystemService>()
-                             ?? throw new ServiceNotFoundException(typeof(ISystemService));
+                                      ?? Locator.Current.GetService<ISystemService>()
+                                      ?? throw new ServiceNotFoundException(typeof(ISystemService));
 
-        var databasePath = System.IO.Path.Combine(systemServiceDependency.GetGameFolder(gmlClientManager.ProjectName ,true), DatabaseFileName);
+        var databasePath = Path.Combine(systemServiceDependency.GetGameFolder(gmlClientManager.ProjectName, true),
+            DatabaseFileName);
 
         _database = new SQLiteAsyncConnection(databasePath);
 
         InitializeTables();
-    }
-
-    private void InitializeTables()
-    {
-        _database.CreateTableAsync<StorageItem>().Wait();
-        _database.CreateTableAsync<LogsItem>().Wait();
     }
 
     public async Task SetAsync<T>(string key, T value, CancellationToken? token = default)
@@ -56,10 +52,7 @@ public class LocalStorageService : IStorageService
             .Where(si => si.Key == key)
             .FirstOrDefaultAsync();
 
-        if (storageItem != null)
-        {
-            return JsonSerializer.Deserialize<T>(storageItem.Value);
-        }
+        if (storageItem != null) return JsonSerializer.Deserialize<T>(storageItem.Value);
 
         return default;
     }
@@ -76,6 +69,12 @@ public class LocalStorageService : IStorageService
         return string.Join("\n", logs.Select(c => c.Message));
     }
 
+    private void InitializeTables()
+    {
+        _database.CreateTableAsync<StorageItem>().Wait();
+        _database.CreateTableAsync<LogsItem>().Wait();
+    }
+
     [Table("StorageItems")]
     private class StorageItem
     {
@@ -88,7 +87,7 @@ public class LocalStorageService : IStorageService
     private class LogsItem
     {
         [PrimaryKey] public string Date { get; set; } = null!;
-        public string? Message { get; set; }
+        public string? Message { get; }
         public string StackTrace { get; set; } = null!;
     }
 }

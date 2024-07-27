@@ -61,10 +61,7 @@ public class AsyncSkinRenderLoader
 
             var bitmap = new Bitmap(new MemoryStream(SkinViewer.GetFront(stream, 128)));
 
-            if (!cts.Token.IsCancellationRequested)
-            {
-                sender.Source = bitmap;
-            }
+            if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
         catch (Exception e)
         {
@@ -83,9 +80,23 @@ public class AsyncSkinRenderLoader
                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     }
 
-    public static void SetSource(Image obj, string value) => obj.SetValue(SourceProperty, value);
-    public static string GetSource(Image obj) => obj.GetValue(SourceProperty);
+    public static void SetSource(Image obj, string value)
+    {
+        obj.SetValue(SourceProperty, value);
+    }
 
-    private static void SetIsLoading(Image obj, bool value) => obj.SetValue(IsLoadingProperty, value);
-    public static bool GetIsLoading(Image obj) => obj.GetValue(IsLoadingProperty);
+    public static string GetSource(Image obj)
+    {
+        return obj.GetValue(SourceProperty);
+    }
+
+    private static void SetIsLoading(Image obj, bool value)
+    {
+        obj.SetValue(IsLoadingProperty, value);
+    }
+
+    public static bool GetIsLoading(Image obj)
+    {
+        return obj.GetValue(IsLoadingProperty);
+    }
 }

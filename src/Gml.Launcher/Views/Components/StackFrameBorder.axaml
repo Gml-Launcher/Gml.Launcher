@@ -9,16 +9,16 @@
 
     <Style Selector="controls|StackFrameBorder">
 
-        <Setter Property="Background" Value="{StaticResource FrameBackgroundColor}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource FrameBackgroundBorderColor}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="20"/>
-        <Setter Property="Padding" Value="30"/>
-        <Setter Property="Spacing" Value="30"/>
+        <Setter Property="Background" Value="{StaticResource FrameBackgroundColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FrameBackgroundBorderColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Padding" Value="30" />
+        <Setter Property="Spacing" Value="30" />
 
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <StackPanel Spacing="{TemplateBinding Spacing}"/>
+                <StackPanel Spacing="{TemplateBinding Spacing}" />
             </ItemsPanelTemplate>
         </Setter>
 
@@ -30,10 +30,9 @@
                         Width="{TemplateBinding Width}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}">
-                    <ItemsPresenter/>
+                    <ItemsPresenter />
                 </Border>
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

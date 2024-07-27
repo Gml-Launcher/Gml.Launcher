@@ -6,12 +6,12 @@ using Gml.Web.Api.Domains.System;
 namespace Gml.Launcher.Core.Services;
 
 /// <summary>
-/// Represents a system service that provides various system-related information and functionalities.
+///     Represents a system service that provides various system-related information and functionalities.
 /// </summary>
 public interface ISystemService
 {
     /// <summary>
-    /// Retrieves the application folder path based on the current operating system.
+    ///     Retrieves the application folder path based on the current operating system.
     /// </summary>
     /// <returns>The path to the application folder.</returns>
     string GetApplicationFolder();
@@ -24,31 +24,31 @@ public interface ISystemService
     string GetGameFolder(string additionalPath, bool needCreate);
 
     /// <summary>
-    /// Gets the maximum amount of RAM available in the system in megabytes.
+    ///     Gets the maximum amount of RAM available in the system in megabytes.
     /// </summary>
     /// <returns>The maximum amount of RAM available in the system in megabytes.</returns>
     ulong GetMaxRam();
 
     /// <summary>
-    /// Gets the operating system type.
+    ///     Gets the operating system type.
     /// </summary>
     /// <returns>The operating system type. Possible values are: Undefined, Linux, OsX, Windows.</returns>
     OsType GetOsType();
 
     /// <summary>
-    /// Gets the available languages.
+    ///     Gets the available languages.
     /// </summary>
     /// <returns>An enumerable of Language objects representing the available languages.</returns>
     IEnumerable<Language> GetAvailableLanguages();
 
     /// <summary>
-    /// Gets the hardware identification (HWID) of the system.
+    ///     Gets the hardware identification (HWID) of the system.
     /// </summary>
     /// <returns>The HWID of the system.</returns>
     string GetHwid();
 
     /// <summary>
-    /// Asynchronously loads system data such as drive list, motherboard list, and CPU list.
+    ///     Asynchronously loads system data such as drive list, motherboard list, and CPU list.
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
     Task LoadSystemData();

@@ -32,36 +32,16 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class OverviewPageViewModel : PageViewModelBase
 {
-    private readonly IStorageService _storageService;
-    private readonly IGmlClientManager _gmlManager;
-    private readonly IUser _user;
-    private readonly IObservable<bool> _onClosed;
-    private readonly ISystemService _systemService;
     private readonly IDisposable? _closeEvent;
-    private readonly IDisposable? _maxCountLoaded;
+    private readonly IGmlClientManager _gmlManager;
     private readonly IDisposable? _loadedLoaded;
-    private readonly IDisposable _profileNameChanged;
-    private Process? _gameProcess;
     private readonly MainWindowViewModel _mainViewModel;
-    public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
-
-    public ICommand GoProfileCommand { get; set; }
-    public ICommand LogoutCommand { get; set; }
-    public ICommand PlayCommand { get; set; }
-    public ICommand GoSettingsCommand { get; set; }
-    public ICommand HomeCommand { get; set; }
-    public ListViewModel ListViewModel { get; } = new();
-    public IUser User => _user;
-
-    [Reactive] public int? LoadingPercentage { get; set; }
-    [Reactive] public int? MaxCount { get; set; }
-    [Reactive] public int? LoadedCount { get; set; }
-
-    [Reactive] public string? Headline { get; set; }
-
-    [Reactive] public string? Description { get; set; }
-
-    [Reactive] public bool IsProcessing { get; set; }
+    private readonly IDisposable? _maxCountLoaded;
+    private readonly IObservable<bool> _onClosed;
+    private readonly IDisposable _profileNameChanged;
+    private readonly IStorageService _storageService;
+    private readonly ISystemService _systemService;
+    private Process? _gameProcess;
 
     internal OverviewPageViewModel(IScreen screen,
         IUser user,
@@ -71,7 +51,7 @@ public class OverviewPageViewModel : PageViewModelBase
         IStorageService? storageService = null) : base(screen)
     {
         _mainViewModel = screen as MainWindowViewModel ?? throw new Exception("Not valid screen");
-        _user = user;
+        User = user;
         _onClosed = onClosed;
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
@@ -82,11 +62,11 @@ public class OverviewPageViewModel : PageViewModelBase
                           ?? throw new ServiceNotFoundException(typeof(IStorageService));
 
         _gmlManager = gmlManager
-                         ?? Locator.Current.GetService<IGmlClientManager>()
-                         ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
+                      ?? Locator.Current.GetService<IGmlClientManager>()
+                      ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user))
+            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -121,6 +101,26 @@ public class OverviewPageViewModel : PageViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
 
+    public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
+
+    public ICommand GoProfileCommand { get; set; }
+    public ICommand LogoutCommand { get; set; }
+    public ICommand PlayCommand { get; set; }
+    public ICommand GoSettingsCommand { get; set; }
+    public ICommand HomeCommand { get; set; }
+    public ListViewModel ListViewModel { get; } = new();
+    public IUser User { get; }
+
+    [Reactive] public int? LoadingPercentage { get; set; }
+    [Reactive] public int? MaxCount { get; set; }
+    [Reactive] public int? LoadedCount { get; set; }
+
+    [Reactive] public string? Headline { get; set; }
+
+    [Reactive] public string? Description { get; set; }
+
+    [Reactive] public bool IsProcessing { get; set; }
+
     private async void LoadProfilesAsync(bool eventInfo)
     {
         await LoadProfiles();
@@ -150,7 +150,6 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task StartGame(CancellationToken cancellationToken)
     {
-
         await ExecuteFromNewThread(async () =>
         {
             try
@@ -174,7 +173,8 @@ public class OverviewPageViewModel : PageViewModelBase
             }
             catch (FileNotFoundException exception)
             {
-                ShowError(ResourceKeysDictionary.Error, LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
 
                 Console.WriteLine(exception);
             }
@@ -188,15 +188,14 @@ public class OverviewPageViewModel : PageViewModelBase
             {
                 Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
-                await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+                await _gmlManager.UpdateDiscordRpcState(
+                    LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
             }
         });
-
-
-
     }
 
-    private async Task<Process> GenerateProcess(CancellationToken cancellationToken, ResponseMessage<ProfileReadInfoDto?> profileInfo)
+    private async Task<Process> GenerateProcess(CancellationToken cancellationToken,
+        ResponseMessage<ProfileReadInfoDto?> profileInfo)
     {
         UpdateProgress(
             LocalizationService.GetString(ResourceKeysDictionary.Updating),
@@ -204,9 +203,7 @@ public class OverviewPageViewModel : PageViewModelBase
             true);
 
         if (profileInfo.Data is null)
-        {
             throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured));
-        }
 
         await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
 
@@ -229,7 +226,8 @@ public class OverviewPageViewModel : PageViewModelBase
             LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
             true);
 
-        await _gmlManager.UpdateDiscordRpcState($"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
+        await _gmlManager.UpdateDiscordRpcState(
+            $"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
 
         var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
@@ -266,8 +264,8 @@ public class OverviewPageViewModel : PageViewModelBase
             await LoadProfiles();
 
             await _gmlManager.LoadDiscordRpc();
-            await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
-
+            await _gmlManager.UpdateDiscordRpcState(
+                LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
         }
         catch (TaskCanceledException exception)
         {
@@ -296,12 +294,9 @@ public class OverviewPageViewModel : PageViewModelBase
 
         if (!string.IsNullOrEmpty(lastSelectedProfileName) &&
             ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName) is { } profile)
-        {
             ListViewModel.SelectedProfile = profile;
-        }
 
         ListViewModel.SelectedProfile ??= ListViewModel.Profiles.FirstOrDefault();
-
     }
 
     private async Task Reconnect()

@@ -1,12 +1,10 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
 namespace Gml.Launcher.Views.Components;
 
 public class ProgressBar : TemplatedControl
 {
-
     public static readonly StyledProperty<string> PercentageProperty = AvaloniaProperty.Register<ProgressBar, string>(
         nameof(Percentage), "50");
 
@@ -33,6 +31,4 @@ public class ProgressBar : TemplatedControl
         get => GetValue(PercentageProperty);
         set => SetValue(PercentageProperty, value);
     }
-
 }
-

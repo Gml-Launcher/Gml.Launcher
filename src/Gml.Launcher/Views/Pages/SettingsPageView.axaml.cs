@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
@@ -27,11 +26,7 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
     private void OnTextInput(object? sender, TextChangedEventArgs e)
     {
-        if (sender is TextBox textBox)
-        {
-            textBox.Text = string.Concat(textBox.Text?.Where(char.IsDigit) ?? string.Empty);
-        }
-
+        if (sender is TextBox textBox) textBox.Text = string.Concat(textBox.Text?.Where(char.IsDigit) ?? string.Empty);
     }
 
     private async void OpenFileDialog(object? sender, RoutedEventArgs e)
@@ -41,7 +36,7 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
             var folders = await mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
             {
                 AllowMultiple = false,
-                Title = "Select a folder",
+                Title = "Select a folder"
             });
 
             if (folders.Count != 1) return;

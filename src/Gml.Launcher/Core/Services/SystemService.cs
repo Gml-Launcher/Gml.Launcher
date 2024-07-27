@@ -13,15 +13,12 @@ namespace Gml.Launcher.Core.Services;
 
 public class SystemService : ISystemService
 {
-    private readonly HardwareInfo _hardwareInfo = new();
     private const string NotSupportedMessage = "The operating system is not supported.";
+    private readonly HardwareInfo _hardwareInfo = new();
 
     public ulong GetMaxRam()
     {
-        if (!(IsWindows() || IsLinux() || IsMacOS()))
-        {
-            throw new NotSupportedException(NotSupportedMessage);
-        }
+        if (!(IsWindows() || IsLinux() || IsMacOS())) throw new NotSupportedException(NotSupportedMessage);
 
         _hardwareInfo.RefreshMemoryStatus();
 
@@ -30,15 +27,9 @@ public class SystemService : ISystemService
 
     public string GetApplicationFolder()
     {
-        if (IsWindows())
-        {
-            return GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        }
+        if (IsWindows()) return GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        if (IsLinux() || IsMacOS())
-        {
-            return GetFolderPath(Environment.SpecialFolder.UserProfile);
-        }
+        if (IsLinux() || IsMacOS()) return GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         throw new NotSupportedException(NotSupportedMessage);
     }
@@ -72,27 +63,13 @@ public class SystemService : ISystemService
         await Task.WhenAll(refreshDriveListTask, refreshMotherboardListTask, refreshCpuListTask);
     }
 
-    private static string GetFolderPath(Environment.SpecialFolder folder)
-    {
-        return Environment.GetFolderPath(folder);
-    }
-
     public OsType GetOsType()
     {
-        if (IsWindows())
-        {
-            return OsType.Windows;
-        }
+        if (IsWindows()) return OsType.Windows;
 
-        if (IsLinux())
-        {
-            return OsType.Linux;
-        }
+        if (IsLinux()) return OsType.Linux;
 
-        if (IsMacOS())
-        {
-            return OsType.OsX;
-        }
+        if (IsMacOS()) return OsType.OsX;
 
         return OsType.Undefined;
     }
@@ -102,7 +79,12 @@ public class SystemService : ISystemService
         return new List<Language>
         {
             new() { IconPath = "/Assets/Images/lang-ru.svg", Name = "Русский", Culture = new CultureInfo("ru-RU") },
-            new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") },
+            new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") }
         };
+    }
+
+    private static string GetFolderPath(Environment.SpecialFolder folder)
+    {
+        return Environment.GetFolderPath(folder);
     }
 }

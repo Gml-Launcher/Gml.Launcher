@@ -9,12 +9,19 @@ public class UrlRedirectProperty
     private static readonly AttachedProperty<string> RedirectUrlProperty =
         AvaloniaProperty.RegisterAttached<UrlRedirectProperty, Control, string>("RedirectUrl");
 
-    public static void SetRedirectUrl(Control obj, string value) => obj.SetValue(RedirectUrlProperty, value);
-    public static string GetRedirectUrl(Control obj) => obj.GetValue(RedirectUrlProperty);
-
     public UrlRedirectProperty()
     {
         RedirectUrlProperty.Changed.AddClassHandler<Control>(OnSourceChanged);
+    }
+
+    public static void SetRedirectUrl(Control obj, string value)
+    {
+        obj.SetValue(RedirectUrlProperty, value);
+    }
+
+    public static string GetRedirectUrl(Control obj)
+    {
+        return obj.GetValue(RedirectUrlProperty);
     }
 
     private void OnSourceChanged(Control control, AvaloniaPropertyChangedEventArgs args)

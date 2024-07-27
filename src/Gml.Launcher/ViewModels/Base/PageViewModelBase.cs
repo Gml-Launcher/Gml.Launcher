@@ -15,14 +15,7 @@ namespace Gml.Launcher.ViewModels.Base;
 
 public class PageViewModelBase : ViewModelBase, IRoutableViewModel
 {
-    public IScreen HostScreen { get; }
-    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
     protected readonly ILocalizationService LocalizationService;
-
-    public string Title => LocalizationService.GetString(ResourceKeysDictionary.DefaultPageTitle);
-
-    public ICommand OpenLinkCommand { get; }
-    public ICommand GoBackCommand { get; set; }
 
     protected PageViewModelBase(IScreen screen, ILocalizationService? localizationService = null)
     {
@@ -36,6 +29,13 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
         HostScreen = screen;
     }
 
+    public string Title => LocalizationService.GetString(ResourceKeysDictionary.DefaultPageTitle);
+
+    public ICommand OpenLinkCommand { get; }
+    public ICommand GoBackCommand { get; set; }
+    public IScreen HostScreen { get; }
+    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
+
     private void OpenLink(string url)
     {
         Process.Start(new ProcessStartInfo
@@ -48,7 +48,6 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
     protected void ShowError(string title, string content)
     {
         if (HostScreen is MainWindowViewModel mainViewModel)
-        {
             Dispatcher.UIThread.Invoke(() =>
             {
                 mainViewModel.Manager
@@ -59,7 +58,6 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
                     .WithDelay(TimeSpan.FromSeconds(3))
                     .Queue();
             });
-        }
     }
 
     protected Task ExecuteFromNewThread(Func<Task> func)

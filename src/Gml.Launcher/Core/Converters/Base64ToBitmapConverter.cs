@@ -34,5 +34,8 @@ public class Base64ToBitmapConverter : MarkupExtension, IValueConverter
         throw new NotImplementedException();
     }
 
-    public override object ProvideValue(IServiceProvider serviceProvider) => this;
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
+    }
 }

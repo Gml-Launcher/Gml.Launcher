@@ -5,14 +5,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 
 namespace Gml.Launcher.Views.Components;
 
 public class GmlButton : TemplatedControl
 {
-
     public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
         RoutedEvent.Register<GmlButton, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
 
@@ -34,8 +32,9 @@ public class GmlButton : TemplatedControl
     public static readonly StyledProperty<bool> IsDefaultProperty = AvaloniaProperty.Register<GmlButton, bool>(
         nameof(IsDefault));
 
-    public static readonly StyledProperty<object?> CommandParameterProperty = AvaloniaProperty.Register<GmlButton, object?>(
-        nameof(CommandParameter));
+    public static readonly StyledProperty<object?> CommandParameterProperty =
+        AvaloniaProperty.Register<GmlButton, object?>(
+            nameof(CommandParameter));
 
     public object? CommandParameter
     {
@@ -90,13 +89,10 @@ public class GmlButton : TemplatedControl
         base.OnApplyTemplate(e);
 
         if (this.GetTemplateChildren().First() is Button button)
-        {
             button.Click += (sender, args) =>
             {
                 RaiseEvent(new RoutedEventArgs(ClickEvent));
                 Command?.Execute(CommandParameter);
             };
-        }
     }
 }
-

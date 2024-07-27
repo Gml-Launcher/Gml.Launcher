@@ -18,78 +18,12 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class SettingsPageViewModel : PageViewModelBase
 {
+    private readonly IGmlClientManager _gmlManager;
     private readonly IStorageService _storageService;
-
-    [Reactive]
-    public bool DynamicRamValue { get; set; }
-
-    [Reactive]
-    public bool FullScreen { get; set; }
-
-    [Reactive]
-    public ulong MaxRamValue { get; set; }
-
-    [Reactive]
-    public Language? SelectedLanguage { get; set; }
-
-    [Reactive]
-    public string? InstallationFolder { get; set; }
-
-    public ICommand ChangeInstallationDirectory { get; }
-
-
-    public double RamValue
-    {
-        get => _ramValue;
-        set
-        {
-            if (!(Math.Abs(value - _ramValue) > 0.0)) return;
-
-            _ramValue = RoundToNearest(value, 8);
-            this.RaisePropertyChanged();
-        }
-    }
-
-    public string WindowWidth
-    {
-        get => _windowWidth.ToString();
-        set
-        {
-            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out int numericValue);
-            if (isNumeric)
-            {
-                this.RaiseAndSetIfChanged(ref _windowWidth, numericValue);
-            }
-            else
-            {
-                this.RaiseAndSetIfChanged(ref _windowWidth, default);
-            }
-        }
-    }
-
-    public string WindowHeight
-    {
-        get => _windowHeight.ToString();
-        set
-        {
-            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out int numericValue);
-            if (isNumeric)
-            {
-                this.RaiseAndSetIfChanged(ref _windowHeight, numericValue);
-            }
-            else
-            {
-                this.RaiseAndSetIfChanged(ref _windowWidth, default);
-            }
-        }
-    }
-
-    public ObservableCollection<Language> AvailableLanguages { get; }
+    private double _ramValue;
+    private int _windowHeight;
 
     private int _windowWidth;
-    private int _windowHeight;
-    private double _ramValue;
-    private readonly IGmlClientManager _gmlManager;
 
     public SettingsPageViewModel(
         IScreen screen,
@@ -137,6 +71,59 @@ public class SettingsPageViewModel : PageViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadSettings);
     }
 
+    [Reactive] public bool DynamicRamValue { get; set; }
+
+    [Reactive] public bool FullScreen { get; set; }
+
+    [Reactive] public ulong MaxRamValue { get; set; }
+
+    [Reactive] public Language? SelectedLanguage { get; set; }
+
+    [Reactive] public string? InstallationFolder { get; set; }
+
+    public ICommand ChangeInstallationDirectory { get; }
+
+
+    public double RamValue
+    {
+        get => _ramValue;
+        set
+        {
+            if (!(Math.Abs(value - _ramValue) > 0.0)) return;
+
+            _ramValue = RoundToNearest(value, 8);
+            this.RaisePropertyChanged();
+        }
+    }
+
+    public string WindowWidth
+    {
+        get => _windowWidth.ToString();
+        set
+        {
+            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out var numericValue);
+            if (isNumeric)
+                this.RaiseAndSetIfChanged(ref _windowWidth, numericValue);
+            else
+                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+        }
+    }
+
+    public string WindowHeight
+    {
+        get => _windowHeight.ToString();
+        set
+        {
+            var isNumeric = int.TryParse(string.Concat(value.Where(char.IsDigit)), out var numericValue);
+            if (isNumeric)
+                this.RaiseAndSetIfChanged(ref _windowHeight, numericValue);
+            else
+                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+        }
+    }
+
+    public ObservableCollection<Language> AvailableLanguages { get; }
+
     internal void ChangeFolder()
     {
         if (InstallationFolder != null)
@@ -171,7 +158,8 @@ public class SettingsPageViewModel : PageViewModelBase
     }
 
     private void SaveSettings(
-        (double ramValue, string width, string height, bool isFullScreen, bool isDynamicRam, Language? selectedLanguage) update)
+        (double ramValue, string width, string height, bool isFullScreen, bool isDynamicRam, Language? selectedLanguage)
+            update)
     {
         _storageService.SetAsync(
             StorageConstants.Settings,
