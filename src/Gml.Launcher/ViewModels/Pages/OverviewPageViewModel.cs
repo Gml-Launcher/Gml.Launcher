@@ -125,7 +125,10 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         LoadedCount = count;
 
-        Description = $"{LocalizationService.GetString(ResourceKeysDictionary.Stay)}: {MaxCount - LoadedCount}";
+        Description =
+            $"{LocalizationService.GetString(ResourceKeysDictionary.Stay)}: " +
+            $"{MaxCount - LoadedCount} " +
+            $"{LocalizationService.GetString(ResourceKeysDictionary.Files)}";
     }
 
     private async void SaveSelectedServer(ProfileReadDto? profile)
