@@ -22,7 +22,7 @@ public class AsyncStreamToImageLoader
         TempPath = Path.GetTempPath();
     }
 
-    public static string TempPath { get; set; }
+    private static string TempPath { get; set; }
 
     private static async void OnSourceChanged(BackgroundComponent sender, AvaloniaPropertyChangedEventArgs args)
     {
@@ -83,10 +83,8 @@ public class AsyncStreamToImageLoader
             fileInfo.Directory.Create();
         }
 
-        using (var fileStream = File.Create(filePath))
-        {
-            await input.CopyToAsync(fileStream);
-        }
+        await using var fileStream = File.Create(filePath);
+        await input.CopyToAsync(fileStream);
     }
 
     private static bool ValidateUrl(string url)

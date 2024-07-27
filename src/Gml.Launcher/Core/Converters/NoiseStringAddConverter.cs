@@ -9,7 +9,7 @@ public class NoiseStringAddConverter : MarkupExtension, IValueConverter
 {
     public override object ProvideValue(IServiceProvider serviceProvider) => this;
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not null && value.ToString()!.Contains('?'))
         {
@@ -21,6 +21,6 @@ public class NoiseStringAddConverter : MarkupExtension, IValueConverter
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        return null;
     }
 }

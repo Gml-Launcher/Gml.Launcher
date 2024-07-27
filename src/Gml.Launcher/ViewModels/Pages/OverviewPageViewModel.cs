@@ -107,7 +107,7 @@ public class OverviewPageViewModel : PageViewModelBase
                 LoadingPercentage = percentage;
         });
 
-        _gmlManager.ProfilesChanges.Subscribe(async eventInfo => await LoadProfiles());
+        _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
         _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
@@ -119,6 +119,11 @@ public class OverviewPageViewModel : PageViewModelBase
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
+    }
+
+    private async void LoadProfilesAsync(bool eventInfo)
+    {
+        await LoadProfiles();
     }
 
     private void ChangeLoadProcessDescription(int count)

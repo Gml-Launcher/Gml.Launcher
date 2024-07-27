@@ -6,7 +6,7 @@ namespace Gml.Launcher.Core.Converters;
 
 public class UrlRedirectProperty
 {
-    public static readonly AttachedProperty<string> RedirectUrlProperty =
+    private static readonly AttachedProperty<string> RedirectUrlProperty =
         AvaloniaProperty.RegisterAttached<UrlRedirectProperty, Control, string>("RedirectUrl");
 
     public static void SetRedirectUrl(Control obj, string value) => obj.SetValue(RedirectUrlProperty, value);

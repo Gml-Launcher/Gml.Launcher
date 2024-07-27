@@ -17,10 +17,10 @@ public class AsyncSkinRenderLoader
     public static readonly AttachedProperty<string> SourceProperty =
         AvaloniaProperty.RegisterAttached<AsyncSkinRenderLoader, Image, string>("Source");
 
-    public static readonly AttachedProperty<bool> IsLoadingProperty =
+    private static readonly AttachedProperty<bool> IsLoadingProperty =
         AvaloniaProperty.RegisterAttached<AsyncSkinRenderLoader, Image, bool>("IsLoading");
 
-    private static ConcurrentDictionary<Image, CancellationTokenSource> _pendingOperations = new();
+    private static readonly ConcurrentDictionary<Image, CancellationTokenSource> PendingOperations = new();
 
     static AsyncSkinRenderLoader()
     {
@@ -32,10 +32,10 @@ public class AsyncSkinRenderLoader
         try
         {
             SetIsLoading(sender, true);
-            CancellationTokenSource cts = _pendingOperations.AddOrUpdate(
+            var cts = PendingOperations.AddOrUpdate(
                 sender,
                 new CancellationTokenSource(),
-                (x, y) =>
+                (_, y) =>
                 {
                     y.Cancel();
                     return new CancellationTokenSource();
@@ -45,7 +45,7 @@ public class AsyncSkinRenderLoader
 
             if (string.IsNullOrEmpty(url))
             {
-                _pendingOperations.Remove(sender, out _);
+                PendingOperations.Remove(sender, out _);
                 sender.Source = null;
                 return;
             }
@@ -72,7 +72,7 @@ public class AsyncSkinRenderLoader
         }
         finally
         {
-            _pendingOperations.Remove(sender, out _);
+            PendingOperations.Remove(sender, out _);
             SetIsLoading(sender, false);
         }
     }

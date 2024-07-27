@@ -12,7 +12,7 @@ public class SumServersOnlineConverter : MarkupExtension, IValueConverter
 {
     public override object ProvideValue(IServiceProvider serviceProvider) => this;
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is List<ServerReadDto> server)
         {
@@ -25,7 +25,7 @@ public class SumServersOnlineConverter : MarkupExtension, IValueConverter
         return "0";
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return "0";
     }
