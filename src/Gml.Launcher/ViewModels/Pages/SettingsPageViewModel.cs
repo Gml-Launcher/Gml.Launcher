@@ -18,6 +18,7 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class SettingsPageViewModel : PageViewModelBase
 {
+    private readonly MainWindowViewModel _mainViewModel;
     private readonly IGmlClientManager _gmlManager;
     private readonly IStorageService _storageService;
     private double _ramValue;
@@ -33,6 +34,7 @@ public class SettingsPageViewModel : PageViewModelBase
         IGmlClientManager gmlManager,
         ProfileReadDto selectedProfile) : base(screen, localizationService)
     {
+        _mainViewModel = (MainWindowViewModel)screen;
         _storageService = storageService;
         _gmlManager = gmlManager;
 
@@ -123,6 +125,7 @@ public class SettingsPageViewModel : PageViewModelBase
     }
 
     public ObservableCollection<Language> AvailableLanguages { get; }
+    public MainWindowViewModel MainViewModel => _mainViewModel;
 
     internal void ChangeFolder()
     {

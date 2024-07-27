@@ -132,4 +132,7 @@
   <data name="Files" xml:space="preserve">
     <value>files</value>
   </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>Failed to change the installation folder or an error occurred while changing the folder.</value>
+  </data>
 </root>

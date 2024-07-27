@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -6,6 +7,8 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.ReactiveUI;
 using Avalonia.VisualTree;
+using GamerVII.Notification.Avalonia;
+using Gml.Launcher.Assets;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
 
@@ -31,18 +34,32 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
     private async void OpenFileDialog(object? sender, RoutedEventArgs e)
     {
-        if (this.GetVisualRoot() is MainWindow mainWindow)
+        try
         {
-            var folders = await mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+            if (this.GetVisualRoot() is MainWindow mainWindow)
             {
-                AllowMultiple = false,
-                Title = "Select a folder"
-            });
+                var folders = await mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+                {
+                    AllowMultiple = false,
+                    Title = "Select a folder"
+                });
 
-            if (folders.Count != 1) return;
+                if (folders.Count != 1) return;
 
-            ViewModel!.InstallationFolder = folders[0].Path.AbsolutePath;
-            ViewModel!.ChangeFolder();
+                ViewModel!.InstallationFolder = folders[0].Path.AbsolutePath;
+                ViewModel!.ChangeFolder();
+            }
+        }
+        catch (Exception exception)
+        {
+            //ToDo: Sentry send
+            ViewModel?.MainViewModel.Manager
+                .CreateMessage(true, "#D03E3E",
+                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.Error),
+                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.InvalidFolder))
+                .Dismiss()
+                .WithDelay(TimeSpan.FromSeconds(3))
+                .Queue();
         }
     }
 }

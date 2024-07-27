@@ -132,4 +132,7 @@
   <data name="Files" xml:space="preserve">
     <value>файлов</value>
   </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>Не получилось сменить папку установки или произошла ошибка при смене папки</value>
+  </data>
 </root>

@@ -250,5 +250,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Files", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string InvalidFolder {
+            get {
+                return ResourceManager.GetString("InvalidFolder", resourceCulture);
+            }
+        }
     }
 }

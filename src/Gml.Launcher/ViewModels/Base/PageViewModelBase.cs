@@ -15,7 +15,7 @@ namespace Gml.Launcher.ViewModels.Base;
 
 public class PageViewModelBase : ViewModelBase, IRoutableViewModel
 {
-    protected readonly ILocalizationService LocalizationService;
+    internal readonly ILocalizationService LocalizationService;
 
     protected PageViewModelBase(IScreen screen, ILocalizationService? localizationService = null)
     {
