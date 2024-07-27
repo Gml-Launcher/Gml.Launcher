@@ -60,6 +60,7 @@
                                        FontWeight="SemiBold"
                                        Text="{TemplateBinding Headline}" />
                             <TextBlock Foreground="{DynamicResource ContentColor}"
+                                       MinWidth="145"
                                        FontSize="12"
                                        Text="{TemplateBinding Description}" />
                         </StackPanel>

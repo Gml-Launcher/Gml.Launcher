@@ -11,7 +11,7 @@ public class ProgressBar : TemplatedControl
         nameof(Percentage), "50");
 
     public static readonly StyledProperty<string> DescriptionProperty = AvaloniaProperty.Register<ProgressBar, string>(
-        nameof(Description), "Hitech");
+        nameof(Description), "Загружено: 1596 / 6599");
 
     public static readonly StyledProperty<string> HeadlineProperty = AvaloniaProperty.Register<ProgressBar, string>(
         nameof(Headline), "Обновление");

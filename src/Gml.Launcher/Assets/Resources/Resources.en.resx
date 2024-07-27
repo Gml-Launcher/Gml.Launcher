@@ -122,4 +122,7 @@
   <data name="Edit" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Stay</value>
+  </data>
 </root>

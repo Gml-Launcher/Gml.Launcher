@@ -7,6 +7,7 @@ public static class ResourceKeysDictionary
     public const string Error = "Error";
     public const string NotSetting = "NotSetting";
     public const string Updating = "Updating";
+    public const string Stay = "Stay";
     public const string DefaultDRpcText = "DefaultDRpcText";
     public const string PlayDRpcText = "PlayDRpcText";
     public const string Launching = "Launching";
@@ -21,8 +22,7 @@ public static class ResourceKeysDictionary
     public const string InstallingUpdates = "InstallingUpdates";
     public const string FailedOs = "FailedOs";
     public const string JavaNotFound = "JavaNotFound";
-    // public const string Host = "http://192.168.31.199:5000";
-    public const string Host = "https://gmlb.recloud.tech";
-    // public const string Host = "https://gmlb-test.recloud.tech";
+    // public const string Host = "https://gmlb.recloud.tech";
+    public const string Host = "https://gmlb-test.recloud.tech";
     public const string FolderName = "GamerVIILacunerhV2";
 }

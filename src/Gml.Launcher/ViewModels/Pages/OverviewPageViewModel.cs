@@ -38,6 +38,8 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IObservable<bool> _onClosed;
     private readonly ISystemService _systemService;
     private readonly IDisposable? _closeEvent;
+    private readonly IDisposable? _maxCountLoaded;
+    private readonly IDisposable? _loadedLoaded;
     private readonly IDisposable _profileNameChanged;
     private Process? _gameProcess;
     private readonly MainWindowViewModel _mainViewModel;
@@ -52,6 +54,8 @@ public class OverviewPageViewModel : PageViewModelBase
     public IUser User => _user;
 
     [Reactive] public int? LoadingPercentage { get; set; }
+    [Reactive] public int? MaxCount { get; set; }
+    [Reactive] public int? LoadedCount { get; set; }
 
     [Reactive] public string? Headline { get; set; }
 
@@ -95,7 +99,7 @@ public class OverviewPageViewModel : PageViewModelBase
                 ListViewModel.SelectedProfile!))
         );
 
-        HomeCommand = ReactiveCommand.Create(() => ListViewModel.SelectedProfile = null);
+        HomeCommand = ReactiveCommand.Create(async () => await LoadProfiles());
 
         _gmlManager.ProgressChanged.Subscribe(percentage =>
         {
@@ -103,14 +107,25 @@ public class OverviewPageViewModel : PageViewModelBase
                 LoadingPercentage = percentage;
         });
 
+        _gmlManager.ProfilesChanges.Subscribe(async eventInfo => await LoadProfiles());
+
         _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
+        _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
+        _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
 
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
+    }
+
+    private void ChangeLoadProcessDescription(int count)
+    {
+        LoadedCount = count;
+
+        Description = $"{LocalizationService.GetString(ResourceKeysDictionary.Stay)}: {MaxCount - LoadedCount}";
     }
 
     private async void SaveSelectedServer(ProfileReadDto? profile)
@@ -240,25 +255,11 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
+            await LoadProfiles();
+
             await _gmlManager.LoadDiscordRpc();
             await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
 
-            var profilesData = await _gmlManager.GetProfiles();
-
-            ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
-
-            var lastSelectedProfileName = await _storageService.GetAsync<string>(StorageConstants.LastSelectedProfileName);
-
-            if (!string.IsNullOrEmpty(lastSelectedProfileName) && ListViewModel.Profiles.Any())
-            {
-                ListViewModel.SelectedProfile =
-                    ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName);
-            }
-
-            if (string.IsNullOrEmpty(lastSelectedProfileName))
-            {
-                ListViewModel.SelectedProfile = ListViewModel.Profiles.FirstOrDefault();
-            }
         }
         catch (TaskCanceledException exception)
         {
@@ -275,6 +276,24 @@ public class OverviewPageViewModel : PageViewModelBase
             Console.WriteLine(ex);
             // ToDo: Send To service
         }
+    }
+
+    private async Task LoadProfiles()
+    {
+        var profilesData = await _gmlManager.GetProfiles();
+
+        ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
+
+        var lastSelectedProfileName = await _storageService.GetAsync<string>(StorageConstants.LastSelectedProfileName);
+
+        if (!string.IsNullOrEmpty(lastSelectedProfileName) &&
+            ListViewModel.Profiles.FirstOrDefault(c => c.Name == lastSelectedProfileName) is { } profile)
+        {
+            ListViewModel.SelectedProfile = profile;
+        }
+
+        ListViewModel.SelectedProfile ??= ListViewModel.Profiles.FirstOrDefault();
+
     }
 
     private async Task Reconnect()

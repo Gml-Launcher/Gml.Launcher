@@ -234,5 +234,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Stay {
+            get {
+                return ResourceManager.GetString("Stay", resourceCulture);
+            }
+        }
     }
 }
