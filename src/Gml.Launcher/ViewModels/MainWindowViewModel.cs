@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Subjects;
 using GamerVII.Notification.Avalonia;
 using Gml.Launcher.ViewModels.Base;
@@ -11,12 +10,9 @@ namespace Gml.Launcher.ViewModels;
 public class MainWindowViewModel : WindowViewModelBase, IScreen
 {
     public RoutingState Router { get; } = new();
-
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBackCommand => Router.NavigateBack!;
-
     public INotificationMessageManager Manager { get; } = new NotificationMessageManager();
-    protected internal Subject<bool> gameLaunched = new();
-    protected internal IObservable<bool> GameLaunched => gameLaunched;
+    protected internal readonly Subject<bool> _gameLaunched = new();
+    protected internal IObservable<bool> GameLaunched => _gameLaunched;
 
     public MainWindowViewModel()
     {

@@ -86,7 +86,7 @@ public class OverviewPageViewModel : PageViewModelBase
                          ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user, gmlManager))
+            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, _user))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -163,7 +163,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
                     _gameProcess.Start();
                     await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-                    Dispatcher.UIThread.Invoke(() => _mainViewModel.gameLaunched.OnNext(true));
+                    Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
                 }
@@ -186,7 +186,7 @@ public class OverviewPageViewModel : PageViewModelBase
             }
             finally
             {
-                Dispatcher.UIThread.Invoke(() => _mainViewModel.gameLaunched.OnNext(false));
+                Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
                 await _gmlManager.UpdateDiscordRpcState(LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
             }

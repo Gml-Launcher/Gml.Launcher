@@ -11,7 +11,6 @@ using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Dto.Profile;
-using GmlCore.Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

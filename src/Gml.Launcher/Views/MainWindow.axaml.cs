@@ -1,7 +1,5 @@
 using System;
-using System.Reactive.Subjects;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -14,7 +12,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
     public MainWindow()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(_ => { });
         AvaloniaXamlLoader.Load(this);
 
 #if DEBUG
@@ -40,14 +38,24 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     protected override void OnClosed(EventArgs e)
     {
-        if(DataContext is MainWindowViewModel viewModel)
-            viewModel.OnClosed.OnNext(false);
+        SendCloseEvent();
 
         base.OnClosed(e);
+    }
+
+    private void SendCloseEvent()
+    {
+        if(DataContext is MainWindowViewModel viewModel)
+            viewModel.OnClosed.OnNext(false);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         BeginMoveDrag(e);
+    }
+
+    private void WindowClosed(object? sender, EventArgs e)
+    {
+        SendCloseEvent();
     }
 }

@@ -19,8 +19,8 @@ namespace Gml.Launcher.ViewModels.Pages;
 
 public class LoginPageViewModel : PageViewModelBase
 {
+    private bool _isProcessing;
     private string _login = string.Empty;
-    private bool _isProcessing = false;
     private string _password = string.Empty;
     private readonly MainWindowViewModel _screen;
     private readonly IObservable<bool> _onClosed;
@@ -53,12 +53,12 @@ public class LoginPageViewModel : PageViewModelBase
 
     public ObservableCollection<string> Errors
     {
-        get => _errors;
-        set => this.RaiseAndSetIfChanged(ref _errors, value);
+        get => _errorList;
+        set => this.RaiseAndSetIfChanged(ref _errorList, value);
     }
 
     public bool IsNotProcessing => !_isProcessing;
-    public ObservableCollection<string> _errors = new();
+    private ObservableCollection<string> _errorList = new();
 
     public ICommand LoginCommand { get; set; }
 
@@ -140,7 +140,7 @@ public class LoginPageViewModel : PageViewModelBase
                 return;
             }
 
-            if (_screen is MainWindowViewModel mainView)
+            if (_screen is { } mainView)
             {
                 if (!authInfo.Details.Any())
                 {
