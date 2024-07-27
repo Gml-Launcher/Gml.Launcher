@@ -82,7 +82,7 @@
                         <TextBlock Text="{TemplateBinding Text}"
                                    VerticalAlignment="Center"
                                    FontWeight="{TemplateBinding FontWeight}"
-                                   Foreground="{DynamicResource HeadlineColor}"/>
+                                   Foreground="{DynamicResource HeadlineColor}" />
                     </StackPanel>
                 </Button>
             </ControlTemplate>

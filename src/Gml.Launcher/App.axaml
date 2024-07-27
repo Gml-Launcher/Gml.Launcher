@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="Assets/Styles/Colors.axaml"/>
+                <ResourceInclude Source="Assets/Styles/Colors.axaml" />
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="ManropeFont">avares://Gml.Launcher/Assets/Fonts#Manrope</FontFamily>
         </ResourceDictionary>
@@ -32,7 +32,7 @@
         <StyleInclude Source="/Views/Components/ProgressBar.axaml" />
         <StyleInclude Source="/Views/Components/OnlineComponent.axaml" />
 
-        <StyleInclude Source="Assets/Styles/Classes.axaml"/>
+        <StyleInclude Source="Assets/Styles/Classes.axaml" />
 
         <StyleInclude Source="avares://GamerVII.Notification.Avalonia/Themes/Generic.xaml" />
 

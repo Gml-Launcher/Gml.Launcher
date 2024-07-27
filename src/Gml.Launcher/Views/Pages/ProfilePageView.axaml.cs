@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
@@ -15,4 +13,3 @@ public partial class ProfilePageView : ReactiveUserControl<ProfilePageViewModel>
         AvaloniaXamlLoader.Load(this);
     }
 }
-

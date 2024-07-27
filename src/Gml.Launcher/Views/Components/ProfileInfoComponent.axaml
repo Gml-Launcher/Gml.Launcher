@@ -32,7 +32,7 @@
                                            StrokeJoin="Round"
                                            StrokeLineCap="Round"
                                            StrokeThickness="1"
-                                           Stroke="{DynamicResource FormBorderColor}"/>
+                                           Stroke="{DynamicResource FormBorderColor}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.DataTemplates>
@@ -42,4 +42,3 @@
         </Setter>
     </Style>
 </Styles>
-

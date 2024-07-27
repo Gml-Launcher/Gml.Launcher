@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Controls;
 
 namespace Gml.Launcher.Views.Components;
 
@@ -11,4 +9,3 @@ public partial class ServerListComponent : UserControl
         InitializeComponent();
     }
 }
-

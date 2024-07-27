@@ -7,18 +7,21 @@ namespace Gml.Launcher.Views.Components;
 
 public class SidebarComponent : TemplatedControl
 {
+    public static readonly StyledProperty<ICommand> ProfileCommandProperty =
+        AvaloniaProperty.Register<SidebarComponent, ICommand>(
+            nameof(ProfileCommand));
 
-    public static readonly StyledProperty<ICommand> ProfileCommandProperty = AvaloniaProperty.Register<SidebarComponent, ICommand>(
-        nameof(ProfileCommand));
+    public static readonly StyledProperty<ICommand> LogoutCommandProperty =
+        AvaloniaProperty.Register<SidebarComponent, ICommand>(
+            nameof(LogoutCommand));
 
-    public static readonly StyledProperty<ICommand> LogoutCommandProperty = AvaloniaProperty.Register<SidebarComponent, ICommand>(
-        nameof(LogoutCommand));
+    public static readonly StyledProperty<ListViewModel> ListViewModelProperty =
+        AvaloniaProperty.Register<SidebarComponent, ListViewModel>(
+            nameof(ListViewModel));
 
-    public static readonly StyledProperty<ListViewModel> ListViewModelProperty = AvaloniaProperty.Register<SidebarComponent, ListViewModel>(
-        nameof(ListViewModel));
-
-    public static readonly StyledProperty<ICommand> HomeCommandProperty = AvaloniaProperty.Register<SidebarComponent, ICommand>(
-        nameof(HomeCommand));
+    public static readonly StyledProperty<ICommand> HomeCommandProperty =
+        AvaloniaProperty.Register<SidebarComponent, ICommand>(
+            nameof(HomeCommand));
 
     public ICommand HomeCommand
     {
@@ -43,6 +46,4 @@ public class SidebarComponent : TemplatedControl
         get => GetValue(ProfileCommandProperty);
         set => SetValue(ProfileCommandProperty, value);
     }
-
 }
-

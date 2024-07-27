@@ -17,7 +17,7 @@
             <ControlTemplate>
                 <Svg Path="/Assets/Images/logo.svg"
                      Width="{TemplateBinding Size}"
-                     Height="{TemplateBinding Size}"/>
+                     Height="{TemplateBinding Size}" />
             </ControlTemplate>
         </Setter>
     </Style>
@@ -30,15 +30,14 @@
                             Spacing="15">
                     <Svg Path="/Assets/Images/logo.svg"
                          Width="{TemplateBinding Size}"
-                         Height="{TemplateBinding Size}"/>
+                         Height="{TemplateBinding Size}" />
                     <TextBlock Text="GAMERVII"
                                VerticalAlignment="Center"
                                FontSize="26"
                                FontWeight="Bold"
-                               Foreground="{StaticResource HeadlineColor}"/>
+                               Foreground="{StaticResource HeadlineColor}" />
                 </StackPanel>
             </ControlTemplate>
         </Setter>
     </Style>
 </Styles>
-

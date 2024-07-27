@@ -17,10 +17,10 @@ public class AsyncSkinRenderLoader
     public static readonly AttachedProperty<string> SourceProperty =
         AvaloniaProperty.RegisterAttached<AsyncSkinRenderLoader, Image, string>("Source");
 
-    public static readonly AttachedProperty<bool> IsLoadingProperty =
+    private static readonly AttachedProperty<bool> IsLoadingProperty =
         AvaloniaProperty.RegisterAttached<AsyncSkinRenderLoader, Image, bool>("IsLoading");
 
-    private static ConcurrentDictionary<Image, CancellationTokenSource> _pendingOperations = new();
+    private static readonly ConcurrentDictionary<Image, CancellationTokenSource> PendingOperations = new();
 
     static AsyncSkinRenderLoader()
     {
@@ -32,10 +32,10 @@ public class AsyncSkinRenderLoader
         try
         {
             SetIsLoading(sender, true);
-            CancellationTokenSource cts = _pendingOperations.AddOrUpdate(
+            var cts = PendingOperations.AddOrUpdate(
                 sender,
                 new CancellationTokenSource(),
-                (x, y) =>
+                (_, y) =>
                 {
                     y.Cancel();
                     return new CancellationTokenSource();
@@ -45,7 +45,7 @@ public class AsyncSkinRenderLoader
 
             if (string.IsNullOrEmpty(url))
             {
-                _pendingOperations.Remove(sender, out _);
+                PendingOperations.Remove(sender, out _);
                 sender.Source = null;
                 return;
             }
@@ -61,10 +61,7 @@ public class AsyncSkinRenderLoader
 
             var bitmap = new Bitmap(new MemoryStream(SkinViewer.GetFront(stream, 128)));
 
-            if (!cts.Token.IsCancellationRequested)
-            {
-                sender.Source = bitmap;
-            }
+            if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
         catch (Exception e)
         {
@@ -72,7 +69,7 @@ public class AsyncSkinRenderLoader
         }
         finally
         {
-            _pendingOperations.Remove(sender, out _);
+            PendingOperations.Remove(sender, out _);
             SetIsLoading(sender, false);
         }
     }
@@ -83,9 +80,23 @@ public class AsyncSkinRenderLoader
                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     }
 
-    public static void SetSource(Image obj, string value) => obj.SetValue(SourceProperty, value);
-    public static string GetSource(Image obj) => obj.GetValue(SourceProperty);
+    public static void SetSource(Image obj, string value)
+    {
+        obj.SetValue(SourceProperty, value);
+    }
 
-    private static void SetIsLoading(Image obj, bool value) => obj.SetValue(IsLoadingProperty, value);
-    public static bool GetIsLoading(Image obj) => obj.GetValue(IsLoadingProperty);
+    public static string GetSource(Image obj)
+    {
+        return obj.GetValue(SourceProperty);
+    }
+
+    private static void SetIsLoading(Image obj, bool value)
+    {
+        obj.SetValue(IsLoadingProperty, value);
+    }
+
+    public static bool GetIsLoading(Image obj)
+    {
+        return obj.GetValue(IsLoadingProperty);
+    }
 }
