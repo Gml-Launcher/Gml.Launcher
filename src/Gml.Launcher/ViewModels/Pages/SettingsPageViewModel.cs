@@ -138,10 +138,12 @@ public class SettingsPageViewModel : PageViewModelBase
         RxApp.MainThreadScheduler.Schedule(LoadSettings);
     }
 
-    private void ChangeFolder()
+    internal void ChangeFolder()
     {
         if (InstallationFolder != null)
             _gmlManager.ChangeInstallationFolder(InstallationFolder);
+
+        _storageService.SetAsync(StorageConstants.InstallationDirectory, InstallationFolder);
     }
 
     private double RoundToNearest(double value, double step)
@@ -158,14 +160,9 @@ public class SettingsPageViewModel : PageViewModelBase
 
         if (data == null) return;
 
-        if (!string.IsNullOrEmpty(data.LanguageCode))
-        {
-            SelectedLanguage = AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode);
-        }
-        else
-        {
-            SelectedLanguage = AvailableLanguages.FirstOrDefault();
-        }
+        SelectedLanguage = !string.IsNullOrEmpty(data.LanguageCode)
+            ? AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode)
+            : AvailableLanguages.FirstOrDefault();
 
         WindowWidth = data.GameWidth == 0 ? "900" : data.GameWidth.ToString();
         WindowHeight = data.GameHeight == 0 ? "600" : data.GameHeight.ToString();
