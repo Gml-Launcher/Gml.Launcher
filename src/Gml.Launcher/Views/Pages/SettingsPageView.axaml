@@ -166,6 +166,7 @@
                                                   IconSize="22"
                                                   HorizontalAlignment="Right"
                                                   CornerRadius="10"
+                                                  Click="OpenFileDialog"
                                                   Text="{x:Static lang:Resources.Edit}" />
 
                         </Grid>

@@ -1,12 +1,20 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Linq;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 
 namespace Gml.Launcher.Views.Components;
 
 public class GmlButton : TemplatedControl
 {
+
+    public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
+        RoutedEvent.Register<GmlButton, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
 
     public static readonly StyledProperty<string> IconPathProperty = AvaloniaProperty.Register<GmlButton, string>(
         nameof(IconPath), "/Assets/Images/profile.svg");
@@ -71,5 +79,35 @@ public class GmlButton : TemplatedControl
         set => SetValue(IconPathProperty, value);
     }
 
+    public event EventHandler<RoutedEventArgs>? Click
+    {
+        add => AddHandler(ClickEvent, value);
+        remove => RemoveHandler(ClickEvent, value);
+    }
+
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    {
+        base.OnApplyTemplate(e);
+
+        if (this.GetTemplateChildren().First() is Button button)
+        {
+            button.Click += (sender, args) =>
+            {
+                RaiseEvent(new RoutedEventArgs(ClickEvent));
+                Command?.Execute(CommandParameter);
+            };
+        }
+    }
+
+    protected sealed override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        base.OnPointerReleased(e);
+
+        if (e.InitialPressMouseButton == MouseButton.Left)
+        {
+            RaiseEvent(new RoutedEventArgs(ClickEvent));
+            Command?.Execute(CommandParameter);
+        }
+    }
 }
 

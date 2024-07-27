@@ -62,7 +62,8 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Button Background="{TemplateBinding Background}"
+                <Button Name="PART_Button"
+                        Background="{TemplateBinding Background}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         Padding="{TemplateBinding Padding}"
