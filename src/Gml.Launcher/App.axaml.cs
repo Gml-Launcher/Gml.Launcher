@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Gml.Launcher.ViewModels;
 using Gml.Launcher.Views;
+using Gml.Launcher.Views.SplashScreen;
 
 namespace Gml.Launcher;
 
