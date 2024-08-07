@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
@@ -15,6 +16,7 @@ public class SystemService : ISystemService
 {
     private const string NotSupportedMessage = "The operating system is not supported.";
     private readonly HardwareInfo _hardwareInfo = new();
+    const int ERROR_DISK_FULL = 0x70;
 
     public ulong GetMaxRam()
     {
@@ -61,6 +63,12 @@ public class SystemService : ISystemService
         var refreshCpuListTask = Task.Run(() => _hardwareInfo.RefreshCPUList());
 
         await Task.WhenAll(refreshDriveListTask, refreshMotherboardListTask, refreshCpuListTask);
+    }
+
+    public bool IsDiskFull(IOException ioException)
+    {
+        int hr = Marshal.GetHRForException(ioException);
+        return (hr & 0xFFFF) == ERROR_DISK_FULL;
     }
 
     public OsType GetOsType()

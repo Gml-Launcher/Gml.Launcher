@@ -23,9 +23,8 @@ public static class ResourceKeysDictionary
     public const string CheckUpdates = "CheckUpdates";
     public const string InstallingUpdates = "InstallingUpdates";
     public const string FailedOs = "FailedOs";
-
     public const string JavaNotFound = "JavaNotFound";
-
+    public const string IsDiskFull = "IsDiskFull";
     // public const string Host = "https://gmlb.recloud.tech";
     public const string Host = "https://gmlb-test.recloud.tech";
     public const string FolderName = "GamerVIILacunerhV2";

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Gml.Launcher.Models;
 using Gml.Web.Api.Domains.System;
@@ -52,4 +53,6 @@ public interface ISystemService
     /// </summary>
     /// <returns>A task representing the asynchronous operation.</returns>
     Task LoadSystemData();
+
+    bool IsDiskFull(IOException ioException);
 }

@@ -178,6 +178,13 @@ public class OverviewPageViewModel : PageViewModelBase
 
                 Console.WriteLine(exception);
             }
+            catch (IOException ioException) when (_systemService.IsDiskFull(ioException))
+            {
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(ResourceKeysDictionary.IsDiskFull));
+
+                Console.WriteLine(ioException);
+            }
             catch (Exception exception)
             {
                 ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));

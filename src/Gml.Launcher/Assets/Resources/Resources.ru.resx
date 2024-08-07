@@ -135,4 +135,7 @@
   <data name="InvalidFolder" xml:space="preserve">
     <value>Не получилось сменить папку установки или произошла ошибка при смене папки</value>
   </data>
+  <data name="IsDiskFull" xml:space="preserve">
+    <value>Недостаточно места на диске</value>
+  </data>
 </root>
