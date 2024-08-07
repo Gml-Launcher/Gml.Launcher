@@ -89,10 +89,6 @@ public class GmlButton : TemplatedControl
         base.OnApplyTemplate(e);
 
         if (this.GetTemplateChildren().First() is Button button)
-            button.Click += (sender, args) =>
-            {
-                RaiseEvent(new RoutedEventArgs(ClickEvent));
-                Command?.Execute(CommandParameter);
-            };
+            button.Click += (_, _) => RaiseEvent(new RoutedEventArgs(ClickEvent));;
     }
 }
