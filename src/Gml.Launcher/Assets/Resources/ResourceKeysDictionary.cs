@@ -5,6 +5,7 @@ public static class ResourceKeysDictionary
     public const string MainPageTitle = "DefaultPageTitle";
     public const string DefaultPageTitle = "DefaultPageTitle";
     public const string Error = "Error";
+    public const string GameProfileError = "GameProfileError";
     public const string InvalidFolder = "InvalidFolder";
     public const string NotSetting = "NotSetting";
     public const string Updating = "Updating";

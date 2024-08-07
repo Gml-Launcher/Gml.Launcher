@@ -138,4 +138,7 @@
   <data name="IsDiskFull" xml:space="preserve">
     <value>Недостаточно места на диске</value>
   </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>Ошибка инициализации игрового профиля.</value>
+  </data>
 </root>

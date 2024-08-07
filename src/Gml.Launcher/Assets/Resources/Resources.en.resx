@@ -138,4 +138,7 @@
   <data name="IsDiskFull" xml:space="preserve">
     <value>Not enough disk space</value>
   </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>Error initializing the game profile.</value>
+  </data>
 </root>
