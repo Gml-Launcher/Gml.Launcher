@@ -224,6 +224,12 @@ public class OverviewPageViewModel : PageViewModelBase
             if (!string.IsNullOrEmpty(e.Data))
             {
                 Console.WriteLine(e.Data);
+
+                // ToDo: Add sentry java logging
+                // if (e.Data.Contains("log4j:Throwable"))
+                // {
+                //
+                // }
             }
         };
 
