@@ -14,6 +14,7 @@ public static class ResourceKeysDictionary
     public const string PlayDRpcText = "PlayDRpcText";
     public const string Launching = "Launching";
     public const string PreparingLaunch = "PreparingLaunch";
+    public const string GameProfileError = "GameProfileError";
     public const string CheckingFileIntegrity = "CheckingFileIntegrity";
     public const string ProfileNotConfigured = "ProfileNotConfigured";
     public const string UpdatingDescription = "UpdatingDescription";
