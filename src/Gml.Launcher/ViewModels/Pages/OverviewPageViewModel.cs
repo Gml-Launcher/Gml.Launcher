@@ -161,6 +161,9 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess?.Close();
                     _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
                     _gameProcess.Start();
+                    _gameProcess.BeginOutputReadLine();
+                    _gameProcess.BeginErrorReadLine();
+
                     await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
@@ -177,6 +180,13 @@ public class OverviewPageViewModel : PageViewModelBase
                     LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
 
                 Console.WriteLine(exception);
+            }
+            catch (IOException ioException) when (_systemService.IsDiskFull(ioException))
+            {
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(ResourceKeysDictionary.IsDiskFull));
+
+                Console.WriteLine(ioException);
             }
             catch (Exception exception)
             {
@@ -207,7 +217,29 @@ public class OverviewPageViewModel : PageViewModelBase
 
         await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
 
-        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
+        Process process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
+
+        process.OutputDataReceived += (sender, e) =>
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                Console.WriteLine(e.Data);
+
+                // ToDo: Add sentry java logging
+                // if (e.Data.Contains("log4j:Throwable"))
+                // {
+                //
+                // }
+            }
+        };
+
+        process.ErrorDataReceived += (sender, e) =>
+        {
+            if (!string.IsNullOrEmpty(e.Data) && !e.Data.Contains("[gml-patch]"))
+            {
+                ShowError(ResourceKeysDictionary.GameProfileError, e.Data);
+            }
+        };
 
         await _gmlManager.ClearFiles(profileInfo.Data);
 

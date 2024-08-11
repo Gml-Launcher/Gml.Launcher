@@ -24,6 +24,7 @@ public static class ResourceKeysDictionary
     public const string InstallingUpdates = "InstallingUpdates";
     public const string FailedOs = "FailedOs";
     public const string JavaNotFound = "JavaNotFound";
+    public const string IsDiskFull = "IsDiskFull";
     public const string Host = "{{HOST}}";
     public const string FolderName = "{{FOLDER_NAME}}";
 }

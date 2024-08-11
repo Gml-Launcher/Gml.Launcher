@@ -258,5 +258,21 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InvalidFolder", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string IsDiskFull {
+            get {
+                return ResourceManager.GetString("IsDiskFull", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string GameProfileError {
+            get {
+                return ResourceManager.GetString("GameProfileError", resourceCulture);
+            }
+        }
     }
 }
