@@ -29,9 +29,9 @@ public class SystemService : ISystemService
 
     public string GetApplicationFolder()
     {
-        if (IsWindows()) return GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        if (IsWindows()) return Path.GetFullPath(GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
-        if (IsLinux() || IsMacOS()) return GetFolderPath(Environment.SpecialFolder.UserProfile);
+        if (IsLinux() || IsMacOS()) return Path.GetFullPath(GetFolderPath(Environment.SpecialFolder.UserProfile));
 
         throw new NotSupportedException(NotSupportedMessage);
     }
@@ -84,11 +84,11 @@ public class SystemService : ISystemService
 
     public IEnumerable<Language> GetAvailableLanguages()
     {
-        return new List<Language>
-        {
+        return
+        [
             new() { IconPath = "/Assets/Images/lang-ru.svg", Name = "Русский", Culture = new CultureInfo("ru-RU") },
             new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") }
-        };
+        ];
     }
 
     private static string GetFolderPath(Environment.SpecialFolder folder)
