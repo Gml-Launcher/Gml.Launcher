@@ -140,7 +140,7 @@ public abstract class SkinViewer
 
         var croppedRightArm = croppedLeftArm.Clone(x => x.Flip(FlipMode.Horizontal));
 
-        Image croppedCloak = null;
+        Image? croppedCloak = null;
 
         if (includeCloak && cloakImage != null)
             croppedCloak = cloakImage.Clone(ctx =>
