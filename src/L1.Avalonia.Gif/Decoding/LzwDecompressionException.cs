@@ -17,7 +17,8 @@ public class LzwDecompressionException : Exception
     {
     }
 
-    protected LzwDecompressionException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
+    // protected LzwDecompressionException(SerializationInfo info, StreamingContext context) : base(info, context)
+    // {
+    // }
+    // TODO
 }

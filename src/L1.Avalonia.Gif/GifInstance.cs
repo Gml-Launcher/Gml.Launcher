@@ -8,7 +8,8 @@ namespace L1.Avalonia.Gif
 {
     public class GifInstance : IDisposable
     {
-        private readonly List<ulong> _colorTableIdList;
+        // TODO
+        // private readonly List<ulong> _colorTableIdList;
         private readonly List<TimeSpan> _frameTimes;
         private readonly GifDecoder _gifDecoder;
         private readonly WriteableBitmap _targetBitmap;
@@ -114,7 +115,7 @@ namespace L1.Avalonia.Gif
         }
 
         [CanBeNull]
-        public WriteableBitmap ProcessFrameTime(TimeSpan stopwatchElapsed)
+        public WriteableBitmap? ProcessFrameTime(TimeSpan stopwatchElapsed)
         {
             if (!IterationCount.IsInfinite && _iterationCount > IterationCount.Value) return null;
 
