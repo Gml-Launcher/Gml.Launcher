@@ -17,7 +17,8 @@ internal class InvalidGifStreamException : Exception
     {
     }
 
-    protected InvalidGifStreamException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
+    // protected InvalidGifStreamException(SerializationInfo info, StreamingContext context) : base(info, context)
+    // {
+    // }
+    // TODO
 }

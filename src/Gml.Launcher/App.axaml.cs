@@ -3,25 +3,25 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Gml.Launcher.ViewModels;
 using Gml.Launcher.Views;
-using Gml.Launcher.Views.SplashScreen;
 
 namespace Gml.Launcher;
 
-public class App : Application
+public partial class App : Application
 {
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override async void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+
 #if DEBUG
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new MainWindowViewModel(),
             };
 #else
             var splashViewModel = new SplashScreenViewModel();

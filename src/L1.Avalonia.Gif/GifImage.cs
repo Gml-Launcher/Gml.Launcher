@@ -33,11 +33,11 @@ public class GifImage : Control
 
     private bool _hasNewSource;
     private object? _newSource;
-    private Stopwatch _stopwatch;
+    private Stopwatch? _stopwatch;
 
-    private RenderTargetBitmap backingRTB;
+    private RenderTargetBitmap? backingRTB;
 
-    private GifInstance gifInstance;
+    private GifInstance? gifInstance;
 
     static GifImage()
     {
@@ -117,8 +117,10 @@ public class GifImage : Control
         if (_hasNewSource)
         {
             StopAndDispose();
-            gifInstance = new GifInstance(_newSource);
-            gifInstance.IterationCount = IterationCount;
+            gifInstance = new GifInstance(_newSource!)
+            {
+                IterationCount = IterationCount
+            };
             backingRTB = new RenderTargetBitmap(gifInstance.GifPixelSize, new Vector(96, 96));
             _hasNewSource = false;
 
@@ -131,7 +133,7 @@ public class GifImage : Control
 
         if (gifInstance is null || (gifInstance.CurrentCts?.IsCancellationRequested ?? true)) return;
 
-        if (!_stopwatch.IsRunning) _stopwatch.Start();
+        if (!_stopwatch!.IsRunning) _stopwatch.Start();
 
         var currentFrame = gifInstance.ProcessFrameTime(_stopwatch.Elapsed);
 

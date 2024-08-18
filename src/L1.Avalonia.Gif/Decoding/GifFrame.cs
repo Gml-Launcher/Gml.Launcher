@@ -6,7 +6,7 @@ public class GifFrame
     public TimeSpan FrameDelay;
     public FrameDisposal FrameDisposalMethod;
     public bool HasTransparency, IsInterlaced, IsLocalColorTableUsed;
-    public GifColor[] LocalColorTable;
+    public GifColor[]? LocalColorTable;
     public int LZWMinCodeSize, LocalColorTableSize;
     public long LZWStreamPosition;
     public bool ShouldBackup;
