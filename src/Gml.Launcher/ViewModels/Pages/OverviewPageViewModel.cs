@@ -235,6 +235,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         process.ErrorDataReceived += (sender, e) =>
         {
+            Console.WriteLine(e?.Data);
             if (!string.IsNullOrEmpty(e.Data) && !e.Data.Contains("[gml-patch]"))
             {
                 ShowError(ResourceKeysDictionary.GameProfileError, e.Data);
