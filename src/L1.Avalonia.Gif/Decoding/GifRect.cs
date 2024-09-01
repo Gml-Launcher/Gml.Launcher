@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace L1.Avalonia.Gif.Decoding;
 
 public readonly struct GifRect
@@ -30,7 +32,7 @@ public readonly struct GifRect
         return !(a == b);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals([AllowNull] object obj)
     {
         if (obj == null || GetType() != obj.GetType())
             return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.IO;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -11,6 +12,7 @@ using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
+// using Sentry;
 
 namespace Gml.Launcher.Views.Pages;
 
@@ -46,13 +48,20 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
                 if (folders.Count != 1) return;
 
-                ViewModel!.InstallationFolder = folders[0].Path.AbsolutePath;
+                ViewModel!.InstallationFolder = Path.GetFullPath(folders[0].Path.AbsolutePath);
                 ViewModel!.ChangeFolder();
             }
         }
         catch (Exception exception)
         {
-            //ToDo: Sentry send
+            // Log the exception details to Sentry
+            // SentrySdk.CaptureException(exception);
+            // TODO Sentry send
+
+            // Existing log statement
+            Console.WriteLine(exception.ToString());
+
+            // Show error notification
             ViewModel?.MainViewModel.Manager
                 .CreateMessage(true, "#D03E3E",
                 ViewModel.LocalizationService.GetString(ResourceKeysDictionary.Error),

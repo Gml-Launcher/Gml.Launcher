@@ -41,8 +41,8 @@ public sealed class GifDecoder : IDisposable
     private readonly Stream _fileStream;
     private readonly bool _hasFrameBackups;
 
-    public readonly List<GifFrame> Frames = new();
-    private byte[] _backupFrameIndexBuf;
+    public readonly List<GifFrame> Frames = [];
+    private byte[]? _backupFrameIndexBuf;
     private GifColor[] _bitmapBackBuffer;
 
     private int _gctSize, _bgIndex, _prevFrame = -1, _backupFrame = -1;
@@ -64,7 +64,7 @@ public sealed class GifDecoder : IDisposable
         ProcessHeaderData();
         ProcessFrameData();
 
-        Header.IterationCount = Header.Iterations switch
+        Header!.IterationCount = Header.Iterations switch
         {
             -1 => new GifRepeatBehavior { Count = 1 },
             0 => new GifRepeatBehavior { LoopForever = true },
@@ -98,12 +98,12 @@ public sealed class GifDecoder : IDisposable
     {
         Frames.Clear();
 
-        _bitmapBackBuffer = null;
-        _prefixBuf = null;
-        _suffixBuf = null;
-        _pixelStack = null;
-        _indexBuf = null;
-        _backupFrameIndexBuf = null;
+        _bitmapBackBuffer = [];
+        _prefixBuf = [];
+        _suffixBuf = [];
+        _pixelStack = [];
+        _indexBuf = [];
+        _backupFrameIndexBuf = [];
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -169,7 +169,7 @@ public sealed class GifDecoder : IDisposable
 
         if (_hasFrameBackups & curFrame.ShouldBackup)
         {
-            Buffer.BlockCopy(_indexBuf, 0, _backupFrameIndexBuf, 0, curFrame.Dimensions.TotalPixels);
+            Buffer.BlockCopy(_indexBuf, 0, _backupFrameIndexBuf!, 0, curFrame.Dimensions.TotalPixels);
             _backupFrame = idx;
         }
 
@@ -417,15 +417,14 @@ public sealed class GifDecoder : IDisposable
         if (!(_hasNewFrame & (_bitmapBackBuffer != null))) return;
 
         unsafe
-        {
-            fixed (void* src = &_bitmapBackBuffer[0])
             {
-                Buffer.MemoryCopy(src, targetPointer.ToPointer(), (uint)_backBufferBytes,
-                    (uint)_backBufferBytes);
+                fixed (void* src = _bitmapBackBuffer) // Use the null-forgiving post-fix to assure the compiler `_bitmapBackBuffer` is not null.
+                {
+                    Buffer.MemoryCopy(src, targetPointer.ToPointer(), (uint)_backBufferBytes, (uint)_backBufferBytes);
+                };
             }
 
-            _hasNewFrame = false;
-        }
+        _hasNewFrame = false;
     }
 
     public static bool IsGifStream(Stream stream)
@@ -466,7 +465,7 @@ public sealed class GifDecoder : IDisposable
             HasGlobalColorTable = _gctUsed,
             // GlobalColorTableCacheID = _globalColorTable,
             GlobarColorTable =
-                _gctUsed ? ProcessColorTable(ref str, tmpB, _gctSize) : Array.Empty<GifColor>(),
+                _gctUsed ? ProcessColorTable(ref str, tmpB, _gctSize) : [],
             GlobalColorTableSize = _gctSize,
             BackgroundColorIndex = _bgIndex,
             HeaderSize = _fileStream.Position

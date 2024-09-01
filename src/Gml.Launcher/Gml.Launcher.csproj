@@ -9,6 +9,9 @@
     <ApplicationIcon>Assets\Images\logo.ico</ApplicationIcon>
     <AssemblyVersion>2.1.0.0</AssemblyVersion>
     <FileVersion>2.1.0.0</FileVersion>
+    <License>Apache-2.0</License>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;osx-x64;osx-arm64;linux-musl-x64;linux-musl-arm64</RuntimeIdentifiers>
+    <NoWarn>$(NoWarn);NETSDK1206</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
