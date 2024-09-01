@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Gml.Launcher.ViewModels;
 using Gml.Launcher.Views;
+using Gml.Launcher.Views.SplashScreen;
 
 namespace Gml.Launcher;
 
@@ -13,7 +15,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
