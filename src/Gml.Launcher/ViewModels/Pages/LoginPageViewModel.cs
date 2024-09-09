@@ -102,7 +102,7 @@ public class LoginPageViewModel : PageViewModelBase
     {
         var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
-        if (authUser is { IsAuth: true })
+        if (authUser is { IsAuth: true } && authUser.ExpiredDate > DateTime.Now)
         {
             _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authUser, _onClosed));
             await _gmlClientManager.OpenServerConnection(authUser);
