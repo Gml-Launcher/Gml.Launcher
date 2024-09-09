@@ -9,6 +9,7 @@ using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using ReactiveUI;
+using Sentry;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Base;
@@ -71,9 +72,10 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
                 await func();
                 tcs.SetResult(null);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                tcs.SetException(ex);
+                tcs.SetException(exception);
+                SentrySdk.CaptureException(exception);
             }
         }
 

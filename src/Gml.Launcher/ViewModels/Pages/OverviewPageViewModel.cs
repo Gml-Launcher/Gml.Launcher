@@ -26,6 +26,7 @@ using Gml.Web.Api.Dto.Messages;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Sentry;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -178,7 +179,7 @@ public class OverviewPageViewModel : PageViewModelBase
             {
                 ShowError(ResourceKeysDictionary.Error,
                     LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
-
+                SentrySdk.CaptureException(exception);
                 Console.WriteLine(exception);
             }
             catch (IOException ioException) when (_systemService.IsDiskFull(ioException))
@@ -186,12 +187,14 @@ public class OverviewPageViewModel : PageViewModelBase
                 ShowError(ResourceKeysDictionary.Error,
                     LocalizationService.GetString(ResourceKeysDictionary.IsDiskFull));
 
+                SentrySdk.CaptureException(ioException);
                 Console.WriteLine(ioException);
             }
             catch (Exception exception)
             {
                 ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
 
+                SentrySdk.CaptureException(exception);
                 Console.WriteLine(exception);
             }
             finally
@@ -235,7 +238,11 @@ public class OverviewPageViewModel : PageViewModelBase
 
         process.ErrorDataReceived += (sender, e) =>
         {
-            Console.WriteLine(e?.Data);
+            if (e.Data is null)
+            {
+                return;
+            }
+
             if (!string.IsNullOrEmpty(e.Data) && !e.Data.Contains("[gml-patch]"))
             {
                 ShowError(ResourceKeysDictionary.GameProfileError, e.Data);
@@ -302,18 +309,19 @@ public class OverviewPageViewModel : PageViewModelBase
         }
         catch (TaskCanceledException exception)
         {
+            SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
             await Reconnect();
         }
         catch (HttpRequestException exception)
         {
+            SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
             await Reconnect();
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            Console.WriteLine(ex);
-            // ToDo: Send To service
+            SentrySdk.CaptureException(exception);
         }
     }
 

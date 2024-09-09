@@ -13,6 +13,7 @@ using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using ReactiveUI;
+using Sentry;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -112,16 +113,6 @@ public class LoginPageViewModel : PageViewModelBase
     {
         try
         {
-            // this.Manager
-            //     .CreateMessage()
-            //     .Accent("#1751C3")
-            //     .Animates(true)
-            //     .Background("#333")
-            //     .HasBadge("Info")
-            //     .HasMessage("Update will be installed on next application restart. This message will be dismissed after 5 seconds.")
-            //     .Dismiss().WithDelay(TimeSpan.FromSeconds(5))
-            //     .Queue();
-            //28823c6e1c503fa9b051fec15e9c5986
             IsProcessing = true;
 
             var authInfo = await _gmlClientManager.Auth(Login, Password, _systemService.GetHwid());
@@ -151,9 +142,9 @@ public class LoginPageViewModel : PageViewModelBase
                 Errors = new ObservableCollection<string>(authInfo.Details);
             }
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Console.WriteLine(e);
+            SentrySdk.CaptureException(exception);
         }
         finally
         {

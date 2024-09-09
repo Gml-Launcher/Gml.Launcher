@@ -29,7 +29,6 @@ public static class ServiceLocator
 
         CheckAndChangeInstallationFolder(storageService, manager);
         CheckAndChangeLanguage(storageService, systemService);
-        InitializeSentry();
 
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
@@ -37,30 +36,6 @@ public static class ServiceLocator
         };
 
         return builder;
-    }
-
-    private static void InitializeSentry()
-    {
-        var sentryUrl = GmlClientManager.GetSentryLink(ResourceKeysDictionary.Host).Result;
-
-        try
-        {
-            if (!string.IsNullOrEmpty(sentryUrl))
-                SentrySdk.Init(options =>
-                {
-                    options.Dsn = sentryUrl;
-                    options.Debug = true;
-                    options.TracesSampleRate = 1.0;
-                    options.DiagnosticLevel = SentryLevel.Debug;
-                    options.IsGlobalModeEnabled = true;
-                    options.SendDefaultPii = true;
-                    options.MaxAttachmentSize = 10 * 1024 * 1024;
-                });
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(exception);
-        }
     }
 
     private static void CheckAndChangeLanguage(LocalStorageService storageService, SystemService systemService)
