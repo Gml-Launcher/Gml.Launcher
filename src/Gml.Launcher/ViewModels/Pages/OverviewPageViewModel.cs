@@ -217,7 +217,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
 
-        Process process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
+        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
 
         process.OutputDataReceived += (sender, e) =>
         {
