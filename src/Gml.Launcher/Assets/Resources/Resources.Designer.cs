@@ -274,5 +274,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("GameProfileError", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string InvalidSession {
+            get {
+                return ResourceManager.GetString("InvalidSession", resourceCulture);
+            }
+        }
     }
 }

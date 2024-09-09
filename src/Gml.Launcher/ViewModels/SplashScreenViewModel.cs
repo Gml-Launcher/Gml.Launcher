@@ -50,6 +50,7 @@ public class SplashScreenViewModel : WindowViewModelBase
     [Reactive] public bool InfinityLoading { get; set; } = true;
     [Reactive] public short Progress { get; set; }
     [Reactive] public bool IsAuth { get; set; }
+    public ILocalizationService LocalizationService => _localizationService;
 
     public async Task InitializeAsync()
     {

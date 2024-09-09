@@ -141,4 +141,7 @@
   <data name="GameProfileError" xml:space="preserve">
     <value>Ошибка инициализации игрового профиля.</value>
   </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>Ваша игровая сессия в лаунчере истекла, авторизуйтесь заново</value>
+  </data>
 </root>

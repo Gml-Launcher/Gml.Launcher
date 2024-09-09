@@ -19,6 +19,7 @@ public static class ResourceKeysDictionary
     public const string ProfileNotConfigured = "ProfileNotConfigured";
     public const string UpdatingDescription = "UpdatingDescription";
     public const string InvalidAuthData = "InvalidAuthData";
+    public const string InvalidSession = "InvalidSession";
     public const string Reconnecting = "Reconnecting";
     public const string LostConnection = "LostConnection";
     public const string CheckUpdates = "CheckUpdates";
