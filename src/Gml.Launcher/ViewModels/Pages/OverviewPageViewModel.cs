@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -15,6 +17,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Client;
+using Gml.Client.Helpers;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
@@ -39,6 +42,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly MainWindowViewModel _mainViewModel;
     private readonly IDisposable? _maxCountLoaded;
     private readonly IObservable<bool> _onClosed;
+    private readonly LogHandler _logHandler;
     private readonly IDisposable _profileNameChanged;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
@@ -49,11 +53,17 @@ public class OverviewPageViewModel : PageViewModelBase
         IObservable<bool> onClosed,
         IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
-        IStorageService? storageService = null) : base(screen)
+        IStorageService? storageService = null,
+        LogHandler? logHandler = null) : base(screen)
     {
         _mainViewModel = screen as MainWindowViewModel ?? throw new Exception("Not valid screen");
         User = user;
         _onClosed = onClosed;
+
+        _logHandler = logHandler
+            ?? Locator.Current.GetService<LogHandler>()
+            ?? throw new ServiceNotFoundException(typeof(LogHandler));
+
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
                          ?? throw new ServiceNotFoundException(typeof(ISystemService));
@@ -155,6 +165,7 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             try
             {
+
                 var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
@@ -162,6 +173,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess?.Close();
                     _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
                     _gameProcess.Start();
+                    _gameProcess.StartWatch();
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
@@ -226,27 +238,21 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                Console.WriteLine(e.Data);
-
-                // ToDo: Add sentry java logging
-                // if (e.Data.Contains("log4j:Throwable"))
-                // {
-                //
-                // }
+                Debug.WriteLine(e.Data);
+                _logHandler.ProcessLogs(e.Data);
             }
         };
 
         process.ErrorDataReceived += (sender, e) =>
         {
-            if (e.Data is null)
+            if (e.Data is null || string.IsNullOrEmpty(e.Data))
             {
                 return;
             }
 
-            if (!string.IsNullOrEmpty(e.Data) && !e.Data.Contains("[gml-patch]"))
-            {
-                ShowError(ResourceKeysDictionary.GameProfileError, e.Data);
-            }
+            Debug.WriteLine(e.Data);
+
+            _logHandler.ProcessLogs(e.Data);
         };
 
         await _gmlManager.ClearFiles(profileInfo.Data);

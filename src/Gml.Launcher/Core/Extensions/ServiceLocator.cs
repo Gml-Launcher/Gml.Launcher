@@ -24,6 +24,7 @@ public static class ServiceLocator
 
         RegisterLocalizationService();
         RegisterSystemService(systemService);
+        RegisterLogHelper(systemService);
         var manager = RegisterGmlManager(systemService, installationDirectory);
         var storageService = RegisterStorage();
 
@@ -36,6 +37,11 @@ public static class ServiceLocator
         };
 
         return builder;
+    }
+
+    private static void RegisterLogHelper(SystemService systemService)
+    {
+        Locator.CurrentMutable.RegisterConstant(new LogHandler());
     }
 
     private static void CheckAndChangeLanguage(LocalStorageService storageService, SystemService systemService)
