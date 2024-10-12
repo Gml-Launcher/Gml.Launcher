@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -15,6 +17,7 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Client;
+using Gml.Client.Helpers;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
@@ -26,6 +29,7 @@ using Gml.Web.Api.Dto.Messages;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Sentry;
 using Splat;
 
 namespace Gml.Launcher.ViewModels.Pages;
@@ -38,6 +42,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly MainWindowViewModel _mainViewModel;
     private readonly IDisposable? _maxCountLoaded;
     private readonly IObservable<bool> _onClosed;
+    private readonly LogHandler _logHandler;
     private readonly IDisposable _profileNameChanged;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
@@ -48,11 +53,17 @@ public class OverviewPageViewModel : PageViewModelBase
         IObservable<bool> onClosed,
         IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
-        IStorageService? storageService = null) : base(screen)
+        IStorageService? storageService = null,
+        LogHandler? logHandler = null) : base(screen)
     {
         _mainViewModel = screen as MainWindowViewModel ?? throw new Exception("Not valid screen");
         User = user;
         _onClosed = onClosed;
+
+        _logHandler = logHandler
+            ?? Locator.Current.GetService<LogHandler>()
+            ?? throw new ServiceNotFoundException(typeof(LogHandler));
+
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
                          ?? throw new ServiceNotFoundException(typeof(ISystemService));
@@ -154,6 +165,7 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             try
             {
+
                 var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
@@ -161,6 +173,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess?.Close();
                     _gameProcess = await GenerateProcess(cancellationToken, profileInfo);
                     _gameProcess.Start();
+                    _gameProcess.StartWatch();
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
@@ -178,7 +191,7 @@ public class OverviewPageViewModel : PageViewModelBase
             {
                 ShowError(ResourceKeysDictionary.Error,
                     LocalizationService.GetString(ResourceKeysDictionary.JavaNotFound));
-
+                SentrySdk.CaptureException(exception);
                 Console.WriteLine(exception);
             }
             catch (IOException ioException) when (_systemService.IsDiskFull(ioException))
@@ -186,12 +199,14 @@ public class OverviewPageViewModel : PageViewModelBase
                 ShowError(ResourceKeysDictionary.Error,
                     LocalizationService.GetString(ResourceKeysDictionary.IsDiskFull));
 
+                SentrySdk.CaptureException(ioException);
                 Console.WriteLine(ioException);
             }
             catch (Exception exception)
             {
                 ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
 
+                SentrySdk.CaptureException(exception);
                 Console.WriteLine(exception);
             }
             finally
@@ -217,29 +232,27 @@ public class OverviewPageViewModel : PageViewModelBase
 
         await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
 
-        Process process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
+        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
 
         process.OutputDataReceived += (sender, e) =>
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                Console.WriteLine(e.Data);
-
-                // ToDo: Add sentry java logging
-                // if (e.Data.Contains("log4j:Throwable"))
-                // {
-                //
-                // }
+                Debug.WriteLine(e.Data);
+                _logHandler.ProcessLogs(e.Data);
             }
         };
 
         process.ErrorDataReceived += (sender, e) =>
         {
-            Console.WriteLine(e?.Data);
-            if (!string.IsNullOrEmpty(e.Data) && !e.Data.Contains("[gml-patch]"))
+            if (e.Data is null || string.IsNullOrEmpty(e.Data))
             {
-                ShowError(ResourceKeysDictionary.GameProfileError, e.Data);
+                return;
             }
+
+            Debug.WriteLine(e.Data);
+
+            _logHandler.ProcessLogs(e.Data);
         };
 
         await _gmlManager.ClearFiles(profileInfo.Data);
@@ -302,18 +315,19 @@ public class OverviewPageViewModel : PageViewModelBase
         }
         catch (TaskCanceledException exception)
         {
+            SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
             await Reconnect();
         }
         catch (HttpRequestException exception)
         {
+            SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
             await Reconnect();
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            Console.WriteLine(ex);
-            // ToDo: Send To service
+            SentrySdk.CaptureException(exception);
         }
     }
 

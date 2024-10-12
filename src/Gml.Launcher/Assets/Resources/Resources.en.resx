@@ -141,4 +141,7 @@
   <data name="GameProfileError" xml:space="preserve">
     <value>Error initializing the game profile.</value>
   </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>Your game session in the launcher has expired, please log in again.</value>
+  </data>
 </root>

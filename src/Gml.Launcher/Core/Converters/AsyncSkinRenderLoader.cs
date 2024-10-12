@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Gml.Client;
 using Gml.Launcher.Core.Services;
+using Sentry;
 
 namespace Gml.Launcher.Core.Converters;
 
@@ -63,9 +64,10 @@ public class AsyncSkinRenderLoader
 
             if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(exception);
+            SentrySdk.CaptureException(exception);
         }
         finally
         {

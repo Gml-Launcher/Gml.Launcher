@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Gml.Client;
+using Gml.Client.Models;
 using Gml.Launcher.Assets;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
@@ -12,19 +13,27 @@ using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Domains.System;
 using GmlCore.Interfaces.Storage;
 using ReactiveUI.Fody.Helpers;
+using Sentry;
 using Splat;
 
 namespace Gml.Launcher.ViewModels;
 
 public class SplashScreenViewModel : WindowViewModelBase
 {
+    private readonly IStorageService _storageService;
     private readonly ILocalizationService _localizationService;
     private readonly IGmlClientManager _manager;
     private readonly ISystemService _systemService;
 
-    public SplashScreenViewModel(ISystemService? systemService = null, IGmlClientManager? manager = null,
+    public SplashScreenViewModel(
+        ISystemService? systemService = null,
+        IGmlClientManager? manager = null,
+        IStorageService? storage = null,
         ILocalizationService? localizationService = null)
     {
+        _storageService = storage ?? Locator.Current.GetService<IStorageService>()
+            ?? throw new ServiceNotFoundException(typeof(IStorageService));;
+
         _systemService = systemService ?? Locator.Current.GetService<ISystemService>()
             ?? throw new ServiceNotFoundException(typeof(ISystemService));
 
@@ -40,30 +49,47 @@ public class SplashScreenViewModel : WindowViewModelBase
     [Reactive] public string StatusText { get; set; }
     [Reactive] public bool InfinityLoading { get; set; } = true;
     [Reactive] public short Progress { get; set; }
+    [Reactive] public bool IsAuth { get; set; }
+    public ILocalizationService LocalizationService => _localizationService;
 
     public async Task InitializeAsync()
     {
-        var osType = _systemService.GetOsType();
-        var osArch = RuntimeInformation.ProcessArchitecture;
-
-        await _systemService.LoadSystemData();
-        ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
-
-        var versionInfo = await CheckActualVersion(osType, osArch);
-
-        if (!versionInfo.IsActuallVersion)
+        try
         {
-            ChangeState(_localizationService.GetString(ResourceKeysDictionary.InstallingUpdates), false);
+            var osType = _systemService.GetOsType();
+            var osArch = RuntimeInformation.ProcessArchitecture;
 
-            var exePath = Process.GetCurrentProcess().MainModule?.FileName
-                          ?? throw new Exception(ResourceKeysDictionary.FailedOs);
+            await _systemService.LoadSystemData();
+            ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
 
-            var process = _manager.ProgressChanged.Subscribe(
-                percentage => Progress = Convert.ToInt16(percentage));
+            var versionInfo = await CheckActualVersion(osType, osArch);
 
-            await _manager.UpdateCurrentLauncher(versionInfo, osType, Path.GetFileName(exePath));
+            if (!versionInfo.IsActuallVersion)
+            {
+                ChangeState(_localizationService.GetString(ResourceKeysDictionary.InstallingUpdates), false);
 
-            process.Dispose();
+                var exePath = Process.GetCurrentProcess().MainModule?.FileName
+                              ?? throw new Exception(ResourceKeysDictionary.FailedOs);
+
+                var process = _manager.ProgressChanged.Subscribe(
+                    percentage => Progress = Convert.ToInt16(percentage));
+
+                await _manager.UpdateCurrentLauncher(versionInfo, osType, Path.GetFileName(exePath));
+
+                process.Dispose();
+            }
+
+            var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
+
+            var accessUser = await _manager.Auth(authUser?.AccessToken ?? string.Empty);
+
+            await _storageService.SetAsync(StorageConstants.User, accessUser.User);
+
+            IsAuth = accessUser.User.ExpiredDate > DateTime.Now && accessUser is { User.IsAuth: true };
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
         }
     }
 

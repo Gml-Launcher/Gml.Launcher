@@ -12,6 +12,8 @@ using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
+using Sentry;
+
 // using Sentry;
 
 namespace Gml.Launcher.Views.Pages;
@@ -54,9 +56,7 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
         }
         catch (Exception exception)
         {
-            // Log the exception details to Sentry
-            // SentrySdk.CaptureException(exception);
-            // TODO Sentry send
+            SentrySdk.CaptureException(exception);
 
             // Existing log statement
             Console.WriteLine(exception.ToString());
