@@ -24,6 +24,7 @@ public class LogHandler
 
     private void HandleErrorData(string data)
     {
+        return;
         Debug.WriteLine(data);
 
         if (data.Contains("Exception", StringComparison.OrdinalIgnoreCase) ||
