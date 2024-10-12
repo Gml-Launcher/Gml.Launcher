@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{09A802
 		load-repositories.bat = load-repositories.bat
 		load-repositories.sh = load-repositories.sh
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		src\Gml.Client\README.md = src\Gml.Client\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Launcher", "src\Gml.Launcher\Gml.Launcher.csproj", "{F2771E71-C782-4713-862F-217694DDDFF5}"
