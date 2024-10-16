@@ -80,12 +80,12 @@ public class SplashScreenViewModel : WindowViewModelBase
             }
 
             var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
-
-            var accessUser = await _manager.Auth(authUser?.AccessToken ?? string.Empty);
-
-            await _storageService.SetAsync(StorageConstants.User, accessUser.User);
-
-            IsAuth = accessUser.User.ExpiredDate > DateTime.Now && accessUser is { User.IsAuth: true };
+            //
+            // var accessUser = await _manager.Auth(authUser?.AccessToken ?? string.Empty);
+            //
+            // await _storageService.SetAsync(StorageConstants.User, accessUser.User);
+            //
+            IsAuth = authUser != null && authUser.ExpiredDate > DateTime.Now && authUser is { IsAuth: true };
         }
         catch (Exception exception)
         {
