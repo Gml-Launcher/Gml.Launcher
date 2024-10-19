@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Gml.Client;
 using Gml.Client.Models;
