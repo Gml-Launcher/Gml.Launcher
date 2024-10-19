@@ -19,13 +19,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-
-#if DEBUG
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel(),
-            };
-#else
             var splashViewModel = new SplashScreenViewModel();
             var splashScreen = new SplashScreen
             {
@@ -37,9 +30,7 @@ public partial class App : Application
             desktop.MainWindow = splashScreen.GetMainWindow();
             desktop.MainWindow.Show();
             splashScreen.Close();
-#endif
         }
-
 
         base.OnFrameworkInitializationCompleted();
     }
