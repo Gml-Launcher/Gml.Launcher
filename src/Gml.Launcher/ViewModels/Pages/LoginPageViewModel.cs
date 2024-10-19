@@ -119,6 +119,7 @@ public class LoginPageViewModel : PageViewModelBase
 
             if (authInfo.User.IsAuth)
             {
+                await _gmlClientManager.OpenServerConnection(authInfo.User);
                 await _storageService.SetAsync(StorageConstants.User, authInfo.User);
                 _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User, _onClosed));
                 return;

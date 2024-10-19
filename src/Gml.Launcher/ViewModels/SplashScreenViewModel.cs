@@ -1,8 +1,11 @@
 using System;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Gml.Client;
 using Gml.Client.Models;
@@ -85,12 +88,27 @@ public class SplashScreenViewModel : WindowViewModelBase
             //
             // await _storageService.SetAsync(StorageConstants.User, accessUser.User);
             //
-            IsAuth = authUser != null && authUser.ExpiredDate > DateTime.Now && authUser is { IsAuth: true };
+
+            IsAuth = authUser != null && authUser.ExpiredDate > DateTime.Now && authUser is { IsAuth: true } && await ValidateToken(authUser);
         }
         catch (Exception exception)
         {
             SentrySdk.CaptureException(exception);
         }
+    }
+
+    private Task<bool> ValidateToken(AuthUser user)
+    {
+        var handler = new JwtSecurityTokenHandler();
+
+        if (!handler.CanReadToken(user.AccessToken))
+            return Task.FromResult(false);
+
+        var jwtToken = handler.ReadJwtToken(user.AccessToken);
+
+        var claims = jwtToken.Claims.FirstOrDefault(c => c.Type == "name");
+
+        return Task.FromResult(claims?.Value == user.Name);
     }
 
     private async Task<(IVersionFile? ActualVersion, bool IsActuallVersion)> CheckActualVersion(OsType osType,

@@ -187,6 +187,10 @@ public class OverviewPageViewModel : PageViewModelBase
                     ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
             }
+            catch (UnauthorizedAccessException exception)
+            {
+                await OnLogout(CancellationToken.None);
+            }
             catch (FileNotFoundException exception)
             {
                 ShowError(ResourceKeysDictionary.Error,
@@ -292,6 +296,7 @@ public class OverviewPageViewModel : PageViewModelBase
         };
 
         var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
+
         return profileInfo;
     }
 
