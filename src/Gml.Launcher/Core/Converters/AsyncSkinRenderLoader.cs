@@ -51,7 +51,8 @@ public class AsyncSkinRenderLoader
                 return;
             }
 
-            if (string.IsNullOrEmpty(url) || !ValidateUrl(url)) return;
+            if (string.IsNullOrEmpty(url) || !ValidateUrl(url))
+                throw new Exception($"User skin not found for user. Url: {url}");
 
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Clear();

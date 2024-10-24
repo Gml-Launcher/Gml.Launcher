@@ -24,10 +24,10 @@
 
     <SolidColorBrush x:Key="BadgeBorder">#20FFFFFF</SolidColorBrush>
 
-    <LinearGradientBrush x:Key="ProfileLinearGradient" StartPoint="50%, -80%" EndPoint="50%, 100%" Opacity=".3">
+    <LinearGradientBrush x:Key="ProfileLinearGradient" StartPoint="0%, 0%" EndPoint="0%, 100%" Opacity=".3">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="Transparent" />
-            <GradientStop Offset="0.1" Color="#10018A44" />
+            <GradientStop Offset="0.2" Color="#10018A44" />
             <GradientStop Offset="1" Color="#018A44" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
