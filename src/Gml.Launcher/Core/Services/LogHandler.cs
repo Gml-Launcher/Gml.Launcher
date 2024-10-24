@@ -1,76 +1,124 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text.RegularExpressions;
+using Gml.Launcher.Core.Exceptions;
 using Sentry;
 
-namespace Gml.Launcher.Core.Services;
-
-public class LogHandler
+namespace Gml.Launcher.Core.Services
 {
-    private readonly Subject<string> _errorDataSubject = new();
-
-
-    public LogHandler()
+    public class LogHandler
     {
-        var errorDataObservable = _errorDataSubject
-            .Where(data => !string.IsNullOrEmpty(data))
-            .Buffer(() => _errorDataSubject.Where(data => data.Contains("</log4j:Event>")))
-            .Select(lines => string.Join(Environment.NewLine, lines));
+        private readonly Subject<string> _errorDataSubject = new();
+        private readonly List<string> _logBuffer = new();
+        private static readonly string[] LogLevels = { "[INFO]", "[WARNING]", "[ERROR]", "[DEBUG]" };
 
-        errorDataObservable.Subscribe(HandleErrorData);
-    }
-
-    private void HandleErrorData(string data)
-    {
-        return;
-        Debug.WriteLine(data);
-
-        if (data.Contains("Exception", StringComparison.OrdinalIgnoreCase) ||
-            data.Contains("<log4j:Throwable>", StringComparison.OrdinalIgnoreCase))
+        public LogHandler()
         {
-            var exception = ExtractException(data);
-            ShowError(ResourceKeysDictionary.GameProfileError, data);
-            SentrySdk.CaptureException(exception);
+            _errorDataSubject
+                .Where(data => !string.IsNullOrEmpty(data)
+                               && !data.Contains("[gml-patch]", StringComparison.OrdinalIgnoreCase)
+                               && !data.Contains("/api/v1/integrations/texture/skins/", StringComparison.OrdinalIgnoreCase)
+                               && !data.Contains("/api/v1/integrations/texture/capes/", StringComparison.OrdinalIgnoreCase)
+                               )
+                .Subscribe(ProcessLogLine);
+
+            Observable.Interval(TimeSpan.FromSeconds(1))
+                .Subscribe(_ => FlushLogBuffer());
         }
 
-        if (data.Contains("[gml-patch]", StringComparison.OrdinalIgnoreCase))
+        private void ProcessLogLine(string logLine)
         {
-        }
-        else
-        {
-            ShowError(ResourceKeysDictionary.GameProfileError, data);
-            SentrySdk.CaptureException(new Exception(data));
-        }
-    }
+            if (LogLevels.Any(level => logLine.Contains(level, StringComparison.OrdinalIgnoreCase)))
+            {
+                FlushLogBuffer();
+            }
 
-    private Exception ExtractException(string data)
-    {
-        var throwableRegex = new Regex(@"<log4j:Throwable><!\[CDATA\[(.*?)\]\]></log4j:Throwable>", RegexOptions.Singleline);
-        var match = throwableRegex.Match(data);
-
-        if (match.Success)
-        {
-            var stackTrace = match.Groups[1].Value;
-            return new Exception(stackTrace);
+            _logBuffer.Add(logLine);
         }
 
-        return new Exception(data);
-    }
+        private void FlushLogBuffer()
+        {
+            if (_logBuffer.Count > 0)
+            {
+                HandleErrorData(string.Join(Environment.NewLine, _logBuffer));
+                _logBuffer.Clear();
+            }
+        }
 
-    private void ShowError(string key, string message)
-    {
-        // Реализуйте здесь показ ошибок пользователю
-    }
+        private void HandleErrorData(string data)
+        {
+            Debug.WriteLine(data);
 
-    private static class ResourceKeysDictionary
-    {
-        public static string GameProfileError = "GameProfileError";
-    }
+            try
+            {
+                if (data.Contains("Exception", StringComparison.OrdinalIgnoreCase) ||
+                    data.Contains("<log4j:Throwable>", StringComparison.OrdinalIgnoreCase) ||
+                    (data.Contains("java.") && data.Contains("Exception", StringComparison.OrdinalIgnoreCase)))
+                {
+                    var exception = data.Contains("java.")
+                        ? ExtractJavaException(data)
+                        : ExtractException(data);
 
-    public void ProcessLogs(string data)
-    {
-        _errorDataSubject.OnNext(data);
+                    ShowError(ResourceKeysDictionary.GameProfileError, data);
+                    SentrySdk.CaptureException(exception);
+                }
+                else
+                {
+                    ShowError(ResourceKeysDictionary.GameProfileError, data);
+                    SentrySdk.CaptureException(new MinecraftException(data));
+                }
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+            }
+        }
+
+        private Exception ExtractException(string data)
+        {
+            var throwableRegex = new Regex(@"<log4j:Throwable><!\[CDATA\[(.*?)\]\]></log4j:Throwable>", RegexOptions.Singleline);
+            var match = throwableRegex.Match(data);
+
+            if (match.Success)
+            {
+                var stackTrace = match.Groups[1].Value;
+                return new MinecraftException(stackTrace);
+            }
+
+            return new MinecraftException(data);
+        }
+
+        private Exception ExtractJavaException(string data)
+        {
+            var javaExceptionRegex = new Regex(@"(java\.(.*?)\.)Exception: (.*?)\n", RegexOptions.Singleline);
+            var match = javaExceptionRegex.Match(data);
+
+            if (match.Success)
+            {
+                var exceptionMessage = match.Groups[3].Value;
+                return new MinecraftException(exceptionMessage);
+            }
+
+            return new MinecraftException(data);
+        }
+
+        private void ShowError(string key, string message)
+        {
+
+        }
+
+        private static class ResourceKeysDictionary
+        {
+            public static string GameProfileError = "GameProfileError";
+        }
+
+        public void ProcessLogs(string data)
+        {
+            _errorDataSubject.OnNext(data);
+        }
     }
 }
