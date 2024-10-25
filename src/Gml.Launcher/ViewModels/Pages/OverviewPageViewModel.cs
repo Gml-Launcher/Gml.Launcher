@@ -77,7 +77,7 @@ public class OverviewPageViewModel : PageViewModelBase
                       ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User))
+            () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User, _gmlManager))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
