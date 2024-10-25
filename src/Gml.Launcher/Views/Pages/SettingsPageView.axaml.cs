@@ -50,7 +50,14 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
                 if (folders.Count != 1) return;
 
-                ViewModel!.InstallationFolder = Path.GetFullPath(folders[0].Path.AbsolutePath);
+                var path = folders[0].Path.AbsolutePath;
+
+                if (path.Any(c => !char.IsLetter(c) || !char.IsLower(c) || c > 'z'))
+                {
+                    throw new Exception("Invalid folder name");
+                }
+
+                ViewModel!.InstallationFolder = Path.GetFullPath(path);
                 ViewModel!.ChangeFolder();
             }
         }
