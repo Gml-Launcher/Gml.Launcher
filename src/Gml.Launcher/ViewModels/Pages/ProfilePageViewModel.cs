@@ -48,7 +48,7 @@ public class ProfilePageViewModel : PageViewModelBase
             if (userTextureInfo is null)
                 return;
 
-            _user.TextureUrl = userTextureInfo?.FullSkinUrl ?? string.Empty;
+            _user.TextureUrl = userTextureInfo.FullSkinUrl ?? string.Empty;
 
             this.RaisePropertyChanged(nameof(User));
             Debug.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Textures updated...]");
