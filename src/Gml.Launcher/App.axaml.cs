@@ -25,7 +25,11 @@ public partial class App : Application
                 DataContext = splashViewModel
             };
 
-            desktop.MainWindow = splashScreen;
+            if (!splashViewModel.Manager.SkipUpdate)
+            {
+                desktop.MainWindow = splashScreen;
+            }
+
             await splashViewModel.InitializeAsync();
             desktop.MainWindow = splashScreen.GetMainWindow();
             desktop.MainWindow.Show();
