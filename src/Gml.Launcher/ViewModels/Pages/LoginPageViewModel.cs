@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Threading;
@@ -145,6 +146,7 @@ public class LoginPageViewModel : PageViewModelBase
         }
         catch (Exception exception)
         {
+            Debug.WriteLine(exception);
             SentrySdk.CaptureException(exception);
         }
         finally

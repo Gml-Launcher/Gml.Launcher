@@ -15,7 +15,7 @@ namespace Gml.Launcher.Core.Extensions;
 
 public static class ServiceLocator
 {
-    public static AppBuilder RegisterServices(this AppBuilder builder)
+    public static AppBuilder RegisterServices(this AppBuilder builder, string[] arguments)
     {
         var systemService = new SystemService();
 
@@ -25,7 +25,7 @@ public static class ServiceLocator
         RegisterLocalizationService();
         RegisterSystemService(systemService);
         RegisterLogHelper(systemService);
-        var manager = RegisterGmlManager(systemService, installationDirectory);
+        var manager = RegisterGmlManager(systemService, installationDirectory, arguments);
         var storageService = RegisterStorage();
 
         CheckAndChangeInstallationFolder(storageService, manager);
@@ -70,11 +70,14 @@ public static class ServiceLocator
         if (!string.IsNullOrEmpty(installationDirectory)) manager.ChangeInstallationFolder(installationDirectory);
     }
 
-    private static GmlClientManager RegisterGmlManager(SystemService systemService, string installationDirectory)
+    private static GmlClientManager RegisterGmlManager(SystemService systemService, string installationDirectory,
+        string[] arguments)
     {
         var manager = new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host,
             ResourceKeysDictionary.FolderName,
             systemService.GetOsType());
+
+        manager.SkipUpdate = arguments.Contains("-skip-update");
 
         Locator.CurrentMutable.RegisterConstant(manager, typeof(IGmlClientManager));
 

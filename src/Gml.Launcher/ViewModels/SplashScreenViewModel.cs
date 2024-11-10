@@ -26,6 +26,7 @@ public class SplashScreenViewModel : WindowViewModelBase
     private readonly ILocalizationService _localizationService;
     private readonly IGmlClientManager _manager;
     private readonly ISystemService _systemService;
+    public IGmlClientManager Manager => _manager;
 
     public SplashScreenViewModel(
         ISystemService? systemService = null,
@@ -64,29 +65,27 @@ public class SplashScreenViewModel : WindowViewModelBase
             await _systemService.LoadSystemData();
             ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
 
-            var versionInfo = await CheckActualVersion(osType, osArch);
-
-            if (!versionInfo.IsActuallVersion)
+            if (!_manager.SkipUpdate)
             {
-                ChangeState(_localizationService.GetString(ResourceKeysDictionary.InstallingUpdates), false);
+                var versionInfo = await CheckActualVersion(osType, osArch);
 
-                var exePath = Process.GetCurrentProcess().MainModule?.FileName
-                              ?? throw new Exception(ResourceKeysDictionary.FailedOs);
+                if (!versionInfo.IsActuallVersion)
+                {
+                    ChangeState(_localizationService.GetString(ResourceKeysDictionary.InstallingUpdates), false);
 
-                var process = _manager.ProgressChanged.Subscribe(
-                    percentage => Progress = Convert.ToInt16(percentage));
+                    var exePath = Process.GetCurrentProcess().MainModule?.FileName
+                                  ?? throw new Exception(ResourceKeysDictionary.FailedOs);
 
-                await _manager.UpdateCurrentLauncher(versionInfo, osType, Path.GetFileName(exePath));
+                    var process = _manager.ProgressChanged.Subscribe(
+                        percentage => Progress = Convert.ToInt16(percentage));
 
-                process.Dispose();
+                    await _manager.UpdateCurrentLauncher(versionInfo, osType, Path.GetFileName(exePath));
+
+                    process.Dispose();
+                }
             }
 
             var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
-            //
-            // var accessUser = await _manager.Auth(authUser?.AccessToken ?? string.Empty);
-            //
-            // await _storageService.SetAsync(StorageConstants.User, accessUser.User);
-            //
 
             IsAuth = authUser != null && authUser.ExpiredDate > DateTime.Now && authUser is { IsAuth: true } && await ValidateToken(authUser);
         }

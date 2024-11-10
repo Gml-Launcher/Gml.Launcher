@@ -19,7 +19,7 @@ internal class Program
         {
             InitializeSentry();
             RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
-            BuildAvaloniaApp()
+            BuildAvaloniaApp(args)
                 .StartWithClassicDesktopLifetime(args);
         }
         catch (Exception exception)
@@ -34,12 +34,12 @@ internal class Program
         SentrySdk.CaptureException(exception);
     }
 
-    public static AppBuilder BuildAvaloniaApp()
+    public static AppBuilder BuildAvaloniaApp(string[] args)
     {
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .RegisterServices()
+            .RegisterServices(args)
             .LogToTrace()
             .UseReactiveUI();
     }
