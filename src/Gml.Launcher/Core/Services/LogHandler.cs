@@ -55,9 +55,7 @@ namespace Gml.Launcher.Core.Services
 
             try
             {
-                if (data.Contains("Exception", StringComparison.OrdinalIgnoreCase) ||
-                    data.Contains("<log4j:Throwable>", StringComparison.OrdinalIgnoreCase) ||
-                    (data.Contains("java.") && data.Contains("Exception", StringComparison.OrdinalIgnoreCase)))
+                if (IsErrorLog(data))
                 {
                     var exception = data.Contains("java.")
                         ? ExtractJavaException(data)
@@ -66,7 +64,7 @@ namespace Gml.Launcher.Core.Services
                     ShowError(ResourceKeysDictionary.GameProfileError, data);
                     SentrySdk.CaptureException(exception);
                 }
-                else
+                else if (data.Contains("Exception", StringComparison.OrdinalIgnoreCase))
                 {
                     ShowError(ResourceKeysDictionary.GameProfileError, data);
                     SentrySdk.CaptureException(new MinecraftException(data));
@@ -76,6 +74,18 @@ namespace Gml.Launcher.Core.Services
             {
                 SentrySdk.CaptureException(exception);
             }
+        }
+
+        private bool IsErrorLog(string data)
+        {
+            // Проверка на ERROR уровень и содержание блоков <log4j:Throwable> или строк, содержащих "Exception"
+            var errorLogRegex = new Regex(@"\blevel=""ERROR""\b", RegexOptions.Singleline);
+            var throwableRegex = new Regex(@"<log4j:Throwable><!\[CDATA\[(.*?)\]\]></log4j:Throwable>", RegexOptions.Singleline);
+
+            return errorLogRegex.IsMatch(data) || throwableRegex.IsMatch(data) ||
+                   (data.Contains("Exception", StringComparison.OrdinalIgnoreCase) &&
+                    !data.Contains("INFO", StringComparison.OrdinalIgnoreCase) &&
+                    !data.Contains("WARN", StringComparison.OrdinalIgnoreCase));
         }
 
         private Exception ExtractException(string data)
@@ -108,7 +118,7 @@ namespace Gml.Launcher.Core.Services
 
         private void ShowError(string key, string message)
         {
-
+            // Реализация показа ошибки
         }
 
         private static class ResourceKeysDictionary
