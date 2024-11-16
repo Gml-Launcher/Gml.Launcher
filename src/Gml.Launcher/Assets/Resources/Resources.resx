@@ -152,4 +152,7 @@
   <data name="InvalidSession" xml:space="preserve">
     <value>Your game session in the launcher has expired, please log in again.</value>
   </data>
+  <data name="VpnUse" xml:space="preserve">
+    <value>You are using a VPN connection, which may negatively affect connection quality and game client downloads. Please disable the VPN while running the launcher.</value>
+  </data>
 </root>

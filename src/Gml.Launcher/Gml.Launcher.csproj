@@ -64,6 +64,9 @@
       <DependentUpon>IStorageService.cs</DependentUpon>
     </Compile>
     <Compile Remove="Assets\Resources\ResourceKeysDictionary.Template.cs"/>
+    <Compile Update="Core\Services\VpnChecker.cs">
+      <DependentUpon>IVpnChecker.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 

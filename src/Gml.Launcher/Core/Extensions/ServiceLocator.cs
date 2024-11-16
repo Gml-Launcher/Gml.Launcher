@@ -30,6 +30,7 @@ public static class ServiceLocator
 
         CheckAndChangeInstallationFolder(storageService, manager);
         CheckAndChangeLanguage(storageService, systemService);
+        Locator.CurrentMutable.RegisterConstant(new VpnChecker(), typeof(IVpnChecker));
 
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {

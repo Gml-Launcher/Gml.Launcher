@@ -20,6 +20,8 @@ public static class ResourceKeysDictionary
     public const string UpdatingDescription = "UpdatingDescription";
     public const string InvalidAuthData = "InvalidAuthData";
     public const string InvalidSession = "InvalidSession";
+    public const string Warning = "Warning";
+    public const string VpnUse = "VpnUse";
     public const string Reconnecting = "Reconnecting";
     public const string LostConnection = "LostConnection";
     public const string CheckUpdates = "CheckUpdates";

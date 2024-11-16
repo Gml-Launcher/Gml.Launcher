@@ -282,5 +282,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InvalidSession", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string VpnUse {
+            get {
+                return ResourceManager.GetString("VpnUse", resourceCulture);
+            }
+        }
     }
 }
