@@ -16,7 +16,7 @@
         TransparencyBackgroundFallback="Transparent"
         x:Class="Gml.Launcher.Views.SplashScreen.SplashScreen"
         x:DataType="viewModels:SplashScreenViewModel"
-        Title="SplashScreen">
+        Title="Gml.Launcher">
 
     <Border Background="{DynamicResource FrameBackgroundColor}"
             BorderBrush="{DynamicResource FrameBackgroundBorderColor}"
