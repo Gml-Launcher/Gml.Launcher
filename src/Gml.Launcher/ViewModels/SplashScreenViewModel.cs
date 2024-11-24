@@ -35,7 +35,7 @@ public class SplashScreenViewModel : WindowViewModelBase
         ILocalizationService? localizationService = null)
     {
         _storageService = storage ?? Locator.Current.GetService<IStorageService>()
-            ?? throw new ServiceNotFoundException(typeof(IStorageService));;
+            ?? throw new ServiceNotFoundException(typeof(IStorageService));
 
         _systemService = systemService ?? Locator.Current.GetService<ISystemService>()
             ?? throw new ServiceNotFoundException(typeof(ISystemService));
@@ -52,7 +52,7 @@ public class SplashScreenViewModel : WindowViewModelBase
     [Reactive] public string StatusText { get; set; }
     [Reactive] public bool InfinityLoading { get; set; } = true;
     [Reactive] public short Progress { get; set; }
-    [Reactive] public bool IsAuth { get; set; }
+    [Reactive] public bool IsAuth { get; private set; }
     public ILocalizationService LocalizationService => _localizationService;
 
     public async Task InitializeAsync()
@@ -87,7 +87,11 @@ public class SplashScreenViewModel : WindowViewModelBase
 
             var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
-            IsAuth = authUser != null && authUser.ExpiredDate > DateTime.Now && authUser is { IsAuth: true } && await ValidateToken(authUser);
+            IsAuth = authUser != null
+                     && authUser.ExpiredDate > DateTime.Now
+                     && authUser is { IsAuth: true }
+                     && await ValidateToken(authUser)
+                     && await ValidateTokenWithApi(authUser);
         }
         catch (Exception exception)
         {
@@ -95,18 +99,36 @@ public class SplashScreenViewModel : WindowViewModelBase
         }
     }
 
-    private Task<bool> ValidateToken(AuthUser user)
+    private async Task<bool> ValidateToken(AuthUser user)
     {
         var handler = new JwtSecurityTokenHandler();
 
         if (!handler.CanReadToken(user.AccessToken))
-            return Task.FromResult(false);
+            return false;
 
         var jwtToken = handler.ReadJwtToken(user.AccessToken);
 
         var claims = jwtToken.Claims.FirstOrDefault(c => c.Type == "name");
 
-        return Task.FromResult(claims?.Value == user.Name);
+        if (claims?.Value == user.Name)
+            return true;
+
+        await _storageService.SetAsync<IUser?>(StorageConstants.User, null).ConfigureAwait(false);
+
+        return false;
+    }
+
+    private async Task<bool> ValidateTokenWithApi(AuthUser user)
+    {
+        var userData = await _manager.Auth(user.AccessToken)
+            .ConfigureAwait(false);
+
+        if (userData.User.IsAuth)
+            return userData.User.IsAuth;
+
+        await _storageService.SetAsync<IUser?>(StorageConstants.User, null).ConfigureAwait(false);
+
+        return userData.User.IsAuth;
     }
 
     private async Task<(IVersionFile? ActualVersion, bool IsActuallVersion)> CheckActualVersion(OsType osType,

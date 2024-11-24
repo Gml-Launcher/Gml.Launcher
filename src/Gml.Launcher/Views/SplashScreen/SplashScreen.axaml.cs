@@ -22,20 +22,6 @@ public partial class SplashScreen : ReactiveWindow<SplashScreenViewModel>
             DataContext = new MainWindowViewModel()
         };
 
-        if (ViewModel?.IsAuth == true)
-        {
-            return mainWindow;
-        }
-
-        mainWindow.ViewModel!.Router.Navigate.Execute(new LoginPageViewModel(mainWindow.ViewModel!, mainWindow.ViewModel!.OnClosed));
-        mainWindow.ViewModel.Manager
-            .CreateMessage(true, "#D03E3E",
-                ViewModel!.LocalizationService.GetString(ResourceKeysDictionary.Error),
-                ViewModel!.LocalizationService.GetString(ResourceKeysDictionary.InvalidSession))
-            .Dismiss()
-            .WithDelay(TimeSpan.FromSeconds(3))
-            .Queue();
         return mainWindow;
-
     }
 }

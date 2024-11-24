@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -36,6 +37,8 @@ public static class ServiceLocator
         {
             SentrySdk.CaptureException((Exception)args.ExceptionObject);
         };
+
+        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring ended");
 
         return builder;
     }

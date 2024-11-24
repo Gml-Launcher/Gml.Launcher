@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reactive;
 using Avalonia;
 using Avalonia.ReactiveUI;
@@ -17,6 +18,7 @@ internal class Program
     {
         try
         {
+            Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Application started");
             InitializeSentry();
             RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp(args)
@@ -36,6 +38,7 @@ internal class Program
 
     public static AppBuilder BuildAvaloniaApp(string[] args)
     {
+        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring launcher");
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
@@ -48,6 +51,7 @@ internal class Program
 
     private static void InitializeSentry()
     {
+        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Start sentry initialization");
         var sentryUrl = GmlClientManager.GetSentryLink(ResourceKeysDictionary.Host).Result;
 
         try
@@ -63,6 +67,8 @@ internal class Program
                     options.SendDefaultPii = true;
                     options.MaxAttachmentSize = 10 * 1024 * 1024;
                 });
+
+            Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Sentry initialized");
         }
         catch (Exception exception)
         {
