@@ -1,6 +1,6 @@
-[submodule "src/Gml.Client"]
-	path = src/Gml.Client
-	url = https://github.com/GamerVII-NET/Gml.Client.git
 [submodule "src/GamerVII.Notification.Avalonia"]
 	path = src/GamerVII.Notification.Avalonia
 	url = https://github.com/GamerVII-NET/GamerVII.Notification.Avalonia.git
+[submodule "src/Gml.Client"]
+	path = src/Gml.Client
+	url = git@github.com:Gml-Launcher/Gml.Client.git
