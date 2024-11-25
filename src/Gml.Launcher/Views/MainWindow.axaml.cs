@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
@@ -49,7 +50,10 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        BeginMoveDrag(e);
+        if (e.Source is Rectangle rectangle)
+        {
+            BeginMoveDrag(e);
+        }
     }
 
     private void WindowClosed(object? sender, EventArgs e)
