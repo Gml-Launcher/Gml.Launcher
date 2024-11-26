@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -29,6 +31,11 @@ public class AsyncSkinRenderLoader
     }
 
     private static async void OnSourceChanged(Image sender, AvaloniaPropertyChangedEventArgs args)
+    {
+        await TryLoadImage(sender, args, 1);
+    }
+
+    private static async Task TryLoadImage(Image sender, AvaloniaPropertyChangedEventArgs args, int attempt)
     {
         try
         {
@@ -65,9 +72,19 @@ public class AsyncSkinRenderLoader
 
             if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
+        catch (HttpRequestException)
+        {
+            Debug.WriteLine($"Texture load attempt: {attempt}");
+            if (attempt < 3)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                ++attempt;
+                await TryLoadImage(sender, args, attempt);
+            }
+        }
         catch (Exception exception)
         {
-            Console.WriteLine(exception);
+            Debug.WriteLine(exception);
             SentrySdk.CaptureException(exception);
         }
         finally

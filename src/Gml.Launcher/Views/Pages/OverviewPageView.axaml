@@ -23,6 +23,7 @@
 
         <Rectangle Grid.Column="0"
                    Grid.ColumnSpan="2"
+                   Opacity=".5"
                    Fill="{DynamicResource BackgroundOverlay}" />
 
         <!-- Content -->

@@ -88,7 +88,7 @@ public class SystemService : ISystemService
         [
             new Language("/Assets/Images/lang-ru.svg", "Русский", new CultureInfo("ru-RU")),
             new Language("/Assets/Images/lang-us.svg", "English", new CultureInfo("en-US")),
-            new Language("/Assets/Images/lang-us.svg", "中文", new CultureInfo("zh-CN"))
+            new Language("/Assets/Images/lang-zh.svg", "中文", new CultureInfo("zh-CN"))
         ];
     }
 
