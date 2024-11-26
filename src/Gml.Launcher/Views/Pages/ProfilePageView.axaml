@@ -32,7 +32,7 @@
                 <components:ProfileUserControl Grid.Row="2"
                                                Grid.Column="0"
                                                UserName="{Binding User.Name}"
-                                               SkinUrl="{Binding User.TextureUrl, Converter={converters:NoiseStringAddConverter}}"
+                                               SkinUrl="{Binding TextureUrl, Converter={converters:NoiseStringAddConverter}}"
                                                VerticalAlignment="Top">
 
 

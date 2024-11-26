@@ -37,19 +37,20 @@ public class AsyncSkinRenderLoader
 
     private static async Task TryLoadImage(Image sender, AvaloniaPropertyChangedEventArgs args, int attempt)
     {
+        SetIsLoading(sender, true);
+        var cts = PendingOperations.AddOrUpdate(
+            sender,
+            new CancellationTokenSource(),
+            (_, y) =>
+            {
+                y.Cancel();
+                return new CancellationTokenSource();
+            });
+
+        var url = args.GetNewValue<string>();
+
         try
         {
-            SetIsLoading(sender, true);
-            var cts = PendingOperations.AddOrUpdate(
-                sender,
-                new CancellationTokenSource(),
-                (_, y) =>
-                {
-                    y.Cancel();
-                    return new CancellationTokenSource();
-                });
-
-            var url = args.GetNewValue<string>();
 
             if (string.IsNullOrEmpty(url))
             {
@@ -72,12 +73,12 @@ public class AsyncSkinRenderLoader
 
             if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
-        catch (HttpRequestException)
+        catch (HttpRequestException exception)
         {
-            Debug.WriteLine($"Texture load attempt: {attempt}");
+            Debug.WriteLine($"Texture load attempt: {attempt}, reason: {exception.Message}, {url}");
             if (attempt < 3)
             {
-                await Task.Delay(TimeSpan.FromSeconds(1));
+                await Task.Delay(TimeSpan.FromSeconds(2));
                 ++attempt;
                 await TryLoadImage(sender, args, attempt);
             }
