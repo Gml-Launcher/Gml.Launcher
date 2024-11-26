@@ -55,8 +55,12 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
-                                       Status="{x:Static lang:Resources.Available}"
+                                       GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
+                                       LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion}"
                                        ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
+                                       State="{Binding ListViewModel.SelectedProfile.State}"
+                                       CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate}"
+                                       Status="{x:Static lang:Resources.Available}"
                                        VerticalAlignment="Center" />
 
                 <!-- Footer -->
