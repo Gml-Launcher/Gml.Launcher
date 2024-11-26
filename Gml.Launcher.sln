@@ -20,17 +20,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Launcher", "src\Gml.Lau
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{53569526-A495-4E84-ADF3-83D2188318AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Client", "src\Gml.Client\src\Gml.Client\src\Gml.Client\Gml.Client.csproj", "{49013DAA-207C-4542-8F85-671FB45797F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Client", "src\Gml.Client\src\Gml.Client\Gml.Client.csproj", "{49013DAA-207C-4542-8F85-671FB45797F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Client.Tests", "src\Gml.Client\src\Gml.Client\tests\Gml.Client.Tests\Gml.Client.Tests.csproj", "{34519B31-294B-4868-BFDB-817E550A54EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Client.Tests", "src\Gml.Client\tests\Gml.Client.Tests\Gml.Client.Tests.csproj", "{34519B31-294B-4868-BFDB-817E550A54EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamerVII.Notification.Avalonia", "src\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia.csproj", "{B8E0451C-3C44-470B-9853-C7D0A3648C20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Dto", "src\Gml.Client\src\Gml.Client\src\Gml.Web.Api.Dto\Gml.Web.Api.Dto.csproj", "{20707D1F-FF51-4E7B-BF99-2B87065AFDC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Dto", "src\Gml.Client\src\Gml.Web.Api.Dto\Gml.Web.Api.Dto.csproj", "{20707D1F-FF51-4E7B-BF99-2B87065AFDC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Domains", "src\Gml.Client\src\Gml.Client\src\Gml.Web.Api.Domains\Gml.Web.Api.Domains.csproj", "{88B821C7-B895-4CB0-832A-5B66138B6AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Web.Api.Domains", "src\Gml.Client\src\Gml.Web.Api.Domains\Gml.Web.Api.Domains.csproj", "{88B821C7-B895-4CB0-832A-5B66138B6AF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Core.Interfaces", "src\Gml.Client\src\Gml.Client\src\Gml.Core.Interfaces\Gml.Core.Interfaces.csproj", "{AE697645-C3EB-4FC8-AAA6-932B9751D348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gml.Core.Interfaces", "src\Gml.Client\src\Gml.Core.Interfaces\Gml.Core.Interfaces.csproj", "{AE697645-C3EB-4FC8-AAA6-932B9751D348}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L1.Avalonia.Gif", "src\L1.Avalonia.Gif\L1.Avalonia.Gif.csproj", "{19B15268-CF4D-4571-8DF3-6EBC586BB856}"
 EndProject

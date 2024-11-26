@@ -72,7 +72,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia\GamerVII.Notification.Avalonia.csproj"/>
-    <ProjectReference Include="..\Gml.Client\src\Gml.Client\src\Gml.Client\Gml.Client.csproj" />
+    <ProjectReference Include="..\Gml.Client\src\Gml.Client\Gml.Client.csproj" />
     <ProjectReference Include="..\L1.Avalonia.Gif\L1.Avalonia.Gif.csproj"/>
   </ItemGroup>
 
