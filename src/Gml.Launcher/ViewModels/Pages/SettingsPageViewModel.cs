@@ -56,8 +56,7 @@ public class SettingsPageViewModel : PageViewModelBase
             {
                 if (language == null) return;
 
-                Thread.CurrentThread.CurrentCulture = language.Culture;
-                Thread.CurrentThread.CurrentCulture.ClearCachedData();
+                Assets.Resources.Resources.Culture = language.Culture;
 
                 GoBackCommand.Execute(Unit.Default);
             });
