@@ -41,7 +41,7 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
         {
             Manager
                 .CreateMessage(true, "#3684EA",
-                    _localizationService.GetString(ResourceKeysDictionary.Error),
+                    _localizationService.GetString(ResourceKeysDictionary.Information),
                     _localizationService.GetString(ResourceKeysDictionary.VpnUse))
                 .Dismiss()
                 .WithDelay(TimeSpan.FromSeconds(10))
