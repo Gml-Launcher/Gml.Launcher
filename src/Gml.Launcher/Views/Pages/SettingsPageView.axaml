@@ -75,7 +75,7 @@
                                        FontSize="16"
                                        Foreground="{DynamicResource HeadlineColor}"
                                        HorizontalAlignment="Right">
-                                <Run Text="{Binding  ElementName=ViewSlider, Path=Value}" />
+                                <Run Text="{Binding RamValueView}" />
                                 <Run Text="{x:Static lang:Resources.UnitMb}"
                                      FontSize="12"
                                      Foreground="{DynamicResource ContentColor}" />
