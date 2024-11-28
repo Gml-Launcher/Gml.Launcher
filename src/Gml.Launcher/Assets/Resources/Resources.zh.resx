@@ -1,0 +1,149 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthButtonText" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>可用</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>个人账户</value>
+  </data>
+  <data name="CheckingFileIntegrity" xml:space="preserve">
+    <value>文件完整性检查</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>更新检查</value>
+  </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>在启动器中</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>无法确定操作系统</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>全屏模式</value>
+  </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>游戏配置初始化错误</value>
+  </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>安装文件夹</value>
+  </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>安装更新</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>授权错误</value>
+  </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>无法更改安装文件夹或更改文件夹时发生错误</value>
+  </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>您在启动器中的游戏会话已过期，请重新登录</value>
+  </data>
+  <data name="IsDiskFull" xml:space="preserve">
+    <value>磁盘空间不足</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>无法为您的操作系统找到已下载的Java，请联系支持或项目管理员</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>与服务器失去连接</value>
+  </data>
+  <data name="ModsList" xml:space="preserve">
+    <value>模组列表</value>
+  </data>
+  <data name="NotSetting" xml:space="preserve">
+    <value>无法获取启动设置。请前往客户端设置并重试</value>
+  </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>在服务器上</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>玩</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>玩</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>人</value>
+  </data>
+  <data name="PreparingLaunch" xml:space="preserve">
+    <value>准备启动中...</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>配置未设置，当前客户端无法启动</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>重新连接中...</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>设置内存使用量</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>RAM设置</value>
+  </data>
+  <data name="Stay" xml:space="preserve">
+    <value>剩余</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UpdatingDescription" xml:space="preserve">
+    <value>获取更新</value>
+  </data>
+  <data name="VpnUse" xml:space="preserve">
+    <value>您正在使用VPN连接，这可能会对连接质量和游戏客户端下载产生不良影响。请在启动器工作期间关闭VPN。</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>我们的网站</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>窗口尺寸</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>信息</value>
+  </data>
+</root>

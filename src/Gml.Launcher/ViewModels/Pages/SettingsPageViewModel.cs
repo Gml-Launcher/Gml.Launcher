@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
@@ -56,8 +58,7 @@ public class SettingsPageViewModel : PageViewModelBase
             {
                 if (language == null) return;
 
-                Thread.CurrentThread.CurrentCulture = language.Culture;
-                Thread.CurrentThread.CurrentCulture.ClearCachedData();
+                Assets.Resources.Resources.Culture = language.Culture;
 
                 GoBackCommand.Execute(Unit.Default);
             });
@@ -82,6 +83,7 @@ public class SettingsPageViewModel : PageViewModelBase
     [Reactive] public Language? SelectedLanguage { get; set; }
 
     [Reactive] public string? InstallationFolder { get; set; }
+    [Reactive] public string? RamValueView { get; set; }
 
     public ICommand ChangeInstallationDirectory { get; }
 
@@ -94,6 +96,7 @@ public class SettingsPageViewModel : PageViewModelBase
             if (!(Math.Abs(value - _ramValue) > 0.0)) return;
 
             _ramValue = RoundToNearest(value, 8);
+            RamValueView = Convert.ToInt32(_ramValue).ToString(CultureInfo.InvariantCulture);
             this.RaisePropertyChanged();
         }
     }

@@ -147,4 +147,7 @@
   <data name="VpnUse" xml:space="preserve">
     <value>You are using a VPN connection, which may negatively affect connection quality and game client downloads. Please disable the VPN while running the launcher.</value>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
 </root>

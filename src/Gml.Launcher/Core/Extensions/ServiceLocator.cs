@@ -53,7 +53,7 @@ public static class ServiceLocator
         var data = storageService.GetAsync<SettingsInfo>(StorageConstants.Settings).Result;
 
         if (data != null && !string.IsNullOrEmpty(data.LanguageCode))
-            Thread.CurrentThread.CurrentCulture = systemService
+            Assets.Resources.Resources.Culture = systemService
                 .GetAvailableLanguages()
                 .FirstOrDefault(c => c.Culture.Name == data.LanguageCode)?
                 .Culture ?? new CultureInfo("ru-RU");

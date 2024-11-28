@@ -8,15 +8,17 @@ using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using GmlCore.Interfaces;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Sentry;
 
 namespace Gml.Launcher.ViewModels.Pages;
 
 public class ProfilePageViewModel : PageViewModelBase
 {
-    private IUser _user;
     private readonly IGmlClientManager _manager;
 
+    [Reactive] public string TextureUrl { get; set; }
+    [Reactive] public IUser User { get; set; }
     internal ProfilePageViewModel(
         IScreen screen,
         IUser user,
@@ -24,7 +26,7 @@ public class ProfilePageViewModel : PageViewModelBase
         ILocalizationService? localizationService = null) : base(screen,
         localizationService)
     {
-        _user = user ?? throw new ArgumentNullException(nameof(user));
+        User = user ?? throw new ArgumentNullException(nameof(user));
         _manager = manager;
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
@@ -32,30 +34,23 @@ public class ProfilePageViewModel : PageViewModelBase
 
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
-    public IUser User
-    {
-        get => _user;
-        set => this.RaiseAndSetIfChanged(ref _user, value);
-    }
-
     private async void LoadData()
     {
         try
         {
             Debug.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Loading texture data...]");
-            var userTextureInfo = await _manager.GetTexturesByName(_user.Name);
+            var userTextureInfo = await _manager.GetTexturesByName(User.Name);
 
             if (userTextureInfo is null)
                 return;
 
-            _user.TextureUrl = userTextureInfo.FullSkinUrl ?? string.Empty;
-
-            this.RaisePropertyChanged(nameof(User));
-            Debug.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Textures updated...]");
+            TextureUrl = userTextureInfo.FullSkinUrl ?? string.Empty;
+            Debug.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Textures updated: {TextureUrl}");
         }
         catch (Exception exception)
         {
             SentrySdk.CaptureException(exception);
         }
     }
+
 }

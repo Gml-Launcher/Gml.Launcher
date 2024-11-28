@@ -147,4 +147,7 @@
   <data name="VpnUse" xml:space="preserve">
     <value>Вы используете VPN подключение, это может негативно влиять на качество соединения и загрузку игровых клиентов. Отключите VPN на время работы лаунчера.</value>
   </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
+  </data>
 </root>

@@ -22,9 +22,20 @@
                             MaxWidth="{TemplateBinding MaxWidth}"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left">
-                    <controls:BadgeComponent Text="{TemplateBinding Status}"
-                                             FontSize="14"
-                                             FontWeight="Medium" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <controls:BadgeComponent Text="{TemplateBinding Status}"
+                                                 FontSize="14"
+                                                 FontWeight="Medium" />
+                        <controls:BadgeComponent Text="{TemplateBinding Property=GameVersion}"
+                                                 FontSize="14"
+                                                 FontWeight="Medium" />
+                        <controls:BadgeComponent Text="{TemplateBinding State}"
+                                                 FontSize="14"
+                                                 FontWeight="Medium" />
+                        <!-- <controls:BadgeComponent Text="{TemplateBinding LaunchVersion}" -->
+                        <!--                          FontSize="14" -->
+                        <!--                          FontWeight="Medium" /> -->
+                    </StackPanel>
                     <TextBlock Text="{TemplateBinding ProfileName}"
                                Foreground="{TemplateBinding Foreground}"
                                TextWrapping="Wrap"
@@ -37,6 +48,13 @@
                                LineHeight="25"
                                TextWrapping="Wrap"
                                FontSize="14" />
+
+                    <!-- <TextBlock Text="{TemplateBinding CreateDate}" -->
+                    <!--            Foreground="{DynamicResource ContentColor}" -->
+                    <!--            FontWeight="Medium" -->
+                    <!--            LineHeight="25" -->
+                    <!--            TextWrapping="Wrap" -->
+                    <!--            FontSize="14" /> -->
 
                     <StackPanel Spacing="10" Orientation="Horizontal">
                         <controls:GmlButton Classes="TextIcon Primary"

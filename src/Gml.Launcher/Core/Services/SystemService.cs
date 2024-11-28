@@ -86,8 +86,9 @@ public class SystemService : ISystemService
     {
         return
         [
-            new() { IconPath = "/Assets/Images/lang-ru.svg", Name = "Русский", Culture = new CultureInfo("ru-RU") },
-            new() { IconPath = "/Assets/Images/lang-us.svg", Name = "English", Culture = new CultureInfo("en-US") }
+            new Language("/Assets/Images/lang-ru.svg", "Русский", new CultureInfo("ru-RU")),
+            new Language("/Assets/Images/lang-us.svg", "English", new CultureInfo("en-US")),
+            new Language("/Assets/Images/lang-zh.svg", "中文", new CultureInfo("zh-CN"))
         ];
     }
 

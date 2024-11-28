@@ -1,6 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
+using Gml.Web.Api.Dto.Profile;
+using GmlCore.Interfaces.Enums;
 
 namespace Gml.Launcher.Views.Components;
 
@@ -26,6 +29,42 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<string> ProfileDescriptionProperty =
         AvaloniaProperty.Register<ServerInfo, string>(
             nameof(ProfileDescription));
+
+    public static readonly StyledProperty<string> GameVersionProperty = AvaloniaProperty.Register<ServerInfo, string>(
+        nameof(GameVersion));
+
+    public static readonly StyledProperty<string> LaunchVersionProperty = AvaloniaProperty.Register<ServerInfo, string>(
+        nameof(LaunchVersion));
+
+    public static readonly StyledProperty<ProfileState> StateProperty = AvaloniaProperty.Register<ServerInfo, ProfileState>(
+        nameof(State));
+
+    public static readonly StyledProperty<DateTime> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTime>(
+        nameof(CreateDate));
+
+    public DateTime CreateDate
+    {
+        get => GetValue(CreateDateProperty);
+        set => SetValue(CreateDateProperty, value);
+    }
+
+    public ProfileState State
+    {
+        get => GetValue(StateProperty);
+        set => SetValue(StateProperty, value);
+    }
+
+    public string LaunchVersion
+    {
+        get => GetValue(LaunchVersionProperty);
+        set => SetValue(LaunchVersionProperty, value);
+    }
+
+    public string GameVersion
+    {
+        get => GetValue(GameVersionProperty);
+        set => SetValue(GameVersionProperty, value);
+    }
 
     public string ProfileDescription
     {

@@ -7,7 +7,7 @@ namespace Gml.Launcher.Core.Services;
 public class VpnChecker : IVpnChecker
 {
     private readonly string[] VpnKeywords =
-    {
+    [
         "WireGuard",
         "OpenVPN",
         "VLESS",
@@ -34,7 +34,7 @@ public class VpnChecker : IVpnChecker
         "PureVPN",
         "IVPN",
         "TorGuard"
-    };
+    ];
 
     public bool IsUseVpnTunnel()
     {

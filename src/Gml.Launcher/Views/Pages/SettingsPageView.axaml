@@ -69,13 +69,13 @@
                                 Classes="FormSlider" />
 
                         <Grid Margin="0, -5, 0, 0">
-                            <TextBlock Text="ОЗУ"
-                                       Classes="FormText" />
+                            <!-- <TextBlock Text="ОЗУ" -->
+                            <!--            Classes="FormText" /> -->
                             <TextBlock Classes="FormText"
                                        FontSize="16"
                                        Foreground="{DynamicResource HeadlineColor}"
                                        HorizontalAlignment="Right">
-                                <Run Text="{Binding  ElementName=ViewSlider, Path=Value}" />
+                                <Run Text="{Binding RamValueView}" />
                                 <Run Text="{x:Static lang:Resources.UnitMb}"
                                      FontSize="12"
                                      Foreground="{DynamicResource ContentColor}" />
@@ -174,24 +174,24 @@
                 </StackPanel>
 
                 <!-- Language -->
-                <!-- <ComboBox Grid.Column="4" -->
-                <!--           Grid.Row="2" -->
-                <!--           Classes="ComboBoxStyle" -->
-                <!--           VerticalAlignment="Bottom" -->
-                <!--           HorizontalAlignment="Right" -->
-                <!--           ItemsSource="{Binding AvailableLanguages}" -->
-                <!--           SelectedItem="{Binding SelectedLanguage}"> -->
-                <!--     <ComboBox.ItemTemplate> -->
-                <!--         <DataTemplate> -->
-                <!--             <StackPanel Orientation="Horizontal" Spacing="10"> -->
-                <!--                 <Svg Path="{Binding IconPath}" -->
-                <!--                      Width="18"/> -->
-                <!--                 <TextBlock Text="{Binding Name}" /> -->
-                <!--             </StackPanel> -->
-                <!--         </DataTemplate> -->
-                <!--     </ComboBox.ItemTemplate> -->
-                <!-- -->
-                <!-- </ComboBox> -->
+                <ComboBox Grid.Column="4"
+                          Grid.Row="2"
+                          Classes="ComboBoxStyle"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Right"
+                          ItemsSource="{Binding AvailableLanguages}"
+                          SelectedItem="{Binding SelectedLanguage}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Svg Path="{Binding IconPath}"
+                                     Width="18"/>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
 
 
             </Grid>

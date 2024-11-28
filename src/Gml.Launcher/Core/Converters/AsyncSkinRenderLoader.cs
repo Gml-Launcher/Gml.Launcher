@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
@@ -30,19 +32,25 @@ public class AsyncSkinRenderLoader
 
     private static async void OnSourceChanged(Image sender, AvaloniaPropertyChangedEventArgs args)
     {
+        await TryLoadImage(sender, args, 1);
+    }
+
+    private static async Task TryLoadImage(Image sender, AvaloniaPropertyChangedEventArgs args, int attempt)
+    {
+        SetIsLoading(sender, true);
+        var cts = PendingOperations.AddOrUpdate(
+            sender,
+            new CancellationTokenSource(),
+            (_, y) =>
+            {
+                y.Cancel();
+                return new CancellationTokenSource();
+            });
+
+        var url = args.GetNewValue<string>();
+
         try
         {
-            SetIsLoading(sender, true);
-            var cts = PendingOperations.AddOrUpdate(
-                sender,
-                new CancellationTokenSource(),
-                (_, y) =>
-                {
-                    y.Cancel();
-                    return new CancellationTokenSource();
-                });
-
-            var url = args.GetNewValue<string>();
 
             if (string.IsNullOrEmpty(url))
             {
@@ -65,9 +73,19 @@ public class AsyncSkinRenderLoader
 
             if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
         }
+        catch (HttpRequestException exception)
+        {
+            Debug.WriteLine($"Texture load attempt: {attempt}, reason: {exception.Message}, {url}");
+            if (attempt < 3)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                ++attempt;
+                await TryLoadImage(sender, args, attempt);
+            }
+        }
         catch (Exception exception)
         {
-            Console.WriteLine(exception);
+            Debug.WriteLine(exception);
             SentrySdk.CaptureException(exception);
         }
         finally
