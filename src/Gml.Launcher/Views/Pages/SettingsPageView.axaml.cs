@@ -50,9 +50,9 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
                 if (folders.Count != 1) return;
 
-                var path = folders[0].Path.AbsolutePath;
+                var path = folders[0].Path.LocalPath;
 
-                if (path.Any(c => !char.IsLetter(c) || !char.IsLower(c) || c > 'z'))
+                if (path.Any(char.IsWhiteSpace))
                 {
                     throw new Exception("Invalid folder name");
                 }
