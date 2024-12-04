@@ -14,6 +14,24 @@ namespace Gml.Launcher;
 internal class Program
 {
     [STAThread]
+#if DEBUG
+    public static void Main(string[] args)
+    {
+        try
+        {
+            Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Application started");
+            InitializeSentry();
+            RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+            Console.WriteLine(exception);
+        }
+    }
+#else
     public static void Main(string[] args)
     {
         try
@@ -30,12 +48,25 @@ internal class Program
             Console.WriteLine(exception);
         }
     }
+#endif
 
     private static void GlobalExceptionHandler(Exception exception)
     {
         SentrySdk.CaptureException(exception);
     }
 
+#if DEBUG
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring launcher");
+        return AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .RegisterServices([])
+            .LogToTrace()
+            .UseReactiveUI();
+    }
+#else
     public static AppBuilder BuildAvaloniaApp(string[] args)
     {
         Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring launcher");
@@ -46,8 +77,7 @@ internal class Program
             .LogToTrace()
             .UseReactiveUI();
     }
-
-
+#endif
 
     private static void InitializeSentry()
     {
