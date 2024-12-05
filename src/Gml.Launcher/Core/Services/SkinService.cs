@@ -42,80 +42,74 @@ public abstract class SkinViewer
         return memoryStream.ToArray();
     }
 
-    public static byte[] GetFront(Stream skinStream, int size)
-    {
-        using var inputImage = Image.Load(skinStream);
+    public static byte[] GetFront(Stream skinStream, int size) {
+    using var inputImage = Image.Load(skinStream);
 
-        var scaleFactor = inputImage.Width / 64;
+    var scaleFactor = inputImage.Width / 64;
 
-        var croppedHead = inputImage.Clone(ctx =>
-            ctx.Crop(new Rectangle(8 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor)));
+    var croppedHead = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(8 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor)));
+    var croppedBody = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(20 * scaleFactor, 20 * scaleFactor, 8 * scaleFactor, 12 * scaleFactor)));
+    var croppedLeg = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(4 * scaleFactor, 20 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
+    var croppedArm = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(44 * scaleFactor, 20 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
 
-        var croppedBody = inputImage.Clone(ctx =>
-            ctx.Crop(new Rectangle(20 * scaleFactor, 20 * scaleFactor, 8 * scaleFactor, 12 * scaleFactor)));
+    var secondLayerHead = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(40 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor, 8 * scaleFactor)));
+    var secondLayerBody = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(20 * scaleFactor, 36 * scaleFactor, 8 * scaleFactor, 12 * scaleFactor)));
+    var secondLayerLeg = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(4 * scaleFactor, 52 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
+    var secondLayerArm = inputImage.Clone(ctx =>
+        ctx.Crop(new Rectangle(44 * scaleFactor, 52 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
 
-        var croppedLeg = inputImage.Clone(ctx =>
-            ctx.Crop(new Rectangle(4 * scaleFactor, 20 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
+    var newWidth = croppedArm.Width * 2 + croppedBody.Width;
+    var newHeight = croppedHead.Height + croppedBody.Height + croppedArm.Height;
 
-        var croppedArm = inputImage.Clone(ctx =>
-            ctx.Crop(new Rectangle(44 * scaleFactor, 20 * scaleFactor, 4 * scaleFactor, 12 * scaleFactor)));
+    var combinedImage = new Image<Rgba32>(newWidth, newHeight);
 
-        var newWidth = croppedArm.Width * 2 + croppedBody.Width;
-        var newHeight = croppedHead.Height + croppedBody.Height + croppedArm.Height;
+    combinedImage.Mutate(context => {
+        var headPosition = new Rectangle(croppedArm.Width, 0, croppedHead.Width, croppedHead.Height);
+        var bodyPosition = new Rectangle(headPosition.X, croppedHead.Height, croppedBody.Width, croppedBody.Height);
 
-        var combinedImage = new Image<Rgba32>(newWidth, newHeight);
+        var leftArmPosition = new Rectangle(0, bodyPosition.Y, croppedArm.Width, croppedArm.Height);
+        var rightArmPosition = new Rectangle(leftArmPosition.Width + bodyPosition.Width, leftArmPosition.Y,
+            leftArmPosition.Width, leftArmPosition.Height);
 
-        combinedImage.Mutate(context =>
-        {
-            var headPosition = new Rectangle(croppedArm.Width, 0, croppedHead.Width, croppedHead.Height);
-            var bodyPosition = new Rectangle(headPosition.X, croppedHead.Height, croppedBody.Width, croppedBody.Height);
+        var leftLegPosition = new Rectangle(leftArmPosition.Width, headPosition.Height + bodyPosition.Height,
+            croppedLeg.Width, croppedLeg.Height);
+        var rightLegPosition = new Rectangle(leftArmPosition.Width + leftLegPosition.Width,
+            headPosition.Height + bodyPosition.Height, leftLegPosition.Width, leftLegPosition.Height);
 
-            var leftArmPosition = new Rectangle(0, bodyPosition.Y, croppedArm.Width, croppedArm.Height);
-            var rightArmPosition = new Rectangle(leftArmPosition.Width + bodyPosition.Width, leftArmPosition.Y,
-                leftArmPosition.Width, leftArmPosition.Height);
+        context.DrawImage(croppedHead, new Point(headPosition.X, headPosition.Y), 1f);
+        context.DrawImage(croppedBody, new Point(bodyPosition.X, bodyPosition.Y), 1f);
+        context.DrawImage(croppedArm, new Point(leftArmPosition.X, leftArmPosition.Y), 1f);
+        context.DrawImage(croppedArm, new Point(rightArmPosition.X, rightArmPosition.Y), 1f);
+        context.DrawImage(croppedLeg, new Point(leftLegPosition.X, leftLegPosition.Y), 1f);
+        context.DrawImage(croppedLeg, new Point(rightLegPosition.X, rightLegPosition.Y), 1f);
 
-            var leftLegPosition = new Rectangle(leftArmPosition.Width, headPosition.Height + bodyPosition.Height,
-                croppedLeg.Width, croppedLeg.Height);
-            var rightLegPosition = new Rectangle(leftArmPosition.Width + leftLegPosition.Width,
-                headPosition.Height + bodyPosition.Height, leftLegPosition.Width, leftLegPosition.Height);
+        context.DrawImage(secondLayerHead, new Point(headPosition.X, headPosition.Y), 1f);
+        context.DrawImage(secondLayerBody, new Point(bodyPosition.X, bodyPosition.Y), 1f);
+        context.DrawImage(secondLayerArm, new Point(leftArmPosition.X, leftArmPosition.Y), 1f);
+        context.DrawImage(secondLayerArm, new Point(rightArmPosition.X, rightArmPosition.Y), 1f);
+        context.DrawImage(secondLayerLeg, new Point(leftLegPosition.X, leftLegPosition.Y), 1f);
+        context.DrawImage(secondLayerLeg, new Point(rightLegPosition.X, rightLegPosition.Y), 1f);
+    });
 
-            context.DrawImage(croppedHead, new Point(headPosition.X, headPosition.Y), 1f);
-            context.DrawImage(croppedBody, new Point(bodyPosition.X, bodyPosition.Y), 1f);
-            context.DrawImage(croppedArm, new Point(leftArmPosition.X, leftArmPosition.Y), 1f);
-            context.DrawImage(croppedArm, new Point(rightArmPosition.X, rightArmPosition.Y), 1f);
-            context.DrawImage(croppedLeg, new Point(leftLegPosition.X, leftLegPosition.Y), 1f);
-            context.DrawImage(croppedLeg, new Point(rightLegPosition.X, rightLegPosition.Y), 1f);
-
-            // context.DrawImage(croppedArm, new Point(0, 8 * scaleFactor), 1f);
-            // context.DrawImage(croppedLeg, new Point(200, 200), 1f);
-        });
-
-        using var memoryStream = new MemoryStream();
-        if (inputImage.Metadata.DecodedImageFormat != null)
-            combinedImage.Save(memoryStream, inputImage.Metadata.DecodedImageFormat);
-        else
-            combinedImage.Save(memoryStream, new PngEncoder());
-
-        // var image = ResizeImage(size, inputImage, combinedImage);
-
-        if (size != combinedImage.Width)
-        {
-            var scaleSize = GetScaleSize(size, combinedImage.Width);
-
-            if (scaleSize != 0)
-                combinedImage = combinedImage.Clone(ctx => ctx.Resize(combinedImage.Width * scaleSize,
-                    combinedImage.Height * scaleSize, KnownResamplers.Box));
-        }
-
-        using var resizeMemoryStream = new MemoryStream();
-
-        if (inputImage.Metadata.DecodedImageFormat != null)
-            combinedImage.Save(resizeMemoryStream, inputImage.Metadata.DecodedImageFormat);
-        else
-            combinedImage.Save(resizeMemoryStream, new PngEncoder());
-
-        return resizeMemoryStream.ToArray();
+    if (size != combinedImage.Width) {
+        var scaleSize = GetScaleSize(size, combinedImage.Width);
+        if (scaleSize != 0)
+            combinedImage = combinedImage.Clone(ctx => ctx.Resize(combinedImage.Width * scaleSize,
+                combinedImage.Height * scaleSize, KnownResamplers.Box));
     }
+
+    using var memoryStream = new MemoryStream();
+    combinedImage.Save(memoryStream, new PngEncoder());
+    return memoryStream.ToArray();
+    }
+
 
     public static byte[] GetBack(string skinPath, int size, bool includeCloak = false)
     {
