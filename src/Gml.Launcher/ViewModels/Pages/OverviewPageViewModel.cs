@@ -155,7 +155,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task OnLogout(CancellationToken arg)
     {
-        await _storageService.SetAsync(StorageConstants.User, new AuthUser());
+        await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
         _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
     }
 
