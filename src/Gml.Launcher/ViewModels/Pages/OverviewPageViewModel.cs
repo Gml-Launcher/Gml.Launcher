@@ -338,7 +338,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task LoadProfiles()
     {
-        var profilesData = await _gmlManager.GetProfiles();
+        var profilesData = await _gmlManager.GetProfiles(User.AccessToken);
 
         ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
 

@@ -80,8 +80,11 @@ public static class ServiceLocator
         var manager = new GmlClientManager(installationDirectory, ResourceKeysDictionary.Host,
             ResourceKeysDictionary.FolderName,
             systemService.GetOsType());
-
+#if DEBUG
+        manager.SkipUpdate = true;
+#else
         manager.SkipUpdate = arguments.Contains("-skip-update");
+#endif
 
         Locator.CurrentMutable.RegisterConstant(manager, typeof(IGmlClientManager));
 
