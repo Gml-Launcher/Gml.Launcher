@@ -14,6 +14,7 @@
                 <controls:GmlButton Classes="TextIcon Primary" />
                 <controls:GmlButton Classes="TextIcon Secondary" />
                 <controls:GmlButton Classes="TextIcon Additional" />
+                <controls:GmlButton Classes="Text Additional" />
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -84,6 +85,35 @@
                                    FontWeight="{TemplateBinding FontWeight}"
                                    Foreground="{DynamicResource HeadlineColor}" />
                     </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Text">
+
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Padding" Value="20, 0, 20 0" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Name="PART_Button"
+                        Background="{TemplateBinding Background}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}">
+                    <TextBlock Text="{TemplateBinding Text}"
+                               VerticalAlignment="Center"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               Foreground="{DynamicResource HeadlineColor}" />
                 </Button>
             </ControlTemplate>
         </Setter>
