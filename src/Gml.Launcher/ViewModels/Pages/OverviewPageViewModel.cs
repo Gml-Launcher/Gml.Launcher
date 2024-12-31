@@ -155,7 +155,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task OnLogout(CancellationToken arg)
     {
-        await _storageService.SetAsync(StorageConstants.User, new AuthUser());
+        await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
         _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
     }
 
@@ -338,7 +338,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task LoadProfiles()
     {
-        var profilesData = await _gmlManager.GetProfiles();
+        var profilesData = await _gmlManager.GetProfiles(User.AccessToken);
 
         ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
 

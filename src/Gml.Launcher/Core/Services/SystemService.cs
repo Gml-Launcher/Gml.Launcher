@@ -56,13 +56,13 @@ public class SystemService : ISystemService
         return $"{cpuIdentifier}-{motherboardIdentifier}-{diskIdentifiers}";
     }
 
-    public async Task LoadSystemData()
+    public Task LoadSystemData()
     {
-        var refreshDriveListTask = Task.Run(() => _hardwareInfo.RefreshDriveList());
-        var refreshMotherboardListTask = Task.Run(() => _hardwareInfo.RefreshMotherboardList());
-        var refreshCpuListTask = Task.Run(() => _hardwareInfo.RefreshCPUList());
-
-        await Task.WhenAll(refreshDriveListTask, refreshMotherboardListTask, refreshCpuListTask);
+        return Task.WhenAll([
+            Task.Run(() => _hardwareInfo.RefreshDriveList()),
+            Task.Run(() => _hardwareInfo.RefreshMotherboardList()),
+            Task.Run(() => _hardwareInfo.RefreshCPUList())
+        ]);
     }
 
     public bool IsDiskFull(IOException ioException)
