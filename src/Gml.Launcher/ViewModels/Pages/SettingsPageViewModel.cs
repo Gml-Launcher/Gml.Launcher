@@ -68,6 +68,9 @@ public class SettingsPageViewModel : PageViewModelBase
         AvailableLanguages = new ObservableCollection<Language>(systemService.GetAvailableLanguages());
 
         MaxRamValue = systemService.GetMaxRam();
+        const int highRamThreshold = 16384;
+        MinRamValue = (ulong)(MaxRamValue > highRamThreshold ? 1024 : 512);
+        RamTickValue = (ulong)(MaxRamValue > highRamThreshold ? 1024 : 512);
 
         InstallationFolder = _gmlManager.InstallationDirectory;
 
@@ -78,7 +81,11 @@ public class SettingsPageViewModel : PageViewModelBase
 
     [Reactive] public bool FullScreen { get; set; }
 
+    [Reactive] public ulong MinRamValue { get; set; }
+
     [Reactive] public ulong MaxRamValue { get; set; }
+
+    [Reactive] public ulong RamTickValue { get; set; }
 
     [Reactive] public Language? SelectedLanguage { get; set; }
 
