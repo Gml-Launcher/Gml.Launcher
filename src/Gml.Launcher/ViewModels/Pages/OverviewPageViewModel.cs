@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -281,13 +282,15 @@ public class OverviewPageViewModel : PageViewModelBase
 
         var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
+        var osArchitecture = RuntimeInformation.OSArchitecture.ToString().ToLower().Replace("x", "");
+
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
             RamSize = Convert.ToInt32(settings.RamValue),
             IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
-            OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
+            OsArchitecture = osArchitecture,
             UserAccessToken = User.AccessToken,
             UserName = User.Name,
             UserUuid = User.Uuid,
