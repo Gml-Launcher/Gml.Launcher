@@ -46,6 +46,7 @@
                                               Margin="0, 15, 0, 0"
                                               Command="{Binding OpenLinkCommand}"
                                               CommandParameter="https://recloud.tech"
+                                              IconPath="/Assets/Images/profile.svg"
                                               Text="{x:Static lang:Resources.Cabinet}"
                                               HorizontalAlignment="Center" />
 
