@@ -78,7 +78,6 @@ namespace Gml.Launcher.Core.Services
 
         private bool IsErrorLog(string data)
         {
-            // Проверка на ERROR уровень и содержание блоков <log4j:Throwable> или строк, содержащих "Exception"
             var errorLogRegex = new Regex(@"\blevel=""ERROR""\b", RegexOptions.Singleline);
             var throwableRegex = new Regex(@"<log4j:Throwable><!\[CDATA\[(.*?)\]\]></log4j:Throwable>", RegexOptions.Singleline);
 
