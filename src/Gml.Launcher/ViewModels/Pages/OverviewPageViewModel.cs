@@ -83,8 +83,12 @@ public class OverviewPageViewModel : PageViewModelBase
         );
 
         GoModsCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ModsPageViewModel(screen, ListViewModel.SelectedProfile!, User,
-                _gmlManager))
+            () => screen.Router.Navigate.Execute(new ModsPageViewModel(
+                screen,
+                ListViewModel.SelectedProfile!,
+                User,
+                _gmlManager,
+                _systemService))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -316,15 +320,13 @@ public class OverviewPageViewModel : PageViewModelBase
 
         var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
-        var osArchitecture = RuntimeInformation.OSArchitecture.ToString().ToLower().Replace("x", "");
-
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
             RamSize = Convert.ToInt32(settings.RamValue),
             IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
-            OsArchitecture = osArchitecture,
+            OsArchitecture = _systemService.GetOsArchitecture(),
             UserAccessToken = User.AccessToken,
             UserName = User.Name,
             UserUuid = User.Uuid,

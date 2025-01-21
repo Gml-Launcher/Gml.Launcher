@@ -71,6 +71,11 @@ public class SystemService : ISystemService
         return (hr & 0xFFFF) == ERROR_DISK_FULL;
     }
 
+    public string GetOsArchitecture()
+    {
+        return RuntimeInformation.OSArchitecture.ToString().ToLower().Replace("x", "");
+    }
+
     public OsType GetOsType()
     {
         if (IsWindows()) return OsType.Windows;

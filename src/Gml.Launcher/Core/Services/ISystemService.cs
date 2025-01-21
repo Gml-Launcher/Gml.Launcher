@@ -55,4 +55,10 @@ public interface ISystemService
     Task LoadSystemData();
 
     bool IsDiskFull(IOException ioException);
+
+    /// <summary>
+    /// Retrieves the architecture of the operating system.
+    /// </summary>
+    /// <returns>A string representation of the operating system's architecture in lowercase, excluding the 'x' prefix.</returns>
+    string GetOsArchitecture();
 }
