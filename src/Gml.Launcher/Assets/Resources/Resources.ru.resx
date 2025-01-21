@@ -31,7 +31,7 @@
     <value>НАСТРОЙКИ</value>
   </data>
   <data name="ModsList" xml:space="preserve">
-    <value>СПИСОК МОДОВ</value>
+    <value>Список модов</value>
   </data>
   <data name="Website" xml:space="preserve">
     <value>НАШ САЙТ</value>
@@ -149,5 +149,17 @@
   </data>
   <data name="Information" xml:space="preserve">
     <value>Информация</value>
+  </data>
+  <data name="ModsListDescription" xml:space="preserve">
+    <value>На данной странице вы можете просмотреть список модификаций, и выбрать интересующие вас, можете динамично включать и выключать в любое время</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="ModDisabled" xml:space="preserve">
+    <value>Мод успешно выключен</value>
+  </data>
+  <data name="ModEnabled" xml:space="preserve">
+    <value>Мод успешно включен</value>
   </data>
 </root>

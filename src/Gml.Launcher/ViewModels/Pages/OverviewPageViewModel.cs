@@ -81,6 +81,10 @@ public class OverviewPageViewModel : PageViewModelBase
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User, _gmlManager))
         );
 
+        GoModsCommand = ReactiveCommand.CreateFromObservable(
+            () => screen.Router.Navigate.Execute(new ModsPageViewModel(screen, ListViewModel.SelectedProfile!, User, _gmlManager))
+        );
+
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
             () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
                 screen,
@@ -116,6 +120,7 @@ public class OverviewPageViewModel : PageViewModelBase
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
+    public ICommand GoModsCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
@@ -182,6 +187,11 @@ public class OverviewPageViewModel : PageViewModelBase
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
+
+                    if (_gameProcess.ExitCode != 0)
+                    {
+                        throw new Exception("Произошла ошибка при запуске игры. Проверьте целостность файлов");
+                    }
                 }
                 else
                 {

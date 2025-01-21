@@ -31,6 +31,6 @@ public static class ResourceKeysDictionary
     public const string JavaNotFound = "JavaNotFound";
     public const string IsDiskFull = "IsDiskFull";
     // public const string Host = "https://gmlb.recloud.tech";
-    public const string Host = "http://localhost:5000";
+    public const string Host = "http://10.0.10.200:5000";
     public const string FolderName = "GamerVIILacunerhV2";
 }

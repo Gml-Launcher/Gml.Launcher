@@ -290,5 +290,37 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("VpnUse", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModsListDescription {
+            get {
+                return ResourceManager.GetString("ModsListDescription", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModDisabled {
+            get {
+                return ResourceManager.GetString("ModDisabled", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModEnabled {
+            get {
+                return ResourceManager.GetString("ModEnabled", resourceCulture);
+            }
+        }
     }
 }

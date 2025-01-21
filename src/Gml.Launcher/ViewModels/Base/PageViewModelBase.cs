@@ -61,6 +61,21 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
             });
     }
 
+    protected void ShowSuccess(string title, string content)
+    {
+        if (HostScreen is MainWindowViewModel mainViewModel)
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                mainViewModel.Manager
+                    .CreateMessage(true, "#008C45",
+                        LocalizationService.GetString(title),
+                        content)
+                    .Dismiss()
+                    .WithDelay(TimeSpan.FromSeconds(3))
+                    .Queue();
+            });
+    }
+
     protected Task ExecuteFromNewThread(Func<Task> func)
     {
         var tcs = new TaskCompletionSource<object?>();

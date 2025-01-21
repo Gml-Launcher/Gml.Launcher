@@ -21,7 +21,7 @@ internal class Program
         {
             Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Application started");
             InitializeSentry();
-            RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
+            // RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
         }
