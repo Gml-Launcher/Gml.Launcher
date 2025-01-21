@@ -158,4 +158,21 @@
   <data name="ModDisabled" xml:space="preserve">
     <value>修改已成功禁用</value>
   </data>
+  <data name="ModsEmpty" xml:space="preserve">
+    <value>此配置文件没有可选模块。如果您有任何建议，请通知管理员。</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="MinecraftExceptionStartException" xml:space="preserve">
+    <value>游戏运行时发生错误。管理员已收到您的错误详情。
+
+
+
+
+
+
+
+</value>
+  </data>
 </root>

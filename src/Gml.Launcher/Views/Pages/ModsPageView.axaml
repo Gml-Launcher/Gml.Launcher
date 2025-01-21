@@ -36,7 +36,7 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="0, 0, 0, 10"
                                     Spacing="10">
-                            <Svg Path="/Assets/Images/ram.svg"
+                            <Svg Path="/Assets/Images/folder.svg"
                                  Width="28"
                                  Height="28" />
                             <TextBlock Text="{x:Static lang:Resources.ModsList}"
@@ -54,35 +54,28 @@
 
                     </components:StackFrameBorder>
 
-                    <!-- <components:StackFrameBorder Grid.Column="2" Margin="0, 0, 0, 10" -->
-                    <!--                              Spacing="10" -->
-                    <!--                              VerticalAlignment="Top"> -->
-                    <!--                 <Grid ColumnDefinitions="Auto, 20, *"> -->
-                    <!--                     <CheckBox IsChecked="True" Classes="FormCheckBox" /> -->
-                    <!-- -->
-                    <!--                     <StackPanel Grid.Column="2"> -->
-                    <!--                         <StackPanel VerticalAlignment="Center" -->
-                    <!--                                     Spacing="3"> -->
-                    <!--                             <TextBlock Foreground="{DynamicResource HeadlineColor}" -->
-                    <!--                                        FontSize="14" -->
-                    <!--                                        FontWeight="SemiBold"> -->
-                    <!--                                 <TextBlock.Text> -->
-                    <!--                                     <MultiBinding Converter="{converters:ModsNameConverter}"> -->
-                    <!--                                         <Binding Path="." /> -->
-                    <!--                                         <Binding Path="DataContext" ElementName="ModsListControl" /> -->
-                    <!--                                     </MultiBinding> -->
-                    <!--                                 </TextBlock.Text> -->
-                    <!--                             </TextBlock> -->
-                    <!--                             <TextBlock Foreground="{DynamicResource ContentColor}" -->
-                    <!--                                        MinWidth="145" -->
-                    <!--                                        FontSize="12" -->
-                    <!--                                        TextWrapping="Wrap" -->
-                    <!--                                        Text="weakfj awefb kawbefgawv efugvaw efugawejhfgva wejvawegvfvj wgefvagwevf"/> -->
-                    <!--                         </StackPanel> -->
-                    <!--                     </StackPanel> -->
-                    <!-- -->
-                    <!--                 </Grid> -->
-                    <!--     </components:StackFrameBorder> -->
+                    <components:StackFrameBorder Grid.Column="2"
+                                                 Spacing="10"
+                                                 VerticalAlignment="Top"
+                                                 IsVisible="{Binding ModsListIsEmpty}">
+
+                        <StackPanel Spacing="10">
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Left"
+                                        Spacing="10">
+                                <Svg Path="/Assets/Images/folder.svg" Width="48"/>
+                                <TextBlock Classes="HeadlineText"
+                                           Margin="0, 5, 0, 0"
+                                           VerticalAlignment="Center"
+                                           Text="{x:Static lang:Resources.Empty}" />
+                            </StackPanel>
+
+                            <TextBlock Classes="FormText"
+                                       TextWrapping="Wrap"
+                                       Text="{x:Static lang:Resources.ModsEmpty}" />
+                        </StackPanel>
+                    </components:StackFrameBorder>
 
                     <ScrollViewer Grid.Column="2">
                         <ItemsControl x:Name="ModsListControl"

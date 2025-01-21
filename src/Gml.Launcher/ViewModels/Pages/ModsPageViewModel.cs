@@ -5,7 +5,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Concurrency;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Threading;
 using Gml.Client;
 using Gml.Client.Models;
 using Gml.Launcher.Core;
@@ -29,6 +31,7 @@ public class ModsPageViewModel : PageViewModelBase
     private readonly string _modsDirectory;
     [Reactive] public ConcurrentDictionary<string, ModsDetailsInfoDto> OptionalModsDetails { get; set; } = [];
     [Reactive] public ObservableCollection<ExternalModReadDto> ProfileOptionalMods { get; set; } = [];
+    [Reactive] public bool ModsListIsEmpty { get; set; }
     [Reactive] public ICommand ChangeOptionalModState { get; set; }
 
     public ModsPageViewModel(IScreen screen,
@@ -36,7 +39,6 @@ public class ModsPageViewModel : PageViewModelBase
         IUser user,
         IGmlClientManager gmlManager) : base(screen)
     {
-
         _profile = profile;
         _modsDirectory = Path.Combine(gmlManager.InstallationDirectory, "clients", profile.Name, "mods");
         _user = user;
@@ -53,34 +55,40 @@ public class ModsPageViewModel : PageViewModelBase
 
         if (!string.IsNullOrEmpty(files) && _gmlManager.ToggleOptionalMod(files, mod.IsSelected))
         {
-            ShowSuccess(SystemConstants.Success,
-                mod.IsSelected
-                    ? LocalizationService.GetString(SystemConstants.ModEnabled)
-                    : LocalizationService.GetString(SystemConstants.ModDisabled));
+            // ShowSuccess(SystemConstants.Success,
+            //     mod.IsSelected
+            //         ? LocalizationService.GetString(SystemConstants.ModEnabled)
+            //         : LocalizationService.GetString(SystemConstants.ModDisabled));
         }
 
     }
 
-    private async void LoadData()
+    private void LoadData()
     {
-        try
+        _ = ExecuteFromNewThread(async () =>
         {
-            var optionalModsInfo = await _gmlManager.GetOptionalModsInfo(_user.AccessToken);
-            var optionalMods = await _gmlManager.GetOptionalMods(_profile.Name, _user.AccessToken);
-            var enabledMods = GetEnabledMods(_modsDirectory);
+            try
+            {
+                var optionalModsInfo = await _gmlManager.GetOptionalModsInfo(_user.AccessToken);
+                var optionalMods = await _gmlManager.GetOptionalMods(_profile.Name, _user.AccessToken);
+                var enabledMods = GetEnabledMods(_modsDirectory);
+                var models = (optionalMods.Data ?? []).Select(c => new ExternalModReadDto(c, enabledMods.Contains(c.Name)));
 
-            OptionalModsDetails = new ConcurrentDictionary<string, ModsDetailsInfoDto>(
-                optionalModsInfo.Data?.ToDictionary(mod => mod.Key, mod => mod) ?? []
-            );
+                Dispatcher.UIThread.Invoke(() =>
+                {
+                    OptionalModsDetails = new ConcurrentDictionary<string, ModsDetailsInfoDto>(
+                        optionalModsInfo.Data?.ToDictionary(mod => mod.Key, mod => mod) ?? []
+                    );
+                    ProfileOptionalMods = new ObservableCollection<ExternalModReadDto>(models);
+                    ModsListIsEmpty = ProfileOptionalMods.Count == 0;
+                });
+            }
+            catch (Exception exception)
+            {
+                SentrySdk.CaptureException(exception);
+            }
+        });
 
-            var models = (optionalMods.Data ?? []).Select(c => new ExternalModReadDto(c, enabledMods.Contains(c.Name)));
-
-            ProfileOptionalMods = new ObservableCollection<ExternalModReadDto>(models);
-        }
-        catch (Exception exception)
-        {
-            SentrySdk.CaptureException(exception);
-        }
     }
 
     private ICollection<string> GetEnabledMods(string modsDirectory)

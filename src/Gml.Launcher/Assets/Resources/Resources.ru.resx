@@ -162,4 +162,13 @@
   <data name="ModEnabled" xml:space="preserve">
     <value>Мод успешно включен</value>
   </data>
+  <data name="ModsEmpty" xml:space="preserve">
+    <value>Для данного профиля нет опциональных модов, если у вас есть предложения, оповестите об этом администрацию</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Пусто</value>
+  </data>
+  <data name="MinecraftExceptionStartException" xml:space="preserve">
+    <value>Произошла ошибка во время работы игры. Администрация уже получила детали вашей ошибки.</value>
+  </data>
 </root>

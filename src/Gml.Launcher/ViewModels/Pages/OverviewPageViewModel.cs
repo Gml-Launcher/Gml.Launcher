@@ -21,6 +21,7 @@ using Gml.Client;
 using Gml.Client.Helpers;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
@@ -62,8 +63,8 @@ public class OverviewPageViewModel : PageViewModelBase
         _onClosed = onClosed;
 
         _logHandler = logHandler
-            ?? Locator.Current.GetService<LogHandler>()
-            ?? throw new ServiceNotFoundException(typeof(LogHandler));
+                      ?? Locator.Current.GetService<LogHandler>()
+                      ?? throw new ServiceNotFoundException(typeof(LogHandler));
 
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
@@ -82,7 +83,8 @@ public class OverviewPageViewModel : PageViewModelBase
         );
 
         GoModsCommand = ReactiveCommand.CreateFromObservable(
-            () => screen.Router.Navigate.Execute(new ModsPageViewModel(screen, ListViewModel.SelectedProfile!, User, _gmlManager))
+            () => screen.Router.Navigate.Execute(new ModsPageViewModel(screen, ListViewModel.SelectedProfile!, User,
+                _gmlManager))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -165,13 +167,15 @@ public class OverviewPageViewModel : PageViewModelBase
         _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
     }
 
-    private async Task StartGame(CancellationToken cancellationToken)
+    private async Task StartGame()
     {
+        var tokenSource = new CancellationTokenSource();
+        var cancellationToken = tokenSource.Token;
+
         await ExecuteFromNewThread(async () =>
         {
             try
             {
-
                 var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
@@ -183,14 +187,16 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
-                    await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                    // await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
 
                     if (_gameProcess.ExitCode != 0)
                     {
-                        throw new Exception("Произошла ошибка при запуске игры. Проверьте целостность файлов");
+                        throw new MinecraftException(
+                            $"Произошел краш игры. {string.Join("\n", _logHandler.RecentLogs)}");
                     }
                 }
                 else
@@ -217,6 +223,23 @@ public class OverviewPageViewModel : PageViewModelBase
                 SentrySdk.CaptureException(ioException);
                 Console.WriteLine(ioException);
             }
+            catch (MinecraftException exception)
+            {
+                _logHandler.RecentLogs.Clear();
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(SystemConstants.MinecraftExceptionStartException));
+
+                SentrySdk.CaptureException(exception);
+            }
+            catch (TaskCanceledException exception)
+            {
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(SystemConstants.MinecraftExceptionStartException));
+
+                SentrySdk.CaptureException(exception);
+                Console.WriteLine(exception);
+                _logHandler.RecentLogs.Clear();
+            }
             catch (Exception exception)
             {
                 ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
@@ -226,6 +249,7 @@ public class OverviewPageViewModel : PageViewModelBase
             }
             finally
             {
+                _gameProcess?.Dispose();
                 Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
                 await _gmlManager.UpdateDiscordRpcState(
