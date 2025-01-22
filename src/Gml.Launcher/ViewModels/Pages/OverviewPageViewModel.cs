@@ -111,7 +111,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
-        _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
+        _closeEvent ??= onClosed.Subscribe(KillGameProcess);
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
         _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
@@ -352,6 +352,18 @@ public class OverviewPageViewModel : PageViewModelBase
             IsProcessing = isProcessing;
             LoadingPercentage = percentage;
         });
+    }
+
+    private async void KillGameProcess(bool isClosed)
+    {
+        try
+        {
+            _gameProcess?.Kill();
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+        }
     }
 
     private async void LoadData()
