@@ -165,10 +165,13 @@ public class OverviewPageViewModel : PageViewModelBase
             await _storageService.SetAsync(StorageConstants.LastSelectedProfileName, profile.Name);
     }
 
-    private async Task OnLogout(CancellationToken arg)
+    private Task OnLogout(CancellationToken arg)
     {
-        await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
-        _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
+        return Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
+            _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
+        });
     }
 
     private async Task StartGame()
@@ -341,10 +344,14 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
     {
-        Headline = headline;
-        Description = description;
-        IsProcessing = isProcessing;
-        LoadingPercentage = percentage;
+
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            Headline = headline;
+            Description = description;
+            IsProcessing = isProcessing;
+            LoadingPercentage = percentage;
+        });
     }
 
     private async void LoadData()
