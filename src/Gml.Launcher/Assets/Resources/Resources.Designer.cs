@@ -290,5 +290,61 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("VpnUse", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModsListDescription {
+            get {
+                return ResourceManager.GetString("ModsListDescription", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModDisabled {
+            get {
+                return ResourceManager.GetString("ModDisabled", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModEnabled {
+            get {
+                return ResourceManager.GetString("ModEnabled", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string ModsEmpty {
+            get {
+                return ResourceManager.GetString("ModsEmpty", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string Empty {
+            get {
+                return ResourceManager.GetString("Empty", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ProfileNotConfigured.
+        /// </summary>
+        public static string MinecraftExceptionStartException {
+            get {
+                return ResourceManager.GetString("MinecraftExceptionStartException", resourceCulture);
+            }
+        }
     }
 }

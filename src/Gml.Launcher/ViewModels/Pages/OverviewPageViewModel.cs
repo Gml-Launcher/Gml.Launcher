@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ using Gml.Client;
 using Gml.Client.Helpers;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
@@ -61,8 +63,8 @@ public class OverviewPageViewModel : PageViewModelBase
         _onClosed = onClosed;
 
         _logHandler = logHandler
-            ?? Locator.Current.GetService<LogHandler>()
-            ?? throw new ServiceNotFoundException(typeof(LogHandler));
+                      ?? Locator.Current.GetService<LogHandler>()
+                      ?? throw new ServiceNotFoundException(typeof(LogHandler));
 
         _systemService = systemService
                          ?? Locator.Current.GetService<ISystemService>()
@@ -78,6 +80,15 @@ public class OverviewPageViewModel : PageViewModelBase
 
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User, _gmlManager))
+        );
+
+        GoModsCommand = ReactiveCommand.CreateFromObservable(
+            () => screen.Router.Navigate.Execute(new ModsPageViewModel(
+                screen,
+                ListViewModel.SelectedProfile!,
+                User,
+                _gmlManager,
+                _systemService))
         );
 
         GoSettingsCommand = ReactiveCommand.CreateFromObservable(
@@ -100,7 +111,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
-        _closeEvent ??= onClosed.Subscribe(_ => _gameProcess?.Kill());
+        _closeEvent ??= onClosed.Subscribe(KillGameProcess);
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
         _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
@@ -115,6 +126,7 @@ public class OverviewPageViewModel : PageViewModelBase
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
     public ICommand GoProfileCommand { get; set; }
+    public ICommand GoModsCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
@@ -153,19 +165,24 @@ public class OverviewPageViewModel : PageViewModelBase
             await _storageService.SetAsync(StorageConstants.LastSelectedProfileName, profile.Name);
     }
 
-    private async Task OnLogout(CancellationToken arg)
+    private Task OnLogout(CancellationToken arg)
     {
-        await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
-        _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
+        return Dispatcher.UIThread.InvokeAsync(async () =>
+        {
+            await _storageService.SetAsync<IUser?>(StorageConstants.User, null);
+            _mainViewModel.Router.Navigate.Execute(new LoginPageViewModel(_mainViewModel, _onClosed));
+        });
     }
 
-    private async Task StartGame(CancellationToken cancellationToken)
+    private async Task StartGame()
     {
+        var tokenSource = new CancellationTokenSource();
+        var cancellationToken = tokenSource.Token;
+
         await ExecuteFromNewThread(async () =>
         {
             try
             {
-
                 var profileInfo = await GetProfileInfo();
 
                 if (profileInfo is { Data: not null })
@@ -177,10 +194,17 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
-                    await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                    // await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
+
+                    if (_gameProcess.ExitCode != 0)
+                    {
+                        throw new MinecraftException(
+                            $"Произошел краш игры. {string.Join("\n", _logHandler.RecentLogs)}");
+                    }
                 }
                 else
                 {
@@ -206,6 +230,23 @@ public class OverviewPageViewModel : PageViewModelBase
                 SentrySdk.CaptureException(ioException);
                 Console.WriteLine(ioException);
             }
+            catch (MinecraftException exception)
+            {
+                _logHandler.RecentLogs.Clear();
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(SystemConstants.MinecraftExceptionStartException));
+
+                SentrySdk.CaptureException(exception);
+            }
+            catch (TaskCanceledException exception)
+            {
+                ShowError(ResourceKeysDictionary.Error,
+                    LocalizationService.GetString(SystemConstants.MinecraftExceptionStartException));
+
+                SentrySdk.CaptureException(exception);
+                Console.WriteLine(exception);
+                _logHandler.RecentLogs.Clear();
+            }
             catch (Exception exception)
             {
                 ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
@@ -215,6 +256,7 @@ public class OverviewPageViewModel : PageViewModelBase
             }
             finally
             {
+                _gameProcess?.Dispose();
                 Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
                 await _gmlManager.UpdateDiscordRpcState(
@@ -287,7 +329,7 @@ public class OverviewPageViewModel : PageViewModelBase
             RamSize = Convert.ToInt32(settings.RamValue),
             IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
-            OsArchitecture = Environment.Is64BitOperatingSystem ? "64" : "32",
+            OsArchitecture = _systemService.GetOsArchitecture(),
             UserAccessToken = User.AccessToken,
             UserName = User.Name,
             UserUuid = User.Uuid,
@@ -302,10 +344,26 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
     {
-        Headline = headline;
-        Description = description;
-        IsProcessing = isProcessing;
-        LoadingPercentage = percentage;
+
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            Headline = headline;
+            Description = description;
+            IsProcessing = isProcessing;
+            LoadingPercentage = percentage;
+        });
+    }
+
+    private async void KillGameProcess(bool isClosed)
+    {
+        try
+        {
+            _gameProcess?.Kill();
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+        }
     }
 
     private async void LoadData()

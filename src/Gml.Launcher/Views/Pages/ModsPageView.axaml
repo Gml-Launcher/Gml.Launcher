@@ -1,0 +1,138 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
+             xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
+             xmlns:mods="clr-namespace:Gml.Web.Api.Dto.Mods;assembly=Gml.Web.Api.Dto"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Gml.Launcher.Views.Pages.ModsPageView"
+             x:DataType="vm:ModsPageViewModel">
+    <Grid>
+        <!-- Background -->
+        <components:BackgroundComponent Classes="Image" Source="/Assets/Images/background.jpg" />
+        <Rectangle Fill="{DynamicResource BackgroundOverlay}" />
+
+        <Border Padding="20">
+            <Grid RowDefinitions="Auto, 30, *">
+
+                <!-- Navigation -->
+                <Grid Grid.ColumnSpan="3" Grid.Row="0">
+                    <components:GmlButton Classes="TextIcon Additional"
+                                          Padding="15, 0, 20 ,0"
+                                          IconPath="/Assets/Images/back.svg"
+                                          IconSize="22"
+                                          Text="{x:Static lang:Resources.Back}"
+                                          Command="{Binding GoBackCommand}" />
+                </Grid>
+
+
+                <Grid Grid.Row="2" ColumnDefinitions="300, 20, *">
+                    <components:StackFrameBorder Grid.Column="0"
+                                                 Spacing="10"
+                                                 VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0, 0, 0, 10"
+                                    Spacing="10">
+                            <Svg Path="/Assets/Images/folder.svg"
+                                 Width="28"
+                                 Height="28" />
+                            <TextBlock Text="{x:Static lang:Resources.ModsList}"
+                                       Classes="HeadlineText"
+                                       Margin="0"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <TextBlock Text="{x:Static lang:Resources.ModsListDescription}"
+                                   TextWrapping="Wrap"
+                                   Margin="38, 0, 0, 0"
+                                   LineHeight="25"
+                                   Classes="FormText" />
+
+
+                    </components:StackFrameBorder>
+
+                    <components:StackFrameBorder Grid.Column="2"
+                                                 Spacing="10"
+                                                 VerticalAlignment="Top"
+                                                 IsVisible="{Binding ModsListIsEmpty}">
+
+                        <StackPanel Spacing="10">
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Left"
+                                        Spacing="10">
+                                <Svg Path="/Assets/Images/folder.svg" Width="48"/>
+                                <TextBlock Classes="HeadlineText"
+                                           Margin="0, 5, 0, 0"
+                                           VerticalAlignment="Center"
+                                           Text="{x:Static lang:Resources.Empty}" />
+                            </StackPanel>
+
+                            <TextBlock Classes="FormText"
+                                       TextWrapping="Wrap"
+                                       Text="{x:Static lang:Resources.ModsEmpty}" />
+                        </StackPanel>
+                    </components:StackFrameBorder>
+
+                    <ScrollViewer Grid.Column="2">
+                        <ItemsControl x:Name="ModsListControl"
+                                      ItemsSource="{Binding ProfileOptionalMods}">
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate x:DataType="vm:ExternalModReadDto">
+
+                                    <components:StackFrameBorder Margin="0, 0, 0, 10"
+                                                                 Spacing="10"
+                                                                 VerticalAlignment="Top">
+                                        <Grid ColumnDefinitions="Auto, 20, *">
+                                            <CheckBox CommandParameter="{Binding .}"
+                                                Command="{Binding ((vm:ModsPageViewModel)DataContext).ChangeOptionalModState, ElementName=ModsListControl}" IsChecked="{Binding IsSelected}" Classes="FormCheckBox" />
+
+
+                                            <StackPanel Grid.Column="2">
+                                                <StackPanel VerticalAlignment="Center"
+                                                            Spacing="3">
+                                                    <TextBlock Foreground="{DynamicResource HeadlineColor}"
+                                                               FontSize="14"
+                                                               FontWeight="SemiBold">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{converters:ModsNameConverter}">
+                                                                <Binding Path="." />
+                                                                <Binding Path="DataContext"
+                                                                         ElementName="ModsListControl" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                    <TextBlock Foreground="{DynamicResource ContentColor}"
+                                                               TextWrapping="Wrap"
+                                                               MinWidth="145"
+                                                               LineHeight="20"
+                                                               FontSize="12">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding
+                                                                Converter="{converters:ModsDescriptionConverter}">
+                                                                <Binding Path="." />
+                                                                <Binding Path="DataContext"
+                                                                         ElementName="ModsListControl" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                    </components:StackFrameBorder>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

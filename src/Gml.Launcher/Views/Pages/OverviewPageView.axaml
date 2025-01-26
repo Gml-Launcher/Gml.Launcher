@@ -30,7 +30,7 @@
         <Border Grid.Column="1" Padding="25">
 
             <Grid ColumnDefinitions="Auto, 30, *"
-                  RowDefinitions="60, 30 *, 30, Auto">
+                  RowDefinitions="60, 30, *, 30, Auto">
 
                 <components:OnlineComponent
                     Grid.Row="0"
@@ -49,10 +49,12 @@
 
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
-                                       Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
                                        Grid.Row="2"
+                                       Background="Blue"
+                                       Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
                                        PlayCommand="{Binding PlayCommand}"
                                        SettingsCommand="{Binding GoSettingsCommand}"
+                                       GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
                                        GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
@@ -61,7 +63,8 @@
                                        State="{Binding ListViewModel.SelectedProfile.State}"
                                        CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate}"
                                        Status="{x:Static lang:Resources.Available}"
-                                       VerticalAlignment="Center" />
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left" />
 
                 <!-- Footer -->
                 <Grid Grid.Row="4"
@@ -71,6 +74,8 @@
 
                     <components:GmlButton Grid.Column="0"
                                           IconPath="/Assets/Images/document.svg"
+                                          Command="{Binding OpenLinkCommand}"
+                                          CommandParameter="https://vk.com/recloud.studio"
                                           IconSize="22"
                                           Classes="TextIcon Additional"
                                           Text="{x:Static lang:Resources.ModsList}" />

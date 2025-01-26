@@ -150,4 +150,27 @@
   <data name="Information" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ModsListDescription" xml:space="preserve">
+    <value>On this page, you can view the list of modifications and select the ones you are interested in. You can dynamically enable or disable them at any time.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="ModEnabled" xml:space="preserve">
+    <value>The mod has been successfully enabled</value>
+  </data>
+  <data name="ModDisabled" xml:space="preserve">
+    <value>The mod has been successfully disabled</value>
+  </data>
+  <data name="ModsEmpty" xml:space="preserve">
+    <value>There are no optional mods available for this profile. If you have any suggestions, please notify the administration.</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="MinecraftExceptionStartException" xml:space="preserve">
+    <value>An error occurred during the game. The administration has already received the details of your error.
+
+</value>
+  </data>
 </root>

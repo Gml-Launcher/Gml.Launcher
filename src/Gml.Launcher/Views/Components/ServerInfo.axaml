@@ -12,14 +12,13 @@
 
         <Setter Property="Spacing" Value="20" />
         <Setter Property="FontSize" Value="60" />
-        <Setter Property="MaxWidth" Value="400" />
+        <Setter Property="MaxWidth" Value="500" />
         <Setter Property="Foreground" Value="{DynamicResource HeadlineColor}" />
         <Setter Property="FontWeight" Value="Black" />
 
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel Spacing="{TemplateBinding Spacing}"
-                            MaxWidth="{TemplateBinding MaxWidth}"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal" Spacing="8">
@@ -46,6 +45,7 @@
                                Foreground="{DynamicResource ContentColor}"
                                FontWeight="Medium"
                                LineHeight="25"
+                               MaxWidth="{TemplateBinding MaxWidth}"
                                TextWrapping="Wrap"
                                FontSize="14" />
 
@@ -63,12 +63,20 @@
                                             IconSize="24"
                                             FontSize="16"
                                             Text="{x:Static lang:Resources.Play}" />
+
                         <controls:GmlButton Classes="TextIcon Secondary"
                                             Command="{TemplateBinding SettingsCommand}"
                                             IconPath="/Assets/Images/settings.svg"
                                             IconSize="24"
                                             FontSize="16"
                                             Text="{x:Static lang:Resources.Settings}" />
+
+                        <controls:GmlButton Classes="TextIcon Secondary"
+                                            Command="{TemplateBinding GoModsCommand}"
+                                            IconPath="/Assets/Images/document.svg"
+                                            IconSize="24"
+                                            FontSize="16"
+                                            Text="{x:Static lang:Resources.ModsList}" />
                     </StackPanel>
                 </StackPanel>
             </ControlTemplate>

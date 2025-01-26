@@ -42,6 +42,15 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<DateTime> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTime>(
         nameof(CreateDate));
 
+    public static readonly StyledProperty<ICommand> GoModsCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
+        nameof(GoModsCommand));
+
+    public ICommand GoModsCommand
+    {
+        get => GetValue(GoModsCommandProperty);
+        set => SetValue(GoModsCommandProperty, value);
+    }
+
     public DateTime CreateDate
     {
         get => GetValue(CreateDateProperty);

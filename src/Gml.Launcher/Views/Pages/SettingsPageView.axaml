@@ -62,9 +62,11 @@
                             IsVisible="{Binding DynamicRamValue, Converter={converters:BoolReverseConverter}}" />
 
                     <StackPanel IsVisible="{Binding DynamicRamValue, Converter={converters:BoolReverseConverter}}">
-                        <Slider Minimum="512"
+                        <Slider Minimum="{Binding MinRamValue}"
                                 Maximum="{Binding MaxRamValue}"
                                 Value="{Binding RamValue}"
+                                TickFrequency="{Binding RamTickValue}"
+                                IsSnapToTickEnabled="True"
                                 x:Name="ViewSlider"
                                 Classes="FormSlider" />
 

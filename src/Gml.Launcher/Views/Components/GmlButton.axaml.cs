@@ -14,8 +14,8 @@ public class GmlButton : TemplatedControl
     public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
         RoutedEvent.Register<GmlButton, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
 
-    public static readonly StyledProperty<string> IconPathProperty = AvaloniaProperty.Register<GmlButton, string>(
-        nameof(IconPath), "/Assets/Images/profile.svg");
+    public static readonly StyledProperty<Uri> IconPathProperty = AvaloniaProperty.Register<GmlButton, Uri>(
+        nameof(IconPath));
 
     public static readonly StyledProperty<double> IconSizeProperty = AvaloniaProperty.Register<GmlButton, double>(
         nameof(IconSize), 16);
@@ -72,7 +72,7 @@ public class GmlButton : TemplatedControl
         set => SetValue(IconSizeProperty, value);
     }
 
-    public string IconPath
+    public Uri IconPath
     {
         get => GetValue(IconPathProperty);
         set => SetValue(IconPathProperty, value);
