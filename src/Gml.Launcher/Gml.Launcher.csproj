@@ -10,7 +10,7 @@
     <AssemblyVersion>0.0.0.1</AssemblyVersion>
     <FileVersion>0.0.0.1</FileVersion>
     <License>Apache-2.0</License>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;osx-x64;osx-arm64;linux-musl-x64;linux-musl-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;osx-x64;osx-arm64;linux-musl-x64;linux-musl-arm64;linux-arm64;linux-arm</RuntimeIdentifiers>
     <NoWarn>$(NoWarn);NETSDK1206</NoWarn>
   </PropertyGroup>
 
