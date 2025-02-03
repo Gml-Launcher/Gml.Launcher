@@ -130,6 +130,11 @@ public class ModsPageViewModel : PageViewModelBase
 
     private ICollection<string> GetEnabledMods(string modsDirectory)
     {
+        if (!Directory.Exists(modsDirectory))
+        {
+            Directory.CreateDirectory(modsDirectory);
+        }
+
         var optionalMods = Directory.GetFiles(modsDirectory, $"*-optional-mod.jar");
 
         return optionalMods.Select(Path.GetFileNameWithoutExtension).ToArray()!;
