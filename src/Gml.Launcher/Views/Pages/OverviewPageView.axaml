@@ -56,7 +56,7 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
-                                       ProfileName="{Binding ListViewModel.SelectedProfile.Name}"
+                                       ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName}"
                                        GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
                                        LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion}"
                                        ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
