@@ -6,6 +6,7 @@
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
+             xmlns:news="clr-namespace:Gml.Web.Api.Dto.News;assembly=Gml.Web.Api.Dto"
              mc:Ignorable="d"
              d:DesignWidth="1000"
              Background="Transparent"
@@ -46,6 +47,24 @@
                                         Headline="{Binding Headline}"
                                         Description="{Binding Description}"
                                         Percentage="{Binding LoadingPercentage}" />
+
+                <!-- News -->
+                <Grid RowDefinitions="Auto, 0, *" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2">
+                    <TextBlock Classes="HeadlineText" Text="{x:Static lang:Resources.News}"/>
+                    <ScrollViewer Grid.Row="2" CornerRadius="10" ClipToBounds="True">
+                        <ItemsControl ItemsSource="{Binding News}">
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate x:DataType="news:NewsReadDto">
+
+                                    <components:NewsComponent Title="{Binding Title}"
+                                                              Description="{Binding Content}"
+                                                              Date="{Binding Date}"
+                                                              Margin="0, 0, 0, 10"/>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
 
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"

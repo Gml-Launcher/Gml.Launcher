@@ -171,4 +171,7 @@
   <data name="MinecraftExceptionStartException" xml:space="preserve">
     <value>Произошла ошибка во время работы игры. Администрация уже получила детали вашей ошибки.</value>
   </data>
+  <data name="News" xml:space="preserve">
+    <value>Новости</value>
+  </data>
 </root>

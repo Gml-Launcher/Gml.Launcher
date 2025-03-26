@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -28,6 +25,7 @@ using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Dto.Messages;
+using Gml.Web.Api.Dto.News;
 using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -143,6 +141,8 @@ public class OverviewPageViewModel : PageViewModelBase
     [Reactive] public string? Description { get; set; }
 
     [Reactive] public bool IsProcessing { get; set; }
+
+    [Reactive] public ObservableCollection<NewsReadDto> News { get; set; } = [];
 
     private async void LoadProfilesAsync(bool eventInfo)
     {
@@ -371,6 +371,7 @@ public class OverviewPageViewModel : PageViewModelBase
         try
         {
             await LoadProfiles();
+            await LoadNews();
 
             await _gmlManager.LoadDiscordRpc();
             await _gmlManager.UpdateDiscordRpcState(
@@ -391,6 +392,20 @@ public class OverviewPageViewModel : PageViewModelBase
         catch (Exception exception)
         {
             SentrySdk.CaptureException(exception);
+        }
+    }
+
+    private async Task LoadNews()
+    {
+        try
+        {
+            var news = await _gmlManager.GetNews();
+
+            News = new ObservableCollection<NewsReadDto>(news.Data ?? []);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
         }
     }
 
