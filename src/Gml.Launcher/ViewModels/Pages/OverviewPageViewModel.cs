@@ -301,8 +301,6 @@ public class OverviewPageViewModel : PageViewModelBase
             _logHandler.ProcessLogs(e.Data);
         };
 
-        await _gmlManager.ClearFiles(profileInfo.Data);
-
         UpdateProgress(
             LocalizationService.GetString(ResourceKeysDictionary.Launching),
             LocalizationService.GetString(ResourceKeysDictionary.PreparingLaunch),
