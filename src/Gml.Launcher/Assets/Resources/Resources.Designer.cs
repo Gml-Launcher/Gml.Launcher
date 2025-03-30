@@ -346,5 +346,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("MinecraftExceptionStartException", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на News.
+        /// </summary>
+        public static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
+            }
+        }
     }
 }

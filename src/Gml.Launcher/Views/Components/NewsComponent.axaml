@@ -1,0 +1,22 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:avalonia="clr-namespace:TheArtOfDev.HtmlRenderer.Avalonia;assembly=Avalonia.HtmlRenderer">
+    <Design.PreviewWith>
+        <controls:NewsComponent />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|NewsComponent">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:StackFrameBorder Padding="20">
+                    <TextBlock Classes="HeadlineText" Text="{TemplateBinding Title}" />
+                    <avalonia:HtmlPanel x:Name="HtmlPanel" Text="{TemplateBinding Description}" Margin="0, 0, 0, 10" />
+                    <TextBlock Classes="FormText" FontSize="12" Text="{TemplateBinding Date}" Margin="0, 10, 0, 0" />
+                </controls:StackFrameBorder>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
+

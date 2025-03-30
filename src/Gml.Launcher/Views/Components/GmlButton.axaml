@@ -132,6 +132,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource FormBorderColor}" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>
+
     <Style Selector="controls|GmlButton.Additional:pointerover /template/ Button /template/ ContentPresenter">
         <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
         <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
@@ -143,6 +144,11 @@
 
     <Style Selector="controls|GmlButton.Primary:pointerover /template/ Button /template/ ContentPresenter">
         <Setter Property="Background" Value="{StaticResource PrimaryColorHover}" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:disabled /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
     </Style>
 
 </Styles>

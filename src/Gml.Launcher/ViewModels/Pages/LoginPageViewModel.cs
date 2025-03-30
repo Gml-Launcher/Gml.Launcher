@@ -145,6 +145,17 @@ public class LoginPageViewModel : PageViewModelBase
         }
         catch (Exception exception)
         {
+            if (_screen is { } mainView)
+            {
+                mainView.Manager
+                    .CreateMessage(true, "#D03E3E",
+                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        exception.Message)
+                    .Dismiss()
+                    .WithDelay(TimeSpan.FromSeconds(3))
+                    .Queue();
+            }
+
             Debug.WriteLine(exception);
             SentrySdk.CaptureException(exception);
         }

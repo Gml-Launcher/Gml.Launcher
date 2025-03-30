@@ -31,6 +31,7 @@
         <StyleInclude Source="/Views/Components/ProfileInfoComponent.axaml" />
         <StyleInclude Source="/Views/Components/ProgressBar.axaml" />
         <StyleInclude Source="/Views/Components/OnlineComponent.axaml" />
+        <StyleInclude Source="/Views/Components/NewsComponent.axaml" />
 
         <StyleInclude Source="Assets/Styles/Classes.axaml" />
 
