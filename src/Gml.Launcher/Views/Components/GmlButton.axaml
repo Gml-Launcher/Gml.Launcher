@@ -4,7 +4,8 @@
 
     <Design.PreviewWith>
         <Border Background="{StaticResource BackgroundColor}"
-                Padding="20">
+                Padding="20"
+                Width="350">
             <StackPanel Spacing="20">
                 <StackPanel Spacing="10" Orientation="Horizontal">
                     <controls:GmlButton Classes="Icon Secondary" />
@@ -56,35 +57,52 @@
     </Style>
     <Style Selector="controls|GmlButton.TextIcon">
 
-        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="CornerRadius" Value="1" />
         <Setter Property="Height" Value="50" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Padding" Value="10, 0, 20, 0" />
+        <Setter Property="FontFamily" Value="Minecraft Ten font cyrillic" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Padding" Value="10, 0,30, 2" />
 
         <Setter Property="Template">
             <ControlTemplate>
                 <Button Name="PART_Button"
-                        Background="{TemplateBinding Background}"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
-                        Padding="{TemplateBinding Padding}"
                         IsDefault="{TemplateBinding IsDefault}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="0"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}">
 
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="{TemplateBinding Spacing}">
-                        <Svg Path="{TemplateBinding IconPath}"
-                             Width="{TemplateBinding IconSize}"
-                             Height="{TemplateBinding IconSize}" />
-                        <TextBlock Text="{TemplateBinding Text}"
-                                   VerticalAlignment="Center"
-                                   FontWeight="{TemplateBinding FontWeight}"
-                                   Foreground="{DynamicResource HeadlineColor}" />
-                    </StackPanel>
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}"
+                            BoxShadow="{Binding InnerShadow, RelativeSource={RelativeSource TemplatedParent}}"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}">
+
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    Spacing="{TemplateBinding Spacing}">
+                            <Svg Path="{TemplateBinding IconPath}"
+                                 Width="{TemplateBinding IconSize}"
+                                 Height="{TemplateBinding IconSize}"/>
+                            <Border Padding="0 4"
+                                    Margin=" 0 -3 0 0">
+                                <controls:OutlinedTextBlock Text="{TemplateBinding Text}"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="{TemplateBinding FontSize}"
+                                                            FontFamily="{TemplateBinding FontFamily}"
+                                                            Fill="{TemplateBinding Foreground}"
+                                                            Stroke="{TemplateBinding Background}"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
                 </Button>
             </ControlTemplate>
         </Setter>
@@ -119,13 +137,59 @@
         </Setter>
     </Style>
 
+    <!-- Primary Button -->
+
+    <Style Selector="controls|GmlButton.Primary">
+        <Setter Property="Background" Value="{StaticResource PrimaryColor}"></Setter>
+        <Setter Property="ShadowColor" Value="#29134C"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:pointerover /template/ Border">
+        <Setter Property="Background" Value="{StaticResource PrimaryColorHover}"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:pointerover">
+        <Setter Property="ShadowColor" Value="#3E1F70"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource ButtonPrimaryTextGradient}"></Setter>
+        <Setter Property="Stroke" Value="#1A0935"></Setter>
+        <Setter Property="StrokeThickness" Value="4"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:pointerover /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource ButtonPrimaryTextHoverGradient}"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Primary:disabled /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
+    </Style>
+
+    <!-- Primary Button -->
+
+    <!-- Secondary Button -->
+
     <Style Selector="controls|GmlButton.Secondary">
         <Setter Property="Background" Value="{StaticResource SecondaryColor}" />
     </Style>
 
-    <Style Selector="controls|GmlButton.Secondary:pointerover /template/ Button /template/ ContentPresenter">
+    <Style Selector="controls|GmlButton.Secondary:pointerover /template/ Border">
         <Setter Property="Background" Value="{StaticResource SecondaryColorHover}" />
     </Style>
+
+    <Style Selector="controls|GmlButton.Secondary /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource HeadlineColor}"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Secondary:pointerover /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource HeadlineColor}"></Setter>
+    </Style>
+
+    <!-- Secondary Button -->
+
+    <!-- Additional Button -->
 
     <Style Selector="controls|GmlButton.Additional">
         <Setter Property="Background" Value="{StaticResource FormBackgroundColor}" />
@@ -133,22 +197,19 @@
         <Setter Property="BorderThickness" Value="1" />
     </Style>
 
-    <Style Selector="controls|GmlButton.Additional:pointerover /template/ Button /template/ ContentPresenter">
+    <Style Selector="controls|GmlButton.Additional:pointerover /template/ Border">
         <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
         <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
     </Style>
 
-    <Style Selector="controls|GmlButton.Primary">
-        <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+    <Style Selector="controls|GmlButton.Additional /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource HeadlineColor}"></Setter>
     </Style>
 
-    <Style Selector="controls|GmlButton.Primary:pointerover /template/ Button /template/ ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource PrimaryColorHover}" />
+    <Style Selector="controls|GmlButton.Additional:pointerover /template/ controls|OutlinedTextBlock">
+        <Setter Property="Fill" Value="{StaticResource HeadlineColor}"></Setter>
     </Style>
 
-    <Style Selector="controls|GmlButton.Primary:disabled /template/ Button /template/ ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource FormBackgroundHoverColor}" />
-        <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
-    </Style>
+    <!-- Additional Button -->
 
 </Styles>

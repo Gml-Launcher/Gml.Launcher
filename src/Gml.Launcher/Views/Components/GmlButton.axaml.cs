@@ -5,7 +5,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Styling;
 
 namespace Gml.Launcher.Views.Components;
 
@@ -35,6 +38,14 @@ public class GmlButton : TemplatedControl
     public static readonly StyledProperty<object?> CommandParameterProperty =
         AvaloniaProperty.Register<GmlButton, object?>(
             nameof(CommandParameter));
+
+    public static readonly StyledProperty<Color> ShadowColorProperty = AvaloniaProperty.Register<GmlButton, Color>(
+        nameof(ShadowColor), Colors.Black);
+
+    public static readonly StyledProperty<BoxShadows> InnerShadowProperty =
+        AvaloniaProperty.Register<GmlButton, BoxShadows>(
+            nameof(InnerShadow));
+
 
     public object? CommandParameter
     {
@@ -82,6 +93,37 @@ public class GmlButton : TemplatedControl
     {
         add => AddHandler(ClickEvent, value);
         remove => RemoveHandler(ClickEvent, value);
+    }
+
+    public Color ShadowColor
+    {
+        get => GetValue(ShadowColorProperty);
+        set => SetValue(ShadowColorProperty, value);
+    }
+
+    public BoxShadows InnerShadow
+    {
+        get => GetValue(InnerShadowProperty);
+        set => SetValue(InnerShadowProperty, value);
+    }
+
+    public GmlButton()
+    {
+        UpdateInnerShadow();
+
+        this.GetObservable(ShadowColorProperty).Subscribe(_ => UpdateInnerShadow());
+    }
+
+    private void UpdateInnerShadow()
+    {
+        InnerShadow = new BoxShadows(new BoxShadow
+        {
+            Color = ShadowColor,
+            OffsetY = -5,
+            Blur = 0,
+            Spread = 0,
+            IsInset = true
+        });
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)

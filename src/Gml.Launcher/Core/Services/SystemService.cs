@@ -91,8 +91,10 @@ public class SystemService : ISystemService
     {
         return
         [
-            new Language("/Assets/Images/lang-ru.svg", "Русский", new CultureInfo("ru-RU")),
             new Language("/Assets/Images/lang-us.svg", "English", new CultureInfo("en-US")),
+            new Language("/Assets/Images/lang-ru.svg", "Русский", new CultureInfo("ru-RU")),
+            new Language("/Assets/Images/lang-ua.svg", "Українська", new CultureInfo("uk-ua-UA")),
+            new Language("/Assets/Images/lang-es.svg", "Español", new CultureInfo("es-ES")),
             new Language("/Assets/Images/lang-zh.svg", "中文", new CultureInfo("zh-CN"))
         ];
     }

@@ -40,14 +40,6 @@
                     Converter={converters:SumServersOnlineConverter}}"
                     VerticalAlignment="Center" />
 
-                <components:ProgressBar Grid.Row="0"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="3"
-                                        IsVisible="{Binding IsProcessing}"
-                                        Headline="{Binding Headline}"
-                                        Description="{Binding Description}"
-                                        Percentage="{Binding LoadingPercentage}" />
-
                 <!-- News -->
                 <Grid RowDefinitions="Auto, 0, *" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2">
                     <TextBlock Classes="HeadlineText" Text="{x:Static lang:Resources.News}"/>
@@ -89,25 +81,17 @@
                 <Grid Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
-                      ColumnDefinitions="Auto, *, Auto">
+                      ColumnDefinitions="35, *, Auto">
 
-                    <components:GmlButton Grid.Column="0"
-                                          IconPath="/Assets/Images/document.svg"
-                                          Command="{Binding OpenLinkCommand}"
-                                          CommandParameter="https://vk.com/recloud.studio"
-                                          IconSize="22"
-                                          Classes="TextIcon Additional"
-                                          Text="{x:Static lang:Resources.ModsList}" />
-
-                    <StackPanel Grid.Column="2"
+                    <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 Spacing="10">
 
-                        <components:GmlButton IconPath="/Assets/Images/vk.svg"
-                                              IconSize="24"
-                                              Padding="0, 2, 0, 0"
+                        <components:GmlButton IconPath="/Assets/Images/discord.svg"
+                                              IconSize="32"
+                                              Padding="0, 5, 0, 0"
                                               Command="{Binding OpenLinkCommand}"
-                                              CommandParameter="https://vk.com/recloud.studio"
+                                              CommandParameter="https://discord.gg/XUZMFBvkzM"
                                               Classes="Icon Additional"
                                               Text="{x:Static lang:Resources.Website}" />
 
@@ -129,10 +113,23 @@
 
         <!-- Sidebar -->
         <components:SidebarComponent Grid.Column="0"
-                                     ListViewModel="{Binding ListViewModel}"
-                                     LogoutCommand="{Binding LogoutCommand}"
-                                     HomeCommand="{Binding HomeCommand}"
-                                     ProfileCommand="{Binding GoProfileCommand}" />
+             ListViewModel="{Binding ListViewModel}"
+             LogoutCommand="{Binding LogoutCommand}"
+             HomeCommand="{Binding HomeCommand}"
+             ProfileCommand="{Binding GoProfileCommand}" />
+
+        <!-- ProgressBar -->
+        <components:ProgressBar
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Margin="0 0 25 25"
+            Height="75"
+            IsVisible="{Binding IsProcessing}"
+            Headline="{Binding Headline}"
+            Description="{Binding Description}"
+            Percentage="{Binding LoadingPercentage}" />
 
     </Grid>
 

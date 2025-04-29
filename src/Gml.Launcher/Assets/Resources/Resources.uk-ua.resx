@@ -1,0 +1,177 @@
+﻿<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+      PublicKeyToken=b77a5c561934e089
+    </value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+      PublicKeyToken=b77a5c561934e089
+    </value>
+  </resheader>
+  <data name="AuthButtonText" xml:space="preserve">
+    <value>увiйти</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Доступний</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>НАЗАД</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Особистий кабінет</value>
+  </data>
+  <data name="CheckingFileIntegrity" xml:space="preserve">
+    <value>Перевірка цілісності файлів</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>Перевірка оновлень</value>
+  </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>Знаходиться в лаунчері</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Автоматично</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Змінити</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Порожньо</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>Не вдалося визначити операційну систему</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>файлів</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Повноекранний режим</value>
+  </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>Помилка ініціалізації ігрового профілю.</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Інформація</value>
+  </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>Тека встановлення</value>
+  </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>Встановлення оновлень</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>Помилка авторизації</value>
+  </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>Не вдалося змінити теку встановлення або сталася помилка під час зміни</value>
+  </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>Ваша ігрова сесія в лаунчері завершилася, увійдіть знову</value>
+  </data>
+  <data name="IsDiskFull" xml:space="preserve">
+    <value>Недостатньо місця на диску</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>Не вдалося виявити завантажену Java для вашої операційної системи, зверніться до підтримки або адміністратора проєкту</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Логін</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Втрачено з’єднання з сервером</value>
+  </data>
+  <data name="MinecraftExceptionStartException" xml:space="preserve">
+    <value>Під час гри сталася помилка. Адміністрація вже отримала деталі вашої помилки.</value>
+  </data>
+  <data name="ModDisabled" xml:space="preserve">
+    <value>Мод успішно вимкнено</value>
+  </data>
+  <data name="ModEnabled" xml:space="preserve">
+    <value>Мод успішно увімкнено</value>
+  </data>
+  <data name="ModsEmpty" xml:space="preserve">
+    <value>Для цього профілю немає доступних опціональних модів. Якщо маєте пропозиції — повідомте адміністрацію.</value>
+  </data>
+  <data name="ModsList" xml:space="preserve">
+    <value>Список модів</value>
+  </data>
+  <data name="ModsListDescription" xml:space="preserve">
+    <value>На цій сторінці ви можете переглянути список модифікацій і вибрати ті, що вас цікавлять. Ви можете динамічно вмикати та вимикати їх у будь-який момент.</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Новини</value>
+  </data>
+  <data name="NotSetting" xml:space="preserve">
+    <value>Не вдалося отримати налаштування запуску. Перейдіть до налаштувань клієнта та спробуйте ще раз.</value>
+  </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>На серверах</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>грати</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>Грає в</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>грав.</value>
+  </data>
+  <data name="PreparingLaunch" xml:space="preserve">
+    <value>Підготовка до запуску...</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Профіль не налаштовано, запуск поточного клієнта недоступний</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Повторне підключення...</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>налаштування</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Налаштуйте обсяг оперативної пам’яті</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Налаштування ОЗП</value>
+  </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Залишилось</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успішно</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>МБ</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Оновлення</value>
+  </data>
+  <data name="UpdatingDescription" xml:space="preserve">
+    <value>Отримання оновлень</value>
+  </data>
+  <data name="VpnUse" xml:space="preserve">
+    <value>Ви використовуєте VPN-з’єднання, це може негативно впливати на якість з’єднання та завантаження ігрових клієнтів. Вимкніть VPN на час роботи лаунчера.</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>наш сайт</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Розміри вікна</value>
+  </data>
+</root>

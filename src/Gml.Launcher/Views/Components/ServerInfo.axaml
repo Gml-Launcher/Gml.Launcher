@@ -58,9 +58,7 @@
 
                     <StackPanel Spacing="10" Orientation="Horizontal">
                         <controls:GmlButton Classes="TextIcon Primary"
-                                            IconPath="/Assets/Images/login.svg"
                                             Command="{TemplateBinding PlayCommand}"
-                                            IconSize="24"
                                             FontSize="16"
                                             Text="{x:Static lang:Resources.Play}" />
 

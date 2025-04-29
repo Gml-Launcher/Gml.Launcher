@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
@@ -14,6 +15,7 @@ using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Web.Api.Domains.System;
 using GmlCore.Interfaces.Storage;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Sentry;
 using Splat;
@@ -149,5 +151,6 @@ public class SplashScreenViewModel : WindowViewModelBase
     {
         StatusText = text;
         InfinityLoading = isInfinity;
+
     }
 }

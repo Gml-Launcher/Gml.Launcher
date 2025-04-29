@@ -1,0 +1,173 @@
+﻿<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthButtonText" xml:space="preserve">
+    <value>iniciar sesión</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>VOLVER</value>
+  </data>
+  <data name="Cabinet" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="CheckingFileIntegrity" xml:space="preserve">
+    <value>Verificando la integridad de los archivos</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>Buscar actualizaciones</value>
+  </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>Permanecer en el lanzador</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>Automático</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Cambiar</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Vacío</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>No se pudo determinar el sistema operativo</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>archivos</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Pantalla completa</value>
+  </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>Error al inicializar el perfil del juego.</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>Carpeta de instalación</value>
+  </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>Instalando actualizaciones</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>Error de autenticación</value>
+  </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>No se pudo cambiar la carpeta de instalación o se produjo un error al cambiarla.</value>
+  </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>Tu sesión en el lanzador ha expirado, por favor inicia sesión nuevamente.</value>
+  </data>
+  <data name="IsDiskFull" xml:space="preserve">
+    <value>Espacio en disco insuficiente</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>No se pudo detectar Java cargado para tu sistema operativo, por favor contacta al soporte o al administrador del proyecto.</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>Iniciando</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>Conexión con el servidor perdida</value>
+  </data>
+  <data name="MinecraftExceptionStartException" xml:space="preserve">
+    <value>Ocurrió un error durante el juego. La administración ya ha recibido los detalles del error.</value>
+  </data>
+  <data name="ModDisabled" xml:space="preserve">
+    <value>El mod se ha desactivado correctamente</value>
+  </data>
+  <data name="ModEnabled" xml:space="preserve">
+    <value>El mod se ha activado correctamente</value>
+  </data>
+  <data name="ModsEmpty" xml:space="preserve">
+    <value>No hay mods opcionales disponibles para este perfil. Si tienes alguna sugerencia, por favor notifícalo a la administración.</value>
+  </data>
+  <data name="ModsList" xml:space="preserve">
+    <value>Lista de mods</value>
+  </data>
+  <data name="ModsListDescription" xml:space="preserve">
+    <value>En esta página puedes ver la lista de modificaciones y seleccionar las que te interesen. Puedes activarlas o desactivarlas dinámicamente en cualquier momento.</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Noticias</value>
+  </data>
+  <data name="NotSetting" xml:space="preserve">
+    <value>No se pudieron obtener los ajustes de inicio. Por favor ve a la configuración del cliente e inténtalo de nuevo.</value>
+  </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>En servidores</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Jugar</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>Jugar a</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>jug.</value>
+  </data>
+  <data name="PreparingLaunch" xml:space="preserve">
+    <value>Preparando para iniciar…</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>Perfil no configurado</value>
+  </data>
+  <data name="Reconnecting" xml:space="preserve">
+    <value>Reconectando…</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>Configura la cantidad de RAM utilizada.</value>
+  </data>
+  <data name="SettingsRamTitle" xml:space="preserve">
+    <value>Configuración de RAM</value>
+  </data>
+  <data name="Stay" xml:space="preserve">
+    <value>Quedan</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Éxito</value>
+  </data>
+  <data name="UnitMb" xml:space="preserve">
+    <value>MB</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Actualizando</value>
+  </data>
+  <data name="UpdatingDescription" xml:space="preserve">
+    <value>Obteniendo actualizaciones</value>
+  </data>
+  <data name="VpnUse" xml:space="preserve">
+    <value>Estás usando una conexión VPN, lo cual puede afectar negativamente la calidad de la conexión y las descargas del cliente del juego. Por favor, desactiva la VPN al ejecutar el lanzador.</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Sitio web</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>Tamaño de la ventana</value>
+  </data>
+</root>

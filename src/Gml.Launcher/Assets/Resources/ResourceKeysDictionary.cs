@@ -1,4 +1,4 @@
-﻿namespace Gml.Launcher.Assets;
+namespace Gml.Launcher.Assets;
 
 public static class ResourceKeysDictionary
 {
@@ -30,10 +30,6 @@ public static class ResourceKeysDictionary
     public const string FailedOs = "FailedOs";
     public const string JavaNotFound = "JavaNotFound";
     public const string IsDiskFull = "IsDiskFull";
-    // public const string Host = "https://gmlb.recloud.tech";
-    // public const string Host = "https://gmlb.smgcraft.com";
-    // public const string Host = "https://gml-api.magcent.ru";
-    // public const string Host = "https://gmlb.smgcraft.com";
-    public const string Host = "http://10.0.10.200:5000";
-    public const string FolderName = "GamerVIILacunerhV2";
+    public const string Host = "http://192.168.31.169:5000";
+    public const string FolderName = "AnessanLauncher";
 }

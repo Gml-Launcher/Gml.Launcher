@@ -3,7 +3,7 @@ using Gml.Launcher.ViewModels.Pages;
 using Gml.Launcher.Views.Pages;
 using ReactiveUI;
 
-namespace Gml.Launcher.Core.Helpers;
+namespace Gml.Launcher.Views.Components;
 
 public class AppViewLocator : IViewLocator
 {

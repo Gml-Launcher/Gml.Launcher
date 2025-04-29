@@ -1,7 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Gml.Launcher.App"
-             xmlns:helpers="clr-namespace:Gml.Launcher.Core.Helpers">
+             xmlns:helpers="clr-namespace:Gml.Launcher.Views.Components"
+             xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters">
 
     <Application.Resources>
         <ResourceDictionary>

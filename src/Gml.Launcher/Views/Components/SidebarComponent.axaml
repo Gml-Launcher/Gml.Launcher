@@ -17,16 +17,12 @@
             <ControlTemplate>
 
                 <Border Padding="0, 20">
-                    <Grid RowDefinitions="Auto, 80, *, 80, Auto"
+                    <Grid RowDefinitions="Auto, 0, *, 80, Auto"
                           Width="80">
-
-                        <controls:LogoComponent Grid.Row="0"
-                                                Classes="Icon"
-                                                Size="32" />
 
                         <StackPanel Grid.Row="2"
                                     Spacing="10"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Top">
 
                             <!-- <controls:GmlButton Classes="Icon Secondary" -->
                             <!--                     Command="{TemplateBinding HomeCommand}" -->
@@ -42,7 +38,7 @@
                                                 IconPath="/Assets/Images/profile.svg"
                                                 IconSize="24" />
 
-                            <controls:ServerListComponent DataContext="{TemplateBinding ListViewModel}" />
+                            <controls:ServerListComponent DataContext="{TemplateBinding ListViewModel}" Padding="15"/>
 
                         </StackPanel>
 

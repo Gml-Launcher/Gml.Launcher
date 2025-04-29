@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Gml.Launcher.ViewModels.Base;
 
-namespace Gml.Launcher.Core.Helpers;
+namespace Gml.Launcher.Views.Components;
 
 public class ViewLocator : IDataTemplate
 {

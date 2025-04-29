@@ -1,6 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:components="clr-namespace:Gml.Launcher.Views.Components">
+        xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
+        xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters">
 
     <Design.PreviewWith>
         <components:StackFrameBorder Padding="20">
@@ -47,19 +48,20 @@
     <Style Selector="TextBox.FormBox">
         <Setter Property="Foreground" Value="{DynamicResource ContentColor}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Background" Value="{DynamicResource FormBackgroundColor}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource FormBorderColor}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="Padding" Value="15" />
+        <Setter Property="BorderThickness" Value="0 0 0 1.4" />
+        <Setter Property="CornerRadius" Value="0"></Setter>
+        <Setter Property="Padding" Value="0 8 15 4" />
     </Style>
     <Style Selector="TextBox.FormBox:pointerover /template/  Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource FormBorderHoverColor}" />
     </Style>
     <Style Selector="TextBox.FormBox:focus /template/  Border#PART_BorderElement">
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource PrimaryTransparentColor}" />
+        <Setter Property="BorderThickness" Value="0 0 0 1.4" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
     <Style Selector="StackPanel.MarginBottom">
@@ -72,9 +74,200 @@
         <Setter Property="Background" Value="{DynamicResource FormBorderColor}" />
     </Style>
 
-    <Style Selector="ProgressBar.ProgressBar">
-        <Setter Property="Background" Value="{DynamicResource FormBorderColor}" />
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}" />
+    <Style Selector="ProgressBar.custom-squares">
+
+        <Style.Resources>
+            <converters:SquareFillConverter x:Key="SquareFillConverter" />
+        </Style.Resources>
+
+        <Setter Property="Template">
+            <ControlTemplate TargetType="ProgressBar">
+                <Grid>
+                    <Border x:Name="PART_Indicator" IsVisible="False" />
+
+                    <Border CornerRadius="2"
+                            BorderBrush="{DynamicResource SquareBarBorderColor}"
+                            BorderThickness="5"
+                            Background="Transparent"
+                            RenderOptions.EdgeMode="Aliased"
+                            Width="90"
+                            Height="30"/>
+
+                    <Border Background="{DynamicResource SquareBarBackgroundColor}"
+                            Width="82"
+                            Height="22"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="0">
+
+                        <ContentControl>
+                            <ContentControl.Content>
+                                <MultiBinding Converter="{StaticResource SquareFillConverter}" ConverterParameter="0">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                </MultiBinding>
+                            </ContentControl.Content>
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="x:Boolean">
+                                    <Border Width="15" Height="15"
+                                            Background="{DynamicResource SquareNullColor}"
+                                            Classes="loading-square-0"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+
+                        <ContentControl>
+                            <ContentControl.Content>
+                                <MultiBinding Converter="{StaticResource SquareFillConverter}" ConverterParameter="1">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                </MultiBinding>
+                            </ContentControl.Content>
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="x:Boolean">
+                                    <Border Width="15" Height="15"
+                                            Background="{DynamicResource SquareFirstColor}"
+                                            Classes="loading-square-1"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+
+                        <ContentControl>
+                            <ContentControl.Content>
+                                <MultiBinding Converter="{StaticResource SquareFillConverter}" ConverterParameter="2">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                </MultiBinding>
+                            </ContentControl.Content>
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="x:Boolean">
+                                    <Border Width="15" Height="15"
+                                            Background="{DynamicResource SquareSecondColor}"
+                                            Classes="loading-square-2"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+
+                        <ContentControl>
+                            <ContentControl.Content>
+                                <MultiBinding Converter="{StaticResource SquareFillConverter}" ConverterParameter="3">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                </MultiBinding>
+                            </ContentControl.Content>
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="x:Boolean">
+                                    <Border Width="15" Height="15"
+                                            Background="{DynamicResource SquareThirdColor}"
+                                            Classes="loading-square-3"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+
+                        <ContentControl>
+                            <ContentControl.Content>
+                                <MultiBinding Converter="{StaticResource SquareFillConverter}" ConverterParameter="4">
+                                    <Binding Path="Value" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                    <Binding Path="Maximum" RelativeSource="{RelativeSource AncestorType=ProgressBar}" />
+                                </MultiBinding>
+                            </ContentControl.Content>
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate x:DataType="x:Boolean">
+                                    <Border Width="15" Height="15"
+                                            Background="{DynamicResource SquareFourthColor}"
+                                            Classes="loading-square-4"/>
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="Border.loading-square-0">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Animations>
+            <Animation IterationCount="1" FillMode="Both" Duration="0:0:2">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="16.66%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="Border.loading-square-1">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Animations>
+            <Animation IterationCount="Infinite" FillMode="Both" Duration="0:0:2">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="30%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="33.33%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="Border.loading-square-2">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Animations>
+            <Animation IterationCount="Infinite" FillMode="Both" Duration="0:0:2">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="45%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="50%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="Border.loading-square-3">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Animations>
+            <Animation IterationCount="Infinite" FillMode="Both" Duration="0:0:2">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="62%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="66.66%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="Border.loading-square-4">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Animations>
+            <Animation IterationCount="Infinite" FillMode="Both" Duration="0:0:2">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="80%">
+                    <Setter Property="Opacity" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="83.33%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
     </Style>
 
     <Style Selector="ComboBox.ComboBoxStyle">

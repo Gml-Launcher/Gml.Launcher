@@ -15,9 +15,9 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <Svg Path="/Assets/Images/logo.svg"
-                     Width="{TemplateBinding Size}"
-                     Height="{TemplateBinding Size}" />
+                <Image Source="/Assets/Images/logo.png"
+                    Width="60"
+                    Height="60" />
             </ControlTemplate>
         </Setter>
     </Style>
@@ -26,12 +26,12 @@
         <!-- Set Defaults -->
         <Setter Property="Template">
             <ControlTemplate>
-                <StackPanel Orientation="Horizontal"
-                            Spacing="15">
-                    <Svg Path="/Assets/Images/logo.svg"
-                         Width="{TemplateBinding Size}"
-                         Height="{TemplateBinding Size}" />
-                    <TextBlock Text="GAMERVII"
+                <StackPanel Orientation="Vertical"
+                            Spacing="0">
+                    <Image Source="/Assets/Images/logo.png"
+                         Width="60"
+                         Height="60" />
+                    <TextBlock Text="Age Of Crafters"
                                VerticalAlignment="Center"
                                FontSize="26"
                                FontWeight="Bold"
