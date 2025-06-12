@@ -18,17 +18,13 @@ public class BackendChecker: IBackendChecker
 {
     private readonly IGmlClientManager _manager;
     public IGmlClientManager Manager => _manager;
+    public bool IsOffline => GlobalVariables.BackendInactive;
 
     public BackendChecker(
         IGmlClientManager? manager=null)
     {
         _manager = manager ?? Locator.Current.GetService<IGmlClientManager>()
             ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
-    }
-
-    public bool IsBackendInactive()
-    {
-        return GlobalVariables.BackendInactive;
     }
 
     public async Task UpdateBackendStatus()

@@ -101,16 +101,16 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
 
     private async void CheckBackend()
     {
-        if (_backendChecker.IsBackendInactive())
+        if (_backendChecker.IsOffline)
         {
             Manager
                 .CreateMessage(true, "#993030",
                     _localizationService.GetString(ResourceKeysDictionary.OfflineMode),
                     _localizationService.GetString(ResourceKeysDictionary.OfflineDescription))
                 .HasBadge("WARNING")
-                .Accent("#6000")
+                .Accent("#A54848")
                 .WithButtonsVisibility(true)
-                .WithCloseButtonVisible(false)
+                .WithCloseButtonVisible(true)
                 .WithButton(_localizationService.GetString(ResourceKeysDictionary.RestartButton), button => RestartApp())
                 .WithButton(_localizationService.GetString(ResourceKeysDictionary.CheckBackendButton), button => CheckBackendStatus(button))
                 .Queue();

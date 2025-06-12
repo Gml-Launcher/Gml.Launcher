@@ -55,7 +55,7 @@
                                   HorizontalAlignment="Center"
                                   IsDefault="True"
                                   IsVisible="{Binding IsNotProcessing}"
-                                  IsEnabled="{Binding IsBackendInactive}"
+                                  IsEnabled="{Binding BackendIsActive}"
                                   Classes="TextIcon Primary"
                                   IconPath="/Assets/Images/login.svg"
                                   IconSize="24"

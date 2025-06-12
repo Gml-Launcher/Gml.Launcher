@@ -126,7 +126,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
-        IsBackendInactive = !_backendChecker.IsBackendInactive();
+        BackendIsActive = !_backendChecker.IsOffline;
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
@@ -141,7 +141,7 @@ public class OverviewPageViewModel : PageViewModelBase
     public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User { get; }
-    public bool IsBackendInactive { get; }
+    public bool BackendIsActive { get; }
 
     [Reactive] public int? LoadingPercentage { get; set; }
     [Reactive] public int? MaxCount { get; set; }
@@ -270,7 +270,7 @@ public class OverviewPageViewModel : PageViewModelBase
                 _gameProcess?.Dispose();
                 Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
-                if (!_backendChecker.IsBackendInactive())
+                if (!_backendChecker.IsOffline)
                 {
                     await _gmlManager.UpdateDiscordRpcState(
                         LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
@@ -290,12 +290,12 @@ public class OverviewPageViewModel : PageViewModelBase
         if (profileInfo.Data is null)
             throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured));
 
-        if (!_backendChecker.IsBackendInactive())
+        if (!_backendChecker.IsOffline)
         {
             await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
         }
 
-        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType(), _backendChecker.IsBackendInactive());
+        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType(), _backendChecker.IsOffline);
 
         process.OutputDataReceived += (sender, e) =>
         {
@@ -333,7 +333,7 @@ public class OverviewPageViewModel : PageViewModelBase
             LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
             true);
 
-        if (!_backendChecker.IsBackendInactive())
+        if (!_backendChecker.IsOffline)
         {
             await _gmlManager.UpdateDiscordRpcState(
                 $"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
@@ -357,7 +357,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         ResponseMessage<ProfileReadInfoDto?>? profileInfo;
 
-        if (_backendChecker.IsBackendInactive())
+        if (_backendChecker.IsOffline)
         {
             profileInfo = await _gmlManager.GetProfileInfoOffline(localProfile);
         }
@@ -400,7 +400,7 @@ public class OverviewPageViewModel : PageViewModelBase
             await LoadProfiles();
             await LoadNews();
 
-            if (!_backendChecker.IsBackendInactive())
+            if (!_backendChecker.IsOffline)
             {
                 await _gmlManager.LoadDiscordRpc();
                 await _gmlManager.UpdateDiscordRpcState(
@@ -429,7 +429,7 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
-            if (_backendChecker.IsBackendInactive())
+            if (_backendChecker.IsOffline)
             {
                 News = new ObservableCollection<NewsReadDto>
                 {
@@ -474,9 +474,9 @@ public class OverviewPageViewModel : PageViewModelBase
     private async Task LoadProfiles()
     {
         ResponseMessage<List<ProfileReadDto>> profilesData;
-        if (_backendChecker.IsBackendInactive())
+        if (_backendChecker.IsOffline)
         {
-            profilesData = await _gmlManager.GetProfilesOffline();
+            profilesData = await _gmlManager.GetOfflineProfiles();
         }
         else
         {

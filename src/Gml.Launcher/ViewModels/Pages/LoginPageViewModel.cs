@@ -98,10 +98,7 @@ public class LoginPageViewModel : PageViewModelBase
 
     public bool IsNotProcessing => !_isProcessing;
 
-    public bool IsBackendInactive
-    {
-        get => !_backendChecker.IsBackendInactive();
-    }
+    public bool BackendIsActive => !_backendChecker.IsOffline;
 
     public ICommand LoginCommand { get; set; }
 

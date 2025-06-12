@@ -90,19 +90,19 @@ public class SplashScreenViewModel : WindowViewModelBase
             _timer.Start();
             await _backendChecker.UpdateBackendStatus();
             _isBackendChecked = true;
-            if (_backendChecker.IsBackendInactive())
+            if (_backendChecker.IsOffline)
             {
                 ChangeState(_localizationService.GetString(ResourceKeysDictionary.BackendOffline), true);
                 await Task.Delay(1000);
             }
 
-            if (!_backendChecker.IsBackendInactive())
+            if (!_backendChecker.IsOffline)
             {
                 ChangeState(_localizationService.GetString(ResourceKeysDictionary.SentrySDKInit), true);
                 await InitializeSentryAsync();
             }
 
-            if (!_manager.SkipUpdate && !_backendChecker.IsBackendInactive())
+            if (!_manager.SkipUpdate && !_backendChecker.IsOffline)
             {
                 ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
                 var versionInfo = await CheckActualVersion(osType, osArch);
@@ -123,7 +123,7 @@ public class SplashScreenViewModel : WindowViewModelBase
                 }
             }
 
-            if (!_backendChecker.IsBackendInactive())
+            if (!_backendChecker.IsOffline)
             {
                 var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
