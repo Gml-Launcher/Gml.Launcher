@@ -26,6 +26,7 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly MainWindowViewModel _screen;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
+    private readonly IBackendChecker _backendChecker;
     private ObservableCollection<string> _errorList = new();
     private bool _isProcessing;
     private string _login = string.Empty;
@@ -37,6 +38,7 @@ public class LoginPageViewModel : PageViewModelBase
         IGmlClientManager? gmlClientManager = null,
         IStorageService? storageService = null,
         ISystemService? systemService = null,
+        IBackendChecker? backendChecker = null,
         ILocalizationService? localizationService = null) : base(screen, localizationService)
     {
         _screen = (MainWindowViewModel)screen;
@@ -53,6 +55,10 @@ public class LoginPageViewModel : PageViewModelBase
         _gmlClientManager = gmlClientManager
                             ?? Locator.Current.GetService<IGmlClientManager>()
                             ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
+
+        _backendChecker = backendChecker
+                          ?? Locator.Current.GetService<IBackendChecker>()
+                          ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
 
         _screen.OnClosed.Subscribe(DisposeConnections);
 
@@ -91,6 +97,11 @@ public class LoginPageViewModel : PageViewModelBase
     }
 
     public bool IsNotProcessing => !_isProcessing;
+
+    public bool IsBackendInactive
+    {
+        get => !_backendChecker.IsBackendInactive();
+    }
 
     public ICommand LoginCommand { get; set; }
 

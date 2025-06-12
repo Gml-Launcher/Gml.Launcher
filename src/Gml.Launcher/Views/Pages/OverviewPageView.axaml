@@ -1,4 +1,4 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -75,6 +75,7 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
+                                       IsBackendInactive="{Binding IsBackendInactive}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName}"
                                        GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
                                        LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion}"
@@ -132,6 +133,7 @@
                                      ListViewModel="{Binding ListViewModel}"
                                      LogoutCommand="{Binding LogoutCommand}"
                                      HomeCommand="{Binding HomeCommand}"
+                                     IsBackendInactive="{Binding IsBackendInactive}"
                                      ProfileCommand="{Binding GoProfileCommand}" />
 
     </Grid>

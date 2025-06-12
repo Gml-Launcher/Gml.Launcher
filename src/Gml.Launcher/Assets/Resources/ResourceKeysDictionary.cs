@@ -1,4 +1,4 @@
-﻿namespace Gml.Launcher.Assets;
+namespace Gml.Launcher.Assets;
 
 public static class ResourceKeysDictionary
 {
@@ -30,7 +30,22 @@ public static class ResourceKeysDictionary
     public const string FailedOs = "FailedOs";
     public const string JavaNotFound = "JavaNotFound";
     public const string IsDiskFull = "IsDiskFull";
-    // public const string Host = "https://gmlb.recloud.tech";
-    public const string Host = "http://10.0.10.74:5000";
+    public const string BackendChecking = "BackendChecking";
+    public const string BackendOffline = "BackendOffline";
+    public const string BackendCheckingLonger = "BackendCheckingLonger";
+    public const string SentrySDKInit = "SentrySDKInit";
+    public const string OfflineMode = "OfflineMode";
+    public const string OfflineDescription = "OfflineDescription";
+    public const string RestartButton = "RestartButton";
+    public const string CheckBackendButton = "CheckBackendButton";
+    public const string CheckBackendTitle = "CheckBackendTitle";
+    public const string CheckBackendMessage = "CheckBackendMessage";
+    public const string CheckBackendResultSuccessful = "CheckBackendResultSuccessful";
+    public const string CheckBackendResultFailed = "CheckBackendResultFailed";
+    public const string NewsOffline = "NewsOffline";
+    public const string NewsEmptyTitle = "NewsEmptyTitle";
+    public const string NewsEmptyContent = "NewsEmptyContent";
+    public const string Host = "https://gmlb.recloud.tech";
+    //public const string Host = "http://10.0.10.74:5000";
     public const string FolderName = "GamerVIILacunerhV2";
 }

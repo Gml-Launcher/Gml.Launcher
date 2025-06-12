@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
@@ -14,6 +14,9 @@ public class ServerInfo : TemplatedControl
 
     public static readonly StyledProperty<string> StatusProperty = AvaloniaProperty.Register<ServerInfo, string>(
         nameof(Status), "Available");
+
+    public static readonly StyledProperty<bool> IsBackendInactiveProperty = AvaloniaProperty.Register<ServerInfo, bool>(
+        nameof(IsBackendInactive), false);
 
     public static readonly StyledProperty<int> SpacingProperty = AvaloniaProperty.Register<ServerInfo, int>(
         nameof(Spacing));
@@ -73,6 +76,11 @@ public class ServerInfo : TemplatedControl
     {
         get => GetValue(GameVersionProperty);
         set => SetValue(GameVersionProperty, value);
+    }
+
+    public bool IsBackendInactive
+    {
+        get => GetValue(IsBackendInactiveProperty);
     }
 
     public string ProfileDescription

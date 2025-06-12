@@ -1,4 +1,4 @@
-﻿using System.Windows.Input;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Gml.Launcher.ViewModels.Components;
@@ -7,6 +7,10 @@ namespace Gml.Launcher.Views.Components;
 
 public class SidebarComponent : TemplatedControl
 {
+    public static readonly StyledProperty<bool> IsBackendInactiveProperty =
+        AvaloniaProperty.Register<SidebarComponent, bool>(
+            nameof(IsBackendInactive), false);
+
     public static readonly StyledProperty<ICommand> ProfileCommandProperty =
         AvaloniaProperty.Register<SidebarComponent, ICommand>(
             nameof(ProfileCommand));
@@ -27,6 +31,11 @@ public class SidebarComponent : TemplatedControl
     {
         get => GetValue(HomeCommandProperty);
         set => SetValue(HomeCommandProperty, value);
+    }
+
+    public bool IsBackendInactive
+    {
+        get => GetValue(IsBackendInactiveProperty);
     }
 
     public ListViewModel ListViewModel

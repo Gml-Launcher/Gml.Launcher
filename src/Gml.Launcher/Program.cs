@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Reactive;
 using Avalonia;
@@ -20,7 +20,7 @@ internal class Program
         try
         {
             Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Application started");
-            InitializeSentry();
+            //InitializeSentry();
             // RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
@@ -37,7 +37,7 @@ internal class Program
         try
         {
             Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Application started");
-            InitializeSentry();
+            //InitializeSentry();
             RxApp.DefaultExceptionHandler = Observer.Create<Exception>(GlobalExceptionHandler);
             BuildAvaloniaApp(args)
                 .StartWithClassicDesktopLifetime(args);
