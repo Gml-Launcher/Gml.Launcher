@@ -69,12 +69,12 @@
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
                                        Grid.Row="2"
-                                       Background="Blue"
                                        Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
                                        PlayCommand="{Binding PlayCommand}"
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
+                                       IsModsButtonVisible="{Binding IsModsButtonVisible}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName}"
                                        GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
                                        LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion}"

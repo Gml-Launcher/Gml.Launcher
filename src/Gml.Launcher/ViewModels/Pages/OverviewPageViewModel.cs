@@ -110,7 +110,8 @@ public class OverviewPageViewModel : PageViewModelBase
         _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
         _closeEvent ??= onClosed.Subscribe(KillGameProcess);
-        _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
+        _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(OnProfileChanged);
+
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
         _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
 
@@ -120,6 +121,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
+    [Reactive] public bool IsModsButtonVisible { get; private set; }
 
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
@@ -147,6 +149,30 @@ public class OverviewPageViewModel : PageViewModelBase
     private async void LoadProfilesAsync(bool eventInfo)
     {
         await LoadProfiles();
+    }
+
+    private void OnProfileChanged(ProfileReadDto? profile)
+    {
+        SaveSelectedServer(profile);
+        UpdateModsButtonVisibility(profile);
+    }
+    private void UpdateModsButtonVisibility(ProfileReadDto? profile)
+    {
+        if (profile is null)
+        {
+            IsModsButtonVisible = false;
+            return;
+        }
+
+        var keywords = new[] { "forge", "fabric", "quilt", "neoforge" };
+        var profileName = profile.Name.ToLowerInvariant();
+        var gameVersion = profile.GameVersion?.ToLowerInvariant() ?? string.Empty;
+        var launchVersion = profile.LaunchVersion?.ToLowerInvariant() ?? string.Empty;
+
+        IsModsButtonVisible = keywords.Any(keyword =>
+            profileName.Contains(keyword) ||
+            gameVersion.Contains(keyword) ||
+            launchVersion.Contains(keyword));
     }
 
     private void ChangeLoadProcessDescription(int count)
@@ -194,8 +220,6 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
-                    // await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
@@ -211,7 +235,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
             }
-            catch (UnauthorizedAccessException exception)
+            catch (UnauthorizedAccessException)
             {
                 await OnLogout(CancellationToken.None);
             }
@@ -420,6 +444,9 @@ public class OverviewPageViewModel : PageViewModelBase
             ListViewModel.SelectedProfile = profile;
 
         ListViewModel.SelectedProfile ??= ListViewModel.Profiles.FirstOrDefault();
+
+        // НОВОЕ: Устанавливаем начальное состояние видимости кнопки при первой загрузке
+        UpdateModsButtonVisibility(ListViewModel.SelectedProfile);
     }
 
     private async Task Reconnect()

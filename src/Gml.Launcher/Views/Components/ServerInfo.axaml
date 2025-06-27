@@ -76,6 +76,7 @@
                                             IconPath="/Assets/Images/document.svg"
                                             IconSize="24"
                                             FontSize="16"
+                                            IsVisible="{TemplateBinding IsModsButtonVisible}"
                                             Text="{x:Static lang:Resources.ModsList}" />
                     </StackPanel>
                 </StackPanel>
