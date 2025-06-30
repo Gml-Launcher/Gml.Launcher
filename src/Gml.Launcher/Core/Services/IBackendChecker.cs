@@ -4,7 +4,7 @@ namespace Gml.Launcher.Core.Services;
 
 public interface IBackendChecker
 {
-    Task<bool> CheckBackendStatus();
+    Task<bool> BackendIsActive();
     Task UpdateBackendStatus();
     bool IsOffline { get; }
 }

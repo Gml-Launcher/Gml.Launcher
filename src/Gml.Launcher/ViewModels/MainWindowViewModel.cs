@@ -75,7 +75,7 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
             .WithCloseButtonVisible(false)
             .Queue();
 
-        bool backendInactive = await _backendChecker.CheckBackendStatus();
+        bool backendInactive = await _backendChecker.BackendIsActive();
 
         Manager.Dismiss(CheckMessage);
         button.IsEnabled = true;

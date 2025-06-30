@@ -431,16 +431,17 @@ public class OverviewPageViewModel : PageViewModelBase
         {
             if (_backendChecker.IsOffline)
             {
-                News = new ObservableCollection<NewsReadDto>
-                {
+                News =
+                [
                     new NewsReadDto
                     {
                         Title = LocalizationService.GetString(ResourceKeysDictionary.NewsOffline),
-                        Content = $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsOffline)}</div>",
-                        Date = DateTime.Now,
+                        Content =
+                            $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsOffline)}</div>",
+                        Date = null,
                         Type = NewsListenerType.Custom
                     }
-                };
+                ];
                 return;
             }
 
@@ -448,16 +449,17 @@ public class OverviewPageViewModel : PageViewModelBase
 
             if (news.Data?.Count == 0)
             {
-                News = new ObservableCollection<NewsReadDto>
-                {
+                News =
+                [
                     new NewsReadDto
                     {
                         Title = LocalizationService.GetString(ResourceKeysDictionary.NewsEmptyTitle),
-                        Content = $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsEmptyContent)}</div>",
-                        Date = DateTime.Now,
+                        Content =
+                            $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsEmptyContent)}</div>",
+                        Date = null,
                         Type = NewsListenerType.Custom
                     }
-                };
+                ];
             }
             else
             {

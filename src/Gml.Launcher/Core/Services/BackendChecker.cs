@@ -29,31 +29,26 @@ public class BackendChecker: IBackendChecker
 
     public async Task UpdateBackendStatus()
     {
-        GlobalVariables.BackendInactive = await CheckBackendStatus();
+        GlobalVariables.BackendInactive = await BackendIsActive() == false;
     }
 
-    public async Task<bool> CheckBackendStatus()
+    public Task<bool> BackendIsActive()
     {
         try
         {
-            var response = await GmlClientManager.CheckAPI(ResourceKeysDictionary.Host);
-            if (response != 200)
-            {
-                return true;
-            }
-            return false;
+            return GmlClientManager.CheckAPI(ResourceKeysDictionary.Host);
         }
         catch (TaskCanceledException exception)
         {
             SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
-            return true;
+            return Task.FromResult(false);
         }
         catch (HttpRequestException exception)
         {
             SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
-            return true;
+            return Task.FromResult(false);
         }
     }
 }
