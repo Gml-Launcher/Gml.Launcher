@@ -8,5 +8,5 @@ public record SettingsInfo(
     double RamValue,
     string? LanguageCode)
 {
-    public static SettingsInfo Default => new(900, 600, false, true, 0, "ru-RU");
+    public static SettingsInfo Default => new(900, 600, false, true, 1024, "ru-RU");
 }

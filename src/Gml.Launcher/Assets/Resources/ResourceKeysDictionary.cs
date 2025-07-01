@@ -45,7 +45,9 @@ public static class ResourceKeysDictionary
     public const string NewsOffline = "NewsOffline";
     public const string NewsEmptyTitle = "NewsEmptyTitle";
     public const string NewsEmptyContent = "NewsEmptyContent";
-    public const string Host = "https://gmlb.recloud.tech";
-    //public const string Host = "http://10.0.10.74:5000";
+    // public const string Host = "https://gmlb.recloud.tech";
+    public const string Host = "http://10.0.10.74:5000";
+    // public const string Host = "http://82.202.138.23:5000";
+    // public const string Host = "https://gmlb.nazzy.team";
     public const string FolderName = "GamerVIILacunerhV2";
 }
