@@ -71,6 +71,54 @@
 
         </components:StackFrameBorder>
 
+         <!-- 2FA Overlay -->
+        <Border IsVisible="{Binding Is2FaVisible}"
+                Background="#80000000"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ZIndex="100">
+            <components:StackFrameBorder VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         Width="300"
+                                         Spacing="20">
+                <TextBlock Text="2FA аутентификация"
+                           HorizontalAlignment="Center"
+                           Classes="FormText"
+                           FontSize="18"
+                           FontWeight="Bold" />
+
+                <TextBlock Text="Пожалуйста, введите код подтверждения из вашего приложения аутентификации"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Classes="FormText" />
+
+                <StackPanel Classes="MarginBottom">
+                    <TextBox Classes="FormBox"
+                             Text="{Binding TwoFactorCode}"
+                             MaxLength="6"
+                             HorizontalContentAlignment="Center"
+                             FontSize="24"
+                             FontWeight="Bold" />
+                </StackPanel>
+
+                <components:GmlButton Command="{Binding Verify2FaCommand}"
+                                      HorizontalAlignment="Center"
+                                      IsDefault="True"
+                                      IsVisible="{Binding !IsProcessing}"
+                                      Classes="TextIcon Primary"
+                                      FontWeight="Bold"
+                                      Text="Подтвердить" />
+
+                <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                             Classes="ProgressBar"
+                             IsVisible="{Binding IsProcessing}"
+                             Margin="23"
+                             Height="1"
+                             VerticalAlignment="Bottom" />
+            </components:StackFrameBorder>
+        </Border>
+
     </Grid>
 
 </UserControl>
