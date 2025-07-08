@@ -58,6 +58,11 @@ public class LoginPageViewModel : PageViewModelBase
                             ?? Locator.Current.GetService<IGmlClientManager>()
                             ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
+        _backendChecker = backendChecker
+                          ?? Locator.Current.GetService<IBackendChecker>()
+                          ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
+
+
         _screen.OnClosed.Subscribe(DisposeConnections);
 
         LoginCommand = ReactiveCommand.CreateFromTask(OnAuth);
