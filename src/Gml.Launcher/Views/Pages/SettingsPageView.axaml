@@ -160,14 +160,22 @@
                                      Classes="FormBox"
                                      Text="{Binding InstallationFolder}" />
 
-                            <components:GmlButton Grid.Column="2" Classes="TextIcon Additional"
-                                                  Padding="15, 0, 20 ,0"
-                                                  IconPath="/Assets/Images/folder.svg"
-                                                  IconSize="22"
-                                                  HorizontalAlignment="Right"
-                                                  CornerRadius="10"
-                                                  Click="OpenFileDialog"
-                                                  Text="{x:Static lang:Resources.Edit}" />
+                            <StackPanel Grid.Column="2" Spacing="10" Orientation="Horizontal">
+                                <components:GmlButton Classes="Icon Additional"
+                                                      IconPath="/Assets/Images/folder.svg"
+                                                      IconSize="22"
+                                                      HorizontalAlignment="Right"
+                                                      CornerRadius="10"
+                                                      Click="OpenLocation"
+                                                      Text="{x:Static lang:Resources.Edit}" />
+                                <components:GmlButton Classes="Icon Additional"
+                                                      IconPath="/Assets/Images/edit.svg"
+                                                      IconSize="22"
+                                                      HorizontalAlignment="Right"
+                                                      CornerRadius="10"
+                                                      Click="OpenFileDialog"
+                                                      Text="{x:Static lang:Resources.Edit}" />
+                            </StackPanel>
 
                         </Grid>
 

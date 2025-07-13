@@ -322,4 +322,10 @@
   <data name="BackendOffline" xml:space="preserve">
     <value>Сервер не отвечает</value>
   </data>
+  <data name="TwoFactorTitle" xml:space="preserve">
+    <value>2FA аутентификация</value>
+  </data>
+  <data name="TwoFactorDescription" xml:space="preserve">
+    <value>Пожалуйста, введите код подтверждения из вашего приложения аутентификации</value>
+  </data>
 </root>

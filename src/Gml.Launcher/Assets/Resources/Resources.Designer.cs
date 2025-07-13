@@ -10,8 +10,8 @@
 
 namespace Gml.Launcher.Assets.Resources {
     using System;
-    
-    
+
+
     /// <summary>
     ///   Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Gml.Launcher.Assets.Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Перезаписывает свойство CurrentUICulture текущего потока для всех
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
@@ -59,7 +59,7 @@ namespace Gml.Launcher.Assets.Resources {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Sign in.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("AuthButtonText", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Available.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Available", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на BACK.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Back", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Checking the server.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("BackendChecking", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Still checking the server.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("BackendCheckingLonger", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на The server is not responding.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("BackendOffline", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Profile.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Cabinet", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Check the server.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckBackendButton", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Checking the availability of the server, please wait.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckBackendMessage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Server is offline right now. Try again later.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckBackendResultFailed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Server is online. You need to restart the launcher to turn off offline mode.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckBackendResultSuccessful", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Checking the server.
         /// </summary>
@@ -167,7 +167,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckBackendTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Checking file integrity.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckingFileIntegrity", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Checking for updates.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("CheckUpdates", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Sits in the launcher.
         /// </summary>
@@ -194,7 +194,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("DefaultDRpcText", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Auto.
         /// </summary>
@@ -203,7 +203,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("DynamicValue", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Change.
         /// </summary>
@@ -212,7 +212,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Empty.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Empty", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Error.
         /// </summary>
@@ -230,7 +230,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Failed to determine the operating system.
         /// </summary>
@@ -239,7 +239,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("FailedOs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на files.
         /// </summary>
@@ -248,7 +248,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Files", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Full screen.
         /// </summary>
@@ -257,7 +257,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("FullScreen", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Error initializing the game profile..
         /// </summary>
@@ -266,7 +266,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("GameProfileError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Information.
         /// </summary>
@@ -275,7 +275,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Information", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Install folder.
         /// </summary>
@@ -284,7 +284,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InstallationDirectory", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Installing updates.
         /// </summary>
@@ -293,7 +293,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InstallingUpdates", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Auth error.
         /// </summary>
@@ -302,7 +302,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InvalidAuthData", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Failed to change the installation folder or an error occurred while changing the folder..
         /// </summary>
@@ -311,7 +311,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InvalidFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Your game session in the launcher has expired, please log in again..
         /// </summary>
@@ -320,7 +320,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("InvalidSession", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Not enough disk space.
         /// </summary>
@@ -329,7 +329,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("IsDiskFull", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Unable to detect a loaded Java for your operating system, please contact support or the project administrator..
         /// </summary>
@@ -338,7 +338,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("JavaNotFound", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Launching.
         /// </summary>
@@ -347,7 +347,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Launching", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Login.
         /// </summary>
@@ -356,7 +356,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Lost connection to server.
         /// </summary>
@@ -365,7 +365,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("LostConnection", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на An error occurred during the game. The administration has already received the details of your error.
         ///
@@ -376,7 +376,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("MinecraftExceptionStartException", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на The mod has been successfully disabled.
         /// </summary>
@@ -385,7 +385,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModDisabled", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на The mod has been successfully enabled.
         /// </summary>
@@ -394,7 +394,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModEnabled", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на There are no optional mods available for this profile. If you have any suggestions, please notify the administration..
         /// </summary>
@@ -403,7 +403,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModsEmpty", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Mods list.
         /// </summary>
@@ -412,7 +412,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModsList", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на On this page, you can view the list of modifications and select the ones you are interested in. You can dynamically enable or disable them at any time..
         /// </summary>
@@ -421,7 +421,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ModsListDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на News.
         /// </summary>
@@ -430,7 +430,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("News", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на It&apos;s empty here.
         /// </summary>
@@ -439,7 +439,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("NewsEmptyContent", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на There is no news right now.
         /// </summary>
@@ -448,7 +448,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("NewsEmptyTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Unable to load news.
         /// </summary>
@@ -457,7 +457,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("NewsOffline", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Failed to get launch settings. Please go to the client settings and try again..
         /// </summary>
@@ -466,7 +466,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("NotSetting", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на There is no access to the server. The launcher works offline.
         ///To exit offline mode, make sure that the server is available, and then restart the launcher..
@@ -476,7 +476,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("OfflineDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Offline mode.
         /// </summary>
@@ -485,7 +485,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("OfflineMode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на On servers.
         /// </summary>
@@ -494,7 +494,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("OnServers", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Password.
         /// </summary>
@@ -503,7 +503,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Play.
         /// </summary>
@@ -512,7 +512,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Play", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Play in.
         /// </summary>
@@ -521,7 +521,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("PlayDRpcText", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на pl..
         /// </summary>
@@ -530,7 +530,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("PlayersShort", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Preparing to launch....
         /// </summary>
@@ -539,7 +539,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("PreparingLaunch", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Profile not configured.
         /// </summary>
@@ -548,7 +548,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("ProfileNotConfigured", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Reconnecting.....
         /// </summary>
@@ -557,7 +557,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Reconnecting", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Restart.
         /// </summary>
@@ -566,7 +566,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("RestartButton", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Initializing Sentry SDK.
         /// </summary>
@@ -575,7 +575,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("SentrySDKInit", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Settings.
         /// </summary>
@@ -584,7 +584,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Configure the amount of RAM consumed..
         /// </summary>
@@ -593,7 +593,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("SettingsRamDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Settings RAM.
         /// </summary>
@@ -602,7 +602,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("SettingsRamTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Stay.
         /// </summary>
@@ -611,7 +611,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Stay", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Success.
         /// </summary>
@@ -620,7 +620,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Success", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на MB.
         /// </summary>
@@ -629,7 +629,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("UnitMb", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Updating.
         /// </summary>
@@ -638,7 +638,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Updating", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Retrieving updates.
         /// </summary>
@@ -647,7 +647,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("UpdatingDescription", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на You are using a VPN connection, which may negatively affect connection quality and game client downloads. Please disable the VPN while running the launcher..
         /// </summary>
@@ -656,7 +656,7 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("VpnUse", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Website.
         /// </summary>
@@ -665,13 +665,31 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Website", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Ищет локализованную строку, похожую на Window size.
         /// </summary>
         public static string WindowSize {
             get {
                 return ResourceManager.GetString("WindowSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Window size.
+        /// </summary>
+        public static string TwoFactorTitle {
+            get {
+                return ResourceManager.GetString("TwoFactorTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Window size.
+        /// </summary>
+        public static string TwoFactorDescription {
+            get {
+                return ResourceManager.GetString("TwoFactorDescription", resourceCulture);
             }
         }
     }

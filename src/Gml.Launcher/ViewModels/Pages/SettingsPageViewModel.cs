@@ -157,16 +157,16 @@ public class SettingsPageViewModel : PageViewModelBase
     {
         var data = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
 
-        SettingsInfo DEFAULT_SETTINGS = SettingsInfo.Default;
+        var defaultSettings = SettingsInfo.Default;
 
         if (data == null)
         {
-            WindowWidth = DEFAULT_SETTINGS.GameWidth.ToString();
-            WindowHeight = DEFAULT_SETTINGS.GameHeight.ToString();
-            RamValue = DEFAULT_SETTINGS.RamValue;
-            DynamicRamValue = DEFAULT_SETTINGS.IsDynamicRam;
-            FullScreen = DEFAULT_SETTINGS.FullScreen;
-            SelectedLanguage = AvailableLanguages.FirstOrDefault();
+            WindowWidth = defaultSettings.GameWidth.ToString();
+            WindowHeight = defaultSettings.GameHeight.ToString();
+            RamValue = defaultSettings.RamValue;
+            DynamicRamValue = defaultSettings.IsDynamicRam;
+            FullScreen = defaultSettings.FullScreen;
+            SelectedLanguage = AvailableLanguages.FirstOrDefault(c => c.Culture.Name == defaultSettings.LanguageCode);
             return;
         }
 
@@ -174,8 +174,8 @@ public class SettingsPageViewModel : PageViewModelBase
             ? AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode)
             : AvailableLanguages.FirstOrDefault();
 
-        WindowWidth = data.GameWidth == 0 ? DEFAULT_SETTINGS.GameWidth.ToString() : data.GameWidth.ToString();
-        WindowHeight = data.GameHeight == 0 ? DEFAULT_SETTINGS.GameHeight.ToString() : data.GameHeight.ToString();
+        WindowWidth = data.GameWidth == 0 ? defaultSettings.GameWidth.ToString() : data.GameWidth.ToString();
+        WindowHeight = data.GameHeight == 0 ? defaultSettings.GameHeight.ToString() : data.GameHeight.ToString();
         RamValue = data.RamValue;
         DynamicRamValue = data.IsDynamicRam;
         FullScreen = data.FullScreen;

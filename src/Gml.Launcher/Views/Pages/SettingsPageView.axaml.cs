@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -59,6 +60,43 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
 
                 ViewModel!.InstallationFolder = Path.GetFullPath(path);
                 ViewModel!.ChangeFolder();
+            }
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+
+            // Existing log statement
+            Console.WriteLine(exception.ToString());
+
+            // Show error notification
+            ViewModel?.MainViewModel.Manager
+                .CreateMessage(true, "#D03E3E",
+                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.Error),
+                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.InvalidFolder))
+                .Dismiss()
+                .WithDelay(TimeSpan.FromSeconds(3))
+                .Queue();
+        }
+    }
+    private async void OpenLocation(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (!Directory.Exists(ViewModel!.InstallationFolder))
+                throw new DirectoryNotFoundException();
+
+            if (OperatingSystem.IsWindows())
+            {
+                Process.Start("explorer.exe", ViewModel!.InstallationFolder);
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                Process.Start("open", ViewModel!.InstallationFolder);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                Process.Start("xdg-open", ViewModel!.InstallationFolder);
             }
         }
         catch (Exception exception)
