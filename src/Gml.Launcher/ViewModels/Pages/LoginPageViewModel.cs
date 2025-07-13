@@ -129,7 +129,6 @@ public class LoginPageViewModel : PageViewModelBase
                 authInfo.Details?.Any(d => d.Contains("2FA")) == true)
             {
                 Debug.WriteLine("2FA required based on error message");
-                _pendingAuthUser = new AuthUser { Name = Login };
                 Is2FaVisible = true;
                 TwoFactorCode = string.Empty;
                 return;
@@ -140,7 +139,6 @@ public class LoginPageViewModel : PageViewModelBase
                 if (authInfo.User.Has2Fa)
                 {
                     Debug.WriteLine("User has 2FA enabled, showing 2FA input");
-                    _pendingAuthUser = (AuthUser)authInfo.User;
                     Is2FaVisible = true;
                     TwoFactorCode = string.Empty;
                     return;
