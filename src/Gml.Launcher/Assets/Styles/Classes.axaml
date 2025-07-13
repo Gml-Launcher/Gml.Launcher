@@ -5,6 +5,7 @@
     <Design.PreviewWith>
         <components:StackFrameBorder Padding="20">
             <TextBox Text="Поле для ввода" />
+            <TextBox Text="For" Classes="FormBox" />
         </components:StackFrameBorder>
     </Design.PreviewWith>
 

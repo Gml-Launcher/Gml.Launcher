@@ -324,4 +324,10 @@ To exit offline mode, make sure that the server is available, and then restart t
   <data name="BackendOffline" xml:space="preserve">
     <value>The server is not responding</value>
   </data>
+  <data name="TwoFactorTitle" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="TwoFactorDescription" xml:space="preserve">
+    <value>Please enter the verification code from your authentication app.</value>
+  </data>
 </root>

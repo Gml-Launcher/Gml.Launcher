@@ -14,6 +14,7 @@ using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Sentry;
 using Splat;
 
@@ -29,10 +30,6 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly ISystemService _systemService;
     private ObservableCollection<string> _errorList = new();
     private bool _isProcessing;
-    private string _login = string.Empty;
-    private string _password = string.Empty;
-    private string _twoFactorCode = string.Empty;
-    private bool _is2FaVisible;
     private AuthUser _pendingAuthUser;
 
     internal LoginPageViewModel(IScreen screen,
@@ -71,29 +68,10 @@ public class LoginPageViewModel : PageViewModelBase
         RxApp.MainThreadScheduler.Schedule(CheckAuth);
     }
 
-    public string Login
-    {
-        get => _login;
-        set => this.RaiseAndSetIfChanged(ref _login, value);
-    }
-
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-
-    public string TwoFactorCode
-    {
-        get => _twoFactorCode;
-        set => this.RaiseAndSetIfChanged(ref _twoFactorCode, value);
-    }
-
-    public bool Is2FaVisible
-    {
-        get => _is2FaVisible;
-        set => this.RaiseAndSetIfChanged(ref _is2FaVisible, value);
-    }
+    [Reactive] public string Login { get; set; }
+    [Reactive] public string Password { get; set; }
+    [Reactive] public string TwoFactorCode { get; set; }
+    [Reactive] public bool Is2FaVisible { get; set; }
 
     public bool IsProcessing
     {

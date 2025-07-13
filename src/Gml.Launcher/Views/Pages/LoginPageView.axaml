@@ -53,7 +53,7 @@
 
             <components:GmlButton Command="{Binding LoginCommand}"
                                   HorizontalAlignment="Center"
-                                  IsDefault="True"
+                                  IsDefault="{Binding !Is2FaVisible}"
                                   IsVisible="{Binding IsNotProcessing}"
                                   IsEnabled="{Binding BackendIsActive}"
                                   Classes="TextIcon Primary"
@@ -79,15 +79,15 @@
                 ZIndex="100">
             <components:StackFrameBorder VerticalAlignment="Center"
                                          HorizontalAlignment="Center"
-                                         Width="300"
+                                         Width="350"
                                          Spacing="20">
-                <TextBlock Text="2FA аутентификация"
+                <TextBlock Text="{x:Static lang:Resources.TwoFactorTitle}"
                            HorizontalAlignment="Center"
-                           Classes="FormText"
+                           Classes="HeadlineText"
                            FontSize="18"
                            FontWeight="Bold" />
 
-                <TextBlock Text="Пожалуйста, введите код подтверждения из вашего приложения аутентификации"
+                <TextBlock Text="{x:Static lang:Resources.TwoFactorDescription}"
                            HorizontalAlignment="Center"
                            TextWrapping="Wrap"
                            TextAlignment="Center"
@@ -103,10 +103,13 @@
                 </StackPanel>
 
                 <components:GmlButton Command="{Binding Verify2FaCommand}"
+                                      IconPath="/Assets/Images/password.svg"
+                                      IconSize="22"
+                                      Padding="12, 0, 15, 0"
                                       HorizontalAlignment="Center"
-                                      IsDefault="True"
+                                      IsDefault="{Binding Is2FaVisible}"
                                       IsVisible="{Binding !IsProcessing}"
-                                      Classes="TextIcon Primary"
+                                      Classes="TextIcon Additional"
                                       FontWeight="Bold"
                                       Text="Подтвердить" />
 
