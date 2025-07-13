@@ -375,7 +375,7 @@ public class OverviewPageViewModel : PageViewModelBase
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
-            RamSize = Convert.ToInt32(settings.RamValue),
+            RamSize = CalculateRecommendedRam(settings),
             IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
             OsArchitecture = _systemService.GetOsArchitecture(),
@@ -398,6 +398,14 @@ public class OverviewPageViewModel : PageViewModelBase
         }
 
         return profileInfo;
+    }
+
+    private int CalculateRecommendedRam(SettingsInfo settings)
+    {
+        var maxRam = (int)_systemService.GetMaxRam();
+        var recommendedRam = settings.IsDynamicRam ? ListViewModel.SelectedProfile?.RecommendedRam ?? 1024 : Convert.ToInt32(settings.RamValue);
+
+        return Math.Min(recommendedRam, maxRam);
     }
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
