@@ -195,7 +195,7 @@ public class LoginPageViewModel : PageViewModelBase
             Errors.Clear();
 
             Debug.WriteLine($"Verifying 2FA code: {TwoFactorCode}");
-            var authInfo = await _gmlClientManager.Auth2Fa(Login, Password, _systemService.GetHwid(), TwoFactorCode);
+            var authInfo = await _gmlClientManager.AuthWith2Fa(Login, Password, _systemService.GetHwid(), TwoFactorCode);
             Debug.WriteLine($"2FA verification response - IsAuth: {authInfo.User?.IsAuth}, Has2Fa: {authInfo.User?.Has2Fa}");
             Debug.WriteLine($"2FA verification message: {authInfo.Message}");
             Debug.WriteLine($"2FA verification details: {string.Join(", ", authInfo.Details)}");
