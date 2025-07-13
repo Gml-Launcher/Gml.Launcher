@@ -1,11 +1,4 @@
-using System;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using Avalonia.Threading;
 using Gml.Client;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
@@ -17,6 +10,15 @@ using GmlCore.Interfaces.Storage;
 using ReactiveUI.Fody.Helpers;
 using Sentry;
 using Splat;
+using System;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Gml.Launcher.ViewModels;
 
@@ -26,13 +28,17 @@ public class SplashScreenViewModel : WindowViewModelBase
     private readonly ILocalizationService _localizationService;
     private readonly IGmlClientManager _manager;
     private readonly ISystemService _systemService;
+    private readonly IBackendChecker _backendChecker;
+    private readonly DispatcherTimer _timer;
+    private bool _isBackendChecked;
     public IGmlClientManager Manager => _manager;
 
     public SplashScreenViewModel(
         ISystemService? systemService = null,
         IGmlClientManager? manager = null,
         IStorageService? storage = null,
-        ILocalizationService? localizationService = null)
+        ILocalizationService? localizationService = null,
+        IBackendChecker? backendChecker = null)
     {
         _storageService = storage ?? Locator.Current.GetService<IStorageService>()
             ?? throw new ServiceNotFoundException(typeof(IStorageService));
@@ -46,6 +52,13 @@ public class SplashScreenViewModel : WindowViewModelBase
         _localizationService = localizationService ?? Locator.Current.GetService<ILocalizationService>()
             ?? throw new ServiceNotFoundException(typeof(ILocalizationService));
 
+        _backendChecker = backendChecker ?? Locator.Current.GetService<IBackendChecker>()
+            ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
+
+        _timer = new DispatcherTimer();
+        _timer.Interval = TimeSpan.FromSeconds(15);
+        _timer.Tick += OnTimerTick;
+
         StatusText = _localizationService.GetString(ResourceKeysDictionary.PreparingLaunch);
     }
 
@@ -55,6 +68,14 @@ public class SplashScreenViewModel : WindowViewModelBase
     [Reactive] public bool IsAuth { get; private set; }
     public ILocalizationService LocalizationService => _localizationService;
 
+    private void OnTimerTick(object? sender, EventArgs e)
+    {
+        if (sender != null && !_isBackendChecked)
+        {
+            StatusText = _localizationService.GetString(ResourceKeysDictionary.BackendCheckingLonger);
+        }
+    }
+
     public async Task InitializeAsync()
     {
         try
@@ -63,10 +84,27 @@ public class SplashScreenViewModel : WindowViewModelBase
             var osArch = RuntimeInformation.ProcessArchitecture;
 
             await _systemService.LoadSystemData();
-            ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
 
-            if (!_manager.SkipUpdate)
+            ChangeState(_localizationService.GetString(ResourceKeysDictionary.BackendChecking), true);
+            _isBackendChecked = false;
+            _timer.Start();
+            await _backendChecker.UpdateBackendStatus();
+            _isBackendChecked = true;
+            if (_backendChecker.IsOffline)
             {
+                ChangeState(_localizationService.GetString(ResourceKeysDictionary.BackendOffline), true);
+                await Task.Delay(1000);
+            }
+
+            if (!_backendChecker.IsOffline)
+            {
+                ChangeState(_localizationService.GetString(ResourceKeysDictionary.SentrySDKInit), true);
+                await InitializeSentryAsync();
+            }
+
+            if (!_manager.SkipUpdate && !_backendChecker.IsOffline)
+            {
+                ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
                 var versionInfo = await CheckActualVersion(osType, osArch);
 
                 if (!versionInfo.IsActuallVersion)
@@ -85,18 +123,23 @@ public class SplashScreenViewModel : WindowViewModelBase
                 }
             }
 
-            var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
+            if (!_backendChecker.IsOffline)
+            {
+                var authUser = await _storageService.GetAsync<AuthUser>(StorageConstants.User);
 
-            IsAuth = authUser != null
-                     && authUser.ExpiredDate > DateTime.Now
-                     && authUser is { IsAuth: true }
-                     && await ValidateToken(authUser)
-                     && await ValidateTokenWithApi(authUser);
+                IsAuth = authUser != null
+                         && authUser.ExpiredDate > DateTime.Now
+                         && authUser is { IsAuth: true }
+                         && await ValidateToken(authUser)
+                         && await ValidateTokenWithApi(authUser);
+            }
         }
         catch (Exception exception)
         {
             SentrySdk.CaptureException(exception);
         }
+        ChangeState(_localizationService.GetString(ResourceKeysDictionary.Launching), true);
+        await Task.Delay(500);
     }
 
     private async Task<bool> ValidateToken(AuthUser user)
@@ -149,5 +192,35 @@ public class SplashScreenViewModel : WindowViewModelBase
     {
         StatusText = text;
         InfinityLoading = isInfinity;
+    }
+
+    private static async Task InitializeSentryAsync()
+    {
+        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Start sentry initialization");
+        var sentryUrl = await GmlClientManager.GetSentryLinkAsync(ResourceKeysDictionary.Host);
+
+        try
+        {
+            if (!string.IsNullOrEmpty(sentryUrl))
+                await Task.Run(() =>
+                {
+                    SentrySdk.Init(options =>
+                    {
+                        options.Dsn = sentryUrl;
+                        options.Debug = true;
+                        options.TracesSampleRate = 1.0;
+                        options.DiagnosticLevel = SentryLevel.Debug;
+                        options.IsGlobalModeEnabled = true;
+                        options.SendDefaultPii = true;
+                        options.MaxAttachmentSize = 10 * 1024 * 1024;
+                    });
+                });
+
+            Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Sentry initialized");
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
     }
 }

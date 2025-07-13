@@ -74,6 +74,7 @@
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
+                                       BackendIsNotOffline="{Binding BackendIsActive}"
                                        IsModsButtonVisible="{Binding IsModsButtonVisible}"
                                        ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName}"
                                        GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
@@ -132,6 +133,7 @@
                                      ListViewModel="{Binding ListViewModel}"
                                      LogoutCommand="{Binding LogoutCommand}"
                                      HomeCommand="{Binding HomeCommand}"
+                                     IsBackendInactive="{Binding BackendIsActive}"
                                      ProfileCommand="{Binding GoProfileCommand}" />
 
     </Grid>

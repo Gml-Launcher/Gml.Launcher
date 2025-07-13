@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -157,14 +157,25 @@ public class SettingsPageViewModel : PageViewModelBase
     {
         var data = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
 
-        if (data == null) return;
+        SettingsInfo DEFAULT_SETTINGS = SettingsInfo.Default;
+
+        if (data == null)
+        {
+            WindowWidth = DEFAULT_SETTINGS.GameWidth.ToString();
+            WindowHeight = DEFAULT_SETTINGS.GameHeight.ToString();
+            RamValue = DEFAULT_SETTINGS.RamValue;
+            DynamicRamValue = DEFAULT_SETTINGS.IsDynamicRam;
+            FullScreen = DEFAULT_SETTINGS.FullScreen;
+            SelectedLanguage = AvailableLanguages.FirstOrDefault();
+            return;
+        }
 
         SelectedLanguage = !string.IsNullOrEmpty(data.LanguageCode)
             ? AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode)
             : AvailableLanguages.FirstOrDefault();
 
-        WindowWidth = data.GameWidth == 0 ? "900" : data.GameWidth.ToString();
-        WindowHeight = data.GameHeight == 0 ? "600" : data.GameHeight.ToString();
+        WindowWidth = data.GameWidth == 0 ? DEFAULT_SETTINGS.GameWidth.ToString() : data.GameWidth.ToString();
+        WindowHeight = data.GameHeight == 0 ? DEFAULT_SETTINGS.GameHeight.ToString() : data.GameHeight.ToString();
         RamValue = data.RamValue;
         DynamicRamValue = data.IsDynamicRam;
         FullScreen = data.FullScreen;

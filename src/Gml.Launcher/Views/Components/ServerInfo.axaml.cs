@@ -45,6 +45,16 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<ICommand> GoModsCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
         nameof(GoModsCommand));
 
+    public static readonly StyledProperty<bool> BackendIsNotOfflineProperty = AvaloniaProperty.Register<ServerInfo, bool>(
+        nameof(BackendIsNotOffline));
+
+    public bool BackendIsNotOffline
+    {
+        get => GetValue(BackendIsNotOfflineProperty);
+        set => SetValue(BackendIsNotOfflineProperty, value);
+    }
+
+    public ICommand GoModsCommand
     public static readonly StyledProperty<bool> IsModsButtonVisibleProperty =
         AvaloniaProperty.Register<ServerInfo, bool>(nameof(IsModsButtonVisible), defaultValue: true);
 

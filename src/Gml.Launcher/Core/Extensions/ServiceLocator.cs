@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -32,6 +32,7 @@ public static class ServiceLocator
         CheckAndChangeInstallationFolder(storageService, manager);
         CheckAndChangeLanguage(storageService, systemService);
         Locator.CurrentMutable.RegisterConstant(new VpnChecker(), typeof(IVpnChecker));
+        Locator.CurrentMutable.RegisterConstant(new BackendChecker(), typeof(IBackendChecker));
 
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {

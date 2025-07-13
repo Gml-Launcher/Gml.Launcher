@@ -1,4 +1,4 @@
-﻿namespace Gml.Launcher.Models;
+namespace Gml.Launcher.Models;
 
 public record SettingsInfo(
     int GameWidth,

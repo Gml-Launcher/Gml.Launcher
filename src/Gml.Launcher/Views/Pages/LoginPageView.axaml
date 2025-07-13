@@ -53,8 +53,9 @@
 
             <components:GmlButton Command="{Binding LoginCommand}"
                                   HorizontalAlignment="Center"
-                                  IsDefault="True"
+                                  IsDefault="{Binding !Is2FaVisible}"
                                   IsVisible="{Binding IsNotProcessing}"
+                                  IsEnabled="{Binding BackendIsActive}"
                                   Classes="TextIcon Primary"
                                   IconPath="/Assets/Images/login.svg"
                                   IconSize="24"
@@ -69,6 +70,57 @@
                          VerticalAlignment="Bottom" />
 
         </components:StackFrameBorder>
+
+         <!-- 2FA Overlay -->
+        <Border IsVisible="{Binding Is2FaVisible}"
+                Background="#80000000"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ZIndex="100">
+            <components:StackFrameBorder VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         Width="350"
+                                         Spacing="20">
+                <TextBlock Text="{x:Static lang:Resources.TwoFactorTitle}"
+                           HorizontalAlignment="Center"
+                           Classes="HeadlineText"
+                           FontSize="18"
+                           FontWeight="Bold" />
+
+                <TextBlock Text="{x:Static lang:Resources.TwoFactorDescription}"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Classes="FormText" />
+
+                <StackPanel Classes="MarginBottom">
+                    <TextBox Classes="FormBox"
+                             Text="{Binding TwoFactorCode}"
+                             MaxLength="6"
+                             HorizontalContentAlignment="Center"
+                             FontSize="24"
+                             FontWeight="Bold" />
+                </StackPanel>
+
+                <components:GmlButton Command="{Binding Verify2FaCommand}"
+                                      IconPath="/Assets/Images/password.svg"
+                                      IconSize="22"
+                                      Padding="12, 0, 15, 0"
+                                      HorizontalAlignment="Center"
+                                      IsDefault="{Binding Is2FaVisible}"
+                                      IsVisible="{Binding !IsProcessing}"
+                                      Classes="TextIcon Additional"
+                                      FontWeight="Bold"
+                                      Text="Подтвердить" />
+
+                <ProgressBar IsIndeterminate="{Binding IsProcessing}"
+                             Classes="ProgressBar"
+                             IsVisible="{Binding IsProcessing}"
+                             Margin="23"
+                             Height="1"
+                             VerticalAlignment="Bottom" />
+            </components:StackFrameBorder>
+        </Border>
 
     </Grid>
 
