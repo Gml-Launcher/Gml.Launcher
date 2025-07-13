@@ -125,8 +125,7 @@ public class LoginPageViewModel : PageViewModelBase
             Debug.WriteLine($"Auth details: {string.Join(", ", authInfo.Details)}");
 
             // Проверяем, требуется ли 2FA по сообщению об ошибке
-            if (authInfo.Message?.Contains("2FA") == true ||
-                authInfo.Details?.Any(d => d.Contains("2FA")) == true)
+            if (authInfo.User is not null && authInfo.User.Has2Fa)
             {
                 Debug.WriteLine("2FA required based on error message");
                 Is2FaVisible = true;
