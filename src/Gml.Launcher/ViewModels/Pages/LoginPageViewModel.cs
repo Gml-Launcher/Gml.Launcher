@@ -30,7 +30,6 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly ISystemService _systemService;
     private ObservableCollection<string> _errorList = new();
     private bool _isProcessing;
-    private AuthUser _pendingAuthUser;
 
     internal LoginPageViewModel(IScreen screen,
         IObservable<bool> onClosed,
