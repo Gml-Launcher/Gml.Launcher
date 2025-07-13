@@ -28,7 +28,7 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly IBackendChecker _backendChecker;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
-    private ObservableCollection<string> _errorList = new();
+    private ObservableCollection<string> _errorList = [];
     private bool _isProcessing;
 
     internal LoginPageViewModel(IScreen screen,
