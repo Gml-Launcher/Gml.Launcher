@@ -27,6 +27,7 @@ using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Dto.Messages;
 using Gml.Web.Api.Dto.News;
 using Gml.Web.Api.Dto.Profile;
+using GmlCore.Interfaces.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Sentry;
@@ -164,15 +165,22 @@ public class OverviewPageViewModel : PageViewModelBase
             return;
         }
 
-        var keywords = new[] { "forge", "fabric", "quilt", "neoforge" };
+        var keywords = new[]
+        {
+            nameof(GameLoader.Forge),
+            nameof(GameLoader.Fabric),
+            nameof(GameLoader.Quilt),
+            nameof(GameLoader.NeoForge)
+        };
+
         var profileName = profile.Name.ToLowerInvariant();
         var gameVersion = profile.GameVersion?.ToLowerInvariant() ?? string.Empty;
         var launchVersion = profile.LaunchVersion?.ToLowerInvariant() ?? string.Empty;
 
         IsModsButtonVisible = keywords.Any(keyword =>
-            profileName.Contains(keyword) ||
-            gameVersion.Contains(keyword) ||
-            launchVersion.Contains(keyword));
+            profileName.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+            gameVersion.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+            launchVersion.Contains(keyword, StringComparison.CurrentCultureIgnoreCase));
     }
 
     private void ChangeLoadProcessDescription(int count)
