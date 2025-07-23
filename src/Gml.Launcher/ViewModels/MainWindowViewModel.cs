@@ -75,13 +75,13 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
             .WithCloseButtonVisible(false)
             .Queue();
 
-        bool backendInactive = await _backendChecker.BackendIsActive();
+        bool backendIsActive = await _backendChecker.BackendIsActive();
 
         Manager.Dismiss(CheckMessage);
         button.IsEnabled = true;
         button.Content = _localizationService.GetString(ResourceKeysDictionary.CheckBackendButton);
 
-        if (!backendInactive)
+        if (backendIsActive)
         {
             Manager
                 .CreateMessage(false, "#086",
