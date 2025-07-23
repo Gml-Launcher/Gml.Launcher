@@ -32,23 +32,23 @@ public class BackendChecker: IBackendChecker
         GlobalVariables.BackendInactive = await BackendIsActive() == false;
     }
 
-    public Task<bool> BackendIsActive()
+    public async Task<bool> BackendIsActive()
     {
         try
         {
-            return GmlClientManager.CheckAPI(ResourceKeysDictionary.Host);
+            return await GmlClientManager.CheckAPI(ResourceKeysDictionary.Host);
         }
         catch (TaskCanceledException exception)
         {
             SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
-            return Task.FromResult(false);
+            return false;
         }
         catch (HttpRequestException exception)
         {
             SentrySdk.CaptureException(exception);
             Console.WriteLine(exception);
-            return Task.FromResult(false);
+            return false;
         }
     }
 }
