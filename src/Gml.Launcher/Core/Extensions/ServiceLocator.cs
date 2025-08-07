@@ -7,6 +7,7 @@ using System.Threading;
 using Avalonia;
 using Gml.Client;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core.Modules.GravitGuard;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Sentry;
@@ -26,6 +27,7 @@ public static class ServiceLocator
         RegisterLocalizationService();
         RegisterSystemService(systemService);
         RegisterLogHelper(systemService);
+        RegisterGravitGuard(systemService);
         var manager = RegisterGmlManager(systemService, installationDirectory, arguments);
         var storageService = RegisterStorage();
 
@@ -42,6 +44,11 @@ public static class ServiceLocator
         Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring ended");
 
         return builder;
+    }
+
+    private static void RegisterGravitGuard(SystemService systemService)
+    {
+        GravitGuardManager.InitializeGuard();
     }
 
     private static void RegisterLogHelper(SystemService systemService)

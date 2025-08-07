@@ -13,6 +13,9 @@
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;osx-x64;osx-arm64;linux-musl-x64;linux-musl-arm64;linux-arm64;linux-arm</RuntimeIdentifiers>
     <NoWarn>$(NoWarn);NETSDK1206</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug3\</OutputPath>
+  </PropertyGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**"/>
@@ -68,6 +71,9 @@
     <Compile Update="Core\Services\VpnChecker.cs">
       <DependentUpon>IVpnChecker.cs</DependentUpon>
     </Compile>
+    <Compile Update="Core\Services\BackendChecker.cs">
+      <DependentUpon>IBackendChecker.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
@@ -99,4 +105,23 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </AvaloniaResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- x64 ресурсы -->
+    <EmbeddedResource Condition="'$(Platform)' == 'x64' Or '$(Platform)' == 'AnyCPU'" Include="Assets\Resources\x86-64-mustdie\GuardDLL.dll">
+      <LogicalName>Guard.x64.GuardDLL.dll</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Condition="'$(Platform)' == 'x64' Or '$(Platform)' == 'AnyCPU'" Include="Assets\Resources\x86-64-mustdie\GravitGuard2.exe">
+      <LogicalName>Guard.x64.GravitGuard2.exe</LogicalName>
+    </EmbeddedResource>
+
+    <!-- x86 ресурсы -->
+    <EmbeddedResource Condition="'$(Platform)' == 'x86' Or '$(Platform)' == 'AnyCPU'" Include="Assets\Resources\x86-mustdie\GuardDLL.dll">
+      <LogicalName>Guard.x86.GuardDLL.dll</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Condition="'$(Platform)' == 'x86' Or '$(Platform)' == 'AnyCPU'" Include="Assets\Resources\x86-mustdie\GravitGuard2.exe">
+      <LogicalName>Guard.x86.GravitGuard2.exe</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
