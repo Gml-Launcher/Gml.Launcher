@@ -90,7 +90,9 @@ internal class Program
                 SentrySdk.Init(options =>
                 {
                     options.Dsn = sentryUrl;
+#if DEBUG
                     options.Debug = true;
+#endif
                     options.TracesSampleRate = 1.0;
                     options.DiagnosticLevel = SentryLevel.Debug;
                     options.IsGlobalModeEnabled = true;

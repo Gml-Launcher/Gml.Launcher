@@ -39,7 +39,7 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<ProfileState> StateProperty = AvaloniaProperty.Register<ServerInfo, ProfileState>(
         nameof(State));
 
-    public static readonly StyledProperty<DateTime> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTime>(
+    public static readonly StyledProperty<DateTimeOffset?> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTimeOffset?>(
         nameof(CreateDate));
 
     public static readonly StyledProperty<ICommand> GoModsCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
@@ -69,7 +69,7 @@ public class ServerInfo : TemplatedControl
         set => SetValue(GoModsCommandProperty, value);
     }
 
-    public DateTime CreateDate
+    public DateTimeOffset? CreateDate
     {
         get => GetValue(CreateDateProperty);
         set => SetValue(CreateDateProperty, value);

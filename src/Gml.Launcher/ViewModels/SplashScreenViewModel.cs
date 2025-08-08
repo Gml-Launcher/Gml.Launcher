@@ -207,7 +207,9 @@ public class SplashScreenViewModel : WindowViewModelBase
                     SentrySdk.Init(options =>
                     {
                         options.Dsn = sentryUrl;
-                        options.Debug = true;
+#if DEBUG
+                    options.Debug = true;
+#endif
                         options.TracesSampleRate = 1.0;
                         options.DiagnosticLevel = SentryLevel.Debug;
                         options.IsGlobalModeEnabled = true;

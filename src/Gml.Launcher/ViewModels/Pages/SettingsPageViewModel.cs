@@ -46,6 +46,7 @@ public class SettingsPageViewModel : PageViewModelBase
             )
             .Where(ValidateParams)
             .Throttle(TimeSpan.FromMilliseconds(400), RxApp.TaskpoolScheduler)
+            .ObserveOn(RxApp.TaskpoolScheduler)
             .Subscribe(SaveSettings);
 
         this.WhenAnyValue(x => x.SelectedLanguage)

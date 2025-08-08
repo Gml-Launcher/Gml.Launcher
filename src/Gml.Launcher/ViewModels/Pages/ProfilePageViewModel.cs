@@ -16,7 +16,6 @@ namespace Gml.Launcher.ViewModels.Pages;
 public class ProfilePageViewModel : PageViewModelBase
 {
     private readonly IGmlClientManager _manager;
-
     [Reactive] public string TextureUrl { get; set; }
     [Reactive] public IUser User { get; set; }
     internal ProfilePageViewModel(
@@ -29,7 +28,7 @@ public class ProfilePageViewModel : PageViewModelBase
         User = user ?? throw new ArgumentNullException(nameof(user));
         _manager = manager;
 
-        RxApp.MainThreadScheduler.Schedule(LoadData);
+        RxApp.TaskpoolScheduler.Schedule(LoadData);
     }
 
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
