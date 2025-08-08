@@ -36,7 +36,7 @@ public class BackendChecker: IBackendChecker
     {
         try
         {
-            return GmlClientManager.CheckAPI(ResourceKeysDictionary.Host);
+            return GmlClientManager.CheckApiAsync(ResourceKeysDictionary.Host);
         }
         catch (TaskCanceledException exception)
         {
