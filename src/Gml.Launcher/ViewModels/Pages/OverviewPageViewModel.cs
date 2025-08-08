@@ -30,6 +30,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -50,6 +51,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly ISystemService _systemService;
     private readonly IBackendChecker _backendChecker;
     private Process? _gameProcess;
+    private readonly ISettingsService _settingsService;
 
     internal OverviewPageViewModel(IScreen screen,
         IUser user,
@@ -57,6 +59,7 @@ public class OverviewPageViewModel : PageViewModelBase
         IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
         IStorageService? storageService = null,
+        ISettingsService? settingsService = null,
         IBackendChecker? backendChecker = null,
         LogHandler? logHandler = null) : base(screen)
     {
@@ -84,6 +87,10 @@ public class OverviewPageViewModel : PageViewModelBase
                           ?? Locator.Current.GetService<IBackendChecker>()
                           ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
 
+        _settingsService = settingsService
+                           ?? Locator.Current.GetService<ISettingsService>()
+                           ?? throw new ServiceNotFoundException(typeof(ISettingsService));
+
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User, _gmlManager))
         );
@@ -101,10 +108,8 @@ public class OverviewPageViewModel : PageViewModelBase
             () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
                 screen,
                 LocalizationService,
-                _storageService,
-                _systemService,
-                _gmlManager,
-                ListViewModel.SelectedProfile!))
+                _settingsService,
+                _gmlManager))
         );
 
         HomeCommand = ReactiveCommand.Create(async () => await LoadProfiles());
@@ -328,7 +333,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType(), _backendChecker.IsOffline);
 
-        process.OutputDataReceived += (sender, e) =>
+        process.OutputDataReceived += (_, e) =>
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
@@ -405,7 +410,9 @@ public class OverviewPageViewModel : PageViewModelBase
         var maxRam = (int)_systemService.GetMaxRam();
         var recommendedRam = settings.IsDynamicRam ? ListViewModel.SelectedProfile?.RecommendedRam ?? 1024 : Convert.ToInt32(settings.RamValue);
 
-        return Math.Min(recommendedRam, maxRam);
+        var minValue = Math.Min(recommendedRam, maxRam);
+
+        return minValue == 0 && ListViewModel.SelectedProfile?.RecommendedRam == 0 ? 512 : minValue;
     }
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
