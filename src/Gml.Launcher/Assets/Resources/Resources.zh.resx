@@ -1,96 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
-    <value>1.3</value>
+    <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthButtonText" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>返回</value>
-  </data>
-  <data name="Available" xml:space="preserve">
-    <value>可用</value>
-  </data>
-  <data name="Cabinet" xml:space="preserve">
-    <value>个人账户</value>
-  </data>
-  <data name="CheckingFileIntegrity" xml:space="preserve">
-    <value>文件完整性检查</value>
-  </data>
-  <data name="CheckUpdates" xml:space="preserve">
-    <value>更新检查</value>
-  </data>
-  <data name="DefaultDRpcText" xml:space="preserve">
-    <value>在启动器中</value>
-  </data>
-  <data name="DynamicValue" xml:space="preserve">
-    <value>自动</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>修改</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>错误</value>
-  </data>
-  <data name="FailedOs" xml:space="preserve">
-    <value>无法确定操作系统</value>
-  </data>
-  <data name="Files" xml:space="preserve">
-    <value>文件</value>
-  </data>
-  <data name="FullScreen" xml:space="preserve">
-    <value>全屏模式</value>
-  </data>
-  <data name="GameProfileError" xml:space="preserve">
-    <value>游戏配置初始化错误</value>
-  </data>
-  <data name="InstallationDirectory" xml:space="preserve">
-    <value>安装文件夹</value>
-  </data>
-  <data name="InstallingUpdates" xml:space="preserve">
-    <value>安装更新</value>
-  </data>
-  <data name="InvalidAuthData" xml:space="preserve">
-    <value>授权错误</value>
-  </data>
-  <data name="InvalidFolder" xml:space="preserve">
-    <value>无法更改安装文件夹或更改文件夹时发生错误</value>
-  </data>
-  <data name="InvalidSession" xml:space="preserve">
-    <value>您在启动器中的游戏会话已过期，请重新登录</value>
-  </data>
-  <data name="IsDiskFull" xml:space="preserve">
-    <value>磁盘空间不足</value>
-  </data>
-  <data name="JavaNotFound" xml:space="preserve">
-    <value>无法为您的操作系统找到已下载的Java，请联系支持或项目管理员</value>
-  </data>
-  <data name="Launching" xml:space="preserve">
-    <value>启动</value>
-  </data>
   <data name="Login" xml:space="preserve">
     <value>登录</value>
-  </data>
-  <data name="LostConnection" xml:space="preserve">
-    <value>与服务器失去连接</value>
-  </data>
-  <data name="ModsList" xml:space="preserve">
-    <value>模组列表</value>
-  </data>
-  <data name="NotSetting" xml:space="preserve">
-    <value>无法获取启动设置。请前往客户端设置并重试</value>
-  </data>
-  <data name="OnServers" xml:space="preserve">
-    <value>在服务器上</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
@@ -98,35 +129,56 @@
   <data name="Play" xml:space="preserve">
     <value>玩</value>
   </data>
-  <data name="PlayDRpcText" xml:space="preserve">
-    <value>玩</value>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="PlayersShort" xml:space="preserve">
-    <value>人</value>
+  <data name="ModsList" xml:space="preserve">
+    <value>模组列表</value>
   </data>
-  <data name="PreparingLaunch" xml:space="preserve">
-    <value>准备启动中...</value>
+  <data name="Website" xml:space="preserve">
+    <value>我们的网站</value>
   </data>
-  <data name="ProfileNotConfigured" xml:space="preserve">
-    <value>配置未设置，当前客户端无法启动</value>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="InvalidAuthData" xml:space="preserve">
+    <value>授权错误</value>
+  </data>
+  <data name="LostConnection" xml:space="preserve">
+    <value>与服务器失去连接</value>
   </data>
   <data name="Reconnecting" xml:space="preserve">
     <value>重新连接中...</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>设置</value>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
   </data>
-  <data name="SettingsRamDescription" xml:space="preserve">
-    <value>设置内存使用量</value>
+  <data name="Cabinet" xml:space="preserve">
+    <value>个人账户</value>
+  </data>
+  <data name="ProfileNotConfigured" xml:space="preserve">
+    <value>配置未设置，当前客户端无法启动</value>
   </data>
   <data name="SettingsRamTitle" xml:space="preserve">
     <value>RAM设置</value>
   </data>
-  <data name="Stay" xml:space="preserve">
-    <value>剩余</value>
+  <data name="SettingsRamDescription" xml:space="preserve">
+    <value>设置内存使用量</value>
+  </data>
+  <data name="DynamicValue" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>全屏模式</value>
+  </data>
+  <data name="WindowSize" xml:space="preserve">
+    <value>窗口尺寸</value>
   </data>
   <data name="UnitMb" xml:space="preserve">
     <value>MB</value>
+  </data>
+  <data name="NotSetting" xml:space="preserve">
+    <value>无法获取启动设置。请前往客户端设置并重试</value>
   </data>
   <data name="Updating" xml:space="preserve">
     <value>更新</value>
@@ -134,14 +186,68 @@
   <data name="UpdatingDescription" xml:space="preserve">
     <value>获取更新</value>
   </data>
+  <data name="CheckingFileIntegrity" xml:space="preserve">
+    <value>文件完整性检查</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="PreparingLaunch" xml:space="preserve">
+    <value>准备启动中...</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>可用</value>
+  </data>
+  <data name="DefaultDRpcText" xml:space="preserve">
+    <value>在启动器中</value>
+  </data>
+  <data name="PlayDRpcText" xml:space="preserve">
+    <value>玩</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>更新检查</value>
+  </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>安装更新</value>
+  </data>
+  <data name="FailedOs" xml:space="preserve">
+    <value>无法确定操作系统</value>
+  </data>
+  <data name="OnServers" xml:space="preserve">
+    <value>在服务器上</value>
+  </data>
+  <data name="PlayersShort" xml:space="preserve">
+    <value>人</value>
+  </data>
+  <data name="JavaNotFound" xml:space="preserve">
+    <value>无法为您的操作系统找到已下载的Java，请联系支持或项目管理员</value>
+  </data>
+  <data name="InstallationDirectory" xml:space="preserve">
+    <value>安装文件夹</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="Stay" xml:space="preserve">
+    <value>剩余</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="InvalidFolder" xml:space="preserve">
+    <value>无法更改安装文件夹或更改文件夹时发生错误</value>
+  </data>
+  <data name="IsDiskFull" xml:space="preserve">
+    <value>磁盘空间不足</value>
+  </data>
+  <data name="GameProfileError" xml:space="preserve">
+    <value>游戏配置初始化错误</value>
+  </data>
+  <data name="InvalidSession" xml:space="preserve">
+    <value>您在启动器中的游戏会话已过期，请重新登录</value>
+  </data>
   <data name="VpnUse" xml:space="preserve">
     <value>您正在使用VPN连接，这可能会对连接质量和游戏客户端下载产生不良影响。请在启动器工作期间关闭VPN。</value>
-  </data>
-  <data name="Website" xml:space="preserve">
-    <value>我们的网站</value>
-  </data>
-  <data name="WindowSize" xml:space="preserve">
-    <value>窗口尺寸</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>信息</value>
@@ -177,5 +283,57 @@
   </data>
   <data name="News" xml:space="preserve">
     <value>新闻</value>
+  </data>
+  <data name="BackendChecking" xml:space="preserve">
+    <value>检查服务器</value>
+  </data>
+  <data name="SentrySDKInit" xml:space="preserve">
+    <value>初始化Sentry SDK</value>
+  </data>
+  <data name="BackendCheckingLonger" xml:space="preserve">
+    <value>还在检查服务器</value>
+  </data>
+  <data name="OfflineDescription" xml:space="preserve">
+    <value>没有对服务器的访问。 启动器脱机工作。
+要退出此模式，请确保服务器正在运行并重新启动程序。</value>
+  </data>
+  <data name="OfflineMode" xml:space="preserve">
+    <value>离线模式</value>
+  </data>
+  <data name="CheckBackendButton" xml:space="preserve">
+    <value>检查服务器</value>
+  </data>
+  <data name="CheckBackendMessage" xml:space="preserve">
+    <value>检查服务器的可用性，请稍候</value>
+  </data>
+  <data name="CheckBackendResultFailed" xml:space="preserve">
+    <value>服务器当前不可用. 请稍后再试。</value>
+  </data>
+  <data name="CheckBackendResultSuccessful" xml:space="preserve">
+    <value>服务器可用。 重新启动启动器以关闭脱机模式</value>
+  </data>
+  <data name="CheckBackendTitle" xml:space="preserve">
+    <value>检查服务器</value>
+  </data>
+  <data name="RestartButton" xml:space="preserve">
+    <value>重新启动</value>
+  </data>
+  <data name="NewsOffline" xml:space="preserve">
+    <value>无法上传新闻</value>
+  </data>
+  <data name="NewsEmptyTitle" xml:space="preserve">
+    <value>现在没有消息</value>
+  </data>
+  <data name="NewsEmptyContent" xml:space="preserve">
+    <value>这里空无一人</value>
+  </data>
+  <data name="BackendOffline" xml:space="preserve">
+    <value>服务器没有响应</value>
+  </data>
+  <data name="TwoFactorTitle" xml:space="preserve">
+    <value>双重身份验证</value>
+  </data>
+  <data name="TwoFactorDescription" xml:space="preserve">
+    <value>请输入您身份验证应用中的验证码。</value>
   </data>
 </root>

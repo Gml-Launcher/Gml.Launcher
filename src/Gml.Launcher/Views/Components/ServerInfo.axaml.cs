@@ -39,19 +39,37 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<ProfileState> StateProperty = AvaloniaProperty.Register<ServerInfo, ProfileState>(
         nameof(State));
 
-    public static readonly StyledProperty<DateTime> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTime>(
+    public static readonly StyledProperty<DateTimeOffset?> CreateDateProperty = AvaloniaProperty.Register<ServerInfo, DateTimeOffset?>(
         nameof(CreateDate));
 
     public static readonly StyledProperty<ICommand> GoModsCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
         nameof(GoModsCommand));
 
-    public ICommand GoModsCommand
+    public static readonly StyledProperty<bool> BackendIsNotOfflineProperty = AvaloniaProperty.Register<ServerInfo, bool>(
+        nameof(BackendIsNotOffline));
+
+    public static readonly StyledProperty<bool> IsModsButtonVisibleProperty =
+        AvaloniaProperty.Register<ServerInfo, bool>(nameof(IsModsButtonVisible), defaultValue: true);
+
+    public bool BackendIsNotOffline
+    {
+        get => GetValue(BackendIsNotOfflineProperty);
+        set => SetValue(BackendIsNotOfflineProperty, value);
+    }
+
+    public bool IsModsButtonVisible
+    {
+        get => GetValue(IsModsButtonVisibleProperty);
+        set => SetValue(IsModsButtonVisibleProperty, value);
+    }
+
+    public ICommand? GoModsCommand
     {
         get => GetValue(GoModsCommandProperty);
         set => SetValue(GoModsCommandProperty, value);
     }
 
-    public DateTime CreateDate
+    public DateTimeOffset? CreateDate
     {
         get => GetValue(CreateDateProperty);
         set => SetValue(CreateDateProperty, value);

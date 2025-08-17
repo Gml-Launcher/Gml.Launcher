@@ -1,43 +1,39 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading;
-using System.Windows.Input;
 using Gml.Client;
+using Gml.Launcher.Assets.Resources;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
-using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Sentry;
 
 namespace Gml.Launcher.ViewModels.Pages;
 
 public class SettingsPageViewModel : PageViewModelBase
 {
-    private readonly MainWindowViewModel _mainViewModel;
+    private const int HighRamThreshold = 16384;
     private readonly IGmlClientManager _gmlManager;
-    private readonly IStorageService _storageService;
+    private readonly ISettingsService _settingsService;
+
     private double _ramValue;
     private int _windowHeight;
-
     private int _windowWidth;
 
     public SettingsPageViewModel(
         IScreen screen,
         ILocalizationService? localizationService,
-        IStorageService storageService,
-        ISystemService systemService,
-        IGmlClientManager gmlManager,
-        ProfileReadDto selectedProfile) : base(screen, localizationService)
+        ISettingsService settingsService,
+        IGmlClientManager gmlManager) : base(screen, localizationService)
     {
-        _mainViewModel = (MainWindowViewModel)screen;
-        _storageService = storageService;
+        MainViewModel = (MainWindowViewModel)screen;
+        _settingsService = settingsService;
         _gmlManager = gmlManager;
 
         this.WhenAnyValue(
@@ -48,52 +44,60 @@ public class SettingsPageViewModel : PageViewModelBase
                 x => x.DynamicRamValue,
                 x => x.SelectedLanguage
             )
-            .Throttle(TimeSpan.FromMilliseconds(400))
-            .ObserveOn(RxApp.MainThreadScheduler)
+            .Where(ValidateParams)
+            .Throttle(TimeSpan.FromMilliseconds(400), RxApp.TaskpoolScheduler)
+            .ObserveOn(RxApp.TaskpoolScheduler)
             .Subscribe(SaveSettings);
 
         this.WhenAnyValue(x => x.SelectedLanguage)
             .Skip(2)
-            .Subscribe(language =>
-            {
-                if (language == null) return;
+            .Subscribe(ChangeLanguage);
 
-                Assets.Resources.Resources.Culture = language.Culture;
+        this.WhenAnyValue(x => x.Settings)
+            .WhereNotNull()
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(UpdateSettings);
 
-                GoBackCommand.Execute(Unit.Default);
-            });
+        RxApp.TaskpoolScheduler.Schedule(LoadSettings);
+    }
 
-        ChangeInstallationDirectory = ReactiveCommand.Create(ChangeFolder);
+    private bool ValidateParams(
+        (
+            double ramValue,
+            string width,
+            string height,
+            bool isFullScreen,
+            bool isDynamicRam,
+            Language? selectedLanguage)
+        update)
+    {
+        if (update.ramValue <= 0)
+        {
+            return false;
+        }
 
-        AvailableLanguages = new ObservableCollection<Language>(systemService.GetAvailableLanguages());
+        if (!int.TryParse(update.width, out var width) || width <= 0)
+        {
+            return false;
+        }
 
-        MaxRamValue = systemService.GetMaxRam();
-        const int highRamThreshold = 16384;
-        MinRamValue = (ulong)(MaxRamValue > highRamThreshold ? 1024 : 512);
-        RamTickValue = (ulong)(MaxRamValue > highRamThreshold ? 1024 : 512);
+        if (!int.TryParse(update.height, out var height) || height <= 0)
+        {
+            return false;
+        }
 
-        InstallationFolder = _gmlManager.InstallationDirectory;
-
-        RxApp.MainThreadScheduler.Schedule(LoadSettings);
+        return true;
     }
 
     [Reactive] public bool DynamicRamValue { get; set; }
-
     [Reactive] public bool FullScreen { get; set; }
-
     [Reactive] public ulong MinRamValue { get; set; }
-
     [Reactive] public ulong MaxRamValue { get; set; }
-
     [Reactive] public ulong RamTickValue { get; set; }
-
     [Reactive] public Language? SelectedLanguage { get; set; }
-
     [Reactive] public string? InstallationFolder { get; set; }
     [Reactive] public string? RamValueView { get; set; }
-
-    public ICommand ChangeInstallationDirectory { get; }
-
+    [Reactive] private SettingsInfo? Settings { get; set; }
 
     public double RamValue
     {
@@ -102,9 +106,18 @@ public class SettingsPageViewModel : PageViewModelBase
         {
             if (!(Math.Abs(value - _ramValue) > 0.0)) return;
 
-            _ramValue = RoundToNearest(value, 8);
+            _ramValue = Round(value, 8);
             RamValueView = Convert.ToInt32(_ramValue).ToString(CultureInfo.InvariantCulture);
             this.RaisePropertyChanged();
+            return;
+
+            double Round(double value, double step)
+            {
+                var offset = value % step;
+                return offset >= step / 2.0
+                    ? value + (step - offset)
+                    : value - offset;
+            }
         }
     }
 
@@ -117,7 +130,7 @@ public class SettingsPageViewModel : PageViewModelBase
             if (isNumeric)
                 this.RaiseAndSetIfChanged(ref _windowWidth, numericValue);
             else
-                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+                this.RaiseAndSetIfChanged(ref _windowWidth, 600);
         }
     }
 
@@ -130,57 +143,77 @@ public class SettingsPageViewModel : PageViewModelBase
             if (isNumeric)
                 this.RaiseAndSetIfChanged(ref _windowHeight, numericValue);
             else
-                this.RaiseAndSetIfChanged(ref _windowWidth, default);
+                this.RaiseAndSetIfChanged(ref _windowWidth, 900);
         }
     }
 
-    public ObservableCollection<Language> AvailableLanguages { get; }
-    public MainWindowViewModel MainViewModel => _mainViewModel;
+    [Reactive] public ObservableCollection<Language> AvailableLanguages { get; set; } = [];
+    public MainWindowViewModel MainViewModel { get; }
+
+    private void ChangeLanguage(Language? language)
+    {
+        if (language == null) return;
+
+        Resources.Culture = language.Culture;
+
+        GoBackCommand.Execute(Unit.Default);
+    }
 
     internal void ChangeFolder()
     {
         if (InstallationFolder != null)
             _gmlManager.ChangeInstallationFolder(InstallationFolder);
 
-        _storageService.SetAsync(StorageConstants.InstallationDirectory, InstallationFolder);
+        _settingsService.UpdateInstallationDirectory(InstallationFolder);
     }
 
-    private double RoundToNearest(double value, double step)
+    private void UpdateSettings(SettingsInfo settings)
     {
-        var offset = value % step;
-        return offset >= step / 2.0
-            ? value + (step - offset)
-            : value - offset;
+        WindowWidth = settings.GameWidth.ToString();
+        WindowHeight = settings.GameHeight.ToString();
+        RamValue = settings.RamValue;
+        DynamicRamValue = settings.IsDynamicRam;
+        FullScreen = settings.FullScreen;
+        SelectedLanguage = AvailableLanguages.FirstOrDefault(c => c.Culture.Name == settings.LanguageCode);
+        InstallationFolder = _gmlManager.InstallationDirectory;
+
+        MinRamValue = (ulong)(MaxRamValue > HighRamThreshold ? 1024 : 512);
+        RamTickValue = (ulong)(MaxRamValue > HighRamThreshold ? 1024 : 512);
     }
 
     private async void LoadSettings()
     {
-        var data = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings);
+        try
+        {
+            AvailableLanguages = new ObservableCollection<Language>(_settingsService.GetAvailableLanguages());
+            MaxRamValue = _settingsService.GetMaxRam();
 
-        if (data == null) return;
-
-        SelectedLanguage = !string.IsNullOrEmpty(data.LanguageCode)
-            ? AvailableLanguages.FirstOrDefault(c => c.Culture.Name == data.LanguageCode)
-            : AvailableLanguages.FirstOrDefault();
-
-        WindowWidth = data.GameWidth == 0 ? "900" : data.GameWidth.ToString();
-        WindowHeight = data.GameHeight == 0 ? "600" : data.GameHeight.ToString();
-        RamValue = data.RamValue;
-        DynamicRamValue = data.IsDynamicRam;
-        FullScreen = data.FullScreen;
+            Settings = await _settingsService.GetSettings();
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+        }
     }
 
-    private void SaveSettings(
+    private async void SaveSettings(
         (double ramValue, string width, string height, bool isFullScreen, bool isDynamicRam, Language? selectedLanguage)
             update)
     {
-        _storageService.SetAsync(
-            StorageConstants.Settings,
-            new SettingsInfo(
+        try
+        {
+            var newSettings = new SettingsInfo(
                 int.Parse(update.width),
                 int.Parse(update.height),
                 update.isFullScreen,
                 update.isDynamicRam,
-                update.ramValue, update.selectedLanguage?.Culture.Name));
+                update.ramValue, update.selectedLanguage?.Culture.Name);
+
+            await _settingsService.UpdateSettingsAsync(newSettings);
+        }
+        catch (Exception exception)
+        {
+            SentrySdk.CaptureException(exception);
+        }
     }
 }

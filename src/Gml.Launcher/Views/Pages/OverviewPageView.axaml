@@ -69,18 +69,19 @@
                 <!-- Server Info -->
                 <components:ServerInfo Grid.Column="0"
                                        Grid.Row="2"
-                                       Background="Blue"
                                        Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
                                        PlayCommand="{Binding PlayCommand}"
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"
-                                       ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName}"
-                                       GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion}"
-                                       LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion}"
-                                       ProfileDescription="{Binding ListViewModel.SelectedProfile.Description}"
-                                       State="{Binding ListViewModel.SelectedProfile.State}"
-                                       CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate}"
+                                       BackendIsNotOffline="{Binding BackendIsActive}"
+                                       IsModsButtonVisible="{Binding IsModsButtonVisible}"
+                                       ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName, FallbackValue={x:Null}}"
+                                       GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion, FallbackValue={x:Null}}"
+                                       LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion, FallbackValue={x:Null}}"
+                                       ProfileDescription="{Binding ListViewModel.SelectedProfile.Description, FallbackValue={x:Null}}"
+                                       State="{Binding ListViewModel.SelectedProfile.State, FallbackValue={x:Null}}"
+                                       CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate, FallbackValue={x:Null}}"
                                        Status="{x:Static lang:Resources.Available}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left" />
@@ -132,6 +133,7 @@
                                      ListViewModel="{Binding ListViewModel}"
                                      LogoutCommand="{Binding LogoutCommand}"
                                      HomeCommand="{Binding HomeCommand}"
+                                     IsBackendInactive="{Binding BackendIsActive}"
                                      ProfileCommand="{Binding GoProfileCommand}" />
 
     </Grid>

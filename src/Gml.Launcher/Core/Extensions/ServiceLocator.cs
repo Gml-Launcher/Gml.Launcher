@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -32,6 +32,13 @@ public static class ServiceLocator
         CheckAndChangeInstallationFolder(storageService, manager);
         CheckAndChangeLanguage(storageService, systemService);
         Locator.CurrentMutable.RegisterConstant(new VpnChecker(), typeof(IVpnChecker));
+        Locator.CurrentMutable.RegisterConstant(new BackendChecker(), typeof(IBackendChecker));
+        Locator.CurrentMutable.RegisterConstant(new SettingsService(
+                GetRequiredService<ISystemService>(),
+                GetRequiredService<IStorageService>()
+            ),
+            typeof(ISettingsService)
+        );
 
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
@@ -41,6 +48,11 @@ public static class ServiceLocator
         Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Configuring ended");
 
         return builder;
+    }
+
+    private static T GetRequiredService<T>()
+    {
+        return Locator.Current.GetService<T>() ?? throw new Exception();
     }
 
     private static void RegisterLogHelper(SystemService systemService)
@@ -94,6 +106,7 @@ public static class ServiceLocator
     private static void RegisterSystemService(SystemService systemService)
     {
         Locator.CurrentMutable.RegisterConstant(systemService, typeof(ISystemService));
+
     }
 
     private static void RegisterLocalizationService()

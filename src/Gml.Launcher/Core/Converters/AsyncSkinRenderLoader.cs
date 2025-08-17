@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using Gml.Client;
 using Gml.Launcher.Core.Services;
 using Sentry;
@@ -30,9 +31,9 @@ public class AsyncSkinRenderLoader
         SourceProperty.Changed.AddClassHandler<Image>(OnSourceChanged);
     }
 
-    private static async void OnSourceChanged(Image sender, AvaloniaPropertyChangedEventArgs args)
+    private static void OnSourceChanged(Image sender, AvaloniaPropertyChangedEventArgs args)
     {
-        await TryLoadImage(sender, args, 1);
+        Task.Run(() => TryLoadImage(sender, args, 1));
     }
 
     private static async Task TryLoadImage(Image sender, AvaloniaPropertyChangedEventArgs args, int attempt)
@@ -51,7 +52,6 @@ public class AsyncSkinRenderLoader
 
         try
         {
-
             if (string.IsNullOrEmpty(url))
             {
                 PendingOperations.Remove(sender, out _);
@@ -71,7 +71,10 @@ public class AsyncSkinRenderLoader
 
             var bitmap = new Bitmap(new MemoryStream(SkinViewer.GetFront(stream, 128)));
 
-            if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                if (!cts.Token.IsCancellationRequested) sender.Source = bitmap;
+            });
         }
         catch (HttpRequestException exception)
         {
@@ -113,7 +116,7 @@ public class AsyncSkinRenderLoader
 
     private static void SetIsLoading(Image obj, bool value)
     {
-        obj.SetValue(IsLoadingProperty, value);
+        Dispatcher.UIThread.Invoke(() => { obj.SetValue(IsLoadingProperty, value); });
     }
 
     public static bool GetIsLoading(Image obj)

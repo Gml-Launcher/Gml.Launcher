@@ -1,4 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
+<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:Gml.Launcher.Views.Components">
     <Design.PreviewWith>
@@ -51,6 +51,7 @@
                                             Command="{TemplateBinding LogoutCommand}"
                                             Width="60"
                                             Height="60"
+                                            IsEnabled="{TemplateBinding IsBackendInactive}"
                                             IconPath="/Assets/Images/logout.svg"
                                             IconSize="20" />
 

@@ -19,10 +19,10 @@ public class NewsComponent : TemplatedControl
     public static readonly StyledProperty<string> DescriptionProperty = AvaloniaProperty.Register<NewsComponent, string>(
         nameof(Description), "<i>Описание</i>");
 
-    public static readonly StyledProperty<DateTimeOffset> DateProperty = AvaloniaProperty.Register<NewsComponent, DateTimeOffset>(
+    public static readonly StyledProperty<DateTimeOffset?> DateProperty = AvaloniaProperty.Register<NewsComponent, DateTimeOffset?>(
         nameof(Date), DateTimeOffset.Now);
 
-    public DateTimeOffset Date
+    public DateTimeOffset? Date
     {
         get => GetValue(DateProperty);
         set => SetValue(DateProperty, value);

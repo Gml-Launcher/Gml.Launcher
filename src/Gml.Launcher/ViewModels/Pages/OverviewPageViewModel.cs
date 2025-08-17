@@ -1,13 +1,3 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Reactive.Concurrency;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -27,10 +17,23 @@ using Gml.Launcher.ViewModels.Components;
 using Gml.Web.Api.Dto.Messages;
 using Gml.Web.Api.Dto.News;
 using Gml.Web.Api.Dto.Profile;
+using GmlCore.Interfaces.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Sentry;
 using Splat;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Gml.Launcher.ViewModels.Pages;
 
@@ -46,7 +49,9 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IDisposable _profileNameChanged;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
+    private readonly IBackendChecker _backendChecker;
     private Process? _gameProcess;
+    private readonly ISettingsService _settingsService;
 
     internal OverviewPageViewModel(IScreen screen,
         IUser user,
@@ -54,6 +59,8 @@ public class OverviewPageViewModel : PageViewModelBase
         IGmlClientManager? gmlManager = null,
         ISystemService? systemService = null,
         IStorageService? storageService = null,
+        ISettingsService? settingsService = null,
+        IBackendChecker? backendChecker = null,
         LogHandler? logHandler = null) : base(screen)
     {
         _mainViewModel = screen as MainWindowViewModel ?? throw new Exception("Not valid screen");
@@ -76,6 +83,14 @@ public class OverviewPageViewModel : PageViewModelBase
                       ?? Locator.Current.GetService<IGmlClientManager>()
                       ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
+        _backendChecker = backendChecker
+                          ?? Locator.Current.GetService<IBackendChecker>()
+                          ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
+
+        _settingsService = settingsService
+                           ?? Locator.Current.GetService<ISettingsService>()
+                           ?? throw new ServiceNotFoundException(typeof(ISettingsService));
+
         GoProfileCommand = ReactiveCommand.CreateFromObservable(
             () => screen.Router.Navigate.Execute(new ProfilePageViewModel(screen, User, _gmlManager))
         );
@@ -93,10 +108,8 @@ public class OverviewPageViewModel : PageViewModelBase
             () => screen.Router.Navigate.Execute(new SettingsPageViewModel(
                 screen,
                 LocalizationService,
-                _storageService,
-                _systemService,
-                _gmlManager,
-                ListViewModel.SelectedProfile!))
+                _settingsService,
+                _gmlManager))
         );
 
         HomeCommand = ReactiveCommand.Create(async () => await LoadProfiles());
@@ -110,7 +123,8 @@ public class OverviewPageViewModel : PageViewModelBase
         _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
         _closeEvent ??= onClosed.Subscribe(KillGameProcess);
-        _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(SaveSelectedServer);
+        _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(OnProfileChanged);
+
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
         _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
 
@@ -118,8 +132,11 @@ public class OverviewPageViewModel : PageViewModelBase
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
+        BackendIsActive = !_backendChecker.IsOffline;
+
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
+    [Reactive] public bool IsModsButtonVisible { get; private set; }
 
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
 
@@ -131,6 +148,7 @@ public class OverviewPageViewModel : PageViewModelBase
     public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();
     public IUser User { get; }
+    public bool BackendIsActive { get; }
 
     [Reactive] public int? LoadingPercentage { get; set; }
     [Reactive] public int? MaxCount { get; set; }
@@ -147,6 +165,37 @@ public class OverviewPageViewModel : PageViewModelBase
     private async void LoadProfilesAsync(bool eventInfo)
     {
         await LoadProfiles();
+    }
+
+    private void OnProfileChanged(ProfileReadDto? profile)
+    {
+        SaveSelectedServer(profile);
+        UpdateModsButtonVisibility(profile);
+    }
+    private void UpdateModsButtonVisibility(ProfileReadDto? profile)
+    {
+        if (profile is null)
+        {
+            IsModsButtonVisible = false;
+            return;
+        }
+
+        var keywords = new[]
+        {
+            nameof(GameLoader.Forge),
+            nameof(GameLoader.Fabric),
+            nameof(GameLoader.Quilt),
+            nameof(GameLoader.NeoForge)
+        };
+
+        var profileName = profile.Name.ToLowerInvariant();
+        var gameVersion = profile.GameVersion?.ToLowerInvariant() ?? string.Empty;
+        var launchVersion = profile.LaunchVersion?.ToLowerInvariant() ?? string.Empty;
+
+        IsModsButtonVisible = keywords.Any(keyword =>
+            profileName.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+            gameVersion.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+            launchVersion.Contains(keyword, StringComparison.CurrentCultureIgnoreCase));
     }
 
     private void ChangeLoadProcessDescription(int count)
@@ -194,8 +243,6 @@ public class OverviewPageViewModel : PageViewModelBase
                     _gameProcess.BeginOutputReadLine();
                     _gameProcess.BeginErrorReadLine();
 
-                    // await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-
                     Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(true));
                     UpdateProgress(string.Empty, string.Empty, false);
                     await _gameProcess.WaitForExitAsync(cancellationToken);
@@ -211,7 +258,7 @@ public class OverviewPageViewModel : PageViewModelBase
                     ShowError(ResourceKeysDictionary.Error, ResourceKeysDictionary.ProfileNotConfigured);
                 }
             }
-            catch (UnauthorizedAccessException exception)
+            catch (UnauthorizedAccessException)
             {
                 await OnLogout(CancellationToken.None);
             }
@@ -259,8 +306,11 @@ public class OverviewPageViewModel : PageViewModelBase
                 _gameProcess?.Dispose();
                 Dispatcher.UIThread.Invoke(() => _mainViewModel._gameLaunched.OnNext(false));
                 UpdateProgress(string.Empty, string.Empty, false);
-                await _gmlManager.UpdateDiscordRpcState(
-                    LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+                if (!_backendChecker.IsOffline)
+                {
+                    await _gmlManager.UpdateDiscordRpcState(
+                        LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+                }
             }
         });
     }
@@ -276,11 +326,14 @@ public class OverviewPageViewModel : PageViewModelBase
         if (profileInfo.Data is null)
             throw new Exception(LocalizationService.GetString(ResourceKeysDictionary.ProfileNotConfigured));
 
-        await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
+        if (!_backendChecker.IsOffline)
+        {
+            await _gmlManager.DownloadNotInstalledFiles(profileInfo.Data, cancellationToken);
+        }
 
-        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType());
+        var process = await _gmlManager.GetProcess(profileInfo.Data, _systemService.GetOsType(), _backendChecker.IsOffline);
 
-        process.OutputDataReceived += (sender, e) =>
+        process.OutputDataReceived += (_, e) =>
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
@@ -316,15 +369,18 @@ public class OverviewPageViewModel : PageViewModelBase
             LocalizationService.GetString(ResourceKeysDictionary.UpdatingDescription),
             true);
 
-        await _gmlManager.UpdateDiscordRpcState(
-            $"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
+        if (!_backendChecker.IsOffline)
+        {
+            await _gmlManager.UpdateDiscordRpcState(
+                $"{LocalizationService.GetString(ResourceKeysDictionary.PlayDRpcText)} \"{ListViewModel.SelectedProfile!.Name}\"");
+        }
 
         var settings = await _storageService.GetAsync<SettingsInfo>(StorageConstants.Settings) ?? SettingsInfo.Default;
 
         var localProfile = new ProfileCreateInfoDto
         {
             ProfileName = ListViewModel.SelectedProfile!.Name,
-            RamSize = Convert.ToInt32(settings.RamValue),
+            RamSize = CalculateRecommendedRam(settings),
             IsFullScreen = settings.FullScreen,
             OsType = ((int)_systemService.GetOsType()).ToString(),
             OsArchitecture = _systemService.GetOsArchitecture(),
@@ -335,9 +391,28 @@ public class OverviewPageViewModel : PageViewModelBase
             WindowHeight = settings.GameHeight
         };
 
-        var profileInfo = await _gmlManager.GetProfileInfo(localProfile);
+        ResponseMessage<ProfileReadInfoDto?>? profileInfo;
+
+        if (_backendChecker.IsOffline)
+        {
+            profileInfo = await _gmlManager.GetProfileInfoOffline(localProfile);
+        }
+        else
+        {
+            profileInfo = await _gmlManager.GetProfileInfo(localProfile);
+        }
 
         return profileInfo;
+    }
+
+    private int CalculateRecommendedRam(SettingsInfo settings)
+    {
+        var maxRam = (int)_systemService.GetMaxRam();
+        var recommendedRam = settings.IsDynamicRam ? ListViewModel.SelectedProfile?.RecommendedRam ?? 1024 : Convert.ToInt32(settings.RamValue);
+
+        var minValue = Math.Min(recommendedRam, maxRam);
+
+        return minValue == 0 && ListViewModel.SelectedProfile?.RecommendedRam == 0 ? 512 : minValue;
     }
 
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
@@ -371,9 +446,12 @@ public class OverviewPageViewModel : PageViewModelBase
             await LoadProfiles();
             await LoadNews();
 
-            await _gmlManager.LoadDiscordRpc();
-            await _gmlManager.UpdateDiscordRpcState(
-                LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+            if (!_backendChecker.IsOffline)
+            {
+                await _gmlManager.LoadDiscordRpc();
+                await _gmlManager.UpdateDiscordRpcState(
+                    LocalizationService.GetString(ResourceKeysDictionary.DefaultDRpcText));
+            }
         }
         catch (TaskCanceledException exception)
         {
@@ -397,9 +475,43 @@ public class OverviewPageViewModel : PageViewModelBase
     {
         try
         {
+            if (_backendChecker.IsOffline)
+            {
+                News =
+                [
+                    new NewsReadDto
+                    {
+                        Title = LocalizationService.GetString(ResourceKeysDictionary.NewsOffline),
+                        Content =
+                            $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsOffline)}</div>",
+                        Date = null,
+                        Type = NewsListenerType.Custom
+                    }
+                ];
+                return;
+            }
+
             var news = await _gmlManager.GetNews();
 
-            News = new ObservableCollection<NewsReadDto>(news.Data ?? []);
+            if (news.Data?.Count == 0)
+            {
+                News =
+                [
+                    new NewsReadDto
+                    {
+                        Title = LocalizationService.GetString(ResourceKeysDictionary.NewsEmptyTitle),
+                        Content =
+                            $"<div style='text-align: center; margin-top: 100 px; margin-bottom: 100 px;'>{LocalizationService.GetString(ResourceKeysDictionary.NewsEmptyContent)}</div>",
+                        Date = null,
+                        Type = NewsListenerType.Custom
+                    }
+                ];
+            }
+            else
+            {
+                News = new ObservableCollection<NewsReadDto>(news.Data ?? []);
+            }
+            ;
         }
         catch (Exception e)
         {
@@ -409,7 +521,15 @@ public class OverviewPageViewModel : PageViewModelBase
 
     private async Task LoadProfiles()
     {
-        var profilesData = await _gmlManager.GetProfiles(User.AccessToken);
+        ResponseMessage<List<ProfileReadDto>> profilesData;
+        if (_backendChecker.IsOffline)
+        {
+            profilesData = await _gmlManager.GetOfflineProfiles();
+        }
+        else
+        {
+            profilesData = await _gmlManager.GetProfiles(User.AccessToken);
+        }
 
         ListViewModel.Profiles = new ObservableCollection<ProfileReadDto>(profilesData.Data ?? []);
 
@@ -420,6 +540,9 @@ public class OverviewPageViewModel : PageViewModelBase
             ListViewModel.SelectedProfile = profile;
 
         ListViewModel.SelectedProfile ??= ListViewModel.Profiles.FirstOrDefault();
+
+        // НОВОЕ: Устанавливаем начальное состояние видимости кнопки при первой загрузке
+        UpdateModsButtonVisibility(ListViewModel.SelectedProfile);
     }
 
     private async Task Reconnect()

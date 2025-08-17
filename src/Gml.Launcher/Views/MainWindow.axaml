@@ -14,7 +14,7 @@
         Width="1000"
         Height="600"
         MinHeight="600"
-        CanResize="False"
+        CanResize="True"
         Closed="WindowClosed"
         x:Class="Gml.Launcher.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -40,7 +40,6 @@
                 </ExperimentalAcrylicBorder>
 
                 <Grid>
-
                     <!-- Background -->
                     <components:BackgroundComponent Classes="Image" Source="/Assets/Images/background.jpg" />
 

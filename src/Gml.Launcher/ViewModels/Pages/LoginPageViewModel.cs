@@ -14,6 +14,7 @@ using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Sentry;
 using Splat;
 
@@ -24,19 +25,18 @@ public class LoginPageViewModel : PageViewModelBase
     private readonly IGmlClientManager _gmlClientManager;
     private readonly IObservable<bool> _onClosed;
     private readonly MainWindowViewModel _screen;
+    private readonly IBackendChecker _backendChecker;
     private readonly IStorageService _storageService;
     private readonly ISystemService _systemService;
-    private ObservableCollection<string> _errorList = new();
+    private ObservableCollection<string> _errorList = [];
     private bool _isProcessing;
-    private string _login = string.Empty;
-    private string _password = string.Empty;
-
 
     internal LoginPageViewModel(IScreen screen,
         IObservable<bool> onClosed,
         IGmlClientManager? gmlClientManager = null,
         IStorageService? storageService = null,
         ISystemService? systemService = null,
+        IBackendChecker? backendChecker = null,
         ILocalizationService? localizationService = null) : base(screen, localizationService)
     {
         _screen = (MainWindowViewModel)screen;
@@ -54,24 +54,23 @@ public class LoginPageViewModel : PageViewModelBase
                             ?? Locator.Current.GetService<IGmlClientManager>()
                             ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
 
+        _backendChecker = backendChecker
+                          ?? Locator.Current.GetService<IBackendChecker>()
+                          ?? throw new ServiceNotFoundException(typeof(IBackendChecker));
+
+
         _screen.OnClosed.Subscribe(DisposeConnections);
 
         LoginCommand = ReactiveCommand.CreateFromTask(OnAuth);
+        Verify2FaCommand = ReactiveCommand.CreateFromTask(OnVerify2Fa);
 
         RxApp.MainThreadScheduler.Schedule(CheckAuth);
     }
 
-    public string Login
-    {
-        get => _login;
-        set => this.RaiseAndSetIfChanged(ref _login, value);
-    }
-
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
+    [Reactive] public string Login { get; set; }
+    [Reactive] public string Password { get; set; }
+    [Reactive] public string TwoFactorCode { get; set; }
+    [Reactive] public bool Is2FaVisible { get; set; }
 
     public bool IsProcessing
     {
@@ -79,7 +78,6 @@ public class LoginPageViewModel : PageViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _isProcessing, value);
-
             this.RaisePropertyChanged(nameof(IsNotProcessing));
         }
     }
@@ -92,7 +90,10 @@ public class LoginPageViewModel : PageViewModelBase
 
     public bool IsNotProcessing => !_isProcessing;
 
+    public bool BackendIsActive => !_backendChecker.IsOffline;
+
     public ICommand LoginCommand { get; set; }
+    public ICommand Verify2FaCommand { get; set; }
 
     private void DisposeConnections(bool isClosed)
     {
@@ -115,20 +116,40 @@ public class LoginPageViewModel : PageViewModelBase
         try
         {
             IsProcessing = true;
+            Errors.Clear();
 
+            Debug.WriteLine("Starting authentication...");
             var authInfo = await _gmlClientManager.Auth(Login, Password, _systemService.GetHwid());
+            Debug.WriteLine($"Auth response - IsAuth: {authInfo.User?.IsAuth}, Has2Fa: {authInfo.User?.Has2Fa}");
+            Debug.WriteLine($"Auth message: {authInfo.Message}");
+            Debug.WriteLine($"Auth details: {string.Join(", ", authInfo.Details)}");
 
-            if (authInfo.User.IsAuth)
+            // Проверяем, требуется ли 2FA по сообщению об ошибке
+            if (authInfo.User is not null && authInfo.User.Has2Fa)
             {
+                Debug.WriteLine("2FA required based on error message");
+                Is2FaVisible = true;
+                TwoFactorCode = string.Empty;
+                return;
+            }
+
+            if (authInfo.User?.IsAuth == true)
+            {
+                if (authInfo.User.Has2Fa)
+                {
+                    Debug.WriteLine("User has 2FA enabled, showing 2FA input");
+                    Is2FaVisible = true;
+                    TwoFactorCode = string.Empty;
+                    return;
+                }
+
+                Debug.WriteLine("Authentication successful, no 2FA required");
                 await _storageService.SetAsync(StorageConstants.User, authInfo.User);
                 _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User, _onClosed));
                 return;
             }
 
-            if (authInfo.Item1.Has2Fa)
-                //ToDo: Next versions
-                return;
-
+            Debug.WriteLine("Authentication failed");
             if (_screen is { } mainView)
             {
                 if (!authInfo.Details.Any())
@@ -145,6 +166,73 @@ public class LoginPageViewModel : PageViewModelBase
         }
         catch (Exception exception)
         {
+            Debug.WriteLine($"Authentication error: {exception}");
+            if (_screen is { } mainView)
+            {
+                mainView.Manager
+                    .CreateMessage(true, "#D03E3E",
+                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        exception.Message)
+                    .Dismiss()
+                    .WithDelay(TimeSpan.FromSeconds(3))
+                    .Queue();
+            }
+
+            Debug.WriteLine(exception);
+            SentrySdk.CaptureException(exception);
+        }
+        finally
+        {
+            IsProcessing = false;
+        }
+    }
+
+    private async Task OnVerify2Fa(CancellationToken arg)
+    {
+        try
+        {
+            IsProcessing = true;
+            Errors.Clear();
+
+            Debug.WriteLine($"Verifying 2FA code: {TwoFactorCode}");
+            var authInfo = await _gmlClientManager.AuthWith2Fa(Login, Password, _systemService.GetHwid(), TwoFactorCode);
+            Debug.WriteLine($"2FA verification response - IsAuth: {authInfo.User?.IsAuth}, Has2Fa: {authInfo.User?.Has2Fa}");
+            Debug.WriteLine($"2FA verification message: {authInfo.Message}");
+            Debug.WriteLine($"2FA verification details: {string.Join(", ", authInfo.Details)}");
+
+            if (authInfo.User?.IsAuth == true)
+            {
+                Debug.WriteLine("2FA verification successful");
+                await _storageService.SetAsync(StorageConstants.User, authInfo.User);
+                Is2FaVisible = false; // Скрываем окно 2FA
+                _screen.Router.Navigate.Execute(new OverviewPageViewModel(_screen, authInfo.User, _onClosed));
+                return;
+            }
+
+            Debug.WriteLine("2FA verification failed");
+            if (_screen is { } mainView)
+            {
+                // Если код неверный, показываем ошибку, но оставляем окно 2FA открытым
+                mainView.Manager
+                    .CreateMessage(true, "#D03E3E",
+                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        authInfo.Message ?? "Invalid 2FA code")
+                    .Dismiss()
+                    .WithDelay(TimeSpan.FromSeconds(3))
+                    .Queue();
+
+                if (authInfo.Details.Any())
+                {
+                    Errors = new ObservableCollection<string>(authInfo.Details);
+                }
+
+                // Очищаем поле для ввода кода
+                TwoFactorCode = string.Empty;
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.WriteLine($"2FA verification error: {exception}");
             if (_screen is { } mainView)
             {
                 mainView.Manager
