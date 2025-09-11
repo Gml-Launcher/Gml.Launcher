@@ -46,7 +46,8 @@
                                         IsVisible="{Binding IsProcessing}"
                                         Headline="{Binding Headline}"
                                         Description="{Binding Description}"
-                                        Percentage="{Binding LoadingPercentage}" />
+                                        Percentage="{Binding LoadingPercentage}"
+                                        Speed="{Binding LoadingSpeed}" />
 
                 <!-- News -->
                 <Grid RowDefinitions="Auto, 0, *" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2">

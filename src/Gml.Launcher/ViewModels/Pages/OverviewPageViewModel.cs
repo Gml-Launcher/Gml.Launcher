@@ -52,6 +52,7 @@ public class OverviewPageViewModel : PageViewModelBase
     private readonly IBackendChecker _backendChecker;
     private Process? _gameProcess;
     private readonly ISettingsService _settingsService;
+    private readonly IDisposable? _speedSubscription;
 
     internal OverviewPageViewModel(IScreen screen,
         IUser user,
@@ -128,6 +129,16 @@ public class OverviewPageViewModel : PageViewModelBase
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
         _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
 
+        _speedSubscription = _gmlManager.DownloadedBytesDelta
+            .Buffer(TimeSpan.FromSeconds(1))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(list =>
+            {
+                var total = list.Sum(x => (long)x);
+                LoadingSpeed = total > 0 ? $"{FormatBytes(total)}/s" : string.Empty;
+                Debug.WriteLine(LoadingSpeed);
+            });
+
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
@@ -157,6 +168,8 @@ public class OverviewPageViewModel : PageViewModelBase
     [Reactive] public string? Headline { get; set; }
 
     [Reactive] public string? Description { get; set; }
+
+    [Reactive] public string? LoadingSpeed { get; set; }
 
     [Reactive] public bool IsProcessing { get; set; }
 
@@ -415,6 +428,20 @@ public class OverviewPageViewModel : PageViewModelBase
         return minValue == 0 && ListViewModel.SelectedProfile?.RecommendedRam == 0 ? 512 : minValue;
     }
 
+    private static string FormatBytes(long bytes)
+    {
+        const int scale = 1024;
+        string[] orders = ["B", "KB", "MB", "GB", "TB"];
+        double max = bytes;
+        int order = 0;
+        while (max >= scale && order < orders.Length - 1)
+        {
+            order++;
+            max /= scale;
+        }
+        return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:0.##} {1}", max, orders[order]);
+    }
+
     private void UpdateProgress(string headline, string description, bool isProcessing, int? percentage = null)
     {
 
@@ -424,6 +451,8 @@ public class OverviewPageViewModel : PageViewModelBase
             Description = description;
             IsProcessing = isProcessing;
             LoadingPercentage = percentage;
+            if (!IsProcessing)
+                LoadingSpeed = string.Empty;
         });
     }
 
