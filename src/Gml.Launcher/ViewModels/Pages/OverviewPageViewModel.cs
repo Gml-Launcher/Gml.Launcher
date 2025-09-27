@@ -136,7 +136,6 @@ public class OverviewPageViewModel : PageViewModelBase
             {
                 var total = list.Sum(x => (long)x);
                 LoadingSpeed = total > 0 ? $"{FormatBytes(total)}/s" : string.Empty;
-                Debug.WriteLine(LoadingSpeed);
             });
 
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogout);
