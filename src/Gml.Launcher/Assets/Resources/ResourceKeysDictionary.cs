@@ -45,8 +45,6 @@ public static class ResourceKeysDictionary
     public const string NewsOffline = "NewsOffline";
     public const string NewsEmptyTitle = "NewsEmptyTitle";
     public const string NewsEmptyContent = "NewsEmptyContent";
-    // public const string Host = "https://gmlb.smgcraft.com";
-    public const string Host = "http://10.0.10.74:5000";
-    // public const string Host = "https://gmlb.hubmc.org/";
+    public const string Host = "http://localhost:52842";
     public const string FolderName = "GamerVIILacunerhV2";
 }
