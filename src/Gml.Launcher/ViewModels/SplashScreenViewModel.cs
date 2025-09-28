@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Gml.Launcher.ViewModels;
@@ -151,7 +152,7 @@ public class SplashScreenViewModel : WindowViewModelBase
 
         var jwtToken = handler.ReadJwtToken(user.AccessToken);
 
-        var claims = jwtToken.Claims.FirstOrDefault(c => c.Type == "name");
+        var claims = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
         if (claims?.Value == user.Name)
             return true;

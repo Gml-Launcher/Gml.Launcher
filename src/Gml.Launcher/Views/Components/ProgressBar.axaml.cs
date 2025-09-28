@@ -14,6 +14,9 @@ public class ProgressBar : TemplatedControl
     public static readonly StyledProperty<string> HeadlineProperty = AvaloniaProperty.Register<ProgressBar, string>(
         nameof(Headline), "Обновление");
 
+    public static readonly StyledProperty<string> SpeedProperty = AvaloniaProperty.Register<ProgressBar, string>(
+        nameof(Speed), string.Empty);
+
     public string Headline
     {
         get => GetValue(HeadlineProperty);
@@ -30,5 +33,11 @@ public class ProgressBar : TemplatedControl
     {
         get => GetValue(PercentageProperty);
         set => SetValue(PercentageProperty, value);
+    }
+
+    public string Speed
+    {
+        get => GetValue(SpeedProperty);
+        set => SetValue(SpeedProperty, value);
     }
 }
