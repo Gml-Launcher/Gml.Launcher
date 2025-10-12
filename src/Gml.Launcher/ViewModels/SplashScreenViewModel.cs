@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IStorageService = Gml.Launcher.Core.Services.IStorageService;
 
 namespace Gml.Launcher.ViewModels;
 
