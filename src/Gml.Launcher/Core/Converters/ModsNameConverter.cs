@@ -4,9 +4,8 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
-using Gml.Launcher.ViewModels;
+using Gml.Dto.Mods;
 using Gml.Launcher.ViewModels.Pages;
-using Gml.Web.Api.Dto.Mods;
 
 namespace Gml.Launcher.Core.Converters;
 

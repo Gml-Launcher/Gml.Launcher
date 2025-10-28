@@ -6,7 +6,7 @@
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
-             xmlns:news="clr-namespace:Gml.Web.Api.Dto.News;assembly=Gml.Web.Api.Dto"
+             xmlns:news="clr-namespace:Gml.Dto.News;assembly=Gml.Dto"
              mc:Ignorable="d"
              d:DesignWidth="1000"
              Background="Transparent"

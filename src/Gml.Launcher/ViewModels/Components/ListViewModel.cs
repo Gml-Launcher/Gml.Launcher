@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Subjects;
+using Gml.Dto.Profile;
 using Gml.Launcher.ViewModels.Base;
-using Gml.Web.Api.Dto.Profile;
 using ReactiveUI;
 
 namespace Gml.Launcher.ViewModels.Components;

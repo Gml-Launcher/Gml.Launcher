@@ -14,9 +14,6 @@ using Gml.Launcher.Core.Services;
 using Gml.Launcher.Models;
 using Gml.Launcher.ViewModels.Base;
 using Gml.Launcher.ViewModels.Components;
-using Gml.Web.Api.Dto.Messages;
-using Gml.Web.Api.Dto.News;
-using Gml.Web.Api.Dto.Profile;
 using GmlCore.Interfaces.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -34,6 +31,9 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Gml.Dto.Messages;
+using Gml.Dto.News;
+using Gml.Dto.Profile;
 
 namespace Gml.Launcher.ViewModels.Pages;
 

@@ -45,6 +45,8 @@ public static class ResourceKeysDictionary
     public const string NewsOffline = "NewsOffline";
     public const string NewsEmptyTitle = "NewsEmptyTitle";
     public const string NewsEmptyContent = "NewsEmptyContent";
-    public const string Host = "http://localhost:52842";
+    // public const string Host = "https://gmlf.recloud.tech";
+    public const string Host = "https://localhost:52841";
+    // public const string Host = "http://localhost";
     public const string FolderName = "GamerVIILacunerhV2";
 }

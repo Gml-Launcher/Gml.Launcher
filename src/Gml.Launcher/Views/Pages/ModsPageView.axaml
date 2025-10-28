@@ -5,7 +5,6 @@
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Pages"
              xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
-             xmlns:mods="clr-namespace:Gml.Web.Api.Dto.Mods;assembly=Gml.Web.Api.Dto"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Gml.Launcher.Views.Pages.ModsPageView"
