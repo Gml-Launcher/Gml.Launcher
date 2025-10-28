@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
-using Gml.Web.Api.Dto.Servers;
+using Gml.Dto.Servers;
 
 namespace Gml.Launcher.Core.Converters;
 

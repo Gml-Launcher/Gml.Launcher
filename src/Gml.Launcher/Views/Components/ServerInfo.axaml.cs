@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
-using Gml.Web.Api.Dto.Profile;
 using GmlCore.Interfaces.Enums;
 
 namespace Gml.Launcher.Views.Components;

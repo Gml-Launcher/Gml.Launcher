@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:Gml.Launcher.ViewModels.Components"
              xmlns:converters="clr-namespace:Gml.Launcher.Core.Converters"
              xmlns:components="clr-namespace:Gml.Launcher.Views.Components"
-             xmlns:profile="clr-namespace:Gml.Web.Api.Dto.Profile;assembly=Gml.Web.Api.Dto"
+             xmlns:profile="clr-namespace:Gml.Dto.Profile;assembly=Gml.Dto"
              x:DataType="vm:ListViewModel"
              mc:Ignorable="d" d:DesignWidth="80" d:DesignHeight="350"
              x:Class="Gml.Launcher.Views.Components.ServerListComponent">
