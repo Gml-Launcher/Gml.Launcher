@@ -78,33 +78,4 @@ internal class Program
             .UseReactiveUI();
     }
 #endif
-
-    private static void InitializeSentry()
-    {
-        Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Start sentry initialization");
-        var sentryUrl = GmlClientManager.GetSentryLink(ResourceKeysDictionary.Host).Result;
-
-        try
-        {
-            if (!string.IsNullOrEmpty(sentryUrl))
-                SentrySdk.Init(options =>
-                {
-                    options.Dsn = sentryUrl;
-#if DEBUG
-                    options.Debug = true;
-#endif
-                    options.TracesSampleRate = 1.0;
-                    options.DiagnosticLevel = SentryLevel.Debug;
-                    options.IsGlobalModeEnabled = true;
-                    options.SendDefaultPii = true;
-                    options.MaxAttachmentSize = 10 * 1024 * 1024;
-                });
-
-            Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Sentry initialized");
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(exception);
-        }
-    }
 }

@@ -46,5 +46,6 @@ public static class ResourceKeysDictionary
     public const string NewsEmptyTitle = "NewsEmptyTitle";
     public const string NewsEmptyContent = "NewsEmptyContent";
     public const string Host = "{{HOST}}";
+    public const string SecondaryHost = "{{HOST_SECONDARY}}";
     public const string FolderName = "{{FOLDER_NAME}}";
 }

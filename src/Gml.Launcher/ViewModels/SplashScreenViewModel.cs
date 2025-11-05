@@ -199,7 +199,8 @@ public class SplashScreenViewModel : WindowViewModelBase
     private static async Task InitializeSentryAsync()
     {
         Debug.WriteLine($"[Gml][{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] Start sentry initialization");
-        var sentryUrl = await GmlClientManager.GetSentryLinkAsync(ResourceKeysDictionary.Host);
+        var manager = Locator.Current.GetService<IGmlClientManager>() ?? throw new ServiceNotFoundException(typeof(IGmlClientManager));
+        var sentryUrl = await GmlClientManager.GetSentryLinkAsync(manager.HostUri.ToString());
 
         try
         {
