@@ -1,0 +1,94 @@
+name: Build Linux
+
+on:
+  workflow_call:
+    inputs:
+      self_contained:
+        description: 'Publish self-contained'
+        required: true
+        default: true
+        type: boolean
+      build_arm:
+        description: 'Build for ARM64'
+        required: true
+        default: true
+        type: boolean
+      publish_ready_to_run:
+        description: 'Publish ReadyToRun'
+        required: true
+        default: true
+        type: boolean
+      hide_pdb:
+        description: 'Hide PDB'
+        required: true
+        default: false
+        type: boolean
+  workflow_dispatch:
+    inputs:
+      self_contained:
+        description: 'Publish self-contained'
+        required: true
+        default: true
+        type: boolean
+      build_arm:
+        description: 'Build for ARM64'
+        required: true
+        default: true
+        type: boolean
+      publish_ready_to_run:
+        description: 'Publish ReadyToRun'
+        required: true
+        default: true
+        type: boolean
+      hide_pdb:
+        description: 'Hide PDB'
+        required: true
+        default: false
+        type: boolean
+
+env:
+  PROJECT_PATH: src/Gml.Launcher/Gml.Launcher.csproj
+
+jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          RIDS='["linux-x64"]'
+          if [[ "${{ inputs.build_arm }}" == "true" ]]; then
+            RIDS='["linux-x64", "linux-arm64"]'
+          fi
+          echo "matrix={\"rid\": $RIDS}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: define-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.define-matrix.outputs.matrix) }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Publish
+      run: |
+        EXTRA_ARGS=""
+        if [[ "${{ inputs.hide_pdb }}" == "true" ]]; then
+          EXTRA_ARGS="-p:DebugType=None -p:DebugSymbols=false"
+        fi
+        dotnet publish $PROJECT_PATH -c Release -r ${{ matrix.rid }} $EXTRA_ARGS -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=${{ inputs.publish_ready_to_run }} -p:PublishSingleFile=true -o ./publish/${{ matrix.rid }} -p:SelfContained=${{ inputs.self_contained }}
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Launcher-${{ matrix.rid }}
+        path: ./publish/${{ matrix.rid }}

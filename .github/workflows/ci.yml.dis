@@ -1,0 +1,184 @@
+name: Build All
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+    inputs:
+      self_contained:
+        description: 'Publish self-contained'
+        required: true
+        default: false
+        type: boolean
+      build_arm:
+        description: 'Build for ARM64'
+        required: true
+        default: false
+        type: boolean
+      build_windows:
+        description: 'Build for Windows'
+        required: true
+        default: true
+        type: boolean
+      build_linux:
+        description: 'Build for Linux'
+        required: true
+        default: true
+        type: boolean
+      publish_ready_to_run:
+        description: 'Publish ReadyToRun'
+        required: true
+        default: true
+        type: boolean
+      hide_pdb:
+        description: 'Hide PDB'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      build_windows: ${{ steps.config.outputs.build_windows }}
+      build_linux: ${{ steps.config.outputs.build_linux }}
+      build_arm: ${{ steps.config.outputs.build_arm }}
+      self_contained: ${{ steps.config.outputs.self_contained }}
+      publish_ready_to_run: ${{ steps.config.outputs.publish_ready_to_run }}
+      hide_pdb: ${{ steps.config.outputs.hide_pdb }}
+    steps:
+      - id: config
+        name: Configure Build Parameters
+        run: |
+          # ======================================================================================
+          # DEFAULT SETTINGS (CHANGE VALUES HERE)         | НАСТРОЙКИ ПО УМОЛЧАНИЮ (ИЗМЕНЯЙТЕ ЗНАЧЕНИЯ ЗДЕСЬ)
+          # Set to "true" to enable, "false" to disable   | Включить "true", отключить "false"
+          # ======================================================================================
+          BUILD_WINDOWS="true"   # Enable Windows build   | Включить сборку под Windows
+          BUILD_LINUX="true"     # Enable Linux build     | Включить сборку под Linux
+          BUILD_ARM="false"      # Enable ARM build       | Включить сборку под ARM
+
+          # ======================================================================================
+          SELF_CONTAINED="false" # Publish self-contained | Публиковать как self-contained
+          # If enabled, the build will include all necessary .NET dependencies inside itself. (greatly increases size) Otherwise, prompt the user to install .NET from the MS site.
+          # Если включено, сборка будет содержать все необходимые зависимости .NET внутри себя. (сильно увеличивает размер) Иначе предложить пользователю установить .NET с сайта MS.
+          
+          PUBLISH_READY_TO_RUN="true" # Publish ReadyToRun | Публиковать как ReadyToRun
+          # If enabled, the build will be optimized for faster startup. (greatly increases size and build time)
+          # Если включено, сборка будет оптимизирована для более быстрого запуска. (сильно увеличивает размер и время сборки)
+          
+          HIDE_PDB="true"        # Hide debug files (.pdb) | Скрывать файлы отладки (.pdb)
+          # ======================================================================================
+          
+          echo "Determining build configuration..."
+          
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Mode: Manual (workflow_dispatch)"
+            echo "build_windows=${{ inputs.build_windows }}" >> $GITHUB_OUTPUT
+            echo "build_linux=${{ inputs.build_linux }}" >> $GITHUB_OUTPUT
+            echo "build_arm=${{ inputs.build_arm }}" >> $GITHUB_OUTPUT
+            echo "self_contained=${{ inputs.self_contained }}" >> $GITHUB_OUTPUT
+            echo "publish_ready_to_run=${{ inputs.publish_ready_to_run }}" >> $GITHUB_OUTPUT
+            echo "hide_pdb=${{ inputs.hide_pdb }}" >> $GITHUB_OUTPUT
+          else
+            echo "Mode: Auto (push/other)"
+            echo "build_windows=$BUILD_WINDOWS" >> $GITHUB_OUTPUT
+            echo "build_linux=$BUILD_LINUX" >> $GITHUB_OUTPUT
+            echo "build_arm=$BUILD_ARM" >> $GITHUB_OUTPUT
+            echo "self_contained=$SELF_CONTAINED" >> $GITHUB_OUTPUT
+            echo "publish_ready_to_run=$PUBLISH_READY_TO_RUN" >> $GITHUB_OUTPUT
+            echo "hide_pdb=$HIDE_PDB" >> $GITHUB_OUTPUT
+          fi
+
+  build-windows:
+    needs: setup
+    if: ${{ needs.setup.outputs.build_windows == 'true' }}
+    uses: ./.github/workflows/build-windows.yml
+    with:
+      self_contained: ${{ needs.setup.outputs.self_contained == 'true' }}
+      build_arm: ${{ needs.setup.outputs.build_arm == 'true' }}
+      publish_ready_to_run: ${{ needs.setup.outputs.publish_ready_to_run == 'true' }}
+      hide_pdb: ${{ needs.setup.outputs.hide_pdb == 'true' }}
+
+  build-linux:
+    needs: setup
+    if: ${{ needs.setup.outputs.build_linux == 'true' }}
+    uses: ./.github/workflows/build-linux.yml
+    with:
+      self_contained: ${{ needs.setup.outputs.self_contained == 'true' }}
+      build_arm: ${{ needs.setup.outputs.build_arm == 'true' }}
+      publish_ready_to_run: ${{ needs.setup.outputs.publish_ready_to_run == 'true' }}
+      hide_pdb: ${{ needs.setup.outputs.hide_pdb == 'true' }}
+
+  package-and-release:
+    needs: [build-windows, build-linux]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Create Structure
+        run: |
+          mkdir -p release
+          
+          # Копирование бинарных файлов
+          echo "Processing binaries..."
+          # Включаем globstar для корректной работы масок
+          shopt -s nullglob
+          
+          for artifact_dir in ./artifacts/Launcher-*; do
+            if [ -d "$artifact_dir" ]; then
+               dirname=$(basename "$artifact_dir")
+               # Получаем RID из имени папки (отрезаем префикс)
+               rid=${dirname#"Launcher-"}
+               echo "Found artifact for $rid in $artifact_dir"
+               
+               target_dir="release/$rid"
+               mkdir -p "$target_dir"
+               
+               # Копируем содержимое
+               cp -r "$artifact_dir"/* "$target_dir/"
+            else
+               echo "Warning: Directory $artifact_dir is not a directory or does not exist (glob failed?)"
+            fi
+          done
+
+      - name: Upload Combined Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Launcher-All
+          path: release/
+
+      - name: Cleanup Intermediate Artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const run_id = context.runId;
+            
+            console.log(`Cleaning up artifacts for run ${run_id}`);
+
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner,
+              repo,
+              run_id,
+            });
+
+            for (const artifact of artifacts.data.artifacts) {
+              // Удаляем временные артефакты платформ и отчетов, оставляем только финальный 'Launcher-All'
+              if (artifact.name !== 'Launcher-All') {
+                 console.log(`Deleting artifact: ${artifact.name} (${artifact.id})`);
+                 await github.rest.actions.deleteArtifact({
+                   owner,
+                   repo,
+                   artifact_id: artifact.id,
+                 });
+              }
+            }
