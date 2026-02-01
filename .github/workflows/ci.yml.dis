@@ -128,22 +128,20 @@ jobs:
         run: |
           mkdir -p release
           
-          # Копирование бинарных файлов
           echo "Processing binaries..."
-          # Включаем globstar для корректной работы масок
-          shopt -s nullglob
+          # Enable globstar for proper globbing (for use ** pattern, for future use) 
+          # shopt -s nullglob
           
           for artifact_dir in ./artifacts/Launcher-*; do
             if [ -d "$artifact_dir" ]; then
                dirname=$(basename "$artifact_dir")
-               # Получаем RID из имени папки (отрезаем префикс)
+               # Get RID from folder name (remove prefix)
                rid=${dirname#"Launcher-"}
                echo "Found artifact for $rid in $artifact_dir"
                
                target_dir="release/$rid"
                mkdir -p "$target_dir"
                
-               # Копируем содержимое
                cp -r "$artifact_dir"/* "$target_dir/"
             else
                echo "Warning: Directory $artifact_dir is not a directory or does not exist (glob failed?)"
@@ -172,7 +170,7 @@ jobs:
             });
 
             for (const artifact of artifacts.data.artifacts) {
-              // Удаляем временные артефакты платформ и отчетов, оставляем только финальный 'Launcher-All'
+              // Remove intermediate platform artifacts, keep only the final 'Launcher-All'
               if (artifact.name !== 'Launcher-All') {
                  console.log(`Deleting artifact: ${artifact.name} (${artifact.id})`);
                  await github.rest.actions.deleteArtifact({
