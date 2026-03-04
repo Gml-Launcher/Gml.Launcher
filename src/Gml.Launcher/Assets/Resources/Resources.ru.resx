@@ -334,4 +334,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
+  <data name="ProfileSuccessRemoved" xml:space="preserve">
+    <value>Профиль успешно удален</value>
+  </data>
 </root>

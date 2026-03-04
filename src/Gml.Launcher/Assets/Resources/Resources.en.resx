@@ -336,4 +336,7 @@ To exit offline mode, make sure that the server is available, and then restart t
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProfileSuccessRemoved" xml:space="preserve">
+    <value>Profile success removed</value>
+  </data>
 </root>

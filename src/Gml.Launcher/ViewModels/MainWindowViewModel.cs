@@ -12,6 +12,7 @@ using System;
 using System.Diagnostics;
 using System.Reactive.Concurrency;
 using System.Reactive.Subjects;
+using Gml.Launcher.Core;
 
 namespace Gml.Launcher.ViewModels;
 
@@ -58,12 +59,12 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
     public async void CheckBackendStatus(INotificationMessageButton button)
     {
         button.IsEnabled = false;
-        button.Content = _localizationService.GetString(ResourceKeysDictionary.CheckBackendTitle);
+        button.Content = _localizationService.GetString(SystemConstants.CheckBackendTitle);
 
         var CheckMessage = Manager
             .CreateMessage(false, "#222",
-                _localizationService.GetString(ResourceKeysDictionary.CheckBackendTitle),
-                _localizationService.GetString(ResourceKeysDictionary.CheckBackendMessage))
+                _localizationService.GetString(SystemConstants.CheckBackendTitle),
+                _localizationService.GetString(SystemConstants.CheckBackendMessage))
             .WithAdditionalContent(ContentLocation.Bottom, new Avalonia.Controls.ProgressBar
             {
                 Foreground = new SolidColorBrush(Color.FromArgb(128, 200, 200, 200)),
@@ -79,22 +80,22 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
 
         Manager.Dismiss(CheckMessage);
         button.IsEnabled = true;
-        button.Content = _localizationService.GetString(ResourceKeysDictionary.CheckBackendButton);
+        button.Content = _localizationService.GetString(SystemConstants.CheckBackendButton);
 
         if (!backendInactive)
         {
             Manager
                 .CreateMessage(false, "#086",
-                    _localizationService.GetString(ResourceKeysDictionary.CheckBackendTitle),
-                    _localizationService.GetString(ResourceKeysDictionary.CheckBackendResultSuccessful)).Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+                    _localizationService.GetString(SystemConstants.CheckBackendTitle),
+                    _localizationService.GetString(SystemConstants.CheckBackendResultSuccessful)).Dismiss().WithDelay(TimeSpan.FromSeconds(5))
                 .Queue();
         }
         else
         {
             Manager
                .CreateMessage(false, "#933",
-                   _localizationService.GetString(ResourceKeysDictionary.CheckBackendTitle),
-                   _localizationService.GetString(ResourceKeysDictionary.CheckBackendResultFailed)).Dismiss().WithDelay(TimeSpan.FromSeconds(5))
+                   _localizationService.GetString(SystemConstants.CheckBackendTitle),
+                   _localizationService.GetString(SystemConstants.CheckBackendResultFailed)).Dismiss().WithDelay(TimeSpan.FromSeconds(5))
                .Queue();
         }
     }
@@ -105,14 +106,14 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
         {
             Manager
                 .CreateMessage(true, "#993030",
-                    _localizationService.GetString(ResourceKeysDictionary.OfflineMode),
-                    _localizationService.GetString(ResourceKeysDictionary.OfflineDescription))
+                    _localizationService.GetString(SystemConstants.OfflineMode),
+                    _localizationService.GetString(SystemConstants.OfflineDescription))
                 .HasBadge("WARNING")
                 .Accent("#A54848")
                 .WithButtonsVisibility(true)
                 .WithCloseButtonVisible(true)
-                .WithButton(_localizationService.GetString(ResourceKeysDictionary.RestartButton), button => RestartApp())
-                .WithButton(_localizationService.GetString(ResourceKeysDictionary.CheckBackendButton), button => CheckBackendStatus(button))
+                .WithButton(_localizationService.GetString(SystemConstants.RestartButton), button => RestartApp())
+                .WithButton(_localizationService.GetString(SystemConstants.CheckBackendButton), button => CheckBackendStatus(button))
                 .Queue();
         }
     }
@@ -122,8 +123,8 @@ public class MainWindowViewModel : WindowViewModelBase, IScreen
         {
             Manager
                 .CreateMessage(true, "#3684EA",
-                    _localizationService.GetString(ResourceKeysDictionary.Information),
-                    _localizationService.GetString(ResourceKeysDictionary.VpnUse))
+                    _localizationService.GetString(SystemConstants.Information),
+                    _localizationService.GetString(SystemConstants.VpnUse))
                 .Dismiss()
                 .WithDelay(TimeSpan.FromSeconds(10))
                 .Queue();

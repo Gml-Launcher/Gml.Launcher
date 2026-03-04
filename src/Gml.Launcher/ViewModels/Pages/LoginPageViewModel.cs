@@ -11,6 +11,7 @@ using Gml.Client;
 using Gml.Client.Interfaces;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
@@ -156,7 +157,7 @@ public class LoginPageViewModel : PageViewModelBase
                 if (!authInfo.Details.Any())
                     mainView.Manager
                         .CreateMessage(true, "#D03E3E",
-                            LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                            LocalizationService.GetString(SystemConstants.InvalidAuthData),
                             authInfo.Message)
                         .Dismiss()
                         .WithDelay(TimeSpan.FromSeconds(3))
@@ -172,7 +173,7 @@ public class LoginPageViewModel : PageViewModelBase
             {
                 mainView.Manager
                     .CreateMessage(true, "#D03E3E",
-                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        LocalizationService.GetString(SystemConstants.InvalidAuthData),
                         exception.Message)
                     .Dismiss()
                     .WithDelay(TimeSpan.FromSeconds(3))
@@ -216,7 +217,7 @@ public class LoginPageViewModel : PageViewModelBase
                 // Если код неверный, показываем ошибку, но оставляем окно 2FA открытым
                 mainView.Manager
                     .CreateMessage(true, "#D03E3E",
-                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        LocalizationService.GetString(SystemConstants.InvalidAuthData),
                         authInfo.Message ?? "Invalid 2FA code")
                     .Dismiss()
                     .WithDelay(TimeSpan.FromSeconds(3))
@@ -238,7 +239,7 @@ public class LoginPageViewModel : PageViewModelBase
             {
                 mainView.Manager
                     .CreateMessage(true, "#D03E3E",
-                        LocalizationService.GetString(ResourceKeysDictionary.InvalidAuthData),
+                        LocalizationService.GetString(SystemConstants.InvalidAuthData),
                         exception.Message)
                     .Dismiss()
                     .WithDelay(TimeSpan.FromSeconds(3))

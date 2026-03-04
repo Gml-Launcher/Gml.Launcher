@@ -5,6 +5,7 @@ using Gml.Client;
 using Gml.Client.Interfaces;
 using Gml.Client.Models;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels.Base;
 using GmlCore.Interfaces;
@@ -32,7 +33,7 @@ public class ProfilePageViewModel : PageViewModelBase
         RxApp.TaskpoolScheduler.Schedule(LoadData);
     }
 
-    public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
+    public new string Title => LocalizationService.GetString(SystemConstants.MainPageTitle);
 
     private async void LoadData()
     {

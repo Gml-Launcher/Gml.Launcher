@@ -342,4 +342,7 @@
   <data name="Delete" xml:space="preserve">
     <value>移走</value>
   </data>
+  <data name="ProfileSuccessRemoved" xml:space="preserve">
+    <value>配置文件成功删除</value>
+  </data>
 </root>

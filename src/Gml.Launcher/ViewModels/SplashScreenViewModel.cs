@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Gml.Client.Interfaces;
+using Gml.Launcher.Core;
 using IStorageService = Gml.Launcher.Core.Services.IStorageService;
 
 namespace Gml.Launcher.ViewModels;
@@ -62,7 +63,7 @@ public class SplashScreenViewModel : WindowViewModelBase
         _timer.Interval = TimeSpan.FromSeconds(15);
         _timer.Tick += OnTimerTick;
 
-        StatusText = _localizationService.GetString(ResourceKeysDictionary.PreparingLaunch);
+        StatusText = _localizationService.GetString(SystemConstants.PreparingLaunch);
     }
 
     [Reactive] public string StatusText { get; set; }
@@ -75,7 +76,7 @@ public class SplashScreenViewModel : WindowViewModelBase
     {
         if (sender != null && !_isBackendChecked)
         {
-            StatusText = _localizationService.GetString(ResourceKeysDictionary.BackendCheckingLonger);
+            StatusText = _localizationService.GetString(SystemConstants.BackendCheckingLonger);
         }
     }
 
@@ -88,34 +89,34 @@ public class SplashScreenViewModel : WindowViewModelBase
 
             await _systemService.LoadSystemData();
 
-            ChangeState(_localizationService.GetString(ResourceKeysDictionary.BackendChecking), true);
+            ChangeState(_localizationService.GetString(SystemConstants.BackendChecking), true);
             _isBackendChecked = false;
             _timer.Start();
             await _backendChecker.UpdateBackendStatus();
             _isBackendChecked = true;
             if (_backendChecker.IsOffline)
             {
-                ChangeState(_localizationService.GetString(ResourceKeysDictionary.BackendOffline), true);
+                ChangeState(_localizationService.GetString(SystemConstants.BackendOffline), true);
                 await Task.Delay(1000);
             }
 
             if (!_backendChecker.IsOffline)
             {
-                ChangeState(_localizationService.GetString(ResourceKeysDictionary.SentrySDKInit), true);
+                ChangeState(_localizationService.GetString(SystemConstants.SentrySDKInit), true);
                 await InitializeSentryAsync();
             }
 
             if (!_manager.SkipUpdate && !_backendChecker.IsOffline)
             {
-                ChangeState(_localizationService.GetString(ResourceKeysDictionary.CheckUpdates), true);
+                ChangeState(_localizationService.GetString(SystemConstants.CheckUpdates), true);
                 var versionInfo = await CheckActualVersion(osType, osArch);
 
                 if (!versionInfo.IsActuallVersion)
                 {
-                    ChangeState(_localizationService.GetString(ResourceKeysDictionary.InstallingUpdates), false);
+                    ChangeState(_localizationService.GetString(SystemConstants.InstallingUpdates), false);
 
                     var exePath = Process.GetCurrentProcess().MainModule?.FileName
-                                  ?? throw new Exception(ResourceKeysDictionary.FailedOs);
+                                  ?? throw new Exception(SystemConstants.FailedOs);
 
                     var process = _manager.ProgressChanged.Subscribe(
                         percentage => Progress = Convert.ToInt16(percentage));
@@ -141,7 +142,7 @@ public class SplashScreenViewModel : WindowViewModelBase
         {
             SentrySdk.CaptureException(exception);
         }
-        ChangeState(_localizationService.GetString(ResourceKeysDictionary.Launching), true);
+        ChangeState(_localizationService.GetString(SystemConstants.Launching), true);
         await Task.Delay(500);
     }
 

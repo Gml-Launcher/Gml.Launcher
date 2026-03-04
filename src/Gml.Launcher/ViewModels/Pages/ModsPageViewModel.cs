@@ -85,7 +85,7 @@ public class ModsPageViewModel : PageViewModelBase
         }
         catch (Exception exception)
         {
-            ShowError(ResourceKeysDictionary.Error, exception.Message);
+            ShowError(SystemConstants.Error, exception.Message);
             SentrySdk.CaptureException(exception);
         }
 

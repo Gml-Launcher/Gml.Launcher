@@ -708,5 +708,13 @@ namespace Gml.Launcher.Assets.Resources {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Window size.
+        /// </summary>
+        public static string ProfileSuccessRemoved {
+            get {
+                return ResourceManager.GetString("ProfileSuccessRemoved", resourceCulture);
+            }
+        }
     }
 }

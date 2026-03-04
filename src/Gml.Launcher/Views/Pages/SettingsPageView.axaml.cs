@@ -11,6 +11,7 @@ using Avalonia.ReactiveUI;
 using Avalonia.VisualTree;
 using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.ViewModels.Pages;
 using ReactiveUI;
 using Sentry;
@@ -72,8 +73,8 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
             // Show error notification
             ViewModel?.MainViewModel.Manager
                 .CreateMessage(true, "#D03E3E",
-                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.Error),
-                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.InvalidFolder))
+                ViewModel.LocalizationService.GetString(SystemConstants.Error),
+                ViewModel.LocalizationService.GetString(SystemConstants.InvalidFolder))
                 .Dismiss()
                 .WithDelay(TimeSpan.FromSeconds(3))
                 .Queue();
@@ -109,8 +110,8 @@ public partial class SettingsPageView : ReactiveUserControl<SettingsPageViewMode
             // Show error notification
             ViewModel?.MainViewModel.Manager
                 .CreateMessage(true, "#D03E3E",
-                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.Error),
-                ViewModel.LocalizationService.GetString(ResourceKeysDictionary.InvalidFolder))
+                ViewModel.LocalizationService.GetString(SystemConstants.Error),
+                ViewModel.LocalizationService.GetString(SystemConstants.InvalidFolder))
                 .Dismiss()
                 .WithDelay(TimeSpan.FromSeconds(3))
                 .Queue();

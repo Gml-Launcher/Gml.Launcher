@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Avalonia.Threading;
 using GamerVII.Notification.Avalonia;
 using Gml.Launcher.Assets;
+using Gml.Launcher.Core;
 using Gml.Launcher.Core.Exceptions;
 using Gml.Launcher.Core.Services;
 using ReactiveUI;
@@ -30,7 +31,7 @@ public class PageViewModelBase : ViewModelBase, IRoutableViewModel
         HostScreen = screen;
     }
 
-    public string Title => LocalizationService.GetString(ResourceKeysDictionary.DefaultPageTitle);
+    public string Title => LocalizationService.GetString(SystemConstants.DefaultPageTitle);
 
     public ICommand OpenLinkCommand { get; }
     public ICommand GoBackCommand { get; set; }
