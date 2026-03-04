@@ -436,7 +436,7 @@ public class OverviewPageViewModel : PageViewModelBase
 
         var minValue = Math.Min(recommendedRam, maxRam);
 
-        return minValue == 0 && ListViewModel.SelectedProfile?.RecommendedRam == 0 ? 512 : minValue;
+        return minValue == 0 && ListViewModel.SelectedProfile?.RecommendedRam == 0 ? 1024 : minValue;
     }
 
     private static string FormatBytes(long bytes)
