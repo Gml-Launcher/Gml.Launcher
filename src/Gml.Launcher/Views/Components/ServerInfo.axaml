@@ -68,6 +68,7 @@
                                     <Setter Property="Background" Value="{DynamicResource FrameBackgroundColor}" />
                                     <Setter Property="CornerRadius" Value="24" />
                                     <Setter Property="Padding" Value="8" />
+                                    <Setter Property="Margin" Value="0, 14" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource FrameBackgroundBorderColor}" />
                                 </Style>
                                 <Style Selector="controls|GmlButton.SmallGmlButton /template/ Button">
