@@ -72,6 +72,8 @@
                                        Grid.Row="2"
                                        Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
                                        PlayCommand="{Binding PlayCommand}"
+                                       ReinstallCommand="{Binding ReinstallCommand}"
+                                       RemoveCommand="{Binding RemoveCommand}"
                                        SettingsCommand="{Binding GoSettingsCommand}"
                                        GoModsCommand="{Binding GoModsCommand}"
                                        IsVisible="{Binding ListViewModel.HasSelectedItem}"

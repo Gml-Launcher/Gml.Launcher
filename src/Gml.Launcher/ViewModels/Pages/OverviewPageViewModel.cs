@@ -146,10 +146,66 @@ public class OverviewPageViewModel : PageViewModelBase
 
         PlayCommand = ReactiveCommand.CreateFromTask(StartGame);
 
+        RemoveCommand = ReactiveCommand.CreateFromTask(RemoveGame);
+
+        ReinstallCommand = ReactiveCommand.CreateFromTask(ReinstallGame);
+
         BackendIsActive = !_backendChecker.IsOffline;
 
         RxApp.MainThreadScheduler.Schedule(LoadData);
     }
+
+    private async Task ReinstallGame()
+    {
+        try
+        {
+            UpdateProgress(LocalizationService.GetString(ResourceKeysDictionary.Updating), LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity), true);
+
+            var profileInfo = await GetProfileInfo();
+            var data = profileInfo?.Data;
+            if (data != null)
+            {
+                await _gmlManager.RemoveProfileFiles(data);
+            }
+        }
+        catch (Exception exception)
+        {
+            ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
+            SentrySdk.CaptureException(exception);
+        }
+        finally
+        {
+            UpdateProgress(string.Empty, string.Empty, false);
+        }
+
+        // После удаления автоматически запускаем установку/игру
+        await StartGame();
+    }
+
+    private async Task RemoveGame()
+    {
+        try
+        {
+            UpdateProgress(LocalizationService.GetString(ResourceKeysDictionary.Updating), LocalizationService.GetString(ResourceKeysDictionary.CheckingFileIntegrity), true);
+
+            var profileInfo = await GetProfileInfo();
+            var data = profileInfo?.Data;
+            if (data != null)
+            {
+                await _gmlManager.RemoveProfileFiles(data);
+            }
+        }
+        catch (Exception exception)
+        {
+            ShowError(ResourceKeysDictionary.Error, string.Join(". ", exception.Message));
+            SentrySdk.CaptureException(exception);
+        }
+        finally
+        {
+            UpdateProgress(string.Empty, string.Empty, false);
+        }
+    }
+
     [Reactive] public bool IsModsButtonVisible { get; private set; }
 
     public new string Title => LocalizationService.GetString(ResourceKeysDictionary.MainPageTitle);
@@ -158,6 +214,8 @@ public class OverviewPageViewModel : PageViewModelBase
     public ICommand GoModsCommand { get; set; }
     public ICommand LogoutCommand { get; set; }
     public ICommand PlayCommand { get; set; }
+    public ICommand RemoveCommand { get; set; }
+    public ICommand ReinstallCommand { get; set; }
     public ICommand GoSettingsCommand { get; set; }
     public ICommand HomeCommand { get; set; }
     public ListViewModel ListViewModel { get; } = new();

@@ -78,11 +78,11 @@
                                     <StackPanel Spacing="8">
                                         <controls:GmlButton Classes="TextIcon Additional"
                                                             Width="180"
-                                                            Command="{TemplateBinding ReinstallCommand}"
+                                                            Command="{Binding $parent[controls:ServerInfo].ReinstallCommand}"
                                                             IconPath="/Assets/Images/download.svg"
                                                             Text="{x:Static lang:Resources.Reinstall}" />
                                         <controls:GmlButton Classes="Text Danger"
-                                                            Command="{TemplateBinding RemoveCommand}"
+                                                            Command="{Binding $parent[controls:ServerInfo].RemoveCommand}"
                                                             Width="180"
                                                             IconPath="/Assets/Images/download.svg"
                                                             Text="{x:Static lang:Resources.Delete}" />
