@@ -157,7 +157,7 @@
     <value>Profile</value>
   </data>
   <data name="ProfileNotConfigured" xml:space="preserve">
-    <value>Profile not configured</value>
+    <value>The profile is not configured, or the texture service is not configured, the launch of the current client is not available.</value>
   </data>
   <data name="SettingsRamTitle" xml:space="preserve">
     <value>Settings RAM</value>

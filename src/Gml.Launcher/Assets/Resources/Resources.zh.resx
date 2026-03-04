@@ -157,7 +157,7 @@
     <value>个人账户</value>
   </data>
   <data name="ProfileNotConfigured" xml:space="preserve">
-    <value>配置未设置，当前客户端无法启动</value>
+    <value>配置文件未配置，或者纹理服务未配置，则当前客户端的启动不可用。</value>
   </data>
   <data name="SettingsRamTitle" xml:space="preserve">
     <value>RAM设置</value>
