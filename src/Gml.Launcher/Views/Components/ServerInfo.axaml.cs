@@ -50,6 +50,24 @@ public class ServerInfo : TemplatedControl
     public static readonly StyledProperty<bool> IsModsButtonVisibleProperty =
         AvaloniaProperty.Register<ServerInfo, bool>(nameof(IsModsButtonVisible), defaultValue: true);
 
+    public static readonly StyledProperty<ICommand> ReinstallCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
+        nameof(ReinstallCommand));
+
+    public static readonly StyledProperty<ICommand> RemoveCommandProperty = AvaloniaProperty.Register<ServerInfo, ICommand>(
+        nameof(RemoveCommand));
+
+    public ICommand RemoveCommand
+    {
+        get => GetValue(RemoveCommandProperty);
+        set => SetValue(RemoveCommandProperty, value);
+    }
+
+    public ICommand ReinstallCommand
+    {
+        get => GetValue(ReinstallCommandProperty);
+        set => SetValue(ReinstallCommandProperty, value);
+    }
+
     public bool BackendIsNotOffline
     {
         get => GetValue(BackendIsNotOfflineProperty);

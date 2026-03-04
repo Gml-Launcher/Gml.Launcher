@@ -3,7 +3,7 @@
         xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources"
         xmlns:controls="using:Gml.Launcher.Views.Components">
     <Design.PreviewWith>
-        <Border Background="{DynamicResource BackgroundColor}">
+        <Border Background="{DynamicResource BackgroundColor}" Padding="100">
             <controls:ServerInfo />
         </Border>
     </Design.PreviewWith>
@@ -57,12 +57,39 @@
                     <!--            FontSize="14" /> -->
 
                     <StackPanel Spacing="10" Orientation="Horizontal">
-                        <controls:GmlButton Classes="TextIcon Primary"
+                        <controls:GmlButton Classes="TextIcon Primary DropDown"
                                             IconPath="/Assets/Images/login.svg"
                                             Command="{TemplateBinding PlayCommand}"
                                             IconSize="24"
                                             FontSize="16"
-                                            Text="{x:Static lang:Resources.Play}" />
+                                            Text="{x:Static lang:Resources.Play}" >
+                            <controls:GmlButton.Styles>
+                                <Style Selector="FlyoutPresenter.flyoutPresenter">
+                                    <Setter Property="Background" Value="{DynamicResource FrameBackgroundColor}" />
+                                    <Setter Property="CornerRadius" Value="24" />
+                                    <Setter Property="Padding" Value="8" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource FrameBackgroundBorderColor}" />
+                                </Style>
+                            </controls:GmlButton.Styles>
+
+                            <controls:GmlButton.FlyoutContent>
+                                <Flyout Placement="BottomEdgeAlignedRight"
+                                        FlyoutPresenterClasses="flyoutPresenter">
+                                    <StackPanel Spacing="8">
+                                        <controls:GmlButton Classes="TextIcon Additional"
+                                                            Width="180"
+                                                            Command="{TemplateBinding ReinstallCommand}"
+                                                            IconPath="/Assets/Images/download.svg"
+                                                            Text="{x:Static lang:Resources.Reinstall}" />
+                                        <controls:GmlButton Classes="Text Danger"
+                                                            Command="{TemplateBinding RemoveCommand}"
+                                                            Width="180"
+                                                            IconPath="/Assets/Images/download.svg"
+                                                            Text="{x:Static lang:Resources.Delete}" />
+                                    </StackPanel>
+                                </Flyout>
+                            </controls:GmlButton.FlyoutContent>
+                        </controls:GmlButton>
 
                         <controls:GmlButton Classes="TextIcon Secondary"
                                             Command="{TemplateBinding SettingsCommand}"

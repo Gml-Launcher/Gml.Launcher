@@ -36,6 +36,15 @@ public class GmlButton : TemplatedControl
         AvaloniaProperty.Register<GmlButton, object?>(
             nameof(CommandParameter));
 
+    public static readonly StyledProperty<Flyout> FlyoutContentProperty = AvaloniaProperty.Register<GmlButton, Flyout>(
+        nameof(FlyoutContent));
+
+    public Flyout FlyoutContent
+    {
+        get => GetValue(FlyoutContentProperty);
+        set => SetValue(FlyoutContentProperty, value);
+    }
+
     public object? CommandParameter
     {
         get => GetValue(CommandParameterProperty);

@@ -336,4 +336,10 @@
   <data name="TwoFactorDescription" xml:space="preserve">
     <value>请输入您身份验证应用中的验证码。</value>
   </data>
+  <data name="Reinstall" xml:space="preserve">
+    <value>重新安装</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>移走</value>
+  </data>
 </root>

@@ -328,4 +328,10 @@
   <data name="TwoFactorDescription" xml:space="preserve">
     <value>Пожалуйста, введите код подтверждения из вашего приложения аутентификации</value>
   </data>
+  <data name="Reinstall" xml:space="preserve">
+    <value>Переустановить</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
 </root>

@@ -330,4 +330,10 @@ To exit offline mode, make sure that the server is available, and then restart t
   <data name="TwoFactorDescription" xml:space="preserve">
     <value>Please enter the verification code from your authentication app.</value>
   </data>
+  <data name="Reinstall" xml:space="preserve">
+    <value>Reinstall</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>

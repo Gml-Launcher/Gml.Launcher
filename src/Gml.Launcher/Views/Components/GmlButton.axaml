@@ -10,11 +10,22 @@
                     <controls:GmlButton Classes="Icon Secondary" />
                     <controls:GmlButton Classes="Icon Primary" />
                     <controls:GmlButton Classes="Icon Additional" />
+                    <controls:GmlButton Classes="Icon Danger" />
+                    <controls:GmlButton Classes="Icon Ghost" />
                 </StackPanel>
                 <controls:GmlButton Classes="TextIcon Primary" />
+                <controls:GmlButton Classes="TextIcon Primary DropDown">
+                    <controls:GmlButton.FlyoutContent>
+                        <Flyout>
+                            <Button Content="Переустановить игру" />
+                        </Flyout>
+                    </controls:GmlButton.FlyoutContent>
+                </controls:GmlButton>
                 <controls:GmlButton Classes="TextIcon Secondary" />
                 <controls:GmlButton Classes="TextIcon Additional" />
                 <controls:GmlButton Classes="Text Additional" />
+                <controls:GmlButton Classes="Text Danger" />
+                <controls:GmlButton Classes="Text Ghost" />
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -89,6 +100,58 @@
             </ControlTemplate>
         </Setter>
     </Style>
+    <Style Selector="controls|GmlButton.DropDown">
+
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Padding" Value="10, 0, 0, 0" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Name="PART_Button"
+                        Background="{TemplateBinding Background}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}">
+
+                    <Grid ColumnDefinitions="*, 1, Auto">
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="{TemplateBinding Spacing}">
+                            <Svg Path="{TemplateBinding IconPath}"
+                                 Width="{TemplateBinding IconSize}"
+                                 Height="{TemplateBinding IconSize}" />
+                            <TextBlock Text="{TemplateBinding Text}"
+                                       VerticalAlignment="Center"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       Foreground="{DynamicResource HeadlineColor}" />
+                        </StackPanel>
+                        <Rectangle Grid.Column="1"
+                                   Margin="15 0 0 0"
+                                   Fill="#20000000"
+                                   Width="1" />
+                        <Button Grid.Column="2"
+                                Flyout="{TemplateBinding FlyoutContent}"
+                                Classes="Ghost">
+
+                            <Button.Content>
+                                <Svg Path="/Assets/Images/down.svg"
+                                     Width="24"
+                                     Height="24" />
+                            </Button.Content>
+
+                        </Button>
+                    </Grid>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
 
     <Style Selector="controls|GmlButton.Text">
 
@@ -151,4 +214,22 @@
         <Setter Property="BorderBrush" Value="{StaticResource FormBorderHoverColor}" />
     </Style>
 
+
+    <Style Selector="Button.Ghost /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="Button.Ghost:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Opacity" Value="0.85"></Setter>
+    </Style>
+
+    <Style Selector="controls|GmlButton.Danger /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="Tomato" />
+    </Style>
+
+    <Style Selector="controls|GmlButton.Danger:pointerover /template/ Button /template/ ContentPresenter">
+        <Setter Property="Background" Value="Tomato" />
+        <Setter Property="Opacity" Value="0.85"></Setter>
+    </Style>
 </Styles>
