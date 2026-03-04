@@ -1,6 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:Gml.Launcher.Views.Components">
+        xmlns:controls="using:Gml.Launcher.Views.Components"
+        xmlns:lang="clr-namespace:Gml.Launcher.Assets.Resources">
 
     <Design.PreviewWith>
         <Border Background="{StaticResource BackgroundColor}"
@@ -15,9 +16,31 @@
                 </StackPanel>
                 <controls:GmlButton Classes="TextIcon Primary" />
                 <controls:GmlButton Classes="TextIcon Primary DropDown">
+                    <controls:GmlButton.Styles>
+                        <Style Selector="FlyoutPresenter.flyoutPresenter">
+                            <Setter Property="Background" Value="{DynamicResource FrameBackgroundColor}" />
+                            <Setter Property="CornerRadius" Value="24" />
+                            <Setter Property="Padding" Value="8" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource FrameBackgroundBorderColor}" />
+                        </Style>
+                    </controls:GmlButton.Styles>
                     <controls:GmlButton.FlyoutContent>
-                        <Flyout>
-                            <Button Content="Переустановить игру" />
+                        <Flyout Placement="BottomEdgeAlignedRight"
+                                FlyoutPresenterClasses="flyoutPresenter">
+                            <StackPanel Spacing="8">
+                                <controls:GmlButton Classes="TextIcon Additional"
+                                                    Width="180"
+                                                    Height="36"
+                                                    Command="{Binding $parent[controls:ServerInfo].ReinstallCommand}"
+                                                    IconPath="/Assets/Images/download.svg"
+                                                    Text="{x:Static lang:Resources.Reinstall}" />
+                                <controls:GmlButton Classes="Text Danger"
+                                                    Command="{Binding $parent[controls:ServerInfo].RemoveCommand}"
+                                                    Width="180"
+                                                    Height="36"
+                                                    IconPath="/Assets/Images/download.svg"
+                                                    Text="{x:Static lang:Resources.Delete}" />
+                            </StackPanel>
                         </Flyout>
                     </controls:GmlButton.FlyoutContent>
                 </controls:GmlButton>
@@ -100,6 +123,35 @@
             </ControlTemplate>
         </Setter>
     </Style>
+
+    <Style Selector="controls|GmlButton.Text">
+
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Padding" Value="20, 0, 20 0" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Name="PART_Button"
+                        Background="{TemplateBinding Background}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        Padding="{TemplateBinding Padding}"
+                        IsDefault="{TemplateBinding IsDefault}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}">
+                    <TextBlock Text="{TemplateBinding Text}"
+                               VerticalAlignment="Center"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               Foreground="{DynamicResource HeadlineColor}" />
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
     <Style Selector="controls|GmlButton.DropDown">
 
         <Setter Property="CornerRadius" Value="50" />
@@ -119,7 +171,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}">
+                        Height="{TemplateBinding Height}"
+                        MaxHeight="{TemplateBinding MaxHeight}">
 
                     <Grid ColumnDefinitions="*, 1, Auto">
                         <StackPanel Orientation="Horizontal"
@@ -148,35 +201,6 @@
 
                         </Button>
                     </Grid>
-                </Button>
-            </ControlTemplate>
-        </Setter>
-    </Style>
-
-    <Style Selector="controls|GmlButton.Text">
-
-        <Setter Property="CornerRadius" Value="50" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Padding" Value="20, 0, 20 0" />
-
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Button Name="PART_Button"
-                        Background="{TemplateBinding Background}"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        Padding="{TemplateBinding Padding}"
-                        IsDefault="{TemplateBinding IsDefault}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}">
-                    <TextBlock Text="{TemplateBinding Text}"
-                               VerticalAlignment="Center"
-                               FontWeight="{TemplateBinding FontWeight}"
-                               Foreground="{DynamicResource HeadlineColor}" />
                 </Button>
             </ControlTemplate>
         </Setter>

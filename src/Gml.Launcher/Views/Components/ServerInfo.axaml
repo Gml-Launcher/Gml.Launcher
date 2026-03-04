@@ -62,7 +62,7 @@
                                             Command="{TemplateBinding PlayCommand}"
                                             IconSize="24"
                                             FontSize="16"
-                                            Text="{x:Static lang:Resources.Play}" >
+                                            Text="{x:Static lang:Resources.Play}">
                             <controls:GmlButton.Styles>
                                 <Style Selector="FlyoutPresenter.flyoutPresenter">
                                     <Setter Property="Background" Value="{DynamicResource FrameBackgroundColor}" />
@@ -70,20 +70,27 @@
                                     <Setter Property="Padding" Value="8" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource FrameBackgroundBorderColor}" />
                                 </Style>
+                                <Style Selector="controls|GmlButton.SmallGmlButton /template/ Button">
+                                    <Setter Property="Height" Value="36" />
+                                </Style>
+                                <Style Selector="controls|GmlButton.SmallGmlButton">
+                                    <Setter Property="Height" Value="NaN" />
+                                </Style>
                             </controls:GmlButton.Styles>
 
                             <controls:GmlButton.FlyoutContent>
                                 <Flyout Placement="BottomEdgeAlignedRight"
                                         FlyoutPresenterClasses="flyoutPresenter">
                                     <StackPanel Spacing="8">
-                                        <controls:GmlButton Classes="TextIcon Additional"
+                                        <controls:GmlButton Classes="SmallGmlButton TextIcon Additional"
                                                             Width="180"
                                                             Command="{Binding $parent[controls:ServerInfo].ReinstallCommand}"
                                                             IconPath="/Assets/Images/download.svg"
                                                             Text="{x:Static lang:Resources.Reinstall}" />
-                                        <controls:GmlButton Classes="Text Danger"
+                                        <controls:GmlButton Classes="SmallGmlButton Text Danger"
                                                             Command="{Binding $parent[controls:ServerInfo].RemoveCommand}"
                                                             Width="180"
+                                                            Height="36"
                                                             IconPath="/Assets/Images/download.svg"
                                                             Text="{x:Static lang:Resources.Delete}" />
                                     </StackPanel>
