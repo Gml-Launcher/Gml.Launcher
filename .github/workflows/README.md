@@ -11,6 +11,7 @@
    | -------------------- | -------------------------------------------------------------------------------------- | ------------- |
    | BUILD_WINDOWS        | Enable Windows build (true/false)                                                      | `true`        |
    | BUILD_LINUX          | Enable Linux build (true/false)                                                        | `true`        |
+   | BUILD_OSX            | Enable OSX build (true/false)                                                          | `true`        |
    | BUILD_ARM            | Enable ARM64 build (true/false)                                                        | `false`       |
    | SELF_CONTAINED       | Publish as self-contained (user won't need to install .NET, greatly increases size)    | `false`       |
    | PUBLISH_READY_TO_RUN | Publish as ReadyToRun (optimization for faster startup, increases size and build time) | `true`        |
@@ -38,6 +39,7 @@ After this, CI will automatically run on pushes to master/main branches or can b
    | -------------------- | --------------------------------------------------------------------------------------------------------- | --------------------- |
    | BUILD_WINDOWS        | Включить сборку под Windows (true/false)                                                                  | `true`                |
    | BUILD_LINUX          | Включить сборку под Linux (true/false)                                                                    | `true`                |
+   | BUILD_OSX            | Включить сборку под OSX (true/false)                                                                      | `true`                |
    | BUILD_ARM            | Включить сборку под ARM64 (true/false)                                                                    | `false`               |
    | SELF_CONTAINED       | Публиковать как self-contained (от пользователя не потребуется установка .NET, сильно увеличивает размер) | `false`               |
    | PUBLISH_READY_TO_RUN | Публиковать как ReadyToRun (оптимизация для быстрого запуска, увеличивает размер и время сборки)          | `true`                |

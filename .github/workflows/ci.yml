@@ -25,6 +25,11 @@ on:
         required: true
         default: true
         type: boolean
+      build_osx:
+        description: 'Build for OSX'
+        required: true
+        default: true
+        type: boolean
       publish_ready_to_run:
         description: 'Publish ReadyToRun'
         required: true
@@ -46,6 +51,7 @@ jobs:
     outputs:
       build_windows: ${{ steps.config.outputs.build_windows }}
       build_linux: ${{ steps.config.outputs.build_linux }}
+      build_osx: ${{ steps.config.outputs.build_osx }}
       build_arm: ${{ steps.config.outputs.build_arm }}
       self_contained: ${{ steps.config.outputs.self_contained }}
       publish_ready_to_run: ${{ steps.config.outputs.publish_ready_to_run }}
@@ -60,26 +66,28 @@ jobs:
           # ======================================================================================
           BUILD_WINDOWS="true"   # Enable Windows build   | Включить сборку под Windows
           BUILD_LINUX="true"     # Enable Linux build     | Включить сборку под Linux
+          BUILD_OSX="true"       # Enable OSX build       | Включить сборку под OSX
           BUILD_ARM="false"      # Enable ARM build       | Включить сборку под ARM
 
           # ======================================================================================
           SELF_CONTAINED="false" # Publish self-contained | Публиковать как self-contained
           # If enabled, the build will include all necessary .NET dependencies inside itself. (greatly increases size) Otherwise, prompt the user to install .NET from the MS site.
           # Если включено, сборка будет содержать все необходимые зависимости .NET внутри себя. (сильно увеличивает размер) Иначе предложить пользователю установить .NET с сайта MS.
-          
+
           PUBLISH_READY_TO_RUN="true" # Publish ReadyToRun | Публиковать как ReadyToRun
           # If enabled, the build will be optimized for faster startup. (greatly increases size and build time)
           # Если включено, сборка будет оптимизирована для более быстрого запуска. (сильно увеличивает размер и время сборки)
-          
+
           HIDE_PDB="true"        # Hide debug files (.pdb) | Скрывать файлы отладки (.pdb)
           # ======================================================================================
-          
+
           echo "Determining build configuration..."
-          
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "Mode: Manual (workflow_dispatch)"
             echo "build_windows=${{ inputs.build_windows }}" >> $GITHUB_OUTPUT
             echo "build_linux=${{ inputs.build_linux }}" >> $GITHUB_OUTPUT
+            echo "build_osx=${{ inputs.build_osx }}" >> $GITHUB_OUTPUT
             echo "build_arm=${{ inputs.build_arm }}" >> $GITHUB_OUTPUT
             echo "self_contained=${{ inputs.self_contained }}" >> $GITHUB_OUTPUT
             echo "publish_ready_to_run=${{ inputs.publish_ready_to_run }}" >> $GITHUB_OUTPUT
@@ -88,6 +96,7 @@ jobs:
             echo "Mode: Auto (push/other)"
             echo "build_windows=$BUILD_WINDOWS" >> $GITHUB_OUTPUT
             echo "build_linux=$BUILD_LINUX" >> $GITHUB_OUTPUT
+            echo "build_osx=$BUILD_OSX" >> $GITHUB_OUTPUT
             echo "build_arm=$BUILD_ARM" >> $GITHUB_OUTPUT
             echo "self_contained=$SELF_CONTAINED" >> $GITHUB_OUTPUT
             echo "publish_ready_to_run=$PUBLISH_READY_TO_RUN" >> $GITHUB_OUTPUT
@@ -114,8 +123,18 @@ jobs:
       publish_ready_to_run: ${{ needs.setup.outputs.publish_ready_to_run == 'true' }}
       hide_pdb: ${{ needs.setup.outputs.hide_pdb == 'true' }}
 
+  build-osx:
+    needs: setup
+    if: ${{ needs.setup.outputs.build_osx == 'true' }}
+    uses: ./.github/workflows/build-osx.yml
+    with:
+      self_contained: ${{ needs.setup.outputs.self_contained == 'true' }}
+      build_arm: ${{ needs.setup.outputs.build_arm == 'true' }}
+      publish_ready_to_run: ${{ needs.setup.outputs.publish_ready_to_run == 'true' }}
+      hide_pdb: ${{ needs.setup.outputs.hide_pdb == 'true' }}
+
   package-and-release:
-    needs: [build-windows, build-linux]
+    needs: [build-windows, build-linux, build-osx]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -127,21 +146,21 @@ jobs:
       - name: Create Structure
         run: |
           mkdir -p release
-          
+
           echo "Processing binaries..."
-          # Enable globstar for proper globbing (for use ** pattern, for future use) 
+          # Enable globstar for proper globbing (for use ** pattern, for future use)
           # shopt -s nullglob
-          
+
           for artifact_dir in ./artifacts/Launcher-*; do
             if [ -d "$artifact_dir" ]; then
                dirname=$(basename "$artifact_dir")
                # Get RID from folder name (remove prefix)
                rid=${dirname#"Launcher-"}
                echo "Found artifact for $rid in $artifact_dir"
-               
+
                target_dir="release/$rid"
                mkdir -p "$target_dir"
-               
+
                cp -r "$artifact_dir"/* "$target_dir/"
             else
                echo "Warning: Directory $artifact_dir is not a directory or does not exist (glob failed?)"
@@ -160,7 +179,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const run_id = context.runId;
-            
+
             console.log(`Cleaning up artifacts for run ${run_id}`);
 
             const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
