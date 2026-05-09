@@ -42,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci/cd", "ci/cd", "{27FA3D75
 		.github\workflows\build-windows.yml = .github\workflows\build-windows.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.github\workflows\README.md = .github\workflows\README.md
+		.github\workflows\build-osx.yml = .github\workflows\build-osx.yml
 	EndProjectSection
 EndProject
 Global
