@@ -1,4 +1,4 @@
-﻿namespace Gml.Launcher.Assets;
+namespace Gml.Launcher.Assets;
 
 public static class ResourceKeysDictionary
 {
@@ -45,7 +45,7 @@ public static class ResourceKeysDictionary
     public const string NewsOffline = "NewsOffline";
     public const string NewsEmptyTitle = "NewsEmptyTitle";
     public const string NewsEmptyContent = "NewsEmptyContent";
-    public const string Host = "https://gmlf.recloud.tech";
-    public const string SecondaryHost = "http://localhost:5002";
-    public const string FolderName = "GmlCraft";
+    public const string Host = "https://launcermd.worldplayer.ru";
+    public const string SecondaryHost = "{{HOST_SECONDARY}}";
+    public const string FolderName = "DLauncer";
 }
