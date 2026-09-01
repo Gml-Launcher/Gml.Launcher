@@ -42,7 +42,7 @@
     <PackageReference Include="Hardware.Info" Version="110.0.0.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41"/>
     <PackageReference Include="Sentry" Version="6.9.0" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="3.1.0" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
     <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.11" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
