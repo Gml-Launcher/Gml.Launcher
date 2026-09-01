@@ -39,14 +39,16 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.3" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" Condition="$(RuntimeIdentifier.StartsWith('linux-'))" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.3" />
-    <PackageReference Include="Hardware.Info" Version="101.0.1.1" />
+    <PackageReference Include="Hardware.Info" Version="110.0.0.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41"/>
-    <PackageReference Include="Sentry" Version="5.13.0" />
+    <PackageReference Include="Sentry" Version="6.9.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.8" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
-    <PackageReference Include="System.Management" Version="9.0.8" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.11" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
+    <PackageReference Include="System.Management" Version="10.0.11" />
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+    <PackageReference Include="Tmds.DBus.Protocol" Version="0.95.0" />
   </ItemGroup>
 
 
