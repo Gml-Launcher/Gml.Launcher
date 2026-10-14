@@ -39,7 +39,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.3" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" Condition="$(RuntimeIdentifier.StartsWith('linux-'))" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.3" />
-    <PackageReference Include="Hardware.Info" Version="101.0.1.1" />
+    <PackageReference Include="Hardware.Info" Version="110.0.0.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41"/>
     <PackageReference Include="Sentry" Version="5.13.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
