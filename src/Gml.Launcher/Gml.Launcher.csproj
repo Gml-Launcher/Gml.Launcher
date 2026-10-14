@@ -29,8 +29,8 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.3.0" />
-    <PackageReference Include="Avalonia" Version="11.3.3" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.3" />
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
     <PackageReference Include="Avalonia.HtmlRenderer" Version="11.2.0" />
     <PackageReference Include="Avalonia.Svg.Skia" Version="11.3.0" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.3" />
