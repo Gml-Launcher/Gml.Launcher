@@ -88,7 +88,7 @@ jobs:
         dotnet publish $PROJECT_PATH -c Release -r ${{ matrix.rid }} $EXTRA_ARGS -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=${{ inputs.publish_ready_to_run }} -p:PublishSingleFile=true -o ./publish/${{ matrix.rid }} -p:SelfContained=${{ inputs.self_contained }}
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Launcher-${{ matrix.rid }}
         path: ./publish/${{ matrix.rid }}
