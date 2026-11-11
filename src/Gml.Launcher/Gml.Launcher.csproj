@@ -46,7 +46,7 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.8" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
-    <PackageReference Include="System.Management" Version="9.0.8" />
+    <PackageReference Include="System.Management" Version="11.0.0" />
   </ItemGroup>
 
 
